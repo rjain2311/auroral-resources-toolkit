@@ -1,0 +1,57 @@
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: you@your.org\n"
+"POT-Creation-Date: 2010-09-16 14:41-0700\n"
+"PO-Revision-Date: 2010-09-16 14:41-0700\n"
+"Last-Translator: you <you@your.org>\n"
+"Language-Team: Team <yourteam@your.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: auroral_resources/Application.js:133
+msgid "Components"
+msgstr ""
+
+#: auroral_resources/Application.js:208
+msgid "File"
+msgstr ""
+
+#: auroral_resources/Application.js:209
+msgid "Edit"
+msgstr ""
+
+#: auroral_resources/Application.js:210
+msgid "Search"
+msgstr ""
+
+#: auroral_resources/Application.js:211
+msgid "View"
+msgstr ""
+
+#: auroral_resources/Application.js:212
+msgid "Format"
+msgstr ""
+
+#: auroral_resources/view/Header.js:32
+msgid "Auroral Resources"
+msgstr ""
+
+#: auroral_resources/view/Header.js:34
+msgid "(alpha)"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:46
+msgid "Preferences"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:47
+msgid "Open Preferences Window."
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:61 auroral_resources/view/ToolBar.js:62
+#: auroral_resources/Application.js:213
+msgid "Help"
+msgstr ""

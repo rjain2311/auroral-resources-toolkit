@@ -1,0 +1,84 @@
+{
+  "name"    : "auroral_resources",
+
+  "include" :
+  [
+    {
+      "path" : "${QOOXDOO_PATH}/tool/data/config/application.json"
+    }
+  ],
+
+  "export" :
+  [
+    "api",
+    "api-data",
+    "build",
+    "clean",
+    "distclean",
+    "fix",
+    "info",
+    "inspector",
+    "lint",
+    "migration",
+    "pretty",
+    "profiling",
+    "source",
+    "source-all",
+    "test",
+    "test-source",
+    "translation"
+  ],
+
+  "let" :
+  {
+    "APPLICATION"  : "auroral_resources",
+    "QOOXDOO_PATH" : "qooxdoo-1.2-sdk",
+    "QXTHEME"      : "auroral_resources.theme.Theme",
+    "API_EXCLUDE"  : ["qx.test.*", "${APPLICATION}.theme.*", "${APPLICATION}.test.*"],
+    "LOCALES"      : [ "en" ],
+    "CACHE"        : "${TMPDIR}/cache",
+    "ROOT"         : "."
+  },
+
+  "jobs" :
+  {
+    "libraries" : 
+    {
+      "library" :
+      [
+        {
+          "manifest" : "contrib/CollapsablePanel/trunk/Manifest.json"
+        },
+
+        {
+          "manifest" : "contrib/QxProtovis/trunk/Manifest.json"
+        },
+
+        {
+          "manifest" : "contrib/CanvasCell/trunk/Manifest.json"
+        },
+
+        {
+          "manifest" : "contrib/TimeChooser/trunk/Manifest.json"
+        },
+
+        {
+          "manifest" : "contrib/TimeSpinner/trunk/Manifest.json"
+        },
+
+        {
+          "manifest" : "contrib/QxDyGraphs/trunk/Manifest.json"
+        }
+      ]
+    },
+
+    "common" :
+    {
+      "variants" :
+      {
+        "qx.contrib" : ["on"]
+      }
+    }
+
+  }
+}
