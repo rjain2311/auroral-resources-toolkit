@@ -190,9 +190,9 @@ qx.Class.define("auroral_resources.Application",
 	  // TODO: add a generic cookie get/set class(es) so we aren't doing this low level everywhere...
 	  var intro = qx.bom.Cookie.get("NGDC.AR.intro");
 	  if (intro == null || intro != "ignore") {
-	      var intro = new auroral_resources.widget.IntroductionWindow();
-	      intro.open();
-	      this.__mainWindow.add( intro, { left: 50, top: 50 } );
+	      var iwin = new auroral_resources.widget.IntroductionWindow("Introduction");
+	      iwin.open();
+	      this.__mainWindow.add( iwin, { left: 50, top: 50 } );
 	  }
  
       // put it all together
