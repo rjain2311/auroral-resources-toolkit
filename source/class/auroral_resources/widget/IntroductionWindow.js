@@ -28,11 +28,6 @@ qx.Class.define("auroral_resources.widget.IntroductionWindow",
 	this.base(arguments, title);
 	
 	this.set({
-	    caption: "Introduction", //ignore any passed in title/caption
-    	width: 640,
-    	height: 480,
-    	padding: 10,
-   	 	shadow: true,
         allowMaximize: false,
         allowMinimize: false,
     	showMaximize: false,
@@ -40,8 +35,11 @@ qx.Class.define("auroral_resources.widget.IntroductionWindow",
     	showClose: true,
     	layout: new qx.ui.layout.VBox(10)
 	});
-	/*
-	// add introductory text here 
+	
+	this.setWidth(640);
+	this.setHeight(480);
+	
+	// add introductory/welcome text
     var req = new qx.io.remote.Request(
 		"resource/auroral_resources/static/html/IntroductionWindow.html",
 		"GET",
@@ -72,12 +70,20 @@ qx.Class.define("auroral_resources.widget.IntroductionWindow",
 	
 	// add it to the mix
 	this.add(hideMe);
-	*/
 	
 	return this;
   }, 
 
 
+  /*
+  *****************************************************************************
+  *****************************************************************************
+  */
+  statics :
+  {
+  },
+  
+  
   /*
   *****************************************************************************
   *****************************************************************************
