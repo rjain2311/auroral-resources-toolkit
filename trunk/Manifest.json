@@ -1,0 +1,47 @@
+{
+  "info" : 
+  {
+    "name" : "auroral_resources",
+    "summary" : "Auroral Resources Toolkit",
+    "description" : "A Web client interface for auroral resources including time-series data, metadata, imagery etc.",
+    "homepage" : "http://spidr.ngdc.noaa.gov/spidr/",
+
+    "license" : "LGPL/ESL",
+    "authors" : 
+    [
+      {
+        "name" : "Peter Elespuru",
+        "email" : "peter.elespuru@noaa.gov"
+      },
+
+      {
+        "name" : "Mikhail Zhizhin",
+        "email" : "jjn@wdcb.ru"
+      },
+
+      {
+        "name" : "Dmitry Medvedev",
+        "email" : "dmedv@wdcb.ru"
+      },
+
+      {
+        "name" : "Rob Redmon",
+        "email" : "rob.redmon@noaa.gov"
+      }
+    ],
+
+    "version" : "trunk",
+    "qooxdoo-versions": ["1.2"]
+  },
+  
+  "provides" : 
+  {
+    "namespace"   : "auroral_resources",
+    "encoding"    : "utf-8",
+    "class"       : "source/class",
+    "resource"    : "source/resource",
+    "translation" : "source/translation",
+    "type"        : "application"
+  }
+}
+

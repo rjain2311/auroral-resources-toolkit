@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+./generate.py build && rm -fr ../ar/ && cp *.txt build && cp -pR build ../ar && cp -pR inspector ../ar/ && cp source/inspector.html ../ar/

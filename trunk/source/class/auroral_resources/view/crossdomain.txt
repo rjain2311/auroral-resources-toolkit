@@ -1,0 +1,29 @@
+once LISIRD supports it, we could add cross-domain support
+
+the crux is the lack of callback support
+
+
+//	var url = "http://ws.geonames.org/citiesJSON?north=42.1&south=-9.2&east=-22.4&west=55.2&lang=en";
+	var url = "http://lasp.colorado.edu/lisird/tss/sorce_tsi_24hr.json?&time%3E=2010-10-01";
+	
+
+// with Qx
+/*
+	
+    var req = new qx.io.remote.Request(
+		url,
+		"GET",
+		"text/plain"
+//		"application/json"
+	);
+	
+	req.setCrossDomain(true);
+	req.setParseJson(false);
+	req.setProhibitCaching(false);
+	req.addListener("completed", this._onAjaxResponseComplete, this);
+	req.send();
+*/
+
+// with jQ
+jQuery.getScript(url, function() {
+	alert();
