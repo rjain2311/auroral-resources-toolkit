@@ -179,7 +179,7 @@ qx.Class.define("auroral_resources.Application",
 	  container.add(chooser);
 
 	  scroller.add(container);
-      scroller.setWidth(200);
+      scroller.setWidth(280);
       scroller.setBackgroundColor("silver");
 
       // add the sidebar
@@ -216,7 +216,7 @@ qx.Class.define("auroral_resources.Application",
     _widgetDropListener : function(e) {
         var w = e.getData("widget");
 	    w.open();
-        var x = this.__mouseX - 205; //sub off extra to center it more
+        var x = this.__mouseX - 285; //sub off extra to center it more
         var y = this.__mouseY - 97; //ditto
 	    this.__mainWindow.add( w, { left:x, top:y });
     } // end widgetDropListener
