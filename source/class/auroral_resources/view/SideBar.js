@@ -308,7 +308,7 @@ qx.Class.define("auroral_resources.view.SideBar",
 		};
 		
 		group.slider.setOrientation("horizontal");
-	    group.value.setWidth(100);
+	    group.value.setWidth(220);
         group.value.setTextAlign("center");
       	slider.addListener("changeValue", this._sliderChanged, this);
       	slider.addListener("mouseup", this._sliderChangeDone, this);

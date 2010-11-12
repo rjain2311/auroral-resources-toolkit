@@ -7,9 +7,13 @@
   <meta http-equiv="Pragma" content="no-cache"/> 
   <meta http-equiv="Cache-Control" content="max-age=0,no-cache,no-store,post-check=0,pre-check=0"/> 
   <meta http-equiv="Expires" content="Mon, 26 Jul 1997 00:00:00 GMT"/> 
-  <meta http-equiv='If-Modified-Since' content='Sat, 1 Jan 2000 00:00:00 GMT'/> 
-  
-  <meta name="DC.creator" content="NOAA National Geophysical Data Center"/> 
+  <meta http-equiv='If-Modified-Since' content='Sat, 1 Jan 2000 00:00:00 GMT'/>
+  <meta name="DC.creator" content="NOAA National Geophysical Data Center"/>
+  <meta name="DC.creator" content="Russian Academy of Science Geophysical Center"/>
+  <meta name="DC.author" content="Peter R. Elespuru (NOAA)"/>
+  <meta name="DC.author" content="Robert Redmon (NOAA)"/>
+  <meta name="DC.author" content="Mikhail Zhizhin (RAS)"/>
+  <meta name="DC.author" content="Dmitry P. Medvedev (RAS)"/>
   <meta name="DC.title" content="USDOC/NOAA/NESDIS/NGDC-Notes on NGDC Web Style Conventions"/> 
   <meta name="DC.date.created" scheme="IOS8601" content="2010-07-19"/> 
   <meta name="DC.language" scheme="DCTERMS.RFC1766" content="EN-US"/> 
@@ -17,7 +21,7 @@
   <meta name="DC.publisher" content="National Oceanic and Atmospheric Administration (NOAA)"/> 
   <meta name="DC.publisher" content="National Environmental Satellite, Data, and Information Service (NESDIS)"/> 
   <meta name="DC.publisher" content="National Geophysical Data Center (NGDC)"/> 
-  <meta name="DC.publisher" content="Solar Terrestrial Physics Division"/>
+  <meta name="DC.publisher" content="Solar-Terrestrial Physics Division (STP)"/>
 
   <title>auroral_resources</title>
 
@@ -28,18 +32,24 @@
   	<script type="text/javascript" src="resource/auroral_resources/jquery-1.4.3.min.js"></script>
     -->
 	
-    <!-- 
-    -->
   	<script type="text/javascript" src="script/auroral_resources.js"></script>
 
 </head>
 
 <body>
-	<!-- Intentionally Blank -->
 </body>
 
-<!-- 
-TODO: add google analytics here
--->
+<!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-19659842-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
 
 </html>
