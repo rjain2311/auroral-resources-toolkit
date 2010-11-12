@@ -85,12 +85,12 @@ qx.Class.define("auroral_resources.view.SideBar",
 	    panel.setGroup(group);
 	    panels.push(panel);
 	    
-        var tree = new qx.ui.tree.Tree().set({ width : 200, height : 400 });
+        var tree = new qx.ui.tree.Tree().set({ width : 350, height : 400 });
    	    var root = new qx.ui.tree.TreeFolder(toolLabels[i]);
 
 		root.setOpen(true);
 		tree.setRoot(root);
-		tree.setOpenMode("double-click");
+		tree.setOpenMode("dblclick");
 		tree.setHideRoot(1);
 
         // introspect the construction
@@ -159,25 +159,51 @@ qx.Class.define("auroral_resources.view.SideBar",
     _addItems : function(index, parent) {
         
         if (index == 0) {
-            var item = new qx.ui.tree.TreeFolder("Ionosphere");
-            item.setOpen(true);
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile("TimeSeries"));
+            var iono = new qx.ui.tree.TreeFolder("Ionosphere");
+            var item = new qx.ui.tree.TreeFolder("foF2");            
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Gakona (GA762) foF2"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Sondrestrom (SMJ67) foF2"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Tromso (TR170) foF2"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Norilsk (NO369) foF2"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Boulder (BC840) foF2"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Mawson (MW26P) foF2"));
+            iono.add(item);
+            item = new qx.ui.tree.TreeFolder("h'F");
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Gakona (GA762) h'F"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Sondrestrom (SMJ67) h'F"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Tromso (TR170) h'F"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Norilsk (NO369) h'F"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Boulder (BC840) h'F"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Mawson (MW26P) h'F"));
+            iono.add(item);
+            parent.add(iono);
+            
+            item = new qx.ui.tree.TreeFolder("Solar");
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile("ACE Bz"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile("ACE Flow"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile("F10.7"));
+            parent.add(item);
+            
+            item = new qx.ui.tree.TreeFolder("Geomagnetic Indices");
+            item.add(new auroral_resources.widget.HistogramTreeFile("Dst"));
+            item.add(new auroral_resources.widget.HistogramTreeFile("Kp"));
+            item.add(new auroral_resources.widget.HistogramTreeFile("Ap"));
             parent.add(item);
             
         } else if (index == 1) {
-            var item = new qx.ui.tree.TreeFolder("DMSP + Ovation");
-            item.setOpen(true);
+            var item = new qx.ui.tree.TreeFolder("Daytime");
+            item.add(new auroral_resources.widget.MapTreeFile("ECS + Ovation"));
+            item.add(new auroral_resources.widget.MapTreeFile("Blue Marble + Ovation"));
             parent.add(item);
-            item = new qx.ui.tree.TreeFolder("ECS + Ovation");
-            item.setOpen(true);
-            parent.add(item);
-            item = new qx.ui.tree.TreeFolder("BlueMarble + Ovation");
-            item.setOpen(true);
+            
+            item = new qx.ui.tree.TreeFolder("Nighttime");
+            item.add(new auroral_resources.widget.MapTreeFile("DMSP + Ovation"));
             parent.add(item);
             
         } else if (index == 2) {
             var item = new qx.ui.tree.TreeFolder("Aurorae");
-            item.setOpen(true);
+            item.add(new auroral_resources.widget.ImageryTreeFile("Hand Picked Gallery"));
+            item.add(new auroral_resources.widget.ImageryTreeFile("Flickr Gallery"));
             parent.add(item);
             
         } else {
@@ -207,7 +233,7 @@ qx.Class.define("auroral_resources.view.SideBar",
 
         var container = new qx.ui.container.Composite(grid);
 	 	container.setPadding(1);
-	    container.setWidth(200);
+	    container.setWidth(280);
 	    container.setHeight(60); 
 
 		var begin = qx.lang.Date.now();

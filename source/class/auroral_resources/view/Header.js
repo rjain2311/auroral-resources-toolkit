@@ -45,9 +45,15 @@ qx.Class.define("auroral_resources.view.Header",
     this.add(logo);
 
     this.add(new qx.ui.core.Spacer, {flex : 1});
+    
+    var title = new qx.ui.basic.Label().set({
+		value: "<a style='font-style:italic;font-size:2.5em;color:white;text-decoration:none;' href='http://en.wikipedia.org/wiki/Aurora_(astronomy)'>Auroral Resources Toolkit</a>",
+		rich: true
+	});
+	this.add(title);
 
     // add the right logo
-    /* I don't like the way this gets stretched right now, nor in general. revisit later
+    /* I don't like the way this gets stretched right now, nor in general. revisit later if/when time
     var rlogo = new qx.ui.basic.Image("resource/auroral_resources/headerright.png").set({
 		alignX: "right",
 		margin: 0,
