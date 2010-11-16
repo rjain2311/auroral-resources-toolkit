@@ -1103,7 +1103,7 @@ if (!document.createElement('canvas').getContext) {
       y: Z * (aX * m[0][1] + aY * m[1][1] + m[2][1]) - Z2
     };
   };
-
+  
   contextPrototype.save = function() {
     var o = {};
     copyState(this, o);
@@ -1322,7 +1322,7 @@ if (!document.createElement('canvas').getContext) {
   contextPrototype.arcTo = function() {
     // TODO: Implement
   };
-
+  
   contextPrototype.createPattern = function(image, repetition) {
     return new CanvasPattern_(image, repetition);
   };

@@ -29,10 +29,10 @@ qx.Class.define("auroral_resources.view.SideBar",
   {
 	  this.base(arguments);
 	
+	  this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
+	  
 	  this.__dateFormat = new qx.util.format.DateFormat("MM/dd/yy");
 	  this.__dateFormatTime = new qx.util.format.DateFormat("MM/dd/yy hh:mm");
-	
-	  this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
 	
 	  this.__resize = new qx.ui.container.Resizer();
 	  this.__resize.setLayout(new qx.ui.layout.Grow);
@@ -101,17 +101,6 @@ qx.Class.define("auroral_resources.view.SideBar",
         panel.setValue(false);
       }
 
-/* example for subsribing to now time component on the bus
-
-      this.__testLabel = new qx.ui.basic.Label().set({
-	    value: "ladadoo",
-	    rich : true,
-	    alignX: "center"
-      });
-      vbox.add(this.__testLabel);
-	  this.__timeBus.subscribe("time.now", this._nowChangeBusCallback, this);
-*/
-
       return this.__resize;
   },
 
@@ -144,15 +133,6 @@ qx.Class.define("auroral_resources.view.SideBar",
     __testLabel : null,
 	__timeBus : null,
 
-	//
-	// callback for the 'now' message channel
-	//
-/*
-	_nowChangeBusCallback : function(e) {
-		this.__testLabel.setValue(e.getData());
-	},
-*/
-
     //
     //
     //
@@ -161,20 +141,20 @@ qx.Class.define("auroral_resources.view.SideBar",
         if (index == 0) {
             var iono = new qx.ui.tree.TreeFolder("Ionosphere");
             var item = new qx.ui.tree.TreeFolder("foF2");            
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Gakona (GA762) foF2"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Sondrestrom (SMJ67) foF2"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Tromso (TR170) foF2"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Norilsk (NO369) foF2"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Boulder (BC840) foF2"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Mawson (MW26P) foF2"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('GA762','foF2',"Gakona (GA762) foF2"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('SMJ67','foF2',"Sondrestrom (SMJ67) foF2"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('TR170','foF2',"Tromso (TR170) foF2"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('NO369','foF2',"Norilsk (NO369) foF2"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('BC840','foF2',"Boulder (BC840) foF2"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('MW26P','foF2',"Mawson (MW26P) foF2"));
             iono.add(item);
             item = new qx.ui.tree.TreeFolder("h'F");
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Gakona (GA762) h'F"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Sondrestrom (SMJ67) h'F"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Tromso (TR170) h'F"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Norilsk (NO369) h'F"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Boulder (BC840) h'F"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile("Mawson (MW26P) h'F"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('GA762',"hpF","Gakona (GA762) h'F"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('SMJ67',"hpF","Sondrestrom (SMJ67) h'F"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('TR170',"hpF","Tromso (TR170) h'F"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('NO369',"hpF","Norilsk (NO369) h'F"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('BC840',"hpF","Boulder (BC840) h'F"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('MW26P',"hpF","Mawson (MW26P) h'F"));
             iono.add(item);
             parent.add(iono);
             
@@ -240,6 +220,11 @@ qx.Class.define("auroral_resources.view.SideBar",
 		begin -= (((86400) * 7) * 1000); //one week of millis
 		var end = qx.lang.Date.now();
 		var cur = end - (((86400) * 3.5) * 1000); //half a week of millis
+
+        // initialize the time bus
+        this.__timeBus.setStartDate(begin);
+        this.__timeBus.setNow(cur);
+        this.__timeBus.setStopDate(end);
 
 		var slider = new qx.ui.form.Slider();
   	    slider.set({
