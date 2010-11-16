@@ -1,12 +1,15 @@
 /* ************************************************************************
 
-Copyright:
+Copyright: TBD
 
-License:
+License: TBD
 
 Authors:
 
 	Peter Elespuru - peter.elespuru@noaa.gov
+	Dmitry Medvedev - dmedv@wdcb.ru
+	Rob Redmon - rob.redmon@noaa.gov
+	Mikhail Zhizhin - jjn@wdcb.ru
 
 ************************************************************************ */
 

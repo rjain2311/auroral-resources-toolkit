@@ -19,6 +19,7 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
   type: "singleton",
   extend : qx.core.Object,
   	
+  	
   /*
   *****************************************************************************
      CONSTRUCTOR
@@ -28,7 +29,10 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
   {
 	  this.base(arguments);
 	  this.__bus = qx.event.message.Bus;
-	  return this.__bus;
+	  this.__bus.subscribe("time.startDate", this._startDateChangeBusCallback, this);
+	  this.__bus.subscribe("time.now", this._nowChangeBusCallback, this);
+	  this.__bus.subscribe("time.stopDate", this._stopDateChangeBusCallback, this);
+	  return this;
   },
 
 
@@ -39,13 +43,134 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
   members :
   {
       __bus : null,
+      __startDate : null,
+      __stopDate : null,
+      __now : null,
 	
 	  //
 	  // wraps the get instance and dispatch into a convenience function
 	  //
 	  dispatch : function(msg) {
 	      this.__bus.getInstance().dispatch(msg);
-	  }
+	  },
+
+  	  //
+  	  // bus reference getter
+      //
+      getBus : function() {
+          return this.__bus;
+      },
+      
+  	  //
+  	  // start date setter
+      //
+      setStartDate : function(date) {
+          this.__startDate = date;
+      },
+
+  	  //
+  	  // start date getter
+      //
+      getStartDate : function() {
+          return this.__startDate;
+      },
+      
+  	  //
+  	  // start date getter, in the format SPIDR WS needs
+      //
+      getStartDateForSPIDRWS : function() {
+          var start = this.__startDate;
+          start = new Date(start);
+          var mo = start.getMonth() + 1;
+          mo = "" + mo;
+          if (mo.length == 1 ) { mo = "0" + mo; }
+          var dy = start.getDate();
+          dy = "" + dy;
+          if (dy.length == 1) { dy = "0" + dy; }
+          start = start.getFullYear() + "" + mo + "" + dy;
+          return start;
+      },
+
+  	  //
+  	  // stop date getter, in the format SPIDR WS needs
+      //
+      getStopDateForSPIDRWS : function() {
+          var stop = this.__stopDate;
+          stop = new Date(stop);
+          var mo = stop.getMonth() + 1;
+          mo = "" + mo;
+          if (mo.length == 1 ) { mo = "0" + mo; }
+          var dy = stop.getDate();
+          dy = "" + dy;
+          if (dy.length == 1) { dy = "0" + dy; }
+          stop = stop.getFullYear() + "" + mo + "" + dy;
+          return stop;
+      },
+      
+      //
+      //
+      //
+      convertToSPIDRWS : function(timeinmillis) {
+          var time = timeinmillis;
+          time = new Date(time);
+          var mo = time.getMonth() + 1;
+          mo = "" + mo;
+          if (mo.length == 1 ) { mo = "0" + mo; }
+          var dy = time.getDate();
+          dy = "" + dy;
+          if (dy.length == 1) { dy = "0" + dy; }
+          time = time.getFullYear() + "" + mo + "" + dy;
+          return time;
+      },      
+      
+  	  //
+  	  // now date setter
+      //
+      setNow : function(date) {
+          this.__now = date;
+      },
+
+  	  //
+  	  // now date getter
+      //
+      getNow : function() {
+          return this.__now;
+      },
+      
+  	  //
+  	  // stop date setter
+      //
+      setStopDate : function(date) {
+          this.__stopDate = date;
+      },
+
+  	  //
+  	  //  stop date getter
+      //
+      getStopDate : function() {
+          return this.__stopDate;
+      },
+
+  	  //
+      // callback for the 'startDate' message channel
+      //
+      _startDateChangeBusCallback : function(e) {
+          this.__startDate = e.getData();
+      },
+
+  	  //
+      // callback for the 'now' message channel
+      //
+      _nowChangeBusCallback : function(e) {
+          this.__now = e.getData();
+      },
+
+      //
+      // callback for the 'stopDate' message channel
+      //
+      _stopDateChangeBusCallback : function(e) {
+          this.__stopDate = e.getData();
+      }	  
   }
 
 });

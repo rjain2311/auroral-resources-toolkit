@@ -34,7 +34,7 @@ qx.Class.define("auroral_resources.widget.Window",
           showMaximize: false,
           showMinimize: false,
           showClose: true,
-          layout: new qx.ui.layout.Basic()
+          layout: new qx.ui.layout.Grow()
       });
       
       var xOffset = 0; //((winWidth/2)/2) - 10;
@@ -49,8 +49,8 @@ qx.Class.define("auroral_resources.widget.Window",
       metaDataButton.setHeight(buttonHeight);
       metaDataButton.setWidth(buttonWidth);
       
-      this.add(dataButton, {left: xOffset, top: 0});
-      this.add(metaDataButton, {left: buttonWidth + 5, top: 0});
+//      this.add(dataButton, {left: xOffset, top: 0});
+//      this.add(metaDataButton, {left: buttonWidth + 5, top: 0});
       
       return this;
   },

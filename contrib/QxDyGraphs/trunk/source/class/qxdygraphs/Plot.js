@@ -54,6 +54,7 @@ qx.Class.define("qxdygraphs.Plot", {
         if (qx.core.Variant.isSet("qx.debug", "on")) {
             min = '';
         }
+        
         var codeArr = [];
         if ( qx.bom.client.Engine.MSHTML && qx.bom.client.Engine.VERSION < 9.0 && !window.G_vmlCanvasManager){
             codeArr.push("excanvas"+min+".js");
