@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
 
-./generate.py build && rm -fr ../ar/ && cp *.txt build && cp source/resource/auroral_resources/favico.ico build && cp -pR build ../ar && cp -pR inspector ../ar/ && cp source/inspector.html ../ar/ && cp iono*.txt ../ar/
+rm -fr build &&\
+./generate.py build &&\
+rm -fr ../ar/ &&\
+cp -pR build ../ar &&\
+cp -pR inspector ../ar/ &&\
+cp source/inspector.html ../ar/

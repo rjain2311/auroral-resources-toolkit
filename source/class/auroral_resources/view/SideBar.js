@@ -76,7 +76,7 @@ qx.Class.define("auroral_resources.view.SideBar",
 
       // tool label and class index must match up 1-1 for the
       // introspective constructor call to work later in this block
-      var toolLabels = ["Time-Series Data", "Maps and Overlays", "Imagery"];
+      var toolLabels = ["Time-Series Data", "Maps and Overlays", "Photos and Videos"];
       for ( var i=0; i < toolLabels.length; i++) {
 	
 	    var panel = new collapsablepanel.Panel( toolLabels[i] );
@@ -141,27 +141,26 @@ qx.Class.define("auroral_resources.view.SideBar",
         if (index == 0) {
             var iono = new qx.ui.tree.TreeFolder("Ionosphere");
             var item = new qx.ui.tree.TreeFolder("foF2");            
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile('GA762','foF2',"Gakona (GA762) foF2"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile('SMJ67','foF2',"Sondrestrom (SMJ67) foF2"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile('TR170','foF2',"Tromso (TR170) foF2"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile('NO369','foF2',"Norilsk (NO369) foF2"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile('BC840','foF2',"Boulder (BC840) foF2"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile('MW26P','foF2',"Mawson (MW26P) foF2"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.GA762',"Gakona (GA762) foF2"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.SMJ67',"Sondrestrom (SMJ67) foF2"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.TR170',"Tromso (TR170) foF2"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.NO369',"Norilsk (NO369) foF2"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.BC840',"Boulder (BC840) foF2"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.MW26P',"Mawson (MW26P) foF2"));
             iono.add(item);
             item = new qx.ui.tree.TreeFolder("h'F");
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile('GA762',"hpF","Gakona (GA762) h'F"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile('SMJ67',"hpF","Sondrestrom (SMJ67) h'F"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile('TR170',"hpF","Tromso (TR170) h'F"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile('NO369',"hpF","Norilsk (NO369) h'F"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile('BC840',"hpF","Boulder (BC840) h'F"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile('MW26P',"hpF","Mawson (MW26P) h'F"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.GA762',"Gakona (GA762) h'F"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.SMJ67',"Sondrestrom (SMJ67) h'F"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.TR170',"Tromso (TR170) h'F"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.NO369',"Norilsk (NO369) h'F"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.BC840',"Boulder (BC840) h'F"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.MW26P',"Mawson (MW26P) h'F"));
             iono.add(item);
             parent.add(iono);
             
             item = new qx.ui.tree.TreeFolder("Solar");
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile("ACE Bz"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile("ACE Flow"));
-            item.add(new auroral_resources.widget.TimeSeriesTreeFile("F10.7"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('imf_bz.ACE_RT',"ACE Bz"));
+            item.add(new auroral_resources.widget.TimeSeriesTreeFile('vsw_x.ACE_RT',"ACE Flow"));
             parent.add(item);
             
             item = new qx.ui.tree.TreeFolder("Geomagnetic Indices");
@@ -172,12 +171,13 @@ qx.Class.define("auroral_resources.view.SideBar",
             
         } else if (index == 1) {
             var item = new qx.ui.tree.TreeFolder("Daytime");
-            item.add(new auroral_resources.widget.MapTreeFile("ECS + Ovation"));
-            item.add(new auroral_resources.widget.MapTreeFile("Blue Marble + Ovation"));
+            item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'ECS', 'nowcast', "ECS + Ovation Nowcast"));
+            item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'ECS', 'forecast', "ECS + Ovation Forecast"));
             parent.add(item);
             
             item = new qx.ui.tree.TreeFolder("Nighttime");
-            item.add(new auroral_resources.widget.MapTreeFile("DMSP + Ovation"));
+            item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'DMSP', 'nowcast', "DMSP + Ovation Nowcast"));
+            item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'DMSP', 'forecast', "DMSP + Ovation Forecast"));
             parent.add(item);
             
         } else if (index == 2) {
