@@ -88,6 +88,13 @@ qx.Class.define("auroral_resources.view.ToolBar",
         // Add a sepearator
         mainPart.addSeparator();
 
+        prefBtn2 = new qx.ui.toolbar.Button(this.tr("Preferences2"), "icon/22/apps/preferences-theme.png");
+        prefBtn2.setToolTipText(this.tr("Open Preferences Window 2."));
+        mainPart.add(prefBtn2);
+
+        // Add a sepearator
+        mainPart.addSeparator();
+
         // Add a spacer
         this.addSpacer();
 
@@ -97,7 +104,7 @@ qx.Class.define("auroral_resources.view.ToolBar",
 
         // Help button
         var aboutBtn = new qx.ui.toolbar.Button(this.tr("Help"), "icon/22/actions/help-about.png");
-        aboutBtn.setToolTipText(this.tr("Help"));
+        aboutBtn.setToolTipText(this.tr("Get Help"));
         infoPart.add(aboutBtn);
     },
 
