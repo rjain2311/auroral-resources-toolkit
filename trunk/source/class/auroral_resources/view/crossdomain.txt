@@ -1,3 +1,6 @@
+an example of issuing a cross-domain request, which requires that the service
+support callbacks for RESTful requests
+
 once LISIRD supports it, we could add cross-domain support
 
 the crux is the lack of callback support

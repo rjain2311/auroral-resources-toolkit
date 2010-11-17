@@ -1,3 +1,3 @@
 /**
- * Auroral resources application
+ * Application
  */
