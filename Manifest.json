@@ -4,7 +4,7 @@
     "name" : "auroral_resources",
     "summary" : "Auroral Resources Toolkit",
     "description" : "A Web client interface for auroral resources including time-series data, metadata, imagery etc.",
-    "homepage" : "http://spidr.ngdc.noaa.gov/spidr/",
+    "homepage" : "http://spidr.ngdc.noaa.gov/art/",
 
     "license" : "LGPL/ESL",
     "authors" : 
