@@ -46,7 +46,7 @@ Rob Redmon - rob.redmon@noaa.gov
 *************************************************************************/
 
 
-qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
+qx.Class.define("auroral_resources.widget.HistogramWindow",
 {
 
     extend : qx.ui.window.Window,
@@ -99,21 +99,10 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
         this.__startDate = start;
         this.__stopDate = stop;
 
-        this.__plot = new qxdygraphs.Plot(
-            "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,
-            //'resource/auroral_resources/ionofof2.txt',
-            {
-                labelsKMB: true,
-                drawPoints: true,
-                errorBars: false,
-                lables: [title],
-                highlightCircleSize: 7,
-                strokeWidth: 2,
-                underlayCallback: this._vline
-            }
-        );
-
-        this.add(this.__plot);
+        /////////////////////////////////////////////////////////////////////        
+        // NEED MORE TIME TO INTEGRATE PROTOVIS DYNAMICALLY...
+        // REVERTING TO DYGRAPHS FOR NOW
+        /////////////////////////////////////////////////////////////////////        
 
         this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
         this.__timeBus.getBus().subscribe("time.now", this._nowChangeBusCallback, this);
@@ -135,131 +124,27 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
         __timeBus : null,
         __startDate : null,
         __stopDate : null,
-        __plot : null,
+        __chart : null,
         __now : null,
-
-        //
-        // vertical line function
-        //
-        _vline : function(canvas, area, g) {
-            // alert(area.toSource()); // MUST BE RUN IN FIREFOX! => debug output
-            // note the way this method is registered as a callback prevents access
-            // to class variables, must access them anew (e.g. timeBus)
-            var timeBus = auroral_resources.messaging.TimeBus.getInstance();
-            var start = timeBus.getStartDate();
-            var stop = timeBus.getStopDate();
-            var now = timeBus.getNow();
-            
-            var A = start;
-            var B = stop;
-            var C = area.x+1;
-            var D = area.w+area.x;
-            // normalize x-prime to determine how the time maps to pixel space
-            var xp = ((D-C)*(now-A)) / (B-A) + C;
-            
-            canvas.beginPath();
-            canvas.strokeStyle = "rgba(255, 0, 0, 1.0)";
-            canvas.moveTo(xp, 0);
-            canvas.lineTo(xp, area.h);
-            canvas.closePath();
-            canvas.stroke();
-        },
 
         //
         // callback for the 'startDate' message channel
         //
         _startDateChangeBusCallback : function(e) {
-            this.remove(this.__plot);
-
-            qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
-            this.__plot = null;
-            
-            var start = this.__timeBus.convertToSPIDRWS(e.getData());
-            this.__start = start;
-            var stop = this.__timeBus.getStopDateForSPIDRWS();
-            var now = this.__timeBus.getNow();
-            var parameter = this.__parameter;
-
-            this.__plot = new qxdygraphs.Plot(
-                "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,
-                //'resource/auroral_resources/ionofof2.txt',
-                {
-                    labelsKMB: true,
-                    errorBars: false,
-                    drawPoints: true,
-                    lables: [this.__title],
-                    highlightCircleSize: 7,
-                    strokeWidth: 2,
-                    underlayCallback: this._vline
-                }
-            );
-
-            this.add(this.__plot);      	    
         },
 
         //
         // callback for the 'stopDate' message channel
         //
         _stopDateChangeBusCallback : function(e) {
-            this.remove(this.__plot);
-
-            qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
-            this.__plot = null;
-            
-            var start = this.__timeBus.getStartDateForSPIDRWS();
-            var stop = this.__timeBus.convertToSPIDRWS(e.getData());
-            this.__stop = stop;
-            var now = this.__timeBus.getNow();
-            var parameter = this.__parameter;
-            
-            this.__plot = new qxdygraphs.Plot(
-                "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,
-                //'resource/auroral_resources/ionofof2.txt',
-                {
-                    labelsKMB: true,
-                    errorBars: false,
-                    drawPoints: true,
-                    lables: [this.__title],
-                    highlightCircleSize: 7,
-                    strokeWidth: 2,
-                    underlayCallback: this._vline
-                }
-            );
-
-            this.add(this.__plot);
         },	
 
         //
         //
         //
         _nowChangeBusCallback : function(e) {
-            this.remove(this.__plot);
-
-            qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
-            this.__plot = null;
-            
-            var start = this.__timeBus.getStartDateForSPIDRWS();
-            var stop = this.__timeBus.getStopDateForSPIDRWS();
-            var now = e.getData();
-            this.__now = now;
-            var parameter = this.__parameter;
-
-            this.__plot = new qxdygraphs.Plot(
-                "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,            
-                //'resource/auroral_resources/ionofof2.txt',
-                {
-                    labelsKMB: true,
-                    errorBars: false,
-                    drawPoints: true,
-                    lables: [this.__title],
-                    highlightCircleSize: 7,
-                    strokeWidth: 2,
-                    underlayCallback: this._vline
-                }
-            );
-
-            this.add(this.__plot);          
         }
+
     },
 
 

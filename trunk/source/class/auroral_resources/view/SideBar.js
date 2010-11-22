@@ -192,9 +192,9 @@ qx.Class.define("auroral_resources.view.SideBar",
                 parent.add(item);
 
                 item = new qx.ui.tree.TreeFolder("Geomagnetic Indices");
-                item.add(new auroral_resources.widget.HistogramTreeFile("Dst"));
-                item.add(new auroral_resources.widget.HistogramTreeFile("Kp"));
-                item.add(new auroral_resources.widget.HistogramTreeFile("Ap"));
+                item.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('index_dst', "Dst"));
+                item.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('index_kp.est', "Kp"));
+                item.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('index_ap', "Ap"));
                 parent.add(item);
 
             } else if (index == 1) {
@@ -210,6 +210,7 @@ qx.Class.define("auroral_resources.view.SideBar",
 
             } else if (index == 2) {
                 var item = new qx.ui.tree.TreeFolder("Aurorae");
+                item.add(new auroral_resources.widget.MapTreeFile('olayerskml', 'ECS', '', "Map Gallery"));
                 item.add(new auroral_resources.widget.ImageryTreeFile("Hand Picked Gallery"));
                 item.add(new auroral_resources.widget.ImageryTreeFile("Flickr Gallery"));
                 parent.add(item);

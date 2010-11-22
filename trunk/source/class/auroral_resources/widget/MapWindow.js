@@ -97,12 +97,14 @@ qx.Class.define("auroral_resources.widget.MapWindow",
             this.add(this._createOpenLayersMap(baselayer, period, this));
         } else if (mapper.toString().toLowerCase() == 'google') {
             this.add(this._createGoogleMap(baselayer, period, this));
+        } else if (mapper.toString().toLowerCase() == 'olayerskml') {
+            this.add(this._createOpenLayersMapKML(baselayer, period, this));
         } else {
             this.add(this._createOpenLayersMap(baselayer, period, this));
         }
 
         this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
-        this.__timeBus.getBus().subscribe("time.startDate", this._nowChangeBusCallback, this);
+        this.__timeBus.getBus().subscribe("time.now", this._nowChangeBusCallback, this);
         this.__timeBus.getBus().subscribe("time.stopDate", this._stopDateChangeBusCallback, this);
 
         return this;
@@ -135,7 +137,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         },	
 
         //
-        //
+        // callback for 'now' changes
         //
         _nowChangeBusCallback : function(e) {
         },
@@ -183,7 +185,6 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         //
         //
         _createOpenLayersMap : function(baselayer, period, self) {
-
             var isle = new qx.ui.core.Widget().set({
                 width: 450,
                 height: 400
@@ -194,14 +195,14 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                     isle.getContentElement().getDomElement(),
                     {
                         controls: [
-                        new OpenLayers.Control.Navigation(),
-                        new OpenLayers.Control.PanZoomBar(),
-                        new OpenLayers.Control.Attribution()
+                            new OpenLayers.Control.Navigation(),
+                            new OpenLayers.Control.PanZoomBar()
                         ], 
                         minExtent: new OpenLayers.Bounds(-180, -90, 180, 90),
                         maxExtent: new OpenLayers.Bounds(-180, -90, 180, 90),
                         displayProjection : new OpenLayers.Projection("EPSG:4326"),
-                        units : 'meters'
+                        units : 'meters',
+                        zoom: 2
                     }
                 );
 
@@ -222,7 +223,109 @@ qx.Class.define("auroral_resources.widget.MapWindow",
 
                 // add the ovation layer
                 var ovation = null;
+                
+                map.zoomToExtent(new OpenLayers.Bounds(-180, -90, 180, 90), true);
+            });
 
+            return isle;          
+        },
+        
+        //
+        //
+        //
+        _createOpenLayersMapKML : function(baselayer, period, self) {
+
+            var isle = new qx.ui.core.Widget().set({
+                width: 450,
+                height: 400
+            });
+
+            isle.addListenerOnce("appear", function() {
+                
+                var map = new OpenLayers.Map(
+                    isle.getContentElement().getDomElement(),
+                    {
+                        controls: [
+                            new OpenLayers.Control.Navigation(),
+                            new OpenLayers.Control.PanZoomBar()
+                        ], 
+                        minExtent: new OpenLayers.Bounds(-180, -90, 180, 90),
+                        maxExtent: new OpenLayers.Bounds(-180, -90, 180, 90),
+                        displayProjection : new OpenLayers.Projection("EPSG:4326"),
+                        units : 'meters',
+                        zoom: 2
+                    }
+                );
+                
+                // add the base layer
+                var base = null;
+                if (baselayer.toString().toLowerCase() == 'bluemarble') {
+                    base = self._getBlueMarbleBaseLayer();
+                } else if (baselayer.toString().toLowerCase() == 'ecs') {
+                    base = self._getBlueMarbleBaseLayer();
+                    //base = self._getECSBaseLayer();
+                } else if (baselayer.toString().toLowerCase() == 'dmsp') {
+                    base = self._getBlueMarbleBaseLayer();
+                    //base = self._getDMSPBaseLayer();
+                } else {
+                    base = self._getBlueMarbleBaseLayer();
+                }
+                map.addLayer(base);
+
+                var kml = new OpenLayers.Layer.GML(
+                    "KML", 
+                    "resource/auroral_resources/images.kml", 
+                    {
+                        format: OpenLayers.Format.KML,
+                        formatOptions: 
+                        {  
+                            extractStyles: true,
+                            extractAttributes: true,
+                            maxDepth: 2
+                        }
+                    }
+                );
+                
+                map.addLayer(kml);
+
+                var selectControl = new OpenLayers.Control.SelectFeature(
+                    kml, 
+                    {
+                        onSelect: onFeatureSelect, 
+                        onUnselect: onFeatureUnselect
+                    }
+                );
+
+                map.addControl(selectControl);
+                selectControl.activate();
+                map.addControl(new OpenLayers.Control.LayerSwitcher());
+
+                function onFeatureSelect(feature) {
+                    selectedFeature = feature;
+
+                    popup = new OpenLayers.Popup.FramedCloud(
+                        "metadata",
+                        feature.geometry.getBounds().getCenterLonLat(),
+                        new OpenLayers.Size(100, 100),
+                        feature.attributes.description,
+                        null, true, onPopupClose
+                    );
+
+                    feature.popup = popup;
+                    map.addPopup(popup);
+                }
+
+                function onFeatureUnselect(feature) {
+                    map.removePopup(feature.popup);
+                    feature.popup.destroy();
+                    feature.popup = null;
+                }
+
+                function onPopupClose(evt) {
+                    selectControl.unselect(selectedFeature);
+                }
+                
+                map.zoomToExtent(new OpenLayers.Bounds(-180, -90, 180, 90), true);
             });
 
             return isle;          
