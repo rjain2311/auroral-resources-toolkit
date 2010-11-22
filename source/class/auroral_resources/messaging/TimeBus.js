@@ -149,7 +149,8 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         //
         //
         convertToSPIDRWS : function(timeinmillis) {
-            var time = timeinmillis;
+            // the day is somehow off by 1, add a day
+            var time = timeinmillis+(86400*1000);
             time = new Date(time);
             var mo = time.getMonth() + 1;
             mo = "" + mo;

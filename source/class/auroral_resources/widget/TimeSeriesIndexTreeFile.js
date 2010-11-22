@@ -46,7 +46,7 @@ Rob Redmon - rob.redmon@noaa.gov
 *************************************************************************/
 
 
-qx.Class.define("auroral_resources.widget.HistogramTreeFile",
+qx.Class.define("auroral_resources.widget.TimeSeriesIndexTreeFile",
 {
 
     extend : qx.ui.tree.TreeFile,
@@ -64,7 +64,8 @@ qx.Class.define("auroral_resources.widget.HistogramTreeFile",
         this.addListener("dragstart", this._dragStart, this);
         this.addListener("droprequest", this._dropRequest, this);
         this.__title = title;
-        this.__paramater = parameter;
+        this.__parameter = parameter;
+        this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
         return this;
     },
 
@@ -78,6 +79,7 @@ qx.Class.define("auroral_resources.widget.HistogramTreeFile",
     {
         __window : null,
         __title : null,
+        __timeBus : null,
         __parameter : null,
 
         _dragStart : function(e) {
@@ -91,7 +93,7 @@ qx.Class.define("auroral_resources.widget.HistogramTreeFile",
             var type = e.getCurrentType();
             var result = null;
 
-            this.__window = new auroral_resources.widget.HistogramWindow(this.__parameter, this.__title);
+            this.__window = new auroral_resources.widget.TimeSeriesIndexWindow(this.__parameter, this.__title);
 
             if (type === "widget") {
                 result = this.__window;
