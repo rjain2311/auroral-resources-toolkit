@@ -8,6 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="trunk/tile-server/lib/catalina-ant.jar"/>
 	<classpathentry kind="lib" path="trunk/tile-server/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="trunk/tile-server/lib/toolsUI-4.2.jar"/>
+	<classpathentry kind="lib" path="trunk/tile-server/lib/netcdfAll-4.2.jar"/>
 	<classpathentry kind="output" path="trunk/tile-server/bin/WEB-INF/classes"/>
 </classpath>
