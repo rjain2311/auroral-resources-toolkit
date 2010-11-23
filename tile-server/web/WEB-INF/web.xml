@@ -1,0 +1,29 @@
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" version="2.4"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http:/java.sun.com/dtd/web-app_2_3.dtd">
+  
+  <servlet>
+    <servlet-name>GetPolarTile</servlet-name>
+    <servlet-class>ru.gcras.tiles.PolarTileServer</servlet-class>
+    <init-param>
+      <param-name>NetcdfPath</param-name>
+      <param-value>C:/netcdf/</param-value>
+    </init-param>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>GetDmspTile</servlet-name>
+    <servlet-class>ru.gcras.tiles.DmspTileServer</servlet-class>
+  </servlet>
+   
+  <servlet-mapping>
+    <servlet-name>GetPolarTile</servlet-name>
+    <url-pattern>/GetPolarTile/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>GetDmspTile</servlet-name>
+    <url-pattern>/GetDmspTile/*</url-pattern>
+  </servlet-mapping>
+  
+</web-app>
