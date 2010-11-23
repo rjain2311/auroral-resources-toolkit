@@ -300,18 +300,31 @@ qx.Class.define("auroral_resources.Application",
                 url = url + "&w" + i + '=' + this.__widgets[i];
             }
             
-            var formData =  {
-                'url' :
-                {
-                    'type'  : "TextArea",
-                    'label' : "URL",
-                    'lines' : 3,
-                    'value' : url
+            var pageData = [{
+                "message" : "",
+                "formData" : {
+                    'url' : {
+                        'type'  : "TextArea",
+                        'label' : "URL",
+                        'lines' : 12,
+                        'value' : url
+                    }
                 }
-            };
+            }];
             
-            dialog.Dialog.form("", formData, function(result){} );
-        },
+            var wizard = new dialog.Wizard({
+                width: 600,
+                height: 300,
+                maxWidth: 600,
+                pageData : pageData,
+                allowCancel: false,
+                allowBack: false,
+                allowNext: false,
+                callback : function(map) {},
+                context : this
+            });
+            wizard.start();
+        }, // end shareUrl
 
         //
         //
