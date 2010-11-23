@@ -54,7 +54,6 @@ qx.Class.define("qxdygraphs.Plot", {
         if (qx.core.Variant.isSet("qx.debug", "on")) {
             min = '';
         }
-        
         var codeArr = [];
         if ( qx.bom.client.Engine.MSHTML && qx.bom.client.Engine.VERSION < 9.0 && !window.G_vmlCanvasManager){
             codeArr.push("excanvas"+min+".js");
@@ -84,7 +83,8 @@ qx.Class.define("qxdygraphs.Plot", {
             ],
             axisLabelFontSize: 12,
             labelsDivStyles: {
-                fontSize: 13
+                fontSize: 13,
+                textAlign: 'right'
             },
             labelsDivWidth: 230
         }

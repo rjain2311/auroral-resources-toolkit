@@ -79,6 +79,7 @@ qx.Class.define("auroral_resources.Application",
         __footer : null,
         __toolBarView : null,
         __menuBarView : null,
+        __timeBus : null,
         __horizontalSplitPane : null,
         __verticalSplitPane : null,
         __prefWindow : null,
@@ -86,6 +87,7 @@ qx.Class.define("auroral_resources.Application",
         __sideBar : null,
         __mouseX : null,
         __mouseY : null,
+        _widgets : null,
 
         /**
         *****************************************************************************
@@ -100,6 +102,11 @@ qx.Class.define("auroral_resources.Application",
             // Call super class
             this.base(arguments);
 
+            this.initializeTimeBus();
+            this._parseQueryStringForTimes();
+            
+            this.__widgets = new Array();
+            
             // Enable logging in debug variant
             if (qx.core.Variant.isSet("qx.debug", "on"))
             {
@@ -149,7 +156,8 @@ qx.Class.define("auroral_resources.Application",
 
         /**
         *****************************************************************************
-        * Add some extra functions to existing classes, mainly helpers
+        * Add some extra functions to existing classes, mainly helpers that don't
+        * already exist
         *****************************************************************************
         */
         monkeyPatch : function() 
@@ -159,6 +167,29 @@ qx.Class.define("auroral_resources.Application",
                 return Math.ceil((this - onejan) / 86400000);
             }            
         }, // end monkey patch
+
+
+        /**
+        *****************************************************************************
+        *****************************************************************************
+        */
+        initializeTimeBus : function()
+        {
+            // initialize the time bus
+            this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
+            var begin = qx.lang.Date.now();
+            begin -= (((86400) * 7) * 1000); //one week of millis
+            var end = qx.lang.Date.now();
+            var cur = end - (((86400) * 3.5) * 1000); //half a week of millis
+            // round to nearest 5 minutes
+            cur = Math.ceil(cur/(5000*60))*(5000*60);
+            cur = cur - 1000000;
+
+            // initialize the time bus
+            this.__timeBus.setStartDate(begin);
+            this.__timeBus.setNow(cur);
+            this.__timeBus.setStopDate(end);
+        }, // end initialize time bus
 
 
         /**
@@ -238,9 +269,9 @@ qx.Class.define("auroral_resources.Application",
 
             // add the introduction window if the user hasn't requested that it be ignored from now on
             // TODO: add a generic cookie get/set class(es) so we aren't doing this low level everywhere...
-            var intro = qx.bom.Cookie.get("NGDC.AR.intro");
+            var intro = auroral_resources.persistence.KVStore.getInstance().get("intro");            
             
-            if (intro == null || intro != "ignore") {
+            if (intro == null || intro != "false") {
                 var iwin = new auroral_resources.widget.IntroductionWindow("Introduction");
                 iwin.open();
                 this.__mainWindow.add( iwin, { left: 50, top: 50 } );
@@ -249,9 +280,126 @@ qx.Class.define("auroral_resources.Application",
             // put it all together
             this.__horizontalSplitPane.add(scroller, 0);
             this.__horizontalSplitPane.add(this.__mainWindow, 1);
+            
+            // add any query added widgets to the display
+            this._parseQueryStringForWidgets();
 
         }, // end buildGui
 
+        //
+        //
+        //
+        shareUrl : function() {
+            var url = window.location.protocol + '//' + window.location.host;
+            url = url + '/?time.startDate=' + this.__timeBus.getStartDate();
+            url = url + '&time.now=' + this.__timeBus.getNow();
+            url = url + '&time.stopDate=' + this.__timeBus.getStopDate();
+            
+            var i = 0;
+            for (i=0;i<this.__widgets.length;i++) {
+                url = url + "&w" + i + '=' + this.__widgets[i];
+            }
+            
+            var formData =  {
+                'url' :
+                {
+                    'type'  : "TextArea",
+                    'label' : "URL",
+                    'lines' : 3,
+                    'value' : url
+                }
+            };
+            
+            dialog.Dialog.form("", formData, function(result){} );
+        },
+
+        //
+        //
+        //
+        _parseQueryStringForTimes : function() {
+            // check for time mods
+            var startDate = getQueryVariable("time.startDate");
+            if (startDate != null) { this.__timeBus.setStartDate(startDate); }
+            
+            var now = getQueryVariable("time.now");
+            if (now != null) { this.__timeBus.setNow(now); }
+            
+            var stopDate = getQueryVariable("time.stopDate");
+            if (stopDate != null) { this.__timeBus.setStopDate(stopDate); }            
+            
+            function getQueryVariable(variable) { 
+                var query = window.location.search.substring(1); 
+                var vars = query.split("&"); 
+                for (var i=0;i<vars.length;i++) { 
+                    var pair = vars[i].split("="); 
+                    if (pair[0] == variable) { 
+                        return pair[1]; 
+                    } 
+                }
+            }
+        },
+
+        //
+        //
+        //
+        _parseQueryStringForWidgets : function() {
+            // parse get query for initial state modifications
+            // check for widget additions
+            var i = 0;
+            for (i=0;i<13;i++) {
+                var w = getQueryVariable("w"+i);
+                if (w != null) {
+                    
+                    // parse
+                    var pieces = qx.util.StringSplit.split(w,',');
+                    
+                    // instantiate
+                    var x = parseInt(pieces[0]);
+                    var y = parseInt(pieces[1]);
+                    var className = pieces[2];
+                    var instance = stringToClass("auroral_resources.widget."+className);
+                    var win = instance.fromArray(pieces);
+                    win.open();
+                    
+                    // add
+                    this.__mainWindow.add(win, { left: x, top: y });
+                    
+                    var wid = x + ',' + y + ',' + className;
+                    var j = 3;
+                    for(j=3;j<pieces.length;j++) {
+                        wid = wid + ',' + pieces[j];
+                    }
+                    
+                    this.__widgets.push(wid);
+                } else {
+                    // do nothing
+                }
+            }
+
+            function getQueryVariable(variable) { 
+                var query = window.location.search.substring(1); 
+                var vars = query.split("&"); 
+                for (var i=0;i<vars.length;i++) { 
+                    var pair = vars[i].split("="); 
+                    if (pair[0] == variable) { 
+                        return pair[1]; 
+                    } 
+                }
+            }
+            
+            function stringToClass(str) {
+                var arr = str.split(".");
+                var fn = (window || this);
+                for (var i = 0, len = arr.length; i < len; i++) {
+                    fn = fn[arr[i]];
+                }
+                if (typeof fn !== "function") {
+                    throw new Error("function not found");
+                }
+                return  fn;
+            };            
+        },
+        
         //
         // keep track of the mouse cursor's location
         // so we can drop widgets right under the cursor

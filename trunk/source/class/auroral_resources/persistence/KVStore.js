@@ -48,15 +48,26 @@ Rob Redmon - rob.redmon@noaa.gov
 /*
 *****************************************************************************
 * Wraps qx.bom.Cookie to include some additional NGDC specific bits, mainly
-* the key name
+* the key name, but serves as an abstraction for using something better at
+* some point than cookies directly
 *****************************************************************************
 */
-qx.Class.define("auroral_resources.persistence.AuroralCookie",
+qx.Class.define("auroral_resources.persistence.KVStore",
 {
 
-    statics :
+    type: "singleton",
+    extend : qx.core.Object,
+
+    /*
+    *****************************************************************************
+        CONSTRUCTOR
+    *****************************************************************************
+    */
+    construct : function()
     {
-        __key : "NGDC.ART"
+        this.base(arguments);
+        //persist isn't working, punting for now using cookies
+        //this.__store = new persist.Store(this.__key_prefix);
     },
 
 
@@ -67,21 +78,25 @@ qx.Class.define("auroral_resources.persistence.AuroralCookie",
     */
     members :
     {
-
+        __store : null,
+        
         //
         //
         //
         set : function(key, value) {
-            qx.bom.Cookie.set(this.__key + '.' + key, value);
+            qx.bom.Cookie.set('NGDC.ART.' + key, value, 100000, null, null, null);
+            //this.__store.save(key, value);
         },
-
 
         //
         //
         //
         get : function(key) {
-            return qx.bom.Cookie.get(this.__key + '.' + key);
+            var val = qx.bom.Cookie.get('NGDC.ART.' + key);
+            return val;
+            //return this.__store.load(key);
         }
+        
     },
 
 

@@ -210,9 +210,9 @@ qx.Class.define("auroral_resources.view.SideBar",
 
             } else if (index == 2) {
                 var item = new qx.ui.tree.TreeFolder("Aurorae");
-                item.add(new auroral_resources.widget.MapTreeFile('olayerskml', 'ECS', '', "Map Gallery"));
-                item.add(new auroral_resources.widget.ImageryTreeFile("Hand Picked Gallery"));
-                item.add(new auroral_resources.widget.ImageryTreeFile("Flickr Gallery"));
+                item.add(new auroral_resources.widget.MapTreeFile('olayerskml', 'ECS', '', "Solar Storm Watch Gallery"));
+                item.add(new auroral_resources.widget.ImageryTreeFile("Hand Selected Gallery"));
+                //item.add(new auroral_resources.widget.ImageryTreeFile("Flickr Gallery"));
                 parent.add(item);
 
             } else {
@@ -245,17 +245,10 @@ qx.Class.define("auroral_resources.view.SideBar",
             container.setWidth(280);
             container.setHeight(60); 
 
-            var begin = qx.lang.Date.now();
-            begin -= (((86400) * 7) * 1000); //one week of millis
-            var end = qx.lang.Date.now();
-            var cur = end - (((86400) * 3.5) * 1000); //half a week of millis
-            // round to nearest 5 minutes
+            var begin = this.__timeBus.getStartDate();
+            var cur = this.__timeBus.getNow();
             cur = Math.ceil(cur/(5000*60))*(5000*60);
-
-            // initialize the time bus
-            this.__timeBus.setStartDate(begin);
-            this.__timeBus.setNow(cur);
-            this.__timeBus.setStopDate(end);
+            var end = this.__timeBus.getStopDate();
 
             var slider = new qx.ui.form.Slider();
             slider.set({

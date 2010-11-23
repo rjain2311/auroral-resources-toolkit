@@ -52,25 +52,40 @@ qx.Class.define("auroral_resources.widget.MapWindow",
 
     extend : qx.ui.window.Window,
 
+    /*
+    *****************************************************************************
+        STATICS
+    *****************************************************************************
+    */
+    statics : 
+    {
+        fromArray : function(argArray) { 
+            return new auroral_resources.widget.MapWindow(
+                parseInt(decodeURI(argArray[3])), 
+                parseInt(decodeURI(argArray[4])), 
+                decodeURI(argArray[5]), 
+                decodeURI(argArray[6]), 
+                decodeURI(argArray[7]), 
+                decodeURI(argArray[8])
+            );
+        }
+    },
+    
 
     /*
     *****************************************************************************
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(mapper, baselayer, period, title)
+    construct : function(width, height, mapper, baselayer, period, title)
     {
         this.base(arguments, title);
-
-        var winWidth = 512;
 
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
         this.__title = title;
         this.__period = period;
-
+        
         this.set({
-            width: winWidth,
-            height: 512,
             allowGrowX: false,
             allowGrowY: false,
             allowShrinkX: false,
@@ -82,6 +97,9 @@ qx.Class.define("auroral_resources.widget.MapWindow",
             showClose: true,
             layout: new qx.ui.layout.Grow()
         });
+
+        this.setWidth(width);
+        this.setHeight(height);
 
         var xOffset = 0; //((winWidth/2)/2) - 10;
         var buttonWidth = 75;
@@ -299,6 +317,8 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                     isBaseLayer : false,
                     displayProjection : new OpenLayers.Projection("EPSG:4326")
                 });
+            } else {
+                dialog.Dialog.error("Sorry. No ovation data is available for your current time.");
             }
             
             return layer;
@@ -418,7 +438,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                     if (self.__ovation != null) {
                         map.addLayer(self.__ovation);
                     } else { 
-                        // alert("Sorry, no ovation data available for the current time"); 
+                        dialog.Dialog.error("Sorry. No ovation data is available for your current time, the layer will not be displayed");
                     }
                 } else if (baselayer.toString().toLowerCase() == 'dmsp') {
                     base = self._getOvationBaseLayer(angle, 'dmsp', map, period);
@@ -427,7 +447,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                     if (self.__ovation != null) {
                         map.addLayer(self.__ovation);
                     } else { 
-                        // alert("Sorry, no ovation data available for the current time"); 
+                        dialog.Dialog.error("Sorry. No ovation data is available for your current time, the layer will not be displayed");
                     }
                 } else {
                     base = self._getBlueMarbleBaseLayer();
@@ -477,7 +497,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
 
                 var kml = new OpenLayers.Layer.GML(
                     "KML", 
-                    "resource/auroral_resources/images.kml", 
+                    "resource/auroral_resources/Solar_Stormwatch.kml", 
                     {
                         format: OpenLayers.Format.KML,
                         formatOptions: 

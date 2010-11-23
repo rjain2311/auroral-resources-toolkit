@@ -54,31 +54,48 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
 
     /*
     *****************************************************************************
+        STATICS
+    *****************************************************************************
+    */
+    statics : 
+    {
+        fromArray : function(argArray) { 
+            return new auroral_resources.widget.TimeSeriesIndexWindow(
+                parseInt(decodeURI(argArray[3])), 
+                parseInt(decodeURI(argArray[4])), 
+                decodeURI(argArray[5]), 
+                decodeURI(argArray[6]), 
+                decodeURI(argArray[7]), 
+                decodeURI(argArray[8])
+            );
+        }
+    },
+    
+
+    /*
+    *****************************************************************************
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(parameter, title)
+    construct : function(width, height, parameter, title)
     {
         this.base(arguments, title);
-
-        var winWidth = 600;
 
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
         this.__parameter = parameter;
         this.__title = title;
         
-        var lout = new qx.ui.layout.Grow();
-
         this.set({
-            width: winWidth,
-            height: 400,
             allowMaximize: false,
             allowMinimize: false,
             showMaximize: false,
             showMinimize: false,
             showClose: true,
-            layout: lout
+            layout: new qx.ui.layout.Grow()
         });
+        
+        this.setWidth(width);
+        this.setHeight(height);
         
         var xOffset = 0; //((winWidth/2)/2) - 10;
         var buttonWidth = 75;

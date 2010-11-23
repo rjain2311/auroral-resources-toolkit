@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
+rm -fr ../ar/ &&\
 rm -fr build &&\
 ./generate.py build &&\
-rm -fr ../ar/ &&\
 cp -pR build ../ar &&\
 cp -pR inspector ../ar/ &&\
 cp source/inspector.html ../ar/
