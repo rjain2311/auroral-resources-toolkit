@@ -99,7 +99,7 @@ qx.Class.define("auroral_resources.widget.IntroductionWindow",
         hideMe.setWidth(150);
 
         // and it's clicked listener
-        hideMe.addListener("click", this._setCookie, this);
+        hideMe.addListener("click", this._setIgnore, this);
 
         // add it to the mix
         this.add(hideMe);
@@ -131,9 +131,9 @@ qx.Class.define("auroral_resources.widget.IntroductionWindow",
             this.add(this.__content);
         },
 
-        _setCookie : function() {
-
-            qx.bom.Cookie.set("NGDC.AR.intro", "ignore", 100000, null, null, null);
+        _setIgnore : function() {
+            //qx.bom.Cookie.set("NGDC.AR.intro", "ignore", 100000, null, null, null);
+            auroral_resources.persistence.KVStore.getInstance().set("intro", "false");
             this.close();
         }	
     },

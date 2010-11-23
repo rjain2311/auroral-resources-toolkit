@@ -104,9 +104,11 @@ qx.Class.define("auroral_resources.widget.HistogramWindow",
         // REVERTING TO DYGRAPHS FOR NOW
         /////////////////////////////////////////////////////////////////////        
 
+        /*
         this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
         this.__timeBus.getBus().subscribe("time.now", this._nowChangeBusCallback, this);
         this.__timeBus.getBus().subscribe("time.stopDate", this._stopDateChangeBusCallback, this);
+        */
 
         return this;
     },

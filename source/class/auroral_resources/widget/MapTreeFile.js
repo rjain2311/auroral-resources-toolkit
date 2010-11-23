@@ -100,7 +100,7 @@ qx.Class.define("auroral_resources.widget.MapTreeFile",
             var type = e.getCurrentType();
             var result = null;
 
-            this.__window = new auroral_resources.widget.MapWindow(this.__mapper, this.__baselayer, this.__period, this.__title);
+            this.__window = new auroral_resources.widget.MapWindow(512,512,this.__mapper, this.__baselayer, this.__period, this.__title);
 
             if (type === "widget") {
                 result = this.__window;

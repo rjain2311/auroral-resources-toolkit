@@ -71,9 +71,9 @@ qx.Class.define("auroral_resources.view.ToolBar",
     */
 
     /**
-    * @param controller {auroral_resources.Application} The main application class
+    * @param application {auroral_resources.Application} The main application class
     */
-    construct : function(controller)
+    construct : function(application)
     {
         this.base(arguments);
 
@@ -81,16 +81,16 @@ qx.Class.define("auroral_resources.view.ToolBar",
         this.add(mainPart);
 
         // Preferences button
+        /*
         var prefBtn = new qx.ui.toolbar.Button(this.tr("Preferences"), "icon/22/apps/preferences-theme.png");
         prefBtn.setToolTipText(this.tr("Open Preferences Window."));
         mainPart.add(prefBtn);
-
-        // Add a sepearator
-        mainPart.addSeparator();
-
-        prefBtn2 = new qx.ui.toolbar.Button(this.tr("Preferences2"), "icon/22/apps/preferences-theme.png");
-        prefBtn2.setToolTipText(this.tr("Open Preferences Window 2."));
-        mainPart.add(prefBtn2);
+        */
+        
+        var sharebtn = new qx.ui.toolbar.Button(this.tr("Share"), "icon/22/actions/document-send.png");
+        sharebtn.setToolTipText(this.tr("Share your current workspaace via URL"));
+        sharebtn.addListener("mouseup", application.shareUrl, application);
+        mainPart.add(sharebtn);
 
         // Add a sepearator
         mainPart.addSeparator();
@@ -105,6 +105,9 @@ qx.Class.define("auroral_resources.view.ToolBar",
         // Help button
         var aboutBtn = new qx.ui.toolbar.Button(this.tr("Help"), "icon/22/actions/help-about.png");
         aboutBtn.setToolTipText(this.tr("Get Help"));
+        aboutBtn.addListener("mouseup", function() {
+            dialog.Dialog.error('TODO: add something here');
+        });
         infoPart.add(aboutBtn);
     },
 

@@ -93,7 +93,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesTreeFile",
             var type = e.getCurrentType();
             var result = null;
 
-            this.__window = new auroral_resources.widget.TimeSeriesWindow(this.__parameter, this.__title);
+            this.__window = new auroral_resources.widget.TimeSeriesWindow(600, 400, this.__parameter, this.__title);
 
             if (type === "widget") {
                 result = this.__window;

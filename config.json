@@ -47,6 +47,14 @@
       "library" :
       [
         {
+          "manifest" : "contrib/Dialog/trunk/Manifest.json"
+        },
+
+        {
+          "manifest" : "contrib/Persist/trunk/Manifest.json"
+        },
+
+        {
           "manifest" : "contrib/CollapsablePanel/trunk/Manifest.json"
         },
 
@@ -79,6 +87,7 @@
         "qx.contrib" : ["on"]
       }
     }
+
 
   }
 }
