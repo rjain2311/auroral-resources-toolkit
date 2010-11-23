@@ -118,8 +118,8 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
         this.__stopDate = stop;
 
         this.__plot = new qxdygraphs.Plot(
-            "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,
-            //'resource/auroral_resources/ionofof2.txt',
+            //"http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,
+            'resource/auroral_resources/ionofof2.txt',
             {
                 labelsKMB: true,
                 drawPoints: true,

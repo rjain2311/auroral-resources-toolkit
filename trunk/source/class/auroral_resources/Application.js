@@ -267,7 +267,10 @@ qx.Class.define("auroral_resources.Application",
             this.__sideBar = new auroral_resources.view.SideBar(this, this.__mainWindow);
             scroller.add(this.__sideBar);
 
-            // add the introduction window if the user hasn't requested that it be ignored from now on
+            // add any query added widgets to the display
+            this._parseQueryStringForWidgets();
+            
+            // LAST: add the introduction window if the user hasn't requested that it be ignored from now on
             // TODO: add a generic cookie get/set class(es) so we aren't doing this low level everywhere...
             var intro = auroral_resources.persistence.KVStore.getInstance().get("intro");            
             
@@ -280,9 +283,6 @@ qx.Class.define("auroral_resources.Application",
             // put it all together
             this.__horizontalSplitPane.add(scroller, 0);
             this.__horizontalSplitPane.add(this.__mainWindow, 1);
-            
-            // add any query added widgets to the display
-            this._parseQueryStringForWidgets();
 
         }, // end buildGui
 
