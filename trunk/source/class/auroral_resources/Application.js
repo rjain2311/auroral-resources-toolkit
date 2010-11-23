@@ -142,8 +142,23 @@ qx.Class.define("auroral_resources.Application",
 
                     this.buildGui();
             } // end if/else
-
+            
+            this.monkeyPatch();
         }, // end main
+
+
+        /**
+        *****************************************************************************
+        * Add some extra functions to existing classes, mainly helpers
+        *****************************************************************************
+        */
+        monkeyPatch : function() 
+        {
+            Date.prototype.getDOY = function() {
+                var onejan = new Date(this.getFullYear(),0,1);
+                return Math.ceil((this - onejan) / 86400000);
+            }            
+        }, // end monkey patch
 
 
         /**

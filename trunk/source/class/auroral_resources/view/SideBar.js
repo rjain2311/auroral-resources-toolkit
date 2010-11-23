@@ -199,13 +199,13 @@ qx.Class.define("auroral_resources.view.SideBar",
 
             } else if (index == 1) {
                 var item = new qx.ui.tree.TreeFolder("Daytime");
-                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'ECS', 'nowcast', "ECS + Ovation Nowcast"));
-                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'ECS', 'forecast', "ECS + Ovation Forecast"));
+                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'ECS', 'north_nowcast', "Polar Relief, Ovation Nowcast"));
+                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'ECS', 'north_forecast', "Polar Relief, Ovation Forecast"));
                 parent.add(item);
 
                 item = new qx.ui.tree.TreeFolder("Nighttime");
-                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'DMSP', 'nowcast', "DMSP + Ovation Nowcast"));
-                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'DMSP', 'forecast', "DMSP + Ovation Forecast"));
+                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'DMSP', 'north_nowcast', "DMSP, Ovation Nowcast"));
+                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'DMSP', 'north_forecast', "DMSP, Ovation Forecast"));
                 parent.add(item);
 
             } else if (index == 2) {
@@ -249,6 +249,8 @@ qx.Class.define("auroral_resources.view.SideBar",
             begin -= (((86400) * 7) * 1000); //one week of millis
             var end = qx.lang.Date.now();
             var cur = end - (((86400) * 3.5) * 1000); //half a week of millis
+            // round to nearest 5 minutes
+            cur = Math.ceil(cur/(5000*60))*(5000*60);
 
             // initialize the time bus
             this.__timeBus.setStartDate(begin);
@@ -259,8 +261,8 @@ qx.Class.define("auroral_resources.view.SideBar",
             slider.set({
                 minimum: begin,
                 maximum: end,
-                singleStep: (60 * 1000),
-                pageStep: (3600 * 1000),
+                singleStep: (60 * 5  * 1000), //5 minutes per step
+                pageStep:   (60 * 60 * 1000), //1 hr per step
                 value: cur
             });
 
@@ -347,7 +349,9 @@ qx.Class.define("auroral_resources.view.SideBar",
         // the slider is in the process of being dragged, only update the label
         //
         _sliderChanged : function(e) {
-            this.__sliderGroup.value.setValue(this.__dateFormatTime.format(new Date(this.__sliderGroup.slider.getValue())));
+            var cur = this.__sliderGroup.slider.getValue();
+            cur = Math.ceil(cur/(5000*60))*(5000*60);
+            this.__sliderGroup.value.setValue(this.__dateFormatTime.format(new Date(cur)));
         },
 
 
@@ -355,7 +359,7 @@ qx.Class.define("auroral_resources.view.SideBar",
         // the slider has been released, publish a message on the bus
         //
         _sliderChangeDone : function(e) {
-            this.__timeBus.dispatch(new qx.event.message.Message("time.now",this.__sliderGroup.slider.getValue()));
+            this.__timeBus.dispatch(new qx.event.message.Message("time.now", this.__sliderGroup.slider.getValue()));
         },
 
 

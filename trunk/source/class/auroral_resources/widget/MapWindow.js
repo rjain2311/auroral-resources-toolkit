@@ -41,6 +41,7 @@ AUTHORS:
 Peter Elespuru - peter.elespuru@noaa.gov
 Dmitry Medvedev - dmedv@wdcb.ru
 Mikhail Zhizhin - jjn@wdcb.ru
+Dmitry Kokovin - 
 Rob Redmon - rob.redmon@noaa.gov
 
 *************************************************************************/
@@ -61,14 +62,19 @@ qx.Class.define("auroral_resources.widget.MapWindow",
     {
         this.base(arguments, title);
 
-        var winWidth = 600;
+        var winWidth = 512;
 
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
         this.__title = title;
+        this.__period = period;
 
         this.set({
             width: winWidth,
-            height: 400,
+            height: 512,
+            allowGrowX: false,
+            allowGrowY: false,
+            allowShrinkX: false,
+            allowShrinkY: false,
             allowMaximize: false,
             allowMinimize: false,
             showMaximize: false,
@@ -122,50 +128,239 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         __timeBus : null,
         __startDate : null,
         __stopDate : null,
+        __map : null,
+        __ovation : null,
+        __baseLayer : null,
+        __base : null,
+        __period : null,
         __now : null,
 
         //
         // callback for the 'startDate' message channel
         //
         _startDateChangeBusCallback : function(e) {
+            // these maps are "now" sensitive, but do not need to listen
+            // for start/stop updates, unless they pertain to now being outside
+            // current range
         },
 
         //
         // callback for the 'stopDate' message channel
         //
         _stopDateChangeBusCallback : function(e) {
+            // these maps are "now" sensitive, but do not need to listen
+            // for start/stop updates, unless they pertain to now being outside
+            // current range
         },	
+
+        //
+        //
+        //
+        toRadians : function(angle) {
+            return Math.PI * angle / 180;
+        },
+        
+        //
+        //
+        //
+        toDegrees : function(angle) {
+            return 180 * angle / Math.PI;
+        },
+        
+        //
+        //
+        //
+        SubsolarLat : function(dayofyear) {
+            return -23.45 * Math.cos(2 * Math.PI / 365 * (dayofyear + 10));
+        },
+        
+        //
+        //
+        //
+        SubsolarLon : function(hourofday) {
+            return (12 - hourofday) / 24 * 360;
+        },
+        
+        //
+        //
+        //
+        getAngle : function() {
+            
+            var cur = this.__timeBus.getNow();
+            cur = Math.ceil(cur/(5000*60))*(5000*60);
+            var d = new Date(cur);
+            var hr = d.getHours();
+            var min = d.getMinutes();
+            var mon = d.getMonth() + 1;  //0 indexed
+            var day = d.getDate();
+            var doy = d.getDOY();
+            var hod = hr + min / 60;
+            var lat = this.SubsolarLat(doy);
+            var lon = this.SubsolarLon(hod);
+            var coords = this.GeoToMag(7.3, -114.4, lat, lon);
+            var angle = coords[1] + 180;
+            
+            if (angle > 180) {
+                angle = -360 + angle;
+            }
+            
+            return angle;
+        },
+        
+        //
+        //
+        //
+        GeoToMag : function(dLat, dLon, geoLat, geoLon) {
+            var dLatR = this.toRadians(dLat);
+            var colatGeo = this.toRadians(90 - geoLat);
+            var lonGeo = this.toRadians(geoLon);
+            var theta = this.toRadians(geoLon - dLon);
+
+            var colatMag = Math.acos(Math.cos(dLatR) * Math.cos(colatGeo)
+            + Math.sin(dLatR) * Math.sin(colatGeo) * Math.cos(theta));
+
+            var lonMag = Math.acos((Math.cos(dLatR) * Math.cos(colatMag) - Math
+            .cos(colatGeo)) / (Math.sin(dLatR) * Math.sin(colatMag)));
+
+            if (!(lonGeo >= this.toRadians(dLon) && lonGeo <= this.toRadians(180 + dLon))) {
+                lonMag = -lonMag;
+            }
+
+            var array = new Array(2);
+            array[0] = this.toDegrees(Math.PI / 2 - colatMag);
+            array[1] = this.toDegrees(lonMag);
+            return array;
+        },
 
         //
         // callback for 'now' changes
         //
         _nowChangeBusCallback : function(e) {
+            // rotate base layer and get the ovation layer based on current time
+            this.__map.removeLayer(this.__baseLayer);
+            var layer = this._getOvationBaseLayer(this.getAngle(), this.__base, this.__map, this.__period);
+            this.__map.addLayer(layer);
+            this.__baseLayer = layer;
+            
+            if (this.__ovation != null) {
+                this.__map.removeLayer(this.__ovation);
+            }
+            
+            layer = this._getOvationOverlay(this.__map, this.__period);
+            
+            if (layer != null) {
+                this.__map.addLayer(layer);
+            }
+            
+            this.__ovation = layer;
         },
+        
+        //
+        //
+        //
+        _getOvationOverlay : function(map, period) {
+            
+            var cur = this.__timeBus.getNow();
+            cur = Math.ceil(cur/(5000*60))*(5000*60);
+            var d = new Date(cur);
+            var hr = d.getHours();
+            var yr = d.getFullYear();
+            var min = d.getMinutes();
+            var mon = d.getMonth() + 1;  //0 indexed
+            var day = d.getDate();
+            var doy = d.getDOY();
+            var hod = hr + min / 60;
+            
+            var request = new XMLHttpRequest();
+            var servletPath = "/spidr/servlet/FileListServlet?year=" + yr + "&month="
+                + mon + "&day=" + day + "&hour=" + hr + "&minute=" + min + "&type="
+                + period;
+                
+            request.open("GET", servletPath, false);
+            request.send(null);
+            response = request.responseText;
 
-        //
-        //
-        //
-        _getECSBaseLayer : function() {
-            /*
-            var angle = 0;
-            Proj4js.defs["EPSG:0"] = "+proj=stere +lat_0=90 +lat_ts=70 +lon_0=" + angle
-              + " +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-
-            var layer = new OpenLayers.Layer.TMS("Relief Polar N",
-                      SITE.resource_prefix + angle + "/", {
+            var files = response.split('\n');
+            var link = "";
+            
+            var layer = null;
+            if (files.length != 0 && files[0] != "") {
+                var baseUrl = "http://ngdc.noaa.gov/stp/ovation_prime/data/";
+                
+                link = baseUrl + yr + "/"
+                       + (mon > 9 ? mon : ("0" + mon)) + "/"
+                       + (day > 9 ? day : ("0" + day)) + "/" + files[0];
+                 
+                layer = new OpenLayers.Layer.TMS("Ovation", "/spidr/servlet/GetAuroraTile/" + files[0] + "/0/", {
                     type : 'png',
-                    getURL : get_my_url,
-                    maxExtent : new OpenLayers.Bounds(-12332000.0, -12332000.0,
-                        12332000.0, 12332000.0),
+                    getURL : get_url,
+                    maxExtent : new OpenLayers.Bounds(-12332000.0, -12332000.0, 12332000.0, 12332000.0),
+                    maxResolution : 12332000.0 * 2 / 256.0,
+                    isBaseLayer : false,
+                    displayProjection : new OpenLayers.Projection("EPSG:4326")
+                });
+            }
+            
+            return layer;
+            
+            function get_url(bounds) {
+                var res = map.getResolution();
+                var x = Math.round((bounds.left - this.maxExtent.left) / (res * this.tileSize.w));
+                var y = Math.round((this.maxExtent.top - bounds.top) / (res * this.tileSize.h));
+                var z = map.getZoom();
+                var path = z + "/" + x + "/" + y;
+                var url = this.url;
+                if (url instanceof Array) {
+                    url = this.selectUrl(path, url);
+                }
+                return url + path;
+            }
+        },
+        
+        //
+        //
+        //
+        _getOvationBaseLayer : function(angle, base, map, period) {
+            
+            // default to daytime, check for NTL
+            var resource = "/spidr/servlet/GetPolarTile/Relief/north/";
+            if (base.toString().toLowerCase() == 'dmsp') {
+                resource = "/spidr/servlet/GetPolarTile_NTL/Relief/north/";
+            }
+            
+            OpenLayers.ProxyHost = "proxy?url=";
+            
+            Proj4js.defs["EPSG:0"] = "+proj=stere +lat_0=90 +lat_ts=70 +lon_0=" + angle
+            + " +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+
+            this.__baseLayer = new OpenLayers.Layer.TMS("North Relief Polar",
+            resource + angle + "/", {
+                type : 'png',
+                getURL : get_url,
+                maxExtent : new OpenLayers.Bounds(-12332000.0, -12332000.0,
+                    12332000.0, 12332000.0),
                     maxResolution : 12332000.0 * 2 / 256.0,
                     isBaseLayer : true,
                     projection : "EPSG:0",
                     displayProjection : new OpenLayers.Projection("EPSG:4326")
-                  });
-              SITE.map.addLayer(SITE.tms);
-            }
-            */
-
+            });
+            
+            this.__base = base;
+            this.__period = period;
+            return this.__baseLayer;
+            
+            function get_url(bounds) {
+                var res = map.getResolution();
+                var x = Math.round((bounds.left - this.maxExtent.left) / (res * this.tileSize.w));
+                var y = Math.round((this.maxExtent.top - bounds.top) / (res * this.tileSize.h));
+                var z = map.getZoom();
+                var path = z + "/" + x + "/" + y;
+                var url = this.url;
+                if (url instanceof Array) {
+                    url = this.selectUrl(path, url);
+                }
+                return url + path;
+            }            
         },
 
         //
@@ -173,10 +368,9 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         //
         _getBlueMarbleBaseLayer : function() {
             var base = new OpenLayers.Layer.WMS(
-                "GVAR", 
+                "Blue Marble", 
                 "http://www.class.ngdc.noaa.gov/geoserver/wms", 
-                { layers: 'bluemarble' }/*,
-                { eventListeners: { "loadend": hideBaseLoading }} */ 
+                { layers: 'bluemarble' }
             );
             return base;
         },      
@@ -191,43 +385,64 @@ qx.Class.define("auroral_resources.widget.MapWindow",
             });
 
             isle.addListenerOnce("appear", function() {
+                                                
                 var map = new OpenLayers.Map(
                     isle.getContentElement().getDomElement(),
                     {
                         controls: [
                             new OpenLayers.Control.Navigation(),
-                            new OpenLayers.Control.PanZoomBar()
+                            new OpenLayers.Control.PanZoomBar(),
+                            new OpenLayers.Control.LayerSwitcher( { 'ascending' : true }),
+                            new OpenLayers.Control.MousePosition( { element : OpenLayers.Util.getElement("mousePos") })
                         ], 
-                        minExtent: new OpenLayers.Bounds(-180, -90, 180, 90),
-                        maxExtent: new OpenLayers.Bounds(-180, -90, 180, 90),
                         displayProjection : new OpenLayers.Projection("EPSG:4326"),
                         units : 'meters',
+                        numZoomLevels : 4,
                         zoom: 2
                     }
                 );
+                
+                self.__map = map;
 
                 // add the base layer
+                var angle = self.getAngle();
+                
                 var base = null;
                 if (baselayer.toString().toLowerCase() == 'bluemarble') {
                     base = self._getBlueMarbleBaseLayer();
+                    map.addLayer(base);
                 } else if (baselayer.toString().toLowerCase() == 'ecs') {
-                    base = self._getBlueMarbleBaseLayer();
-                    //base = self._getECSBaseLayer();
+                    base = self._getOvationBaseLayer(angle, 'ecs', map, period);
+                    map.addLayer(base);
+                    self.__ovation = self._getOvationOverlay(map, period);
+                    if (self.__ovation != null) {
+                        map.addLayer(self.__ovation);
+                    } else { 
+                        // alert("Sorry, no ovation data available for the current time"); 
+                    }
                 } else if (baselayer.toString().toLowerCase() == 'dmsp') {
-                    base = self._getBlueMarbleBaseLayer();
-                    //base = self._getDMSPBaseLayer();
+                    base = self._getOvationBaseLayer(angle, 'dmsp', map, period);
+                    map.addLayer(base);
+                    self.__ovation = self._getOvationOverlay(map, period);
+                    if (self.__ovation != null) {
+                        map.addLayer(self.__ovation);
+                    } else { 
+                        // alert("Sorry, no ovation data available for the current time"); 
+                    }
                 } else {
                     base = self._getBlueMarbleBaseLayer();
+                    map.addLayer(base);
                 }
-                map.addLayer(base);
-
-                // add the ovation layer
-                var ovation = null;
                 
-                map.zoomToExtent(new OpenLayers.Bounds(-180, -90, 180, 90), true);
+                if (baselayer.toString().toLowerCase() == 'ecs' ||
+                    baselayer.toString().toLowerCase() == 'dmsp') {
+                    map.setCenter(new OpenLayers.LonLat(0.0, 0.0), 2);
+                } else {
+                    map.zoomToExtent(new OpenLayers.Bounds(-180, -90, 180, 90), true);
+                }
             });
 
-            return isle;          
+            return isle;
         },
         
         //
@@ -258,19 +473,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                 );
                 
                 // add the base layer
-                var base = null;
-                if (baselayer.toString().toLowerCase() == 'bluemarble') {
-                    base = self._getBlueMarbleBaseLayer();
-                } else if (baselayer.toString().toLowerCase() == 'ecs') {
-                    base = self._getBlueMarbleBaseLayer();
-                    //base = self._getECSBaseLayer();
-                } else if (baselayer.toString().toLowerCase() == 'dmsp') {
-                    base = self._getBlueMarbleBaseLayer();
-                    //base = self._getDMSPBaseLayer();
-                } else {
-                    base = self._getBlueMarbleBaseLayer();
-                }
-                map.addLayer(base);
+                map.addLayer(self._getBlueMarbleBaseLayer());
 
                 var kml = new OpenLayers.Layer.GML(
                     "KML", 

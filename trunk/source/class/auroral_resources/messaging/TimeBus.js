@@ -201,7 +201,7 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         // callback for the 'now' message channel
         //
         _nowChangeBusCallback : function(e) {
-            this.__now = e.getData();
+            this.__now = e.getData();            
         },
 
         //
