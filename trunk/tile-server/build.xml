@@ -1,0 +1,73 @@
+<project name="tile-server" default="all" basedir=".">
+  
+	<taskdef name="deploy"    classname="org.apache.catalina.ant.DeployTask"    classpath="lib\catalina-ant.jar"/>
+  <taskdef name="undeploy"  classname="org.apache.catalina.ant.UndeployTask"  classpath="lib\catalina-ant.jar"/>
+  
+	<property file="build.properties"/>
+<!--
+tomcat.url=http://localhost:8080/manager
+tomcat.username=...
+tomcat.password=...
+-->
+	
+	<property name="source" location="src"/>
+	<property name="build" location="bin"/>
+		
+	<path id="compile.classpath">
+		<fileset dir="lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="init">
+		<tstamp/>
+		<mkdir dir="${build}"/>
+		<mkdir dir="${build}\WEB-INF\classes"/>
+	  <mkdir dir="${build}\WEB-INF\lib"/>			
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${source}" destdir="${build}\WEB-INF\classes">
+			<classpath refid="compile.classpath"/>
+		</javac>
+	</target>
+
+	<target name="war" depends="clean, compile">
+		<copy todir="${build}">
+		  <fileset dir="web"/>
+		</copy>
+	  <copy todir="${build}\WEB-INF\lib">
+	    <fileset dir="lib">
+	    	<exclude name="servlet-api.jar"/>
+	    	<exclude name="catalina-ant.jar"/>
+	    </fileset>
+	  </copy>
+		<jar jarfile="${ant.project.name}.war" basedir="${build}"/> 
+	</target>
+
+	<target name="clean">
+		<delete dir="${build}"/>
+		<delete file="${ant.project.name}.war"/>
+	</target>
+
+	<target name="all" depends="war, jar"/>
+	
+	<target name="jar" depends="clean, compile">
+	   <jar jarfile="${ant.project.name}.jar" basedir="${build}\WEB-INF\classes"/>
+	</target>
+	
+	<!-- ========== Tomcat tasks ========== -->
+	
+  <target name="undeploy" description="Remove web application">
+    <undeploy failonerror="false" url="${tomcat.url}" username="${tomcat.username}" password="${tomcat.password}"
+            path="/${ant.project.name}"/>
+  </target>
+	
+	<target name="deploy" description="Install web application" depends="war">
+    <deploy url="${tomcat.url}" username="${tomcat.username}" password="${tomcat.password}"
+            path="/${ant.project.name}" war="file:${ant.project.name}.war"/>
+  </target>
+
+  <target name="redeploy" depends="undeploy, deploy"/>
+	
+</project>

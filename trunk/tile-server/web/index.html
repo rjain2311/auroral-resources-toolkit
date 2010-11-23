@@ -1,0 +1,153 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+
+<script type="text/javascript" src="js/OpenLayers.js"></script>
+<script type="text/javascript" src="js/proj4js-combined.js"></script>
+
+<script>
+
+Date.prototype.getDOY = function() {
+  var onejan = new Date(this.getFullYear(),0,1);
+  return Math.ceil((this - onejan) / 86400000);
+} 
+
+
+//Proj4js.defs["EPSG:0"] = "+proj=stere +lat_0=90 +lat_ts=70 +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+
+var map;
+var tms;
+var dmsp;
+
+function get_my_url(bounds) {
+
+  var res = this.map.getResolution();
+  var x = Math.round ((bounds.left - this.maxExtent.left) / (res * this.tileSize.w));
+  var y = Math.round ((this.maxExtent.top - bounds.top) / (res * this.tileSize.h));
+  var z = this.map.getZoom();
+
+  //var path = z + "/" + x + "/" + y + "." + this.type;
+  var path = z + "/" + x + "/" + y;
+  var url = this.url;
+  if (url instanceof Array) {
+    url = this.selectUrl(path, url);
+  }
+
+  return url + path;
+}
+
+
+  function addtms(angle) {     
+
+    Proj4js.defs["EPSG:0"] = "+proj=stere +lat_0=90 +lat_ts=70 +lon_0="+angle+" +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+    
+    tms = new OpenLayers.Layer.TMS(
+        "Relief Polar N", 
+        "GetPolarTile/Relief/north/"+angle+"/", 
+        { 
+          type : 'png', 
+          getURL : get_my_url, 
+          maxExtent : new OpenLayers.Bounds(-12332000.0,-12332000.0,12332000.0,12332000.0),
+          maxResolution : 12332000.0 * 2 / 256.0,
+          isBaseLayer: true, 
+          projection : "EPSG:0",
+          displayProjection: new OpenLayers.Projection("EPSG:4326")
+        }
+      );
+    map.addLayer(tms);
+    }
+  
+  function addDMSP(angle) {
+	  dmsp = new OpenLayers.Layer.TMS(
+		      "DMSP",
+		      "GetDmspTile/13736-19870129024814-19870129034932.FTS/north/"+angle+"/", 
+		      { 
+		        type: 'png',
+		        getURL: get_my_url, 
+		        maxExtent : new OpenLayers.Bounds(-12332000.0,-12332000.0,12332000.0,12332000.0),
+		        maxResolution : 12332000.0 * 2 / 256.0,
+		        isBaseLayer: false, 
+		        displayProjection: new OpenLayers.Projection("EPSG:4326")
+		      }
+		    );
+
+		    map.addLayer(dmsp);     
+  }
+  
+  function init() {
+    
+    map = new OpenLayers.Map('map',
+        { 
+          units : 'meters',
+          displayProjection: new OpenLayers.Projection("EPSG:4326")
+        });
+    
+
+    
+    addtms(0);
+    addDMSP(0);
+    
+    map.setCenter(new OpenLayers.LonLat(0.0, 0.0), 1);
+    map.addControl(new OpenLayers.Control.LayerSwitcher({'ascending' : true}));
+    map.addControl(new OpenLayers.Control.MousePosition({element : OpenLayers.Util.getElement("mousePos")}));
+  }
+  
+  function SubsolarLat(dayofyear) {
+    return -23.45*Math.cos(2*Math.PI/365*(dayofyear+10));
+  }
+  
+  function SubsolarLon(hourofday) {
+    return (12-hourofday)/24*360;
+  }
+  
+  function GeoToMag(dLat, dLon, geoLat, geoLon) {
+    var dLatR = toRadians(dLat);
+    var colatGeo = toRadians(90 - geoLat);
+    var lonGeo = toRadians(geoLon);
+    var theta = toRadians(geoLon - dLon);
+    
+    var colatMag = Math.acos(
+        Math.cos(dLatR)*Math.cos(colatGeo)+
+        Math.sin(dLatR)*Math.sin(colatGeo)*
+        Math.cos(theta)
+      );
+    
+    var lonMag = Math.acos(
+        (Math.cos(dLatR)*Math.cos(colatMag)-Math.cos(colatGeo)) /
+        (Math.sin(dLatR)*Math.sin(colatMag))
+      );
+    
+    if (!(lonGeo>=toRadians(dLon) && lonGeo<=toRadians(180+dLon))) {
+      lonMag = -lonMag;
+    }
+
+    var array = new Array(2);
+    array[0] = toDegrees(Math.PI/2 - colatMag);
+    array[1] = toDegrees(lonMag);
+    return array;
+  }
+
+  function toRadians(angle) {
+    return Math.PI*angle/180;
+  }
+
+  function toDegrees(angle) {
+    return 180*angle/Math.PI; 
+  }
+  
+        
+</script>
+
+</head>
+<body onload="init()">
+  <table>
+	  <tr >
+	    <td valign="top">
+	      <div id="map" style="width: 512px; height: 512px"></div>
+	      <div id="mousePos"></div>
+	    </td>
+	  </tr>  
+  </table>
+</body>
+</html>
