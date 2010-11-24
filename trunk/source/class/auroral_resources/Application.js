@@ -87,7 +87,7 @@ qx.Class.define("auroral_resources.Application",
         __sideBar : null,
         __mouseX : null,
         __mouseY : null,
-        _widgets : null,
+        __widgets : null,
 
         /**
         *****************************************************************************
@@ -289,19 +289,53 @@ qx.Class.define("auroral_resources.Application",
         //
         //
         //
+        emptyWorkspace : function() {
+            this.__mainWindow.removeAll();
+        },
+
+        //
+        //
+        //
         shareUrl : function() {
+            
             var url = window.location.protocol + '//' + window.location.host;
             url = url + '/?time.startDate=' + this.__timeBus.getStartDate();
             url = url + '&time.now=' + this.__timeBus.getNow();
             url = url + '&time.stopDate=' + this.__timeBus.getStopDate();
             
+            /* not needed, the probe below gets them all and ensures that any changed x,y are captured too
+            // add any widgets specified in the URL until can probe for them
             var i = 0;
             for (i=0;i<this.__widgets.length;i++) {
                 url = url + "&w" + i + '=' + this.__widgets[i];
             }
+            */
+            
+            // add widgets by probing the workspace for details
+            var windows = this.__mainWindow.getWindows();
+            
+            if (windows == null || windows.length == 0) {
+                dialog.Dialog.error("You don't have any widgets on your workspace, there's nothing to share!");
+                return;
+            } else {
+                var i = 0;
+                for (i=0; i<windows.length; i++) {
+                    var win = windows[i];
+                    var b = win.getBounds();
+                    var x = b["left"];
+                    var y = b["top"];
+                    var w = b["width"];
+                    var h = b["height"];
+                    var className = win.constructor.classname;
+                    className = className.substring(className.lastIndexOf('.')+1,className.length);
+                    url = url + "&w" + i + '=' + x + ',' + y + ',' + className + ',' + w + ',' + h + ',' + win.getStatus();
+                }
+            }
+            
+            url = encodeURI(url);
             
             var pageData = [{
-                "message" : "",
+                "message" : "Copy this URL to share your workspace with others.",
                 "formData" : {
                     'url' : {
                         'type'  : "TextArea",
@@ -312,7 +346,7 @@ qx.Class.define("auroral_resources.Application",
                 }
             }];
             
-            var wizard = new dialog.Wizard({
+            var wizard = new dialog.BareWizard({
                 width: 600,
                 height: 300,
                 maxWidth: 600,
@@ -332,13 +366,13 @@ qx.Class.define("auroral_resources.Application",
         _parseQueryStringForTimes : function() {
             // check for time mods
             var startDate = getQueryVariable("time.startDate");
-            if (startDate != null) { this.__timeBus.setStartDate(startDate); }
+            if (startDate != null) { this.__timeBus.setStartDate(parseInt(startDate)); }
             
             var now = getQueryVariable("time.now");
             if (now != null) { this.__timeBus.setNow(now); }
             
             var stopDate = getQueryVariable("time.stopDate");
-            if (stopDate != null) { this.__timeBus.setStopDate(stopDate); }            
+            if (stopDate != null) { this.__timeBus.setStopDate(parseInt(stopDate)); }
             
             function getQueryVariable(variable) { 
                 var query = window.location.search.substring(1); 

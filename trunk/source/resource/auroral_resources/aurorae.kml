@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>kml</name>
+	<Style id="sh_blu-blank">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<ListStyle>
+			<ItemIcon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png</href>
+			</ItemIcon>
+		</ListStyle>
+	</Style>
+	<Style id="sn_blu-blank">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<ListStyle>
+			<ItemIcon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png</href>
+			</ItemIcon>
+		</ListStyle>
+	</Style>
+	<StyleMap id="msn_blu-blank">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_blu-blank</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_blu-blank</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_blu-blank0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_blu-blank0</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_blu-blank0</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_blu-blank0">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<ListStyle>
+			<ItemIcon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png</href>
+			</ItemIcon>
+		</ListStyle>
+	</Style>
+	<Style id="sh_blu-blank0">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<ListStyle>
+			<ItemIcon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png</href>
+			</ItemIcon>
+		</ListStyle>
+	</Style>
+	<Folder>
+		<name>Solar Stormwatch Favourites' photostream </name>
+		<open>1</open>
+		<Placemark>
+			<name>Kingdom Come</name>
+			<description><![CDATA[
+<img src="http://farm5.static.flickr.com/4024/4498342913_e82f2520d1_m.jpg" />
+<br /><br />
+Light from an amazing display of the Aurora Borealis fills the sky - and lends a hue of green to the spring snow - of Vee Lake, located outside Yellowknife, Northwest Territories.
+<br /><br />
+<a href="http://www.flickr.com/photos/brosha/4498342913/in/faves-45436041@N05/" target="_blank"> link </a>
+			]]></description>
+    <Style>
+		<IconStyle>
+			<scale>3.0</scale>
+			<Icon>
+				<href>http://farm5.static.flickr.com/4024/4498342913_e82f2520d1_m.jpg</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+			<Point>
+				<coordinates>-114.354457,62.553717,0</coordinates>
+			</Point>
+		</Placemark>
+
+		<Placemark>
+			<name>27 March 2010</name>
+			<description><![CDATA[
+<img src="http://farm5.static.flickr.com/4014/4477614526_c2c79e3343_m.jpg" />
+<br /><br />
+Thick eyeshadow on an eyelid.
+<br /><br />
+<a href="http://www.flickr.com/photos/mt_cleverest/4477614526/in/faves-45436041@N05/" target="_blank"> link </a>
+			]]></description>
+    <Style>
+		<IconStyle>
+			<scale>3.0</scale>
+			<Icon>
+				<href>http://farm5.static.flickr.com/4014/4477614526_c2c79e3343_m.jpg</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+			<Point>
+				<coordinates>-147.122983,64.869321,0</coordinates>
+			</Point>
+		</Placemark>
+
+		<Placemark>
+			<name>Aurora borealis</name>
+			<description><![CDATA[
+<img src="http://farm3.static.flickr.com/2752/4489777759_3d43119327_m.jpg" />
+<br /><br />
+<a href="http://www.flickr.com/photos/roskifte/4489777759/in/faves-45436041@N05/" target="_blank"> link </a>
+			]]></description>
+    <Style>
+		<IconStyle>
+			<scale>3.0</scale>
+			<Icon>
+				<href>http://farm3.static.flickr.com/2752/4489777759_3d43119327_m.jpg</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+			<Point>
+				<coordinates>19.217834,69.062552,0</coordinates>
+			</Point>
+		</Placemark>
+
+		<Placemark>
+			<name>Easter Aurora - Jökulsárlón á Breiðarmerkursandi</name>
+			<description><![CDATA[
+<img src="http://farm4.static.flickr.com/3297/4563872197_879e9d1f82_m.jpg" />
+<br /><br />
+<b>Jökulsárlón, Iceland</b> One more Aurora photo from a great session last Easter. <b>Attention</b> I am posting this image to try to get as much attention to a issue I have with <b>stolen images</b>. Fox News published 6 of my images with a gallery from the eruption in Iceland without any permission from me. See: <a href="http://www.foxnews.com/slideshow/scitech/2010/03/21/volcano-erupts-iceland/?slide=30" target="blank" rel="nofollow">Fox News</a> I have tried to contact Fox News, by email, by phone, sent a bill, sent a polite email to them, sent another less polite email to them via various email addresses found on their website. No response at all. Its like emailing a black hole, there is nothing coming back. These media company ferociously defend the copyright of their material but them self steal material from others. Its hypocrisy. The difference is that I have no means of defending myself against them. Does anybody have any advice how to claim my rights? Getting a lawyer is probably going to cost me more than I could ever get back. If you can share this with other please do so, thank you. <b>30th April 1:31am</b>: I have contacted Creative Commons to get their input on if usage of the image by Fox News is illegal under &quot;Attribution Non-Commercial No Derivatives&quot;. Waiting response. <b>30th April 11am</b>: Creative Commons did not want to state if the usage was illegal or not. <b>30th April 11:50am</b>: Contacted <a href="http://www.photoattorney.com/" rel="nofollow">Carolyn E. Wright</a> for legal advice as recommended by <a href="http://www.flickr.com/photos/27519701@N02">Younes</a> <b>6th of May</b>: Fox News agreed on paying a compensation for the image use. Örvar vs. Fox News 1 - 0.
+<br /><br />
+<a href="http://www.flickr.com/photos/orvaratli/4563872197/in/faves-45436041@N05/" target="_blank"> link </a>
+			]]></description>
+    <Style>
+		<IconStyle>
+			<scale>3.0</scale>
+			<Icon>
+				<href>http://farm4.static.flickr.com/3297/4563872197_879e9d1f82_m.jpg</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+			<Point>
+				<coordinates>-16.166381,64.05463,0</coordinates>
+			</Point>
+		</Placemark>
+
+		<Placemark>
+			<name>scottaurora21</name>
+			<description><![CDATA[
+<img src="http://farm5.static.flickr.com/4016/4526590297_6b77ae1585_m.jpg" />
+<br /><br />
+Scott Lake NWT/ SK, Canada This is one of my favorite places in the world so I posted a number of the photos I took on April 11th. The clouds broke for one night and thankfully it was the right night to be there, the show was great. The next 40 shots or so were all taken over the course of one night, actually a mere couple of hours, with an Aurora display that peaked around 2am with wild movement and vivd color. I never get tired of seeing the Auroras... Some of these exposures were as short as 6 seconds when the Auroras reached their peak. All exposures where recorded at ISO speeds ranging from 400 to 800. Processing was done in Adobe Lightroom 2 and the borders added in Photoshop CS4. This shot is taken looking south towards Saskatchewan, the stumps in the foreground are chairs that, during the summer, myself and many friends and colleagues sit on around the fire pit that sits beneath a couple feet of snow during the winter months. The log sided building (directly behind the camera in this shot) that apears in some of the next frames is the main lodge and the hub of my summer life. Hope you all enjoy them as much as I enjoyed photographing them. Nikon D700
+<br /><br />
+<a href="http://www.flickr.com/photos/mattcornell/4526590297/in/faves-45436041@N05/" target="_blank"> link </a>
+			]]></description>
+    <Style>
+		<IconStyle>
+			<scale>3.0</scale>
+			<Icon>
+				<href>http://farm5.static.flickr.com/4016/4526590297_6b77ae1585_m.jpg</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+			<Point>
+				<coordinates>-106.226806,60.000702,0</coordinates>
+			</Point>
+		</Placemark>
+
+		<Placemark>
+			<name>Streakers</name>
+			<description><![CDATA[
+<img src="http://farm3.static.flickr.com/2687/4477613442_3bb27f3bf9_m.jpg" />
+<br /><br />
+Nearly full moon.
+<br /><br />
+<a href="http://www.flickr.com/photos/mt_cleverest/4477613442/in/faves-45436041@N05/" target="_blank"> link </a>
+			]]></description>
+    <Style>
+		<IconStyle>
+			<scale>3.0</scale>
+			<Icon>
+				<href>http://farm3.static.flickr.com/2687/4477613442_3bb27f3bf9_m.jpg</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+			<Point>
+				<coordinates>-147.122983,64.869321,0</coordinates>
+			</Point>
+		</Placemark>
+
+		<Placemark>
+			<name>Aurora borealis - Hattavarre - Troms</name>
+			<description><![CDATA[
+<img src="http://farm3.static.flickr.com/2682/4506976999_f78917e974_m.jpg" />
+<br /><br />
+&quot;Northern lights&quot; (aurora borealis) over mount Hattavarre in Troms, Norway. <a href="http://bighugelabs.com/onblack.php?id=4506976999&amp;size=large" rel="nofollow">View On Black</a>
+<br /><br />
+<a href="http://www.flickr.com/photos/roskifte/4506976999/in/faves-45436041@N05/" target="_blank"> link </a>
+			]]></description>
+    <Style>
+		<IconStyle>
+			<scale>3.0</scale>
+			<Icon>
+				<href>http://farm3.static.flickr.com/2682/4506976999_f78917e974_m.jpg</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+			<Point>
+				<coordinates>19.471893,69.091364,0</coordinates>
+			</Point>
+		</Placemark>
+
+		<Placemark>
+			<name>Northern Lights/Aurora at Yellowknife??? IMG_2883</name>
+			<description><![CDATA[
+<img src="http://farm3.static.flickr.com/2777/4465016259_12df8cfcca_m.jpg" />
+<br /><br />
+<a href="http://www.flickr.com/photos/dongyuan/4465016259/in/faves-45436041@N05/" target="_blank"> link </a>
+			]]></description>
+    <Style>
+		<IconStyle>
+			<scale>3.0</scale>
+			<Icon>
+				<href>http://farm3.static.flickr.com/2777/4465016259_12df8cfcca_m.jpg</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+			<Point>
+				<coordinates>-114.034652,62.563141,0</coordinates>
+			</Point>
+		</Placemark>
+
+		<Placemark>
+			<name>Extreme Aurora light</name>
+			<description><![CDATA[
+<img src="http://farm4.static.flickr.com/3316/3330584099_b02b723ba6_m.jpg" />
+<br /><br />
+The mountains of Ringvassøya are lit up in the distance. A weak group of stripes seem to go horizontally over the aurora lights this evening. I believe there were a thin layer of clouds over the sky that made all the images of the aurora this way. So, there is no wrong about the image!
+<br /><br />
+<a href="http://www.flickr.com/photos/perivar/3330584099/in/faves-45436041@N05/" target="_blank"> link </a>
+			]]></description>
+    <Style>
+		<IconStyle>
+			<scale>3.0</scale>
+			<Icon>
+				<href>http://farm4.static.flickr.com/3316/3330584099_b02b723ba6_m.jpg</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+			<Point>
+				<coordinates>19.005703,69.702116,0</coordinates>
+			</Point>
+		</Placemark>
+
+		<Placemark>
+			<name>It´s Written In The Stars</name>
+			<description><![CDATA[
+<img src="http://farm1.static.flickr.com/145/404056610_856a48d8c6_m.jpg" />
+<br /><br />
+I got real lucky with the borealis with this one, stumbled upon this farm just as the borealis lit up and couldn´t resist taking a picture. Think this is my favorite photo in February along with &quot;The Pedestrian&quot; I swear, no photo manipulation here, all I did was some curves adjustments and then sharpened after resizing. I almost think there are too many stars in this one but not like I was going to edit them out,hehe. Can anyone spot the three shooting stars?
+<br /><br />
+<a href="http://www.flickr.com/photos/lallisig/404056610/in/faves-45436041@N05/" target="_blank"> link </a>
+			]]></description>
+    <Style>
+		<IconStyle>
+			<scale>3.0</scale>
+			<Icon>
+				<href>http://farm1.static.flickr.com/145/404056610_856a48d8c6_m.jpg</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+			<Point>
+				<coordinates>-21.4151,64.259509,0</coordinates>
+			</Point>
+		</Placemark>
+
+		<Placemark>
+			<name>Aurora Borealis in Tasermiut (Greenland)</name>
+			<description><![CDATA[
+<img src="http://farm4.static.flickr.com/3217/2817708386_0b27a63799_m.jpg" />
+<br /><br />
+taken in one of the most impresive places of greenland: Tasermiut Fjord, from the ulamertorsuaq base camp....
+<br /><br />
+<a href="http://www.flickr.com/photos/elosoenpersona/2817708386/in/faves-45436041@N05/" target="_blank"> link </a>
+			]]></description>
+    <Style>
+		<IconStyle>
+			<scale>3.0</scale>
+			<Icon>
+				<href>http://farm4.static.flickr.com/3217/2817708386_0b27a63799_m.jpg</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+			<Point>
+				<coordinates>-44.583892,60.406732,0</coordinates>
+			</Point>
+		</Placemark>
+
+		<Placemark>
+			<name>Straumur Revisited</name>
+			<description><![CDATA[
+<img src="http://farm3.static.flickr.com/2599/4180701211_00d5ee09db_m.jpg" />
+<br /><br />
+This is a shot from almost two months ago. This was the only proper Aurora session I have had this year. The sun has been very inactive, the weather rather foul and combined with bad luck does not produce alot of Aurora shots. This location is only 5 minutes drive from my home so I go there alot (some might have noticed that hehe). But it is a beautiful location, much overlooked by visitors as behind me there is a huge aluminum smelter.
+<br /><br />
+<a href="http://www.flickr.com/photos/orvaratli/4180701211/in/faves-45436041@N05/" target="_blank"> link </a>
+			]]></description>
+    <Style>
+		<IconStyle>
+			<scale>3.0</scale>
+			<Icon>
+				<href>http://farm3.static.flickr.com/2599/4180701211_00d5ee09db_m.jpg</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+			<Point>
+				<coordinates>-22.045869,64.040695,0</coordinates>
+			</Point>
+		</Placemark>
+
+		<Placemark>
+			<name>Mt. Esja</name>
+			<description><![CDATA[
+<img src="http://farm3.static.flickr.com/2477/4048017206_ff3b95e9bf_m.jpg" />
+<br /><br />
+Here is another from last weekends great Aurora session. This image is taken 3 hours after I took my first Aurora shot that night. Rarely can you shoot Aurora for so long the same night. The Aurora was not very active but it seem to hover up there for long periods often almost static. It wasn´t very clear but when I used all my poor old Canon 30D could gather light (highest practical ISO, wide open for 30-60second) the result was quite nice. This is taken just north of Reykjavík city at the foot of Mt. Esja. The night was unusually calm making a rare reflection at this otherwise windy place. The light from nearby Reykjavík helped with lighting up the mountain. On the crest you can see remains snow from the cold and snowy days couple of weeks ago
+<br /><br />
+<a href="http://www.flickr.com/photos/orvaratli/4048017206/in/faves-45436041@N05/" target="_blank"> link </a>
+			]]></description>
+    <Style>
+		<IconStyle>
+			<scale>3.0</scale>
+			<Icon>
+				<href>http://farm3.static.flickr.com/2477/4048017206_ff3b95e9bf_m.jpg</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+			<Point>
+				<coordinates>-21.708383,64.206526,0</coordinates>
+			</Point>
+		</Placemark>
+
+		<Placemark>
+			<name>Garðskagaviti Aurora</name>
+			<description><![CDATA[
+<img src="http://farm3.static.flickr.com/2567/4078618747_166ed76242_m.jpg" />
+<br /><br />
+As the days are getting pretty short here in Iceland now, I only get time to shoot on Sundays as other days I am working while there is still light. Some Sundays have bad weather so there is way to much time between my shooting sessions now. The good thing is that I can edit more of my latest shots. Here is the only decent Aurora session I have had this season. It was very productive and I still have some good shots unedited. <b>Shot settings:</b> Shutter speed: 30 second Aperture: f3.5 ISO: 800
+<br /><br />
+<a href="http://www.flickr.com/photos/orvaratli/4078618747/in/faves-45436041@N05/" target="_blank"> link </a>
+			]]></description>
+    <Style>
+		<IconStyle>
+			<scale>3.0</scale>
+			<Icon>
+				<href>http://farm3.static.flickr.com/2567/4078618747_166ed76242_m.jpg</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+			<Point>
+				<coordinates>-22.69329,64.083043,0</coordinates>
+			</Point>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>

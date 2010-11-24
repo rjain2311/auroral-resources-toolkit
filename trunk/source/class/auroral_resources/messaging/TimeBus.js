@@ -118,6 +118,7 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         //
         getStartDateForSPIDRWS : function() {
             var start = this.__startDate;
+            //start = start + (86400*1000);
             start = new Date(start);
             var mo = start.getMonth() + 1;
             mo = "" + mo;
@@ -133,7 +134,9 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         // stop date getter, in the format SPIDR WS needs
         //
         getStopDateForSPIDRWS : function() {
+            // the day is somehow off by 1, add a day
             var stop = this.__stopDate;
+            //stop = stop + (86400*1000);
             stop = new Date(stop);
             var mo = stop.getMonth() + 1;
             mo = "" + mo;
@@ -150,7 +153,7 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         //
         convertToSPIDRWS : function(timeinmillis) {
             // the day is somehow off by 1, add a day
-            var time = timeinmillis+(86400*1000);
+            var time = timeinmillis;//+(86400*1000);
             time = new Date(time);
             var mo = time.getMonth() + 1;
             mo = "" + mo;
@@ -194,21 +197,24 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         // callback for the 'startDate' message channel
         //
         _startDateChangeBusCallback : function(e) {
-            this.__startDate = e.getData();
+            //alert(new Date(parseInt(e.getData())));
+            this.__startDate = parseInt(e.getData());
         },
 
         //
         // callback for the 'now' message channel
         //
         _nowChangeBusCallback : function(e) {
-            this.__now = e.getData();            
+            //alert(new Date(parseInt(e.getData())));
+            this.__now = parseInt(e.getData());
         },
 
         //
         // callback for the 'stopDate' message channel
         //
         _stopDateChangeBusCallback : function(e) {
-            this.__stopDate = e.getData();
+            //alert(new Date(parseInt(e.getData())));
+            this.__stopDate = parseInt(e.getData());
         }	  
     }
 

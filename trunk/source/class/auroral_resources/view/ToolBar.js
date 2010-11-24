@@ -87,7 +87,7 @@ qx.Class.define("auroral_resources.view.ToolBar",
         mainPart.add(prefBtn);
         */
         
-        var sharebtn = new qx.ui.toolbar.Button(this.tr("Share"), "icon/22/actions/document-send.png");
+        var sharebtn = new qx.ui.toolbar.Button(this.tr("Share Workspace"), "icon/22/actions/document-send.png");
         sharebtn.setToolTipText(this.tr("Share your current workspaace via URL"));
         sharebtn.addListener("mouseup", application.shareUrl, application);
         mainPart.add(sharebtn);
@@ -95,6 +95,14 @@ qx.Class.define("auroral_resources.view.ToolBar",
         // Add a sepearator
         mainPart.addSeparator();
 
+        var clearbtn = new qx.ui.toolbar.Button(this.tr("Empty Workspace"), "icon/22/actions/edit-clear.png");
+        clearbtn.setToolTipText(this.tr("Clean off your workspace, remove all widgets"));
+        clearbtn.addListener("mouseup", application.emptyWorkspace, application);
+        mainPart.add(clearbtn);
+        
+        // Add a sepearator
+        mainPart.addSeparator();
+        
         // Add a spacer
         this.addSpacer();
 

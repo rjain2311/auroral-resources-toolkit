@@ -86,6 +86,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         this.__period = period;
         
         this.set({
+            resizable: false,
             allowGrowX: false,
             allowGrowY: false,
             allowShrinkX: false,
@@ -94,6 +95,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
             allowMinimize: false,
             showMaximize: false,
             showMinimize: false,
+            status: mapper + ',' + baselayer + ',' + period + ',' + title,
             showClose: true,
             layout: new qx.ui.layout.Grow()
         });
@@ -126,6 +128,8 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         } else {
             this.add(this._createOpenLayersMap(baselayer, period, this));
         }
+        
+        this.addListener("close", function(evt) { this.destroy() });
 
         this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
         this.__timeBus.getBus().subscribe("time.now", this._nowChangeBusCallback, this);
@@ -497,7 +501,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
 
                 var kml = new OpenLayers.Layer.GML(
                     "KML", 
-                    "resource/auroral_resources/Solar_Stormwatch.kml", 
+                    "resource/auroral_resources/aurorae.kml", 
                     {
                         format: OpenLayers.Format.KML,
                         formatOptions: 

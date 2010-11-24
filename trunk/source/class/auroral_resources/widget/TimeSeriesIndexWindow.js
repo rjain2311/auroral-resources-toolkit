@@ -64,9 +64,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
                 parseInt(decodeURI(argArray[3])), 
                 parseInt(decodeURI(argArray[4])), 
                 decodeURI(argArray[5]), 
-                decodeURI(argArray[6]), 
-                decodeURI(argArray[7]), 
-                decodeURI(argArray[8])
+                decodeURI(argArray[6])
             );
         }
     },
@@ -91,6 +89,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
             showMaximize: false,
             showMinimize: false,
             showClose: true,
+            status: parameter + ',' + title,
             layout: new qx.ui.layout.Grow()
         });
         
@@ -132,6 +131,8 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
         );
 
         this.add(this.__plot);
+        
+        this.addListener("close", function(evt) { this.destroy() });
 
         this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
         this.__timeBus.getBus().subscribe("time.now", this._nowChangeBusCallback, this);

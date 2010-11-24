@@ -63,9 +63,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
                 parseInt(decodeURI(argArray[3])), 
                 parseInt(decodeURI(argArray[4])), 
                 decodeURI(argArray[5]), 
-                decodeURI(argArray[6]), 
-                decodeURI(argArray[7]), 
-                decodeURI(argArray[8])
+                decodeURI(argArray[6])
             );
         }
     },
@@ -90,6 +88,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
             showMaximize: false,
             showMinimize: false,
             showClose: true,
+            status: parameter + ',' + title,
             layout: new qx.ui.layout.Grow()
         });
         
@@ -132,7 +131,9 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
         );
 
         this.add(this.__plot);
-
+        
+        this.addListener("close", function(evt) { this.destroy() });
+        
         this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
         this.__timeBus.getBus().subscribe("time.now", this._nowChangeBusCallback, this);
         this.__timeBus.getBus().subscribe("time.stopDate", this._stopDateChangeBusCallback, this);
@@ -197,10 +198,13 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
             var stop = this.__timeBus.getStopDateForSPIDRWS();
             var now = this.__timeBus.getNow();
             var parameter = this.__parameter;
+            
+            var req = "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop;
+            //alert(req);
 
             this.__plot = new qxdygraphs.Plot(
-                "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,
-                //'resource/auroral_resources/ionofof2.txt',
+                //"http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,
+                'resource/auroral_resources/ionofof2.txt',
                 {
                     labelsKMB: true,
                     errorBars: false,
@@ -229,10 +233,13 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
             this.__stop = stop;
             var now = this.__timeBus.getNow();
             var parameter = this.__parameter;
+
+            var req = "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop;
+            //alert(req);
             
             this.__plot = new qxdygraphs.Plot(
-                "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,
-                //'resource/auroral_resources/ionofof2.txt',
+                //"http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,
+                'resource/auroral_resources/ionofof2.txt',
                 {
                     labelsKMB: true,
                     errorBars: false,
@@ -262,9 +269,12 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
             this.__now = now;
             var parameter = this.__parameter;
 
+            var req = "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop;
+            //alert(req);
+
             this.__plot = new qxdygraphs.Plot(
-                "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,            
-                //'resource/auroral_resources/ionofof2.txt',
+                //"http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,            
+                'resource/auroral_resources/ionofof2.txt',
                 {
                     labelsKMB: true,
                     errorBars: false,
