@@ -67,7 +67,7 @@ qx.Class.define("auroral_resources.view.SideBar",
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
 
         this.__dateFormat = new qx.util.format.DateFormat("MM/dd/yy");
-        this.__dateFormatTime = new qx.util.format.DateFormat("MM/dd/yy hh:mm");
+        this.__dateFormatTime = new qx.util.format.DateFormat("MM/dd/yy HH:mm");
 
         this.__resize = new qx.ui.container.Resizer();
         this.__resize.setLayout(new qx.ui.layout.Grow);

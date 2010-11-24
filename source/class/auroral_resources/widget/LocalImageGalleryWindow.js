@@ -51,13 +51,29 @@ qx.Class.define("auroral_resources.widget.LocalImageGalleryWindow",
 
     extend : qx.ui.window.Window,
 
+    /*
+    *****************************************************************************
+        STATICS
+    *****************************************************************************
+    */
+    statics : 
+    {
+        fromArray : function(argArray) { 
+            return new auroral_resources.widget.LocalImageGalleryWindow(
+                parseInt(decodeURI(argArray[3])), 
+                parseInt(decodeURI(argArray[4])), 
+                decodeURI(argArray[5])
+            );
+        }
+    },
+    
 
     /*
     *****************************************************************************
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(title)
+    construct : function(width, height, title)
     {
         this.base(arguments, title);
 
@@ -67,12 +83,19 @@ qx.Class.define("auroral_resources.widget.LocalImageGalleryWindow",
             showMaximize: false,
             showMinimize: false,
             showClose: true,
+            status: title,
             layout: new qx.ui.layout.Grow()
         });
+        
+        /* for now ignore width, height given
+        this.setWidth(width);
+        this.setHeight(height);
+        */
 
         // hard coded example. need a JSON mapping of what's in the local folder 
         // so it can be randomly walked
         this.add(new qx.ui.basic.Image("resource/auroral_resources/imagery/Milner.jpg"));
+        this.addListener("close", function(evt) { this.destroy() });
 
         return this;
     },
