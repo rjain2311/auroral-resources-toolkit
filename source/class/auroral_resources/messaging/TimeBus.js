@@ -209,7 +209,7 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         // callback for the 'stopDate' message channel
         //
         _stopDateChangeBusCallback : function(e) {
-            //alert(parseInt(e.getData()) + '|||' + new Date(parseInt(e.getData())).toUTCString());
+            //  alert(parseInt(e.getData()) + '|||' + new Date(parseInt(e.getData())).toUTCString());
             this.__stopDate = parseInt(e.getData());
         }	  
     }
