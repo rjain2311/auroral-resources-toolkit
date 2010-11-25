@@ -2,6 +2,8 @@ package ru.gcras.tiles;
 
 public class GeolocateOLS
 {
+	public static final int NUM_SAMPLES = 1465;
+	
     /// <summary>
     /// Degrees to radians
     /// </summary>
@@ -72,7 +74,7 @@ public class GeolocateOLS
         //-----------------------------------------------------------------------------
         //dmedv
         //int nPixels = (fine) ? 7324 : 1465;
-        int nPixels = 4669;
+        int nPixels = NUM_SAMPLES;
 
         //-----------------------------------------------------------------------------
         // array containing pixel numbers
@@ -101,7 +103,7 @@ public class GeolocateOLS
         double thetaPeak = 1.0096730;
         //dmedv
         //double totalPixels = (fine) ? 7322.1790 : 1464.4360;
-        double totalPixels = 4669;
+        double totalPixels = NUM_SAMPLES;
 
         //-----------------------------------------------------------------------------
         // compute scan angles
