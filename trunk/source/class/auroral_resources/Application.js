@@ -317,8 +317,8 @@ qx.Class.define("auroral_resources.Application",
         //
         shareUrl : function() {
             
-            var url = window.location.protocol + '//' + window.location.host;
-            url = url + '/?time.startDate=' + this.__timeBus.getStartDate();
+            var url = window.location.protocol + '//' + window.location.host + window.location.pathname;
+            url = url + '?time.startDate=' + this.__timeBus.getStartDate();
             url = url + '&time.now=' + this.__timeBus.getNow();
             url = url + '&time.stopDate=' + this.__timeBus.getStopDate();
             
