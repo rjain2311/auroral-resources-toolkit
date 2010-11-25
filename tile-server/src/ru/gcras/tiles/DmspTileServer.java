@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
@@ -22,8 +23,8 @@ import ucar.nc2.dataset.NetcdfDataset;
 public class DmspTileServer extends HttpServlet {
 
 	//private static final String filename = "13736-19870129024814-19870129034932.FTS";
-	private static final String dods = "http://poseidon.wdcb.ru:8080/thredds/dodsC/images/";
-	private static final String images = "E:\\png\\";
+	//private static final String dods = "http://poseidon.wdcb.ru:8080/thredds/dodsC/images/";
+	//private static final String images = "E:\\png\\";
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
 			res.setContentType("image/png");
@@ -52,43 +53,59 @@ public class DmspTileServer extends HttpServlet {
 	}
 	
 	private BufferedImage GetTileImage(String layer, int hemisphere, double alpha, int x, int y, int z) throws Exception {
-		int p = 30;
-		BufferedImage png = ImageIO.read(new File(images+layer+".png"));
+		
+		int stride = 5;
+		
+		String threddsURL = getInitParameter("threddsBaseURL");
+		String imageURL = getInitParameter("imageBaseURL");
+		
+		BufferedImage png = null;
+	    String ym = layer.substring(3, 9);
+	    png = ImageIO.read(new URL(imageURL+ym+"/"+layer+".ols.vis.png"));
+
+		String[] parts = layer.split("\\.");
+		int segment = Integer.parseInt(parts[1]);
+		String olsFileName = parts[0];
 		
 		BufferedImage image = new BufferedImage(256,256,BufferedImage.TYPE_INT_ARGB);
-		NetcdfDataset dataset = NetcdfDataset.openDataset(dods + layer);
+		NetcdfDataset dataset = NetcdfDataset.openDataset(threddsURL + olsFileName+".OIS");
+		int numScans = dataset.findDimension("numScans").getLength();
+		int[] origin = new int[] { (segment-1) * numScans / 8 };
+		int[] shape = new int[] { numScans / 8 };
+		
 		Variable latVar = dataset.findVariable("satEphemLatitude");
-		float[] lat = (float[])latVar.read().copyTo1DJavaArray();
+		float[] lat = (float[])latVar.read(origin,shape).copyTo1DJavaArray();
 		Variable lonVar = dataset.findVariable("satEphemLongitude");
-		float[] lon = (float[])lonVar.read().copyTo1DJavaArray();
+		float[] lon = (float[])lonVar.read(origin,shape).copyTo1DJavaArray();
 		Variable altVar = dataset.findVariable("satEphemAltitude");
-		float[] alt = (float[])altVar.read().copyTo1DJavaArray();
+		float[] alt = (float[])altVar.read(origin,shape).copyTo1DJavaArray();
 		Variable headVar = dataset.findVariable("satEphemHeading");
-		float[] head = (float[])headVar.read().copyTo1DJavaArray();
+		float[] head = (float[])headVar.read(origin,shape).copyTo1DJavaArray();
 		Variable scannerOffsVar = dataset.findVariable("scannerOffset");
-		float[] scannerOffs = (float[])scannerOffsVar.read().copyTo1DJavaArray();
+		float[] scannerOffs = (float[])scannerOffsVar.read(origin,shape).copyTo1DJavaArray();
 		int[][] pixels = new int[256][256];
-		for (int i=0; i<lat.length; i+=p) {
+		for (int i=0; i<lat.length; i+=stride) {
 			
 			int imageY = (int)((double)i/lat.length * png.getHeight());
-			
+			if (imageY >= png.getHeight()) imageY = png.getHeight()-1;
 			double geoLat = lat[i];
 			double geoLon = lon[i];
 			if (geoLat < 0) continue;
-			double pixelLatLon[][] = GeolocateOLS.Geolocate(geoLat, geoLon, alt[i], head[i], scannerOffs[i], false, false, p);
+			double pixelLatLon[][] = GeolocateOLS.Geolocate(geoLat, geoLon, alt[i], head[i], scannerOffs[i], false, false, stride);
 
 		    int n = pixelLatLon.length;
 		    //System.out.println("### "+n+" "+pixelLatLon[0][0]+" "+pixelLatLon[n-1][0]);
 			for (int j=0; j<n; j++) {
-				int imageX = (int)((double)j*p / 4669 * png.getWidth());
-			    int[] pixelXY = getPixelXY(x,y,z,alpha,pixelLatLon[j][0],pixelLatLon[j][1]);
+				int imageX = (int)((double)j*stride / GeolocateOLS.NUM_SAMPLES * png.getWidth());
+			    if (imageX >= png.getWidth()) imageX = png.getWidth()-1;
+				int[] pixelXY = getPixelXY(x,y,z,alpha,pixelLatLon[j][0],pixelLatLon[j][1]);
 				if ((pixelXY[1] <= 255) 
 						&& (pixelXY[0] <= 255)
 						&& (pixelXY[1] >= 0)
 						&& (pixelXY[0] >= 0))
 				{
 					//image.setRGB(pixelXY[0],pixelXY[1],png.getRGB(imageX, imageY));
-					pixels[pixelXY[0]][pixelXY[1]] = png.getRGB(png.getWidth()-imageX-1, imageY);
+					pixels[pixelXY[0]][pixelXY[1]] = png.getRGB(imageX, png.getHeight()-imageY-1);
 				}
 			}
 		}
