@@ -263,14 +263,18 @@ qx.Class.define("auroral_resources.view.SideBar",
             calchooseb.setFocusable(false);
             calchooseb.setKeepFocus(true);
             calchooseb.addListener("execute", this._startDateChanged, this);
-            calchooseb.setValue(new Date(begin));
+            var cbd = new Date(begin);
+            cbd = new Date(cbd.toUTCString());
+            calchooseb.setValue(cbd);
             this.__startChooser = calchooseb;
 
             var calchoosee = new qx.ui.control.DateChooser();
             calchoosee.setFocusable(false);
             calchoosee.setKeepFocus(true);
             calchoosee.addListener("execute", this._endDateChanged, this);
-            calchoosee.setValue(new Date(end));
+            var ced = new Date(end);
+            ced = new Date(ced.toUTCString());
+            calchoosee.setValue(ced);
             this.__stopChooser = calchoosee;
 
             var calpopupb = new qx.ui.popup.Popup(new qx.ui.layout.VBox);
@@ -307,13 +311,17 @@ qx.Class.define("auroral_resources.view.SideBar",
                 cale.set({cursor: "default"});
             });
 
+            var minn = this._formatMDYtoUTC(new Date(slider.getMinimum()));
+            var maxx = this._formatMDYtoUTC(new Date(slider.getMaximum()));
+            var noww = this._formatMDYHMStoUTC(new Date(slider.getValue()));
+
             var group = {
                 slider: slider,
                 calb: calb,
                 cale: cale,
-                minimum: new qx.ui.basic.Label(this.__dateFormat.format(new Date(slider.getMinimum()))),
-                maximum: new qx.ui.basic.Label(this.__dateFormat.format(new Date(slider.getMaximum()))),
-                value: new qx.ui.basic.Label(this.__dateFormatTime.format(new Date(slider.getValue())))
+                minimum: new qx.ui.basic.Label(minn),
+                maximum: new qx.ui.basic.Label(maxx),
+                value: new qx.ui.basic.Label(noww)
             };
 
             group.slider.setOrientation("horizontal");
@@ -321,6 +329,7 @@ qx.Class.define("auroral_resources.view.SideBar",
             group.value.setTextAlign("center");
             slider.addListener("changeValue", this._sliderChanged, this);
             slider.addListener("mouseup", this._sliderChangeDone, this);
+            slider.addListener("keyup", this._sliderKeyChangeDone, this);
             this.__sliderGroup = group;
 
             container.add(group.value, {row: 0, column: 1, colSpan: 3});
@@ -343,8 +352,62 @@ qx.Class.define("auroral_resources.view.SideBar",
         //
         _sliderChanged : function(e) {
             var cur = this.__sliderGroup.slider.getValue();
+            // round up to the nearest 5 min interval
             cur = Math.ceil(cur/(5000*60))*(5000*60);
-            this.__sliderGroup.value.setValue(this.__dateFormatTime.format(new Date(cur)));
+            var d = new Date(cur);
+            
+            // has issues with displaying UTC, doing it manually instead...
+            //var val = this.__dateFormatTime.format(new Date(cur));
+            var val = this._formatMDYHMStoUTC(d);
+            this.__sliderGroup.value.setValue(val);
+        },
+        
+        
+        //
+        //
+        //
+        _formatMDYtoUTC : function(d) {
+            // manually build the UTC m/d/y hh:mm
+            var yr = d.getUTCFullYear();
+            yr = yr.toString().substring(2,4); //last 2 only
+            
+            var mo = d.getUTCMonth() + 1;
+            mo = "" + mo;
+            if (mo.length == 1 ) { mo = "0" + mo; }
+            
+            var dy = d.getUTCDate();
+            dy = "" + dy;
+            if (dy.length == 1) { dy = "0" + dy; }
+            
+            return mo + '/' + dy + '/' + yr;
+        },
+
+
+        //
+        //
+        //
+        _formatMDYHMStoUTC : function(d) {
+            // manually build the UTC m/d/y hh:mm            
+            var mo = d.getUTCMonth() + 1;
+            mo = "" + mo;
+            if (mo.length == 1 ) { mo = "0" + mo; }
+            
+            var dy = d.getUTCDate();
+            dy = "" + dy;
+            if (dy.length == 1) { dy = "0" + dy; }
+            
+            var yr = d.getUTCFullYear();
+            yr = yr.toString().substring(2,4); //last 2 only
+            
+            var hr = d.getUTCHours();
+            hr = "" + hr;
+            if (hr.length == 1) { hr = "0" + hr; }
+            
+            var mn = d.getUTCMinutes();
+            mn = "" + mn;
+            if (mn.length == 1) { mn = "0" + mn; }
+            
+            return mo + '/' + dy + '/' + yr + ' ' + hr + ':' + mn;
         },
 
 
@@ -357,17 +420,29 @@ qx.Class.define("auroral_resources.view.SideBar",
 
 
         //
+        // the slider has been moved by keyboard, publish a message on the bus
+        //
+        _sliderKeyChangeDone : function(e) {
+            var key = e.getKeyIdentifier().toLowerCase();
+            // if it was left or right arrow only
+            if (key == "left" || key == "right") {
+                this.__timeBus.dispatch(new qx.event.message.Message("time.now", this.__sliderGroup.slider.getValue()));
+            }
+        },
+        
+
+        //
         // a new start date has been chosen, update label, publish a message on the bus
         //
         _startDateChanged : function(e) {
 
             var val = this.__startChooser.getValue();
-            var min = Date.UTC(val.getFullYear(),val.getMonth(),val.getDate(),val.getMinutes(),val.getSeconds(),val.getMilliseconds());
+            var min = Date.UTC(val.getUTCFullYear(),val.getUTCMonth(),val.getUTCDate(),val.getUTCMinutes(),val.getUTCSeconds(),val.getUTCMilliseconds());
             var max = this.__sliderGroup.slider.getMaximum();
 
             // do nothing if invalid selection
             if (min >= max) {
-                alert("ERROR: you attempted to specify a start time greater or equal to your stop time");
+                dialog.Dialog.error("You attempted to specify a start time greater or equal to your stop time. Try again.");
                 this.__startPopup.hide();
                 return;
             }
@@ -387,11 +462,11 @@ qx.Class.define("auroral_resources.view.SideBar",
 
             var val = this.__stopChooser.getValue();
             var min = this.__sliderGroup.slider.getMinimum();
-            var max = Date.UTC(val.getFullYear(),val.getMonth(),val.getDate(),val.getMinutes(),val.getSeconds(),val.getMilliseconds());
+            var max = Date.UTC(val.getUTCFullYear(),val.getUTCMonth(),val.getUTCDate(),val.getUTCMinutes(),val.getUTCSeconds(),val.getUTCMilliseconds());
 
             // do nothing if invalid selection
             if (max <= min) {
-                alert("ERROR: you attempted to specify a stop time less than or equal to your start time");
+                dialog.Dialog.error("You attempted to specify a stop time less than or equal to your start time. Try again.");
                 this.__stopPopup.hide();
                 return;
             }

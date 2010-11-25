@@ -163,7 +163,7 @@ qx.Class.define("auroral_resources.Application",
         monkeyPatch : function() 
         {
             Date.prototype.getDOY = function() {
-                var onejan = new Date(this.getFullYear(),0,1);
+                var onejan = new Date(this.getUTCFullYear(),0,1);
                 return Math.ceil((this - onejan) / 86400000);
             }            
         }, // end monkey patch
@@ -176,10 +176,11 @@ qx.Class.define("auroral_resources.Application",
         initializeTimeBus : function()
         {
             // initialize the time bus
+            var now = this.getNowUTC();
             this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
-            var begin = qx.lang.Date.now();
+            var begin = now;
             begin -= (((86400) * 7) * 1000); //one week of millis
-            var end = qx.lang.Date.now();
+            var end = now;
             var cur = end - (((86400) * 3.5) * 1000); //half a week of millis
             // round to nearest 5 minutes
             cur = Math.ceil(cur/(5000*60))*(5000*60);
@@ -254,8 +255,8 @@ qx.Class.define("auroral_resources.Application",
             this.__mainWindow.addListener("mousemove", this._mouseMove, this);
 
             // create and add the date/time chooser
-            var d = new Date();
-            var chooser = new timechooser.TimeChooser(Math.floor(d.getTime()/1000));
+            var utc = this.getNowUTC();
+            var chooser = new timechooser.TimeChooser(Math.floor(utc/1000));
             chooser.setLayoutFormat("below/vertical");
             container.add(chooser);
 
@@ -282,9 +283,27 @@ qx.Class.define("auroral_resources.Application",
 
             // put it all together
             this.__horizontalSplitPane.add(scroller, 0);
-            this.__horizontalSplitPane.add(this.__mainWindow, 1);
+            var scroller2 = new qx.ui.container.Scroll();
+            scroller2.add(this.__mainWindow);
+            this.__horizontalSplitPane.add(scroller2, 1);
 
         }, // end buildGui
+        
+        //
+        //
+        //
+        getNowUTC : function() {
+            var d = new Date();
+            return Date.UTC(
+                d.getFullYear(),
+                d.getMonth(),
+                d.getDate(),
+                d.getHours(),
+                d.getMinutes(),
+                d.getSeconds(),
+                d.getMilliseconds()
+            );
+        },
 
         //
         //
