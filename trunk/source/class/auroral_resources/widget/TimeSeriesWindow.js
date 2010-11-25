@@ -199,9 +199,6 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
             var now = this.__timeBus.getNow();
             var parameter = this.__parameter;
             
-            var req = "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop;
-            //alert(req);
-
             this.__plot = new qxdygraphs.Plot(
                 //"http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,
                 'resource/auroral_resources/ionofof2.txt',
@@ -234,9 +231,6 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
             var now = this.__timeBus.getNow();
             var parameter = this.__parameter;
 
-            var req = "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop;
-            //alert(req);
-            
             this.__plot = new qxdygraphs.Plot(
                 //"http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,
                 'resource/auroral_resources/ionofof2.txt',
@@ -268,9 +262,6 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
             var now = e.getData();
             this.__now = now;
             var parameter = this.__parameter;
-
-            var req = "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop;
-            //alert(req);
 
             this.__plot = new qxdygraphs.Plot(
                 //"http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,            

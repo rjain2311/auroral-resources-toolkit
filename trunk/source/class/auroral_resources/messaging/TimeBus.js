@@ -118,15 +118,14 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         //
         getStartDateForSPIDRWS : function() {
             var start = this.__startDate;
-            //start = start + (86400*1000);
             start = new Date(start);
-            var mo = start.getMonth() + 1;
+            var mo = start.getUTCMonth() + 1;
             mo = "" + mo;
             if (mo.length == 1 ) { mo = "0" + mo; }
-            var dy = start.getDate();
+            var dy = start.getUTCDate();
             dy = "" + dy;
             if (dy.length == 1) { dy = "0" + dy; }
-            start = start.getFullYear() + "" + mo + "" + dy;
+            start = start.getUTCFullYear() + "" + mo + "" + dy;
             return start;
         },
 
@@ -134,17 +133,15 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         // stop date getter, in the format SPIDR WS needs
         //
         getStopDateForSPIDRWS : function() {
-            // the day is somehow off by 1, add a day
             var stop = this.__stopDate;
-            //stop = stop + (86400*1000);
             stop = new Date(stop);
-            var mo = stop.getMonth() + 1;
+            var mo = stop.getUTCMonth() + 1;
             mo = "" + mo;
             if (mo.length == 1 ) { mo = "0" + mo; }
-            var dy = stop.getDate();
+            var dy = stop.getUTCDate();
             dy = "" + dy;
             if (dy.length == 1) { dy = "0" + dy; }
-            stop = stop.getFullYear() + "" + mo + "" + dy;
+            stop = stop.getUTCFullYear() + "" + mo + "" + dy;
             return stop;
         },
 
@@ -152,16 +149,15 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         //
         //
         convertToSPIDRWS : function(timeinmillis) {
-            // the day is somehow off by 1, add a day
-            var time = timeinmillis;//+(86400*1000);
+            var time = timeinmillis;
             time = new Date(time);
-            var mo = time.getMonth() + 1;
+            var mo = time.getUTCMonth() + 1;
             mo = "" + mo;
             if (mo.length == 1 ) { mo = "0" + mo; }
-            var dy = time.getDate();
+            var dy = time.getUTCDate();
             dy = "" + dy;
             if (dy.length == 1) { dy = "0" + dy; }
-            time = time.getFullYear() + "" + mo + "" + dy;
+            time = time.getUTCFullYear() + "" + mo + "" + dy;
             return time;
         },      
 
@@ -197,7 +193,7 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         // callback for the 'startDate' message channel
         //
         _startDateChangeBusCallback : function(e) {
-            //alert(new Date(parseInt(e.getData())));
+            //alert(parseInt(e.getData()) + '|||' + new Date(parseInt(e.getData())).toUTCString());
             this.__startDate = parseInt(e.getData());
         },
 
@@ -205,7 +201,7 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         // callback for the 'now' message channel
         //
         _nowChangeBusCallback : function(e) {
-            //alert(new Date(parseInt(e.getData())));
+            //alert(parseInt(e.getData()) + '|||' + new Date(parseInt(e.getData())).toUTCString());
             this.__now = parseInt(e.getData());
         },
 
@@ -213,7 +209,7 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         // callback for the 'stopDate' message channel
         //
         _stopDateChangeBusCallback : function(e) {
-            //alert(new Date(parseInt(e.getData())));
+            //alert(parseInt(e.getData()) + '|||' + new Date(parseInt(e.getData())).toUTCString());
             this.__stopDate = parseInt(e.getData());
         }	  
     }
