@@ -105,7 +105,12 @@ public class DmspTileServer extends HttpServlet {
 						&& (pixelXY[0] >= 0))
 				{
 					//image.setRGB(pixelXY[0],pixelXY[1],png.getRGB(imageX, imageY));
-					pixels[pixelXY[0]][pixelXY[1]] = png.getRGB(imageX, png.getHeight()-imageY-1);
+					if (segment < 3) {
+						pixels[pixelXY[0]][pixelXY[1]] = png.getRGB(imageX, png.getHeight()-imageY-1);
+					}
+					else {
+						pixels[pixelXY[0]][pixelXY[1]] = png.getRGB(png.getWidth()-imageX-1, imageY);
+					}
 				}
 			}
 		}
