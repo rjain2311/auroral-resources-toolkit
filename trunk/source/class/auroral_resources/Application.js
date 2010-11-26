@@ -65,7 +65,6 @@ qx.Class.define("auroral_resources.Application",
 
     extend : qx.application.Standalone,
 
-
     /*
     *****************************************************************************
         CLASS VARIABLES AND METHODS

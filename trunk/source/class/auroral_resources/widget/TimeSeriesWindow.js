@@ -126,7 +126,8 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
                 lables: [title],
                 highlightCircleSize: 7,
                 strokeWidth: 2,
-                underlayCallback: this._vline
+                underlayCallback: this._vline,
+                zoomCallback: this._zoom
             }
         );
 
@@ -156,11 +157,21 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
         __stopDate : null,
         __plot : null,
         __now : null,
+        
 
+        //
+        //
+        //
+        _zoom : function(minDate, maxDate, minValue, maxValue) {
+            // not doing anything here yet
+        },
+        
+        
         //
         // vertical line function
         //
         _vline : function(canvas, area, g) {
+            /* no need to normalize, just use toDomCoords !!!
             // alert(area.toSource()); // MUST BE RUN IN FIREFOX! => debug output
             // note the way this method is registered as a callback prevents access
             // to class variables, must access them anew (e.g. timeBus)
@@ -175,6 +186,13 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
             var D = area.w+area.x;
             // normalize x-prime to determine how the time maps to pixel space
             var xp = ((D-C)*(now-A)) / (B-A) + C;
+            */
+            
+            var timeBus = auroral_resources.messaging.TimeBus.getInstance();
+            var now = timeBus.getNow();
+            now = now + ((new Date().getTimezoneOffset()*60)*1000);
+            var xp = g.toDomCoords(parseInt(now),0); //only care about X
+            xp = xp[0];
             
             canvas.beginPath();
             canvas.strokeStyle = "rgba(255, 0, 0, 1.0)";
@@ -209,7 +227,8 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
                     lables: [this.__title],
                     highlightCircleSize: 7,
                     strokeWidth: 2,
-                    underlayCallback: this._vline
+                    underlayCallback: this._vline,
+                    zoomCallback: this._zoom
                 }
             );
 
@@ -241,7 +260,8 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
                     lables: [this.__title],
                     highlightCircleSize: 7,
                     strokeWidth: 2,
-                    underlayCallback: this._vline
+                    underlayCallback: this._vline,
+                    zoomCallback: this._zoom
                 }
             );
 
@@ -273,7 +293,8 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
                     lables: [this.__title],
                     highlightCircleSize: 7,
                     strokeWidth: 2,
-                    underlayCallback: this._vline
+                    underlayCallback: this._vline,
+                    zoomCallback: this._zoom
                 }
             );
 
