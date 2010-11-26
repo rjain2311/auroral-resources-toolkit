@@ -126,14 +126,13 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
                 stepPlot: true,
                 fillGraph: true,
                 lables: [title],
-                underlayCallback: this._vline
+                underlayCallback: this._vline,
+                zoomCallback: this._zoom
             }
         );
 
         this.add(this.__plot);
-        
         this.addListener("close", function(evt) { this.destroy() });
-
         this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
         this.__timeBus.getBus().subscribe("time.now", this._nowChangeBusCallback, this);
         this.__timeBus.getBus().subscribe("time.stopDate", this._stopDateChangeBusCallback, this);
@@ -156,25 +155,43 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
         __stopDate : null,
         __plot : null,
         __now : null,
+        
+        //
+        //
+        //
+        _zoom : function(minDate, maxDate, minValue, maxValue) {
+            // not doing anything here yet
+        },
 
         //
         // vertical line function
         //
         _vline : function(canvas, area, g) {
-            // alert(area.toSource()); // MUST BE RUN IN FIREFOX! => debug output
-            // note the way this method is registered as a callback prevents access
-            // to class variables, must access them anew (e.g. timeBus)
+//            alert(listProperties(g));
+//            alert(g.toDomCoords(10,10));
+            
+            // note: the way this method is registered as a callback prevents access
+            // to class variables, must access them differently since this function is
+            // scoped within the dygraphs object, NOT the Qx object :(
+            /* don't need to normalize, just use the toDomCoords function!!!
             var timeBus = auroral_resources.messaging.TimeBus.getInstance();
             var start = timeBus.getStartDate();
             var stop = timeBus.getStopDate();
             var now = timeBus.getNow();
-            
+
             var A = start;
             var B = stop;
             var C = area.x+1;
             var D = area.w+area.x;
             // normalize x-prime to determine how the time maps to pixel space
             var xp = ((D-C)*(now-A)) / (B-A) + C;
+            */
+            
+            var timeBus = auroral_resources.messaging.TimeBus.getInstance();
+            var now = timeBus.getNow();
+            now = now + ((new Date().getTimezoneOffset()*60)*1000);
+            var xp = g.toDomCoords(parseInt(now),0); //only care about X
+            xp = xp[0];
             
             canvas.beginPath();
             canvas.strokeStyle = "rgba(255, 0, 0, 1.0)";
@@ -182,6 +199,16 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
             canvas.lineTo(xp, area.h);
             canvas.closePath();
             canvas.stroke();
+            
+            function listProperties(obj) {
+               var propList = "";
+               for(var propName in obj) {
+                  if(typeof(obj[propName]) != "undefined") {
+                     propList += (propName + ", ");
+                  }
+               }
+               return propList;
+            }
         },
         
         //
@@ -210,7 +237,8 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
                     stepPlot: true,
                     fillGraph: true,
                     lables: [this.__title],
-                    underlayCallback: this._vline
+                    underlayCallback: this._vline,
+                    zoomCallback: this._zoom
                 }
             );
 
@@ -243,7 +271,8 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
                     stepPlot: true,
                     fillGraph: true,
                     lables: [this.__title],
-                    underlayCallback: this._vline
+                    underlayCallback: this._vline,
+                    zoomCallback: this._zoom
                 }
             );
 
@@ -276,7 +305,8 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
                     stepPlot: true,
                     fillGraph: true,
                     lables: [this.__title],
-                    underlayCallback: this._vline
+                    underlayCallback: this._vline,
+                    zoomCallback: this._zoom
                 }
             );
 

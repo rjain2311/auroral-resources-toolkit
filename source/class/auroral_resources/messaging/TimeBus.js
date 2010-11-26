@@ -162,6 +162,37 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         },      
 
         //
+        //
+        //
+        getNowUTC : function() {
+            var d = new Date();
+            return Date.UTC(
+                d.getFullYear(),
+                d.getMonth(),
+                d.getDate(),
+                d.getHours(),
+                d.getMinutes(),
+                d.getSeconds(),
+                d.getMilliseconds()
+            );
+        },
+                
+        //
+        //
+        //
+        getUTCfromDate : function(d) {
+            return Date.UTC(
+                d.getFullYear(),
+                d.getMonth(),
+                d.getDate(),
+                d.getHours(),
+                d.getMinutes(),
+                d.getSeconds(),
+                d.getMilliseconds()
+            );
+        },
+        
+        //
         // now date setter
         //
         setNow : function(date) {
