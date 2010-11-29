@@ -83,11 +83,28 @@ qx.Class.define("auroral_resources.view.Header",
 
         this.add(new qx.ui.core.Spacer, {flex : 1});
 
+        // add the right logo
+        var rlogo = new qx.ui.basic.Image("resource/auroral_resources/logo.png");
+        rlogo.addListener("mouseup", function() {
+            window.location = "http://www.ngdc.noaa.gov";
+        });
+
+        rlogo.addListener("mouseover", function() {
+            rlogo.set({cursor: "pointer"});
+        });
+
+        rlogo.addListener("mouseout", function() {
+            rlogo.set({cursor: "default"});
+        });
+        this.add(rlogo);
+
+        /* using the image based right side now above
         var title = new qx.ui.basic.Label().set({
             value: "<a style='font-style:italic;font-size:2.5em;color:white;text-decoration:none;' href='http://en.wikipedia.org/wiki/Aurora_(astronomy)'>Auroral Resources Toolkit</a>",
             rich: true
         });
         this.add(title);
+        */
 
         // add the right logo
         /* I don't like the way this gets stretched right now, nor in general. revisit later if/when time

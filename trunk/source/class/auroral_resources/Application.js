@@ -162,7 +162,8 @@ qx.Class.define("auroral_resources.Application",
         monkeyPatch : function() 
         {
             Date.prototype.getDOY = function() {
-                var onejan = new Date(this.getUTCFullYear(),0,1);
+                //var onejan = new Date(this.getUTCFullYear(),0,1);
+                var onejan = new Date(this.getFullYear(),0,1);
                 return Math.ceil((this - onejan) / 86400000);
             }            
         }, // end monkey patch
@@ -175,8 +176,9 @@ qx.Class.define("auroral_resources.Application",
         initializeTimeBus : function()
         {
             // initialize the time bus
-            var now = this.getNowUTC();
+            // var now = this.getNowUTC();
             this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
+            var now = this.__timeBus.getCurrentTime();
             var begin = now;
             begin -= (((86400) * 7) * 1000); //one week of millis
             var end = now;
@@ -254,8 +256,9 @@ qx.Class.define("auroral_resources.Application",
             this.__mainWindow.addListener("mousemove", this._mouseMove, this);
 
             // create and add the date/time chooser
-            var utc = this.getNowUTC();
-            var chooser = new timechooser.TimeChooser(Math.floor(utc/1000));
+            //var utc = this.getNowUTC();
+            var time = this.__timeBus.getCurrentTime();
+            var chooser = new timechooser.TimeChooser(Math.floor(time/1000));
             chooser.setLayoutFormat("below/vertical");
             container.add(chooser);
 
@@ -288,22 +291,6 @@ qx.Class.define("auroral_resources.Application",
 
         }, // end buildGui
         
-        //
-        //
-        //
-        getNowUTC : function() {
-            var d = new Date();
-            return Date.UTC(
-                d.getFullYear(),
-                d.getMonth(),
-                d.getDate(),
-                d.getHours(),
-                d.getMinutes(),
-                d.getSeconds(),
-                d.getMilliseconds()
-            );
-        },
-
         //
         //
         //

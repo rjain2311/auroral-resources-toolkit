@@ -119,13 +119,16 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         getStartDateForSPIDRWS : function() {
             var start = this.__startDate;
             start = new Date(start);
-            var mo = start.getUTCMonth() + 1;
+            //var mo = start.getUTCMonth() + 1;
+            var mo = start.getMonth() + 1;
             mo = "" + mo;
             if (mo.length == 1 ) { mo = "0" + mo; }
-            var dy = start.getUTCDate();
+            //var dy = start.getUTCDate();
+            var dy = start.getDate();
             dy = "" + dy;
             if (dy.length == 1) { dy = "0" + dy; }
-            start = start.getUTCFullYear() + "" + mo + "" + dy;
+            // start = start.getUTCFullYear() + "" + mo + "" + dy;
+            start = start.getFullYear() + "" + mo + "" + dy;
             return start;
         },
 
@@ -135,13 +138,16 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         getStopDateForSPIDRWS : function() {
             var stop = this.__stopDate;
             stop = new Date(stop);
-            var mo = stop.getUTCMonth() + 1;
+            // var mo = stop.getUTCMonth() + 1;
+            var mo = stop.getMonth() + 1;
             mo = "" + mo;
             if (mo.length == 1 ) { mo = "0" + mo; }
-            var dy = stop.getUTCDate();
+            // var dy = stop.getUTCDate();
+            var dy = stop.getDate();
             dy = "" + dy;
             if (dy.length == 1) { dy = "0" + dy; }
-            stop = stop.getUTCFullYear() + "" + mo + "" + dy;
+            // stop = stop.getUTCFullYear() + "" + mo + "" + dy;
+            stop = stop.getFullYear() + "" + mo + "" + dy;
             return stop;
         },
 
@@ -151,16 +157,26 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         convertToSPIDRWS : function(timeinmillis) {
             var time = timeinmillis;
             time = new Date(time);
-            var mo = time.getUTCMonth() + 1;
+            // var mo = time.getUTCMonth() + 1;
+            var mo = time.getMonth() + 1;
             mo = "" + mo;
             if (mo.length == 1 ) { mo = "0" + mo; }
-            var dy = time.getUTCDate();
+            // var dy = time.getUTCDate();
+            var dy = time.getDate();
             dy = "" + dy;
             if (dy.length == 1) { dy = "0" + dy; }
-            time = time.getUTCFullYear() + "" + mo + "" + dy;
+            // time = time.getUTCFullYear() + "" + mo + "" + dy;
+            time = time.getFullYear() + "" + mo + "" + dy;
             return time;
         },      
 
+        //
+        //
+        //
+        getCurrentTime : function() {
+            return new Date().getTime();
+        },
+        
         //
         //
         //

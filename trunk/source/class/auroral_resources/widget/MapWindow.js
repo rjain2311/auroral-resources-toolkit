@@ -341,6 +341,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
             }
         },
         
+        
         //
         //
         //
@@ -387,6 +388,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
             }            
         },
 
+
         //
         //
         //
@@ -398,6 +400,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
             );
             return base;
         },      
+
 
         //
         //
@@ -468,6 +471,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
 
             return isle;
         },
+        
         
         //
         //
@@ -557,6 +561,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
 
             return isle;          
         },
+
 
         //
         //
