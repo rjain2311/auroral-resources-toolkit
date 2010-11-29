@@ -118,7 +118,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
         this.__stopDate = stop;
 
         this.__plot = new qxdygraphs.Plot(
-            "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,
+            "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop,
             //'resource/auroral_resources/ionofof2.txt',
             {
                 labelsKMB: true,
@@ -229,7 +229,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
             //alert("http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop);
 
             this.__plot = new qxdygraphs.Plot(
-                "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,
+                "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop,
                 //'resource/auroral_resources/ionofof2.txt',
                 {
                     labelsKMB: true,
@@ -263,7 +263,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
             //alert("http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop);
 
             this.__plot = new qxdygraphs.Plot(
-                "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,
+                "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop,
                 //'resource/auroral_resources/ionofof2.txt',
                 {
                     labelsKMB: true,
@@ -277,7 +277,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
             );
 
             this.add(this.__plot);
-        },	
+        },
 
         //
         //
@@ -297,7 +297,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
             //alert("http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop);
 
             this.__plot = new qxdygraphs.Plot(
-                "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop,            
+                "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop,            
                 //'resource/auroral_resources/ionofof2.txt',
                 {
                     labelsKMB: true,
