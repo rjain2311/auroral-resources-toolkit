@@ -264,7 +264,8 @@ qx.Class.define("auroral_resources.view.SideBar",
             calchooseb.setKeepFocus(true);
             calchooseb.addListener("execute", this._startDateChanged, this);
             var cbd = new Date(begin);
-            cbd = new Date(cbd.toUTCString());
+            //cbd = new Date(cbd.toUTCString());
+            cbd = new Date(cbd.toTimeString());
             calchooseb.setValue(cbd);
             this.__startChooser = calchooseb;
 
@@ -273,7 +274,8 @@ qx.Class.define("auroral_resources.view.SideBar",
             calchoosee.setKeepFocus(true);
             calchoosee.addListener("execute", this._endDateChanged, this);
             var ced = new Date(end);
-            ced = new Date(ced.toUTCString());
+            // ced = new Date(ced.toUTCString());
+            ced = new Date(ced.toTimeString());
             calchoosee.setValue(ced);
             this.__stopChooser = calchoosee;
 
@@ -311,9 +313,12 @@ qx.Class.define("auroral_resources.view.SideBar",
                 cale.set({cursor: "default"});
             });
 
-            var minn = this._formatMDYtoUTC(new Date(slider.getMinimum()));
-            var maxx = this._formatMDYtoUTC(new Date(slider.getMaximum()));
-            var noww = this._formatMDYHMStoUTC(new Date(slider.getValue()));
+            //var minn = this._formatMDYtoUTC(new Date(slider.getMinimum()));
+            var minn = this._formatMDYtoTime(new Date(slider.getMinimum()));
+            //var maxx = this._formatMDYtoUTC(new Date(slider.getMaximum()));
+            var maxx = this._formatMDYtoTime(new Date(slider.getMaximum()));
+            //var noww = this._formatMDYHMStoUTC(new Date(slider.getValue()));
+            var noww = this._formatMDYHMStoTime(new Date(slider.getValue()));
 
             var group = {
                 slider: slider,
@@ -358,7 +363,8 @@ qx.Class.define("auroral_resources.view.SideBar",
             
             // has issues with displaying UTC, doing it manually instead...
             //var val = this.__dateFormatTime.format(new Date(cur));
-            var val = this._formatMDYHMStoUTC(d);
+            //var val = this._formatMDYHMStoUTC(d);
+            var val = this._formatMDYHMStoTime(d);
             this.__sliderGroup.value.setValue(val);
         },
         
@@ -386,8 +392,28 @@ qx.Class.define("auroral_resources.view.SideBar",
         //
         //
         //
+        _formatMDYtoTime : function(d) {
+            // manually build the UTC m/d/y hh:mm
+            var yr = d.getFullYear();
+            yr = yr.toString().substring(2,4); //last 2 only
+            
+            var mo = d.getMonth() + 1;
+            mo = "" + mo;
+            if (mo.length == 1 ) { mo = "0" + mo; }
+            
+            var dy = d.getDate();
+            dy = "" + dy;
+            if (dy.length == 1) { dy = "0" + dy; }
+            
+            return mo + '/' + dy + '/' + yr;
+        },
+
+
+        //
+        //
+        //
         _formatMDYHMStoUTC : function(d) {
-            // manually build the UTC m/d/y hh:mm            
+            // manually build the time m/d/y hh:mm            
             var mo = d.getUTCMonth() + 1;
             mo = "" + mo;
             if (mo.length == 1 ) { mo = "0" + mo; }
@@ -411,6 +437,34 @@ qx.Class.define("auroral_resources.view.SideBar",
         },
 
 
+        //
+        //
+        //
+        _formatMDYHMStoTime : function(d) {
+            // manually build the time m/d/y hh:mm            
+            var mo = d.getMonth() + 1;
+            mo = "" + mo;
+            if (mo.length == 1 ) { mo = "0" + mo; }
+            
+            var dy = d.getDate();
+            dy = "" + dy;
+            if (dy.length == 1) { dy = "0" + dy; }
+            
+            var yr = d.getFullYear();
+            yr = yr.toString().substring(2,4); //last 2 only
+            
+            var hr = d.getHours();
+            hr = "" + hr;
+            if (hr.length == 1) { hr = "0" + hr; }
+            
+            var mn = d.getMinutes();
+            mn = "" + mn;
+            if (mn.length == 1) { mn = "0" + mn; }
+            
+            return mo + '/' + dy + '/' + yr + ' ' + hr + ':' + mn;
+        },
+        
+        
         //
         // the slider has been released, publish a message on the bus
         //
@@ -437,7 +491,8 @@ qx.Class.define("auroral_resources.view.SideBar",
         _startDateChanged : function(e) {
 
             var val = this.__startChooser.getValue();
-            var min = Date.UTC(val.getUTCFullYear(),val.getUTCMonth(),val.getUTCDate(),val.getUTCMinutes(),val.getUTCSeconds(),val.getUTCMilliseconds());
+            //var min = Date.UTC(val.getUTCFullYear(),val.getUTCMonth(),val.getUTCDate(),val.getUTCMinutes(),val.getUTCSeconds(),val.getUTCMilliseconds());
+            var min = new Date(val.getFullYear(),val.getMonth(),val.getDate(),val.getMinutes(),val.getSeconds(),val.getMilliseconds()).getTime();
             var max = this.__sliderGroup.slider.getMaximum();
 
             // do nothing if invalid selection
@@ -462,7 +517,8 @@ qx.Class.define("auroral_resources.view.SideBar",
 
             var val = this.__stopChooser.getValue();
             var min = this.__sliderGroup.slider.getMinimum();
-            var max = Date.UTC(val.getUTCFullYear(),val.getUTCMonth(),val.getUTCDate(),val.getUTCMinutes(),val.getUTCSeconds(),val.getUTCMilliseconds());
+            //var max = Date.UTC(val.getUTCFullYear(),val.getUTCMonth(),val.getUTCDate(),val.getUTCMinutes(),val.getUTCSeconds(),val.getUTCMilliseconds());
+            var max = new Date(val.getFullYear(),val.getMonth(),val.getDate(),val.getMinutes(),val.getSeconds(),val.getMilliseconds()).getTime();
 
             // do nothing if invalid selection
             if (max <= min) {

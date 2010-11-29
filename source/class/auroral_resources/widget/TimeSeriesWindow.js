@@ -190,7 +190,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
             
             var timeBus = auroral_resources.messaging.TimeBus.getInstance();
             var now = timeBus.getNow();
-            now = now + ((new Date().getTimezoneOffset()*60)*1000);
+//            now = now + ((new Date().getTimezoneOffset()*60)*1000);
             var xp = g.toDomCoords(parseInt(now),0); //only care about X
             xp = xp[0];
             
