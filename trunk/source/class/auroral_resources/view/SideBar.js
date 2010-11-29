@@ -199,13 +199,13 @@ qx.Class.define("auroral_resources.view.SideBar",
 
             } else if (index == 1) {
                 var item = new qx.ui.tree.TreeFolder("Daytime");
-                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'ECS', 'north_nowcast', "Polar Relief, Ovation Nowcast"));
-                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'ECS', 'north_forecast', "Polar Relief, Ovation Forecast"));
+                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'ECS', 'north_nowcast', "Polar Relief Ovation Nowcast"));
+                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'ECS', 'north_forecast', "Polar Relief Ovation Forecast"));
                 parent.add(item);
 
                 item = new qx.ui.tree.TreeFolder("Nighttime");
-                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'DMSP', 'north_nowcast', "DMSP, Ovation Nowcast"));
-                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'DMSP', 'north_forecast', "DMSP, Ovation Forecast"));
+                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'DMSP', 'north_nowcast', "DMSP Ovation Nowcast"));
+                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'DMSP', 'north_forecast', "DMSP Ovation Forecast"));
                 parent.add(item);
 
             } else if (index == 2) {
