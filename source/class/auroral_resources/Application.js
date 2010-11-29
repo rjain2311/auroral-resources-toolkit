@@ -333,7 +333,10 @@ qx.Class.define("auroral_resources.Application",
                     var h = b["height"];
                     var className = win.constructor.classname;
                     className = className.substring(className.lastIndexOf('.')+1,className.length);
-                    url = url + "&w" + i + '=' + x + ',' + y + ',' + className + ',' + w + ',' + h + ',' + win.getStatus();
+                    
+                    if (className.toLowerCase() != "introductionwindow") {
+                        url = url + "&w" + i + '=' + x + ',' + y + ',' + className + ',' + w + ',' + h + ',' + win.getStatus();
+                    }
                 }
             }
             

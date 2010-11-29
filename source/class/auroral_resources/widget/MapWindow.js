@@ -102,6 +102,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
 
         this.setWidth(width);
         this.setHeight(height);
+        this.setContentPadding(0,0,0,0);
 
         var xOffset = 0; //((winWidth/2)/2) - 10;
         var buttonWidth = 75;

@@ -100,6 +100,9 @@ qx.Class.define("auroral_resources.widget.IntroductionWindow",
 
         // and it's clicked listener
         hideMe.addListener("click", this._setIgnore, this);
+        
+        // make sure cleanup occurs in all cases
+        this.addListener("close", function(evt) { this.destroy() });
 
         // add it to the mix
         this.add(hideMe);

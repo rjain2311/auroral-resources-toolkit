@@ -85,9 +85,6 @@ qx.Class.define("auroral_resources.view.Header",
 
         // add the right logo
         var rlogo = new qx.ui.basic.Image("resource/auroral_resources/logo.png");
-        rlogo.set({
-            height: 50
-        });
         rlogo.addListener("mouseup", function() {
             window.location = "http://www.ngdc.noaa.gov";
         });
