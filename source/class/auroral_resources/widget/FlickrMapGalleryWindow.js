@@ -42,11 +42,12 @@ Peter Elespuru - peter.elespuru@noaa.gov
 Dmitry Medvedev - dmedv@wdcb.ru
 Mikhail Zhizhin - jjn@wdcb.ru
 Rob Redmon - rob.redmon@noaa.gov
+Sasha Godunov - goduy@mail.ru
 
 *************************************************************************/
 
 
-qx.Class.define("auroral_resources.widget.LocalImageGalleryWindow",
+qx.Class.define("auroral_resources.widget.FlickrMapGalleryWindow",
 {
 
     extend : qx.ui.window.Window,
@@ -59,7 +60,7 @@ qx.Class.define("auroral_resources.widget.LocalImageGalleryWindow",
     statics : 
     {
         fromArray : function(argArray) { 
-            return new auroral_resources.widget.LocalImageGalleryWindow(
+            return new auroral_resources.widget.FlickrMapGalleryWindow(
                 parseInt(decodeURI(argArray[3])), 
                 parseInt(decodeURI(argArray[4])), 
                 decodeURI(argArray[5])
@@ -75,8 +76,6 @@ qx.Class.define("auroral_resources.widget.LocalImageGalleryWindow",
     */
     construct : function(width, height, title)
     {
-        title = title + ' (coming soon, submit your photos now!)';
-        
         this.base(arguments, title);
 
         this.set({
@@ -89,16 +88,14 @@ qx.Class.define("auroral_resources.widget.LocalImageGalleryWindow",
             layout: new qx.ui.layout.Grow()
         });
         
-        /* for now ignore width, height given
         this.setWidth(width);
         this.setHeight(height);
-        */
-
-        // hard coded example. need a JSON mapping of what's in the local folder 
-        // so it can be randomly walked
-        this.add(new qx.ui.basic.Image("resource/auroral_resources/imagery/Milner.jpg"));
         this.addListener("close", function(evt) { this.destroy() });
         this.addListener("mouseup", this._rightClick, this);
+
+        var frame = new qx.ui.embed.ThemedIframe();
+        frame.setSource("resource/auroral_resources/static/html/flickr_aurora_search.html");
+        this.add(frame);
 
         return this;
     },

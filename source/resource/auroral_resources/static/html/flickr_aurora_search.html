@@ -1,0 +1,104 @@
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<title>Flickr Aurora Gallery</title>
+<link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+	var date_from = '2000-01-01';
+	var date_to = '2011-11-01';
+	var page = 1;
+	var per_page = 100;
+	var pages;
+	var total_imgs;
+	
+	var map;
+	var info_window;
+	
+	function searchReqParser(o){
+		pages = o.photos.pages;
+		total_imgs = o.photos.total;
+		var items = o.photos.photo;
+		
+		var no_items=items.length;
+		var images = new Array(no_items);
+		for(var i=0;i<no_items;i++){
+			images[i] = {
+				url: 'http://www.flickr.com/photos/' + items[i].owner + '/' + items[i].id,
+				title: items[i].title,
+				ispublic: items[i].ispublic,
+				description: items[i].description._content,
+				latitude: items[i].latitude,
+				longitude: items[i].longitude,
+				url_s: items[i].url_s,
+				url_t: items[i].url_t
+				};
+		}
+		return images;
+	}
+	
+	function addMarkerListener(marker, content_string) {
+		google.maps.event.addListener(marker, 'click', function() {
+															info_window.setPosition(marker.getPosition());
+															info_window.setContent(content_string);
+															info_window.open(map);
+															});
+	}
+	
+	function searchImages(search_url) {
+		var http_request = new XMLHttpRequest();
+		http_request.open( "GET", search_url, true );
+		http_request.send(null);
+		http_request.onreadystatechange = function () {
+			if ( http_request.readyState == 4 ) {
+				if ( http_request.status == 200 ) {
+					var images = eval(http_request.responseText);
+					var no_images = images.length;
+					for(var i=0;i<no_images;i++) {
+						var image = images[i].url_t;
+						var marker = new google.maps.Marker({
+							position: new google.maps.LatLng(images[i].latitude,images[i].longitude),
+							map: map,
+							icon: image,
+							title: images[i].title
+						});
+						var content_string = '<h2>' + images[i].title + '</h2>' +
+							'<img src="' + images[i].url_s + '"/>' +
+							'<br/><br/>' +
+							images[i].description +
+							'<br/><br/>' +
+							'<a href="' + images[i].url + '"> link </a>';
+						
+						addMarkerListener(marker, content_string);
+						}
+				} else {
+					alert( "There was a problem with the URL." );
+				}
+				http_request = null;
+			}
+		};
+	}
+	
+	function initialize() {
+		var myOptions = {
+		  zoom: 1,
+		  center: new google.maps.LatLng(55, -45),
+		  mapTypeId: google.maps.MapTypeId.HYBRID
+		}
+		map = new google.maps.Map(document.getElementById("map_canvas"),
+									  myOptions);
+
+		info_window = new google.maps.InfoWindow();
+		
+		var search_url = 'http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=62f34ca66805285f1cdf66bcb56e4df2&safe_search=1&content_type=1&tags=aurora%2C+borealis&tag_mode=all&min_upload_date='+date_from+'&max_upload_date='+date_to+'&has_geo=1&extras=description%2C+geo%2C+url_t%2C+url_s&per_page='+per_page+'&page='+page+'&format=json&jsoncallback=searchReqParser';
+		searchImages(search_url);
+	}
+</script>
+</head>
+<body onload="initialize()">
+  <div id="map_canvas"></div>
+</body>
+
+</html>
+

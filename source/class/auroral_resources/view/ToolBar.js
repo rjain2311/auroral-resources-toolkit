@@ -111,10 +111,10 @@ qx.Class.define("auroral_resources.view.ToolBar",
         this.add(infoPart);
 
         // Help button
-        var aboutBtn = new qx.ui.toolbar.Button(this.tr("Help"), "icon/22/actions/help-about.png");
-        aboutBtn.setToolTipText(this.tr("Get Help"));
+        var aboutBtn = new qx.ui.toolbar.Button(this.tr("About"), "icon/22/actions/help-about.png");
+        aboutBtn.setToolTipText(this.tr("Credits"));
         aboutBtn.addListener("mouseup", function() {
-            dialog.Dialog.error('TODO: add something here');
+            dialog.Dialog.alert('<h3>Auroral Resources Toolkit</h3><h3>NOAA</h3>Peter Elespuru<br/>Rob Redmon<br/>Eric Kihn<br/><br/><h3>Russian Academy of Science</h3>Dmitry Medvedev<br/>Mikhail Zhizhin<br/>Sasha Godunov<br/><br/><br/>');
         });
         infoPart.add(aboutBtn);
     },

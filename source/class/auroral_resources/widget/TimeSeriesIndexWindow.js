@@ -133,6 +133,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
 
         this.add(this.__plot);
         this.addListener("close", function(evt) { this.destroy() });
+        this.addListener("mouseup", this._rightClick, this);
         this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
         this.__timeBus.getBus().subscribe("time.now", this._nowChangeBusCallback, this);
         this.__timeBus.getBus().subscribe("time.stopDate", this._stopDateChangeBusCallback, this);
@@ -155,6 +156,60 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
         __stopDate : null,
         __plot : null,
         __now : null,
+        
+        //
+        //
+        //
+        _rightClick : function(evt) { 
+            
+            if(evt.isRightPressed()) {
+                
+                var popup = new qx.ui.popup.Popup(new qx.ui.layout.VBox()).set({
+                     autoHide: true
+                });
+                
+                var param = this.__parameter;
+                var start = this.__startDate;
+                var stop = this.__stopDate;
+                var win = this;
+                
+                var data = new qx.ui.form.Button("Download Data");
+                data.addListener("click", function(evt) {
+                    var dlurl = "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+param+"&format=zip&dateFrom="+start+"&dateTo="+stop;
+                    var dlframe = new qx.ui.embed.Iframe("");
+                    dlframe.set({width:0,height:0,decorator:null});
+                    dlframe.setSource(dlurl);
+                    win.add(dlframe);
+                    popup.hide();
+                });
+                
+                var mdata = new qx.ui.form.Button("Download Metadata");
+                mdata.addListener("click", function(evt) {
+                    dialog.Dialog.alert("Coming Soon!");
+                    popup.hide();
+                });
+                
+                var pdf = new qx.ui.form.Button("Download PDF");
+                pdf.addListener("click", function(evt) {
+                    dialog.Dialog.alert("Coming Soon!");
+                    popup.hide();
+                });
+                
+                var svg = new qx.ui.form.Button("Download SVG");
+                svg.addListener("click", function(evt) {
+                    dialog.Dialog.alert("Coming Soon!");
+                    popup.hide();
+                });
+                
+                popup.add(new qx.ui.basic.Label("Options"));
+                popup.add(data);
+                popup.add(mdata);
+                popup.add(pdf);
+                popup.add(svg);
+                popup.placeToMouse(evt);
+                popup.show();            
+            }
+        },
         
         //
         //
