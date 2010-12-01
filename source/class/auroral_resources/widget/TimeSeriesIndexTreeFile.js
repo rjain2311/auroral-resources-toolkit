@@ -57,7 +57,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexTreeFile",
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(parameter, title)
+    construct : function(mddocname, parameter, title)
     {
         this.base(arguments, title);
         this.setDraggable(true);
@@ -65,6 +65,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexTreeFile",
         this.addListener("droprequest", this._dropRequest, this);
         this.__title = title;
         this.__parameter = parameter;
+        this.__mddocname = mddocname;
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
         return this;
     },
@@ -81,6 +82,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexTreeFile",
         __title : null,
         __timeBus : null,
         __parameter : null,
+        __mddocname : null,
 
         _dragStart : function(e) {
             e.addAction("copy");
@@ -93,7 +95,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexTreeFile",
             var type = e.getCurrentType();
             var result = null;
 
-            this.__window = new auroral_resources.widget.TimeSeriesIndexWindow(600, 400, this.__parameter, this.__title);
+            this.__window = new auroral_resources.widget.TimeSeriesIndexWindow(600, 400, this.__parameter, this.__title, this.__mddocname);
 
             if (type === "widget") {
                 result = this.__window;

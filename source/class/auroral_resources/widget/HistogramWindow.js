@@ -78,21 +78,6 @@ qx.Class.define("auroral_resources.widget.HistogramWindow",
             layout: new qx.ui.layout.Grow()
         });
 
-        var xOffset = 0; //((winWidth/2)/2) - 10;
-        var buttonWidth = 75;
-        var buttonHeight = 10;
-
-        var dataButton = new qx.ui.form.Button("Get Data");
-        dataButton.setHeight(buttonHeight);
-        dataButton.setWidth(buttonWidth);
-
-        var metaDataButton = new qx.ui.form.Button("Get Meta");
-        metaDataButton.setHeight(buttonHeight);
-        metaDataButton.setWidth(buttonWidth);
-
-        //this.add(dataButton, {left: xOffset, top: 0});
-        //this.add(metaDataButton, {left: buttonWidth + 5, top: 0});
-
         var start = this.__timeBus.getStartDateForSPIDRWS();
         var stop = this.__timeBus.getStopDateForSPIDRWS();
 

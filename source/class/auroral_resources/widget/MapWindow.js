@@ -66,7 +66,8 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                 decodeURI(argArray[5]), 
                 decodeURI(argArray[6]), 
                 decodeURI(argArray[7]), 
-                decodeURI(argArray[8])
+                decodeURI(argArray[8]),
+                decodeURI(argArray[9])
             );
         }
     },
@@ -77,13 +78,14 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(width, height, mapper, baselayer, period, title)
+    construct : function(width, height, mapper, baselayer, period, title, mddocname)
     {
         this.base(arguments, title);
 
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
         this.__title = title;
         this.__period = period;
+        this.__mddocname = mddocname;
         
         this.set({
             resizable: false,
@@ -95,7 +97,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
             allowMinimize: false,
             showMaximize: false,
             showMinimize: false,
-            status: mapper + ',' + baselayer + ',' + period + ',' + title,
+            status: mapper + ',' + baselayer + ',' + period + ',' + title + ',' + mddocname,
             showClose: true,
             layout: new qx.ui.layout.Grow()
         });
@@ -103,21 +105,6 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         this.setWidth(width);
         this.setHeight(height);
         this.setContentPadding(0,0,0,0);
-
-        var xOffset = 0; //((winWidth/2)/2) - 10;
-        var buttonWidth = 75;
-        var buttonHeight = 10;
-
-        var dataButton = new qx.ui.form.Button("Get Data");
-        dataButton.setHeight(buttonHeight);
-        dataButton.setWidth(buttonWidth);
-
-        var metaDataButton = new qx.ui.form.Button("Get Meta");
-        metaDataButton.setHeight(buttonHeight);
-        metaDataButton.setWidth(buttonWidth);
-
-        //      this.add(dataButton, {left: xOffset, top: 0});
-        //      this.add(metaDataButton, {left: buttonWidth + 5, top: 0});
 
         // maps currently support either google or openlayers based on what was requested
         if(mapper.toString().toLowerCase() == 'openlayers') {
@@ -158,6 +145,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         __base : null,
         __period : null,
         __now : null,
+        __mddocname : null,
 
         //
         //
@@ -165,22 +153,34 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         _rightClick : function(evt) { 
             if(evt.isRightPressed()) {
                 
+                var start = this.__startDate;
+                var stop = this.__stopDate;
+                var mddoc = this.__mddocname;
+                
+                if (mddoc == null || mddoc == '') { 
+                    dialog.Dialog.alert("This widget does not have any additional options.");
+                    return; 
+                }
+                
                 var popup = new qx.ui.popup.Popup(new qx.ui.layout.VBox()).set({
                      autoHide: true
                 });
                 
-                var data = new qx.ui.form.Button("Download Data");
+                var data = new qx.ui.form.Button("Download Ovation Data");
                 data.addListener("click", function(evt) {
-                    dialog.Dialog.alert("Coming Soon!");
+                    var dlurl = "http://www.ngdc.noaa.gov/stp/ovation_prime/data/";
+                    window.open(dlurl,"");
                     popup.hide();
                 });
                 
-                var mdata = new qx.ui.form.Button("Download Metadata");
+                var mdata = new qx.ui.form.Button("View Ovation Metadata");
                 mdata.addListener("click", function(evt) {
-                    dialog.Dialog.alert("Coming Soon!");
+                    var mdurl = "http://spidr.ngdc.noaa.gov/spidrvo/viewdata.do?docname="+mddoc;
+                    window.open(mdurl,"");
                     popup.hide();
                 });
                 
+                /*
                 var pdf = new qx.ui.form.Button("Download PDF");
                 pdf.addListener("click", function(evt) {
                     dialog.Dialog.alert("Coming Soon!");
@@ -192,12 +192,13 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                     dialog.Dialog.alert("Coming Soon!");
                     popup.hide();
                 });
+                */
                 
-                popup.add(new qx.ui.basic.Label("Options"));
+                popup.add(new qx.ui.basic.Label("Additional Options"));
                 popup.add(data);
                 popup.add(mdata);
-                popup.add(pdf);
-                popup.add(svg);
+                //popup.add(pdf);
+                //popup.add(svg);
                 popup.placeToMouse(evt);
                 popup.show();            
             }
