@@ -96,7 +96,7 @@ qx.Class.define("auroral_resources.widget.ExternalImageTreeFile",
             var type = e.getCurrentType();
             var result = null;
 
-            this.__window = new auroral_resources.widget.ExternalImageWindow(400,400, this.__filename, this.__title);
+            this.__window = new auroral_resources.widget.ExternalImageWindow(450,450, this.__filename, this.__title);
 
             if (type === "widget") {
                 result = this.__window;
