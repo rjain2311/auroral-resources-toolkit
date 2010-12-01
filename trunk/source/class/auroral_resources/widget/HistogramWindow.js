@@ -110,6 +110,9 @@ qx.Class.define("auroral_resources.widget.HistogramWindow",
         this.__timeBus.getBus().subscribe("time.stopDate", this._stopDateChangeBusCallback, this);
         */
 
+        this.addListener("close", function(evt) { this.destroy() });
+        this.addListener("mouseup", this._rightClick, this);
+        
         return this;
     },
 
@@ -129,6 +132,15 @@ qx.Class.define("auroral_resources.widget.HistogramWindow",
         __chart : null,
         __now : null,
 
+        //
+        //
+        //
+        _rightClick : function(evt) { 
+            if(evt.isRightPressed()) { 
+                dialog.Dialog.alert('This window does not have any additional options');
+            }
+        },
+        
         //
         // callback for the 'startDate' message channel
         //

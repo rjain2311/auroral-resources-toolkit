@@ -1,4 +1,4 @@
-/* ************************************************************************
+/*************************************************************************
 
 COPYRIGHTS:
 
@@ -42,60 +42,70 @@ Peter Elespuru - peter.elespuru@noaa.gov
 Dmitry Medvedev - dmedv@wdcb.ru
 Mikhail Zhizhin - jjn@wdcb.ru
 Rob Redmon - rob.redmon@noaa.gov
+Sasha Godunov - goduy@mail.ru
 
-************************************************************************ */
+*************************************************************************/
 
-/**
-* The Application's Footer
-*/
-
-qx.Class.define("auroral_resources.view.Footer",
+qx.Class.define("auroral_resources.widget.FlickrImageTreeFile",
 {
-    extend : qx.ui.container.Composite,
+    extend : qx.ui.tree.TreeFile,
 
     /*
     *****************************************************************************
         CONSTRUCTOR
     *****************************************************************************
     */
-
-    construct : function()
+    construct : function(title)
     {
-        this.base(arguments);
-        this.setLayout(new qx.ui.layout.HBox);
-        this.setAppearance("app-header");
+        this.base(arguments, title);
+        this.setDraggable(true);
+        this.addListener("dragstart", this._dragStart, this);
+        this.addListener("droprequest", this._dropRequest, this);
+        this.__title = title;
+        return this;
+    },
 
-        var noaaLink = new qx.ui.basic.Label().set({
-            value: "<a style='color:white;text-decoration:none;' href='http://www.noaa.gov/'>NOAA</a> > ",
-            rich: true
-        });
-        this.add(noaaLink);
 
-        var nesdisLink = new qx.ui.basic.Label().set({
-            value: "<a style='color:white;text-decoration:none;' href='http://www.nesdis.noaa.gov/'>&nbsp;NESDIS</a> > ",
-            rich: true
-        });
-        this.add(nesdisLink);
+    /*
+    *****************************************************************************
+        CLASS VARIABLES AND MEMBERS
+    *****************************************************************************
+    */
+    members :
+    {
+        __window : null,
+        __title : null,
 
-        var ngdcLink = new qx.ui.basic.Label().set({
-            value: "<a style='color:white;text-decoration:none;' href='http://www.ngdc.noaa.gov/'>&nbsp;NGDC</a> > ",
-            rich: true
-        });
-        this.add(ngdcLink);
+        _dragStart : function(e) {
+            e.addAction("copy");
+            e.addAction("move");
+            e.addType("widget");
+        },
 
-        var stpLink = new qx.ui.basic.Label().set({
-            value: "<a style='color:white;text-decoration:none;' href='http://www.ngdc.noaa.gov/stp/'>&nbsp;Solar-Terrestrial Physics</a>",
-            rich: true
-        });
-        this.add(stpLink);
+        _dropRequest : function(e) {
+            var action = e.getCurrentAction();
+            var type = e.getCurrentType();
+            var result = null;
 
-        this.add(new qx.ui.core.Spacer, {flex : 1});
+            this.__window = new auroral_resources.widget.FlickrMapGalleryWindow(600, 400, this.__title);
 
-        var quesLink = new qx.ui.basic.Label().set({
-            value: "<a style='color:white;text-decoration:none;' href='mailto:ionosphere@noaa.gov?Subject=Auroral%20Resources%20Question'>questions: (Rob Redmon) ionosphere@noaa.gov</a>",
-            rich : true
-        });
-        this.add(quesLink);
-
+            if (type === "widget") {
+                result = this.__window;
+                e.addData(type, result);
+            }
+        }
+    },
+    
+    
+    /*
+    *****************************************************************************
+        DESTRUCTOR
+    *****************************************************************************
+    */
+    destruct : function()
+    {
+        // TODO: add destructor code...
     }
+    
+
 });

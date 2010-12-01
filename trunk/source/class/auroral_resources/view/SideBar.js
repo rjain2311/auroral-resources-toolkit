@@ -168,50 +168,51 @@ qx.Class.define("auroral_resources.view.SideBar",
 
             if (index == 0) {
                 var iono = new qx.ui.tree.TreeFolder("Ionosphere");
-                var item = new qx.ui.tree.TreeFolder("foF2");            
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.GA762',"Gakona (GA762) foF2"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.SMJ67',"Sondrestrom (SMJ67) foF2"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.TR170',"Tromso (TR170) foF2"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.NO369',"Norilsk (NO369) foF2"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.BC840',"Boulder (BC840) foF2"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.MW26P',"Mawson (MW26P) foF2"));
+                var item = new qx.ui.tree.TreeFolder("foF2");
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.GA762',"Gakona (GA762) foF2 {MHz}"));
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.SMJ67',"Sondrestrom (SMJ67) foF2 {MHz}"));
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.TR170',"Tromso (TR170) foF2 {MHz}"));
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.NO369',"Norilsk (NO369) foF2 {MHz}"));
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.BC840',"Boulder (BC840) foF2 {MHz}"));
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_foF2.MW26P',"Mawson (MW26P) foF2 {MHz}"));
                 iono.add(item);
                 item = new qx.ui.tree.TreeFolder("h'F");
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.GA762',"Gakona (GA762) h'F"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.SMJ67',"Sondrestrom (SMJ67) h'F"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.TR170',"Tromso (TR170) h'F"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.NO369',"Norilsk (NO369) h'F"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.BC840',"Boulder (BC840) h'F"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.MW26P',"Mawson (MW26P) h'F"));
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.GA762',"Gakona (GA762) h'F {Km}"));
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.SMJ67',"Sondrestrom (SMJ67) h'F {Km}"));
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.TR170',"Tromso (TR170) h'F {Km}"));
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.NO369',"Norilsk (NO369) h'F {Km}"));
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.BC840',"Boulder (BC840) h'F {Km}"));
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('iono_hpF.MW26P',"Mawson (MW26P) h'F {Km}"));
                 iono.add(item);
                 parent.add(iono);
 
                 item = new qx.ui.tree.TreeFolder("Solar");
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('imf_bz.ACE_RT',"ACE Bz"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('vsw_x.ACE_RT',"ACE Flow"));
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('imf_bz.ACE_RT',"ACE Bz {nT}"));
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('vsw_x.ACE_RT',"ACE Flow {Km/s}"));
                 parent.add(item);
 
                 item = new qx.ui.tree.TreeFolder("Geomagnetic Indices");
-                item.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('index_dst', "Dst"));
+                item.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('index_dst', "Dst {nT}"));
                 item.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('index_kp.est', "Kp"));
                 item.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('index_ap', "Ap"));
                 parent.add(item);
 
             } else if (index == 1) {
-                var item = new qx.ui.tree.TreeFolder("Daytime");
-                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'ECS', 'north_nowcast', "Polar Relief Ovation Nowcast"));
-                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'ECS', 'north_forecast', "Polar Relief Ovation Forecast"));
+                var item = new qx.ui.tree.TreeFolder("Ovation Aurora Coastal Relief");
+                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'ECS', 'north_nowcast', "Nowcast {Ergs/cm^2/s}"));
+                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'ECS', 'north_forecast', "Forecast {Ergs/cm^2/s}"));
                 parent.add(item);
 
-                item = new qx.ui.tree.TreeFolder("Nighttime");
-                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'DMSP', 'north_nowcast', "DMSP Ovation Nowcast"));
-                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'DMSP', 'north_forecast', "DMSP Ovation Forecast"));
+                item = new qx.ui.tree.TreeFolder("Ovation Aurora Nighttime Lights");
+                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'DMSP', 'north_nowcast', "Nowcast {Ergs/cm^2/s}"));
+                item.add(new auroral_resources.widget.MapTreeFile('openlayers', 'DMSP', 'north_forecast', "Forecast {Ergs/cm^2/s}"));
                 parent.add(item);
 
             } else if (index == 2) {
                 var item = new qx.ui.tree.TreeFolder("Aurorae");
-                item.add(new auroral_resources.widget.MapTreeFile('olayerskml', 'ECS', '', "Solar Storm Watch Gallery"));
-                item.add(new auroral_resources.widget.ImageryTreeFile("Hand Selected Gallery"));
+                item.add(new auroral_resources.widget.FlickrImageTreeFile("Flickr Map Gallery"));
+                item.add(new auroral_resources.widget.MapTreeFile('olayerskml', 'ECS', '', "Solar Storm Watch Map Gallery"));
+                item.add(new auroral_resources.widget.ImageryTreeFile("User Gallery"));
                 //item.add(new auroral_resources.widget.ImageryTreeFile("Flickr Gallery"));
                 parent.add(item);
 
@@ -265,7 +266,6 @@ qx.Class.define("auroral_resources.view.SideBar",
             calchooseb.addListener("execute", this._startDateChanged, this);
             var cbd = new Date(begin);
             //cbd = new Date(cbd.toUTCString());
-            cbd = new Date(cbd.toTimeString());
             calchooseb.setValue(cbd);
             this.__startChooser = calchooseb;
 
@@ -275,24 +275,24 @@ qx.Class.define("auroral_resources.view.SideBar",
             calchoosee.addListener("execute", this._endDateChanged, this);
             var ced = new Date(end);
             // ced = new Date(ced.toUTCString());
-            ced = new Date(ced.toTimeString());
             calchoosee.setValue(ced);
             this.__stopChooser = calchoosee;
 
             var calpopupb = new qx.ui.popup.Popup(new qx.ui.layout.VBox);
-            calpopupb.setAutoHide(false);
+            calpopupb.setAutoHide(true);
             calpopupb.addListener("mouseup", this._startDateChanged, this);
             calpopupb.add(calchooseb);
             this.__startPopup = calpopupb;
 
             var calpopupe = new qx.ui.popup.Popup(new qx.ui.layout.VBox);
-            calpopupe.setAutoHide(false);
+            calpopupe.setAutoHide(true);
             calpopupe.addListener("mouseup", this._endDateChanged, this);
             calpopupe.add(calchoosee);
             this.__stopPopup = calpopupe;
 
             var calb = new qx.ui.basic.Image("resource/auroral_resources/calico16x18.png");
-            calb.addListener("mouseup", function() {
+            calb.addListener("click", function(evt) {
+                calpopupb.placeToMouse(evt);
                 calpopupb.show();
             });
             calb.addListener("mouseover", function() {
@@ -303,7 +303,8 @@ qx.Class.define("auroral_resources.view.SideBar",
             });
 
             var cale = new qx.ui.basic.Image("resource/auroral_resources/calico16x18.png");
-            cale.addListener("mouseup", function() {
+            cale.addListener("click", function(evt) {
+                calpopupe.placeToMouse(evt);
                 calpopupe.show();
             });
             cale.addListener("mouseover", function() {
