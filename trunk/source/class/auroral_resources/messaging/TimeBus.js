@@ -249,7 +249,10 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         //
         _nowChangeBusCallback : function(e) {
             //alert(parseInt(e.getData()) + '|||' + new Date(parseInt(e.getData())).toUTCString());
-            this.__now = parseInt(e.getData());
+            // round to nearest 5 min
+            var cur = parseInt(e.getData());
+            cur = Math.ceil(cur/(5000*60))*(5000*60);
+            this.__now = cur;
         },
 
         //

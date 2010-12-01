@@ -471,7 +471,7 @@ qx.Class.define("auroral_resources.Application",
             var w = e.getData("widget");
             w.open();
             var x = this.__mouseX - 285; //sub off extra to center it more
-            var y = this.__mouseY - 97; //ditto
+            var y = this.__mouseY - 97;  //ditto
             this.__mainWindow.add( w, { left:x, top:y });
         } // end widgetDropListener
     } // end members

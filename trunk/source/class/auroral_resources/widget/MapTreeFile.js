@@ -54,12 +54,13 @@ qx.Class.define("auroral_resources.widget.MapTreeFile",
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(mapper, baselayer, period, title)
+    construct : function(mddocname, mapper, baselayer, period, title)
     {
         this.base(arguments, title);
         this.setDraggable(true);
         this.addListener("dragstart", this._dragStart, this);
         this.addListener("droprequest", this._dropRequest, this);
+        this.__mddocname = mddocname;
         this.__mapper = mapper;
         this.__baselayer = baselayer;
         this.__title = title;
@@ -82,6 +83,7 @@ qx.Class.define("auroral_resources.widget.MapTreeFile",
         __mapper : null,
         __baseLayer : null,
         __period : null,
+        __mddocname : null,
 
         //
         //
@@ -100,7 +102,7 @@ qx.Class.define("auroral_resources.widget.MapTreeFile",
             var type = e.getCurrentType();
             var result = null;
 
-            this.__window = new auroral_resources.widget.MapWindow(512,512,this.__mapper, this.__baselayer, this.__period, this.__title);
+            this.__window = new auroral_resources.widget.MapWindow(512,512,this.__mapper, this.__baselayer, this.__period, this.__title, this.__mddocname);
 
             if (type === "widget") {
                 result = this.__window;

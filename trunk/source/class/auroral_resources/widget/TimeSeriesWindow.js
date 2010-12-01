@@ -63,7 +63,8 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
                 parseInt(decodeURI(argArray[3])), 
                 parseInt(decodeURI(argArray[4])), 
                 decodeURI(argArray[5]), 
-                decodeURI(argArray[6])
+                decodeURI(argArray[6]),
+                decodeURI(argArray[7])
             );
         }
     },
@@ -74,12 +75,13 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(width, height, parameter, title)
+    construct : function(width, height, parameter, title, mddocname)
     {
         this.base(arguments, title);
 
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
         this.__parameter = parameter;
+        this.__mddocname = mddocname;
         this.__title = title;
 
         this.set({
@@ -88,27 +90,12 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
             showMaximize: false,
             showMinimize: false,
             showClose: true,
-            status: parameter + ',' + title,
+            status: parameter + ',' + title + ',' + mddocname,
             layout: new qx.ui.layout.Grow()
         });
         
         this.setWidth(width);
         this.setHeight(height);
-
-        var xOffset = 0; //((winWidth/2)/2) - 10;
-        var buttonWidth = 75;
-        var buttonHeight = 10;
-
-        var dataButton = new qx.ui.form.Button("Get Data");
-        dataButton.setHeight(buttonHeight);
-        dataButton.setWidth(buttonWidth);
-
-        var metaDataButton = new qx.ui.form.Button("Get Meta");
-        metaDataButton.setHeight(buttonHeight);
-        metaDataButton.setWidth(buttonWidth);
-
-        //this.add(dataButton, {left: xOffset, top: 0});
-        //this.add(metaDataButton, {left: buttonWidth + 5, top: 0});
 
         var start = this.__timeBus.getStartDateForSPIDRWS();
         var stop = this.__timeBus.getStopDateForSPIDRWS();
@@ -152,6 +139,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
     {
         __title : null,
         __parameter : null,
+        __mddocname : null,
         __timeBus : null,
         __startDate : null,
         __stopDate : null,
@@ -169,18 +157,26 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
                      autoHide: true
                 });
                 
+                var param = this.__parameter;
+                var start = this.__startDate;
+                var stop = this.__stopDate;
+                var mddoc = this.__mddocname;
+                
                 var data = new qx.ui.form.Button("Download Data");
                 data.addListener("click", function(evt) {
-                    dialog.Dialog.alert("Coming Soon!");
+                    var dlurl = "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+param+"&format=zip&dateFrom="+start+"&dateTo="+stop;
+                    window.open(dlurl,"");
                     popup.hide();
                 });
                 
-                var mdata = new qx.ui.form.Button("Download Metadata");
+                var mdata = new qx.ui.form.Button("View Metadata");
                 mdata.addListener("click", function(evt) {
-                    dialog.Dialog.alert("Coming Soon!");
+                    var mdurl = "http://spidr.ngdc.noaa.gov/spidrvo/viewdata.do?docname="+mddoc;
+                    window.open(mdurl,"");
                     popup.hide();
                 });
                 
+                /*
                 var pdf = new qx.ui.form.Button("Download PDF");
                 pdf.addListener("click", function(evt) {
                     dialog.Dialog.alert("Coming Soon!");
@@ -192,12 +188,13 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
                     dialog.Dialog.alert("Coming Soon!");
                     popup.hide();
                 });
+                */
                 
-                popup.add(new qx.ui.basic.Label("Options"));
+                popup.add(new qx.ui.basic.Label("Additional Options"));
                 popup.add(data);
                 popup.add(mdata);
-                popup.add(pdf);
-                popup.add(svg);
+                //popup.add(pdf);
+                //popup.add(svg);
                 popup.placeToMouse(evt);
                 popup.show();            
             }
