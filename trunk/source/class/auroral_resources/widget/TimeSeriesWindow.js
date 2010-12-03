@@ -111,8 +111,8 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
                 drawPoints: true,
                 errorBars: false,
                 lables: [title],
-                highlightCircleSize: 7,
-                strokeWidth: 2,
+                highlightCircleSize: 3,
+                strokeWidth: 1,
                 underlayCallback: this._vline,
                 zoomCallback: this._zoom
             }
@@ -267,8 +267,8 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
                     errorBars: false,
                     drawPoints: true,
                     lables: [this.__title],
-                    highlightCircleSize: 7,
-                    strokeWidth: 2,
+                    highlightCircleSize: 3,
+                    strokeWidth: 1,
                     underlayCallback: this._vline,
                     zoomCallback: this._zoom
                 }
@@ -300,8 +300,8 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
                     errorBars: false,
                     drawPoints: true,
                     lables: [this.__title],
-                    highlightCircleSize: 7,
-                    strokeWidth: 2,
+                    highlightCircleSize: 3,
+                    strokeWidth: 1,
                     underlayCallback: this._vline,
                     zoomCallback: this._zoom
                 }
@@ -333,8 +333,8 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
                     errorBars: false,
                     drawPoints: true,
                     lables: [this.__title],
-                    highlightCircleSize: 7,
-                    strokeWidth: 2,
+                    highlightCircleSize: 3,
+                    strokeWidth: 1,
                     underlayCallback: this._vline,
                     zoomCallback: this._zoom
                 }
