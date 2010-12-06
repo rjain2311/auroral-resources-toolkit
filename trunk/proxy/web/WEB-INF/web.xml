@@ -1,0 +1,41 @@
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" version="2.4"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http:/java.sun.com/dtd/web-app_2_3.dtd">
+  
+  <servlet>
+    <servlet-name>SpidrProxy</servlet-name>
+    <servlet-class>ru.gcras.proxy.ProxyServlet</servlet-class>
+    <init-param>
+      <param-name>url</param-name>
+      <param-value>http://spidr.ngdc.noaa.gov/spidr/servlet/GetData2?</param-value>
+    </init-param>
+    <init-param>
+      <param-name>contentType</param-name>
+      <param-value>text/plain</param-value>
+    </init-param>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>LisirdProxy</servlet-name>
+    <servlet-class>ru.gcras.proxy.ProxyServlet</servlet-class>
+    <init-param>
+      <param-name>url</param-name>
+      <param-value>http://lasp.colorado.edu/lisird/tss/sfo_sunspot_indices.json?&amp;</param-value>
+    </init-param>
+    <init-param>
+      <param-name>contentType</param-name>
+      <param-value>text/plain</param-value>
+    </init-param>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>SpidrProxy</servlet-name>
+    <url-pattern>/SpidrProxy/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>LisirdProxy</servlet-name>
+    <url-pattern>/LisirdProxy/*</url-pattern>
+  </servlet-mapping>
+  
+</web-app>
