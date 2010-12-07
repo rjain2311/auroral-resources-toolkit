@@ -198,7 +198,7 @@ qx.Class.define("auroral_resources.view.SideBar",
                 parent.add(item);
                 
                 item = new qx.ui.tree.TreeFolder("LASP (external source)");
-                item.add(new auroral_resources.widget.ProxiedTimeSeriesTreeFile("http://lasp.colorado.edu/lisird/tss/timed_see_ssi.html","Timed SEE SSI"));
+                item.add(new auroral_resources.widget.ProxiedTimeSeriesTreeFile("http://lasp.colorado.edu/lisird/tss/sorce_tsi_6hr.html","SORCE 6hr TSI {W/m^2}"));
                 parent.add(item);
 
             } else if (index == 1) {
@@ -231,7 +231,7 @@ qx.Class.define("auroral_resources.view.SideBar",
                 parent.add(item);
                 
                 item = new qx.ui.tree.TreeFolder("Videos of Aurorae");
-                item.add(new auroral_resources.widget.ExternalVidTreeFile("na","YouTube"));
+                item.add(new auroral_resources.widget.ExternalVidTreeFile("na","Tromso 2009"));
                 parent.add(item);
                 
             } else {
