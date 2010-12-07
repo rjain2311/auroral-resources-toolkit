@@ -46,7 +46,7 @@ Rob Redmon - rob.redmon@noaa.gov
 *************************************************************************/
 
 
-qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
+qx.Class.define("auroral_resources.widget.ProxiedTimeSeriesWindow",
 {
 
     extend : qx.ui.window.Window,
@@ -59,12 +59,11 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
     statics : 
     {
         fromArray : function(argArray) { 
-            return new auroral_resources.widget.TimeSeriesWindow(
+            return new auroral_resources.widget.ProxiedTimeSeriesWindow(
                 parseInt(decodeURI(argArray[3])), 
-                parseInt(decodeURI(argArray[4])), 
+                parseInt(decodeURI(argArray[4])),
                 decodeURI(argArray[5]), 
-                decodeURI(argArray[6]),
-                decodeURI(argArray[7])
+                decodeURI(argArray[6])
             );
         }
     },
@@ -75,12 +74,11 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(width, height, parameter, title, mddocname)
+    construct : function(width, height, title, mddocname)
     {
         this.base(arguments, title);
 
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
-        this.__parameter = parameter;
         this.__mddocname = mddocname;
         this.__title = title;
 
@@ -90,24 +88,25 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
             showMaximize: false,
             showMinimize: false,
             showClose: true,
-            status: parameter + ',' + title + ',' + mddocname,
+            status: title + ',' + mddocname,
             layout: new qx.ui.layout.Grow()
         });
         
         this.setWidth(width);
         this.setHeight(height);
 
-        var start = this.__timeBus.getStartDateForSPIDRWS();
-        var stop = this.__timeBus.getStopDateForSPIDRWS();
+        var start = this.__timeBus.getStartDateForLISIRD();
+        var stop = this.__timeBus.getStopDateForLISIRD();
 
         this.__startDate = start;
         this.__stopDate = stop;
 
         this.__plot = new qxdygraphs.Plot(
-            "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop,
+            "http://spidrd.ngdc.noaa.gov/spidr/LisirdProxy/?time,tsi_1au,tsi_true_earth&time>="+start+"&time<"+stop+"&exclude_missing&format_time(yyyy-MM-dd%20HH:mm)",
             //'resource/auroral_resources/ionofof2.txt',
+            //'resource/auroral_resources/lisird.csv',
             {
-                labelsKMB: true,
+                labelsKMB: false,
                 drawPoints: true,
                 errorBars: false,
                 lables: [title],
@@ -119,9 +118,9 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
         );
 
         this.add(this.__plot);
-        
         this.addListener("close", function(evt) { this.destroy() });
         this.addListener("mouseup", this._rightClick, this);
+        
         this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
         this.__timeBus.getBus().subscribe("time.now", this._nowChangeBusCallback, this);
         this.__timeBus.getBus().subscribe("time.stopDate", this._stopDateChangeBusCallback, this);
@@ -138,14 +137,12 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
     members :
     {
         __title : null,
-        __parameter : null,
         __mddocname : null,
         __timeBus : null,
         __startDate : null,
         __stopDate : null,
         __plot : null,
         __now : null,
-        
 
         //
         //
@@ -157,44 +154,27 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
                      autoHide: true
                 });
                 
-                var param = this.__parameter;
                 var start = this.__startDate;
                 var stop = this.__stopDate;
                 var mddoc = this.__mddocname;
                 
                 var data = new qx.ui.form.Button("Download Data");
                 data.addListener("click", function(evt) {
-                    var dlurl = "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+param+"&format=zip&dateFrom="+start+"&dateTo="+stop;
+                    var dlurl = "http://spidrd.ngdc.noaa.gov/spidr/LisirdProxy/?time,tsi_1au,tsi_true_earth&time>="+start+"&time<"+stop+"&exclude_missing&format_time(yyyy-MM-dd%20HH:mm)";
                     window.open(dlurl,"");
                     popup.hide();
                 });
                 
                 var mdata = new qx.ui.form.Button("View Metadata");
                 mdata.addListener("click", function(evt) {
-                    var mdurl = "http://spidr.ngdc.noaa.gov/spidrvo/viewdata.do?docname="+mddoc;
+                    var mdurl = mddoc;
                     window.open(mdurl,"");
                     popup.hide();
                 });
                 
-                /* 
-                var pdf = new qx.ui.form.Button("Download PDF");
-                pdf.addListener("click", function(evt) {
-                    dialog.Dialog.alert("Coming Soon!");
-                    popup.hide();
-                });
-                
-                var svg = new qx.ui.form.Button("Download SVG");
-                svg.addListener("click", function(evt) {
-                    dialog.Dialog.alert("Coming Soon!");
-                    popup.hide();
-                });
-                */
-                
                 popup.add(new qx.ui.basic.Label("Additional Options"));
                 popup.add(data);
                 popup.add(mdata);
-                //popup.add(pdf);
-                //popup.add(svg);
                 popup.placeToMouse(evt);
                 popup.show();            
             }
@@ -253,17 +233,15 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
             qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
             this.__plot = null;
             
-            var start = this.__timeBus.convertToSPIDRWS(e.getData());
+            var start = this.__timeBus.convertToLISIRD(e.getData());
             this.__start = start;
-            var stop = this.__timeBus.getStopDateForSPIDRWS();
+            var stop = this.__timeBus.getStopDateForLISIRD();
             var now = this.__timeBus.getNow();
-            var parameter = this.__parameter;
             
             this.__plot = new qxdygraphs.Plot(
-                "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop,
-                //'resource/auroral_resources/ionofof2.txt',
+                "http://spidrd.ngdc.noaa.gov/spidr/LisirdProxy/?time,tsi_1au,tsi_true_earth&time>="+start+"&time<"+stop+"&exclude_missing&format_time(yyyy-MM-dd%20HH:mm)",
                 {
-                    labelsKMB: true,
+                    labelsKMB: false,
                     errorBars: false,
                     drawPoints: true,
                     lables: [this.__title],
@@ -286,17 +264,15 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
             qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
             this.__plot = null;
             
-            var start = this.__timeBus.getStartDateForSPIDRWS();
-            var stop = this.__timeBus.convertToSPIDRWS(e.getData());
+            var start = this.__timeBus.getStartDateForLISIRD();
+            var stop = this.__timeBus.convertToLISIRD(e.getData());
             this.__stop = stop;
             var now = this.__timeBus.getNow();
-            var parameter = this.__parameter;
 
             this.__plot = new qxdygraphs.Plot(
-                "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop,
-                //'resource/auroral_resources/ionofof2.txt',
+                "http://spidrd.ngdc.noaa.gov/spidr/LisirdProxy/?time,tsi_1au,tsi_true_earth&time>="+start+"&time<"+stop+"&exclude_missing&format_time(yyyy-MM-dd%20HH:mm)",
                 {
-                    labelsKMB: true,
+                    labelsKMB: false,
                     errorBars: false,
                     drawPoints: true,
                     lables: [this.__title],
@@ -319,17 +295,15 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
             qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
             this.__plot = null;
             
-            var start = this.__timeBus.getStartDateForSPIDRWS();
-            var stop = this.__timeBus.getStopDateForSPIDRWS();
+            var start = this.__timeBus.getStartDateForLISIRD();
+            var stop = this.__timeBus.getStopDateForLISIRD();
             var now = e.getData();
             this.__now = now;
-            var parameter = this.__parameter;
 
             this.__plot = new qxdygraphs.Plot(
-                "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop,            
-                //'resource/auroral_resources/ionofof2.txt',
+                "http://spidrd.ngdc.noaa.gov/spidr/LisirdProxy/?time,tsi_1au,tsi_true_earth&time>="+start+"&time<"+stop+"&exclude_missing&format_time(yyyy-MM-dd%20HH:mm)",
                 {
-                    labelsKMB: true,
+                    labelsKMB: false,
                     errorBars: false,
                     drawPoints: true,
                     lables: [this.__title],

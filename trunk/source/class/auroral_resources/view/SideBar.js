@@ -196,6 +196,10 @@ qx.Class.define("auroral_resources.view.SideBar",
                 item.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('geomInd','index_kp.est', "Kp"));
                 item.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('geomInd','index_ap', "Ap"));
                 parent.add(item);
+                
+                item = new qx.ui.tree.TreeFolder("LASP (external source)");
+                item.add(new auroral_resources.widget.ProxiedTimeSeriesTreeFile("http://lasp.colorado.edu/lisird/tss/timed_see_ssi.html","Timed SEE SSI"));
+                parent.add(item);
 
             } else if (index == 1) {
                 var item = new qx.ui.tree.TreeFolder("Ovation Aurora Coastal Relief");
