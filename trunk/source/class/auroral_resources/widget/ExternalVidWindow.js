@@ -99,7 +99,7 @@ qx.Class.define("auroral_resources.widget.ExternalVidWindow",
         this.addListener("close", function(evt) { this.destroy() });
         this.addListener("mouseup", this._rightClick, this);
         
-        var frame = new qx.ui.embed.Flash("http://www.youtube.com/v/9AoIBt-zgn0?fs=1&amp;hl=en_US");
+        var frame = new qx.ui.embed.Flash(this.__filename);
         this.add(frame);
         
         return this;

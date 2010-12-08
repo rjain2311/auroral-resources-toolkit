@@ -23,7 +23,9 @@
 #asset(qx/icon/${qx.icontheme}/48/status/dialog-information.png)
 #asset(qx/icon/${qx.icontheme}/48/status/dialog-error.png)
 #asset(qx/icon/${qx.icontheme}/48/status/dialog-warning.png)
-
+#asset(qx/icon/${qx.icontheme}/48/actions/help-contents.png)
+#asset(qx/icon/${qx.icontheme}/48/actions/help-about.png)
+ 
 #ignore(dialog.alert)
 #ignore(dialog.error)
 #ignore(dialog.warning)
@@ -104,6 +106,26 @@ qx.Class.define("dialog.Dialog",
         "context"   : context || null,
         "image"     : "icon/48/status/dialog-information.png"
       })).show();      
+    },
+
+    med_alert : function( message, callback, context )
+    {
+      (new dialog.MedAlert({
+        "message"   : message,
+        "callback"  : callback || null,
+        "context"   : context || null,
+        "image"     : "icon/48/actions/help-about.png"
+      })).show();
+    },
+
+    wide_alert : function( message, callback, context )
+    {
+      (new dialog.WideAlert({
+        "message"   : message,
+        "callback"  : callback || null,
+        "context"   : context || null,
+        "image"     : "icon/48/actions/help-contents.png"
+      })).show();
     },
 
     error : function( message, callback, context )

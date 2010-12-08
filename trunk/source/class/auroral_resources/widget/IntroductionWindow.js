@@ -128,7 +128,7 @@ qx.Class.define("auroral_resources.widget.IntroductionWindow",
             this.__content = new qx.ui.embed.Html(this.__html);
             this.__content.setOverflow("auto", "auto");
             this.__content.setDecorator("main");
-            this.__content.setBackgroundColor("white"); 
+            this.__content.setBackgroundColor("#e4e4e4");
             this.__content.setWidth(640);
             this.__content.setHeight(430);
             this.add(this.__content);

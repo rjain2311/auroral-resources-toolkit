@@ -398,10 +398,33 @@ qx.Class.define("auroral_resources.Application",
         //
         //
         _parseQueryStringForWidgets : function() {
+            
+            if (window.location.toString().indexOf("?") == -1) {
+                
+                // add introductory/welcome text
+                var req = new qx.io.remote.Request(
+                    "resource/auroral_resources/static/html/startpage.html",
+                    "GET",
+                    "text/html"
+                );
+
+                // ensure this content is grabbed fresh
+                req.setProhibitCaching(false);
+                req.addListener("completed", gotResponse);
+                req.send();
+
+                function gotResponse(result) {
+                    var html = result.getContent();
+                    window.location = html;
+                }
+                
+                return;
+            }
+            
             // parse get query for initial state modifications
             // check for widget additions
             var i = 0;
-            for (i=0;i<13;i++) {
+            for (i=0;i<42;i++) {
                 var w = getQueryVariable("w"+i);
                 if (w != null) {
                     
