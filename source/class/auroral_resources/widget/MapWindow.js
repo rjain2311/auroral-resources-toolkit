@@ -86,6 +86,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         this.__title = title;
         this.__period = period;
         this.__mddocname = mddocname;
+        this.__mapper = mapper;
         
         this.set({
             resizable: false,
@@ -113,6 +114,8 @@ qx.Class.define("auroral_resources.widget.MapWindow",
             this.add(this._createGoogleMap(baselayer, period, this));
         } else if (mapper.toString().toLowerCase() == 'olayerskml') {
             this.add(this._createOpenLayersMapKML(baselayer, period, this));
+        } else if (mapper.toString().toLowerCase() == 'olayersols') {
+            this.add(this._createOpenLayersMapOLS(baselayer, period, this));
         } else {
             this.add(this._createOpenLayersMap(baselayer, period, this));
         }
@@ -141,7 +144,9 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         __stopDate : null,
         __map : null,
         __ovation : null,
+        __ols : null,
         __baseLayer : null,
+        __mapper : null,
         __base : null,
         __period : null,
         __now : null,
@@ -156,6 +161,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                 var start = this.__startDate;
                 var stop = this.__stopDate;
                 var mddoc = this.__mddocname;
+                var basename = this.__mapper;
                 
                 if (mddoc == null || mddoc == '') { 
                     dialog.Dialog.alert("This widget does not have any additional options.");
@@ -166,14 +172,24 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                      autoHide: true
                 });
                 
-                var data = new qx.ui.form.Button("Download Ovation Data");
+                var data = new qx.ui.form.Button("Download Data");
                 data.addListener("click", function(evt) {
-                    var dlurl = "http://www.ngdc.noaa.gov/stp/ovation_prime/data/";
+                    
+                    var dlurl = '';
+                    if (basename.toLowerCase() === "openlayers") {
+                        dlurl = "http://www.ngdc.noaa.gov/stp/ovation_prime/data/";
+                    } else if (basename.toLowerCase() === "olayersols") {
+                        dlurl = "http://www.ngdc.noaa.gov/dmsp/";
+                    } else {
+                        dlurl = "http://spidr.ngdc.noaa.gov/spidr/";
+                    }
+                    
                     window.open(dlurl,"");
                     popup.hide();
+                    
                 });
                 
-                var mdata = new qx.ui.form.Button("View Ovation Metadata");
+                var mdata = new qx.ui.form.Button("View Metadata");
                 mdata.addListener("click", function(evt) {
                     var mdurl = "http://spidr.ngdc.noaa.gov/spidrvo/viewdata.do?docname="+mddoc;
                     window.open(mdurl,"");
@@ -314,7 +330,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
             if (this.__ovation != null) {
                 this.__map.removeLayer(this.__ovation);
             }
-            
+                        
             layer = this._getOvationOverlay(this.__map, this.__period);
             
             if (layer != null) {
@@ -322,7 +338,55 @@ qx.Class.define("auroral_resources.widget.MapWindow",
             }
             
             this.__ovation = layer;
+            
+            if (this.__ols != null) {
+                this.__map.removeLayer(this.__ols);
+            }
+                        
+            layer = this._getOLSOverlay(this.getAngle(), this.__map);
+            
+            if (layer != null) {
+                this.__map.addLayer(layer);
+            }
+            
+            this.__ols = layer;
         },
+        
+        
+        //
+        //
+        //
+        _getOLSOverlay : function(angle, map) {
+            
+      	    var layer = new OpenLayers.Layer.TMS(
+      	        "DMSP",
+      		    "/spidr/servlet/GetDmspTile/F14200310302135.2/north/"+angle+"/", 
+      		    { 
+      		        type: 'png',
+      		        getURL: get_url, 
+      		        maxExtent : new OpenLayers.Bounds(-12332000.0,-12332000.0,12332000.0,12332000.0),
+      		        maxResolution : 12332000.0 * 2 / 256.0,
+      		        isBaseLayer: false, 
+      		        displayProjection: new OpenLayers.Projection("EPSG:4326")
+      		    }
+      	    );
+            
+            return layer;
+            
+            function get_url(bounds) {
+                var res = map.getResolution();
+                var x = Math.round((bounds.left - this.maxExtent.left) / (res * this.tileSize.w));
+                var y = Math.round((this.maxExtent.top - bounds.top) / (res * this.tileSize.h));
+                var z = map.getZoom();
+                var path = z + "/" + x + "/" + y;
+                var url = this.url;
+                if (url instanceof Array) {
+                    url = this.selectUrl(path, url);
+                }
+                return url + path;
+            }            
+        },
+
         
         //
         //
@@ -449,6 +513,55 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         },      
 
 
+        //
+        //
+        //
+        _createOpenLayersMapOLS : function(baselayer, period, self) {
+            var isle = new qx.ui.core.Widget().set({
+                width: 450,
+                height: 400
+            });
+
+            isle.addListenerOnce("appear", function() {
+                                                
+                var map = new OpenLayers.Map(
+                    isle.getContentElement().getDomElement(),
+                    {
+                        controls: [
+                            new OpenLayers.Control.Navigation(),
+                            new OpenLayers.Control.PanZoomBar(),
+                            new OpenLayers.Control.LayerSwitcher( { 'ascending' : true } ),
+                            new OpenLayers.Control.MousePosition( { element : OpenLayers.Util.getElement("mousePos") })
+                        ], 
+                        displayProjection : new OpenLayers.Projection("EPSG:4326"),
+                        units : 'meters',
+                        numZoomLevels : 4,
+                        zoom: 1
+                    }
+                );
+                
+                self.__map = map;
+
+                // add the base layer
+                var angle = self.getAngle();
+                
+                var base = null;
+                // use the same relief base layer as ovation
+                base = self._getOvationBaseLayer(angle, 'ecs', map, period);
+                map.addLayer(base);
+                
+                self.__ols = self._getOLSOverlay(angle, map);
+                if (self.__ols != null) {
+                    map.addLayer(self.__ols);
+                } 
+                    
+                map.setCenter(new OpenLayers.LonLat(0.0, 0.0), 1);
+            });
+
+            return isle;
+        },
+        
+        
         //
         //
         //

@@ -231,7 +231,7 @@ qx.Class.define("auroral_resources.view.SideBar",
                 parent.add(item);
                 
                 item = new qx.ui.tree.TreeFolder("Videos of Aurorae");
-                item.add(new auroral_resources.widget.ExternalVidTreeFile("na","Tromso 2009"));
+                item.add(new auroral_resources.widget.ExternalVidTreeFile("na","Tromsø Norway, 2009"));
                 parent.add(item);
                 
             } else {
