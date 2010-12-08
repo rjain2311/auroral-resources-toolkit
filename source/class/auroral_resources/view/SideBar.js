@@ -230,8 +230,9 @@ qx.Class.define("auroral_resources.view.SideBar",
                 item.add(new auroral_resources.widget.ImageryTreeFile("User Gallery"));
                 parent.add(item);
                 
-                item = new qx.ui.tree.TreeFolder("Videos of Aurorae");
-                item.add(new auroral_resources.widget.ExternalVidTreeFile("na","Tromsø Norway, 2009"));
+                item = new qx.ui.tree.TreeFolder("Videos of Aurorae");                
+                item.add(new auroral_resources.widget.ExternalVidTreeFile("http://www.youtube.com/v/_Y2gv-MoQx4","Halloween Storm (NASA) 2003"));
+                item.add(new auroral_resources.widget.ExternalVidTreeFile("http://www.youtube.com/v/9AoIBt-zgn0","Tromsø Norway 2009"));
                 parent.add(item);
                 
             } else {

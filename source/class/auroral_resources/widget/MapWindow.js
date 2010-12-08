@@ -123,9 +123,9 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         this.addListener("close", function(evt) { this.destroy() });
         this.addListener("mouseup", this._rightClick, this);
         
-        this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
+        //this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
         this.__timeBus.getBus().subscribe("time.now", this._nowChangeBusCallback, this);
-        this.__timeBus.getBus().subscribe("time.stopDate", this._stopDateChangeBusCallback, this);
+        //this.__timeBus.getBus().subscribe("time.stopDate", this._stopDateChangeBusCallback, this);
 
         return this;
     },
@@ -327,29 +327,33 @@ qx.Class.define("auroral_resources.widget.MapWindow",
             this.__map.addLayer(layer);
             this.__baseLayer = layer;
             
-            if (this.__ovation != null) {
-                this.__map.removeLayer(this.__ovation);
-            }
+            if (this.__mapper.toLowerCase() === "openlayers") {
+                if (this.__ovation != null) {
+                    this.__map.removeLayer(this.__ovation);
+                }
                         
-            layer = this._getOvationOverlay(this.__map, this.__period);
+                layer = this._getOvationOverlay(this.__map, this.__period);
+
+                if (layer != null) {
+                    this.__map.addLayer(layer);
+                }
+
+                this.__ovation = layer;
+                
+            } else if (this.__mapper.toLowerCase() === "olayersols") {
             
-            if (layer != null) {
-                this.__map.addLayer(layer);
+                if (this.__ols != null) {
+                    this.__map.removeLayer(this.__ols);
+                }
+
+                layer = this._getOLSOverlay(this.getAngle(), this.__map);
+
+                if (layer != null) {
+                    this.__map.addLayer(layer);
+                }
+
+                this.__ols = layer;
             }
-            
-            this.__ovation = layer;
-            
-            if (this.__ols != null) {
-                this.__map.removeLayer(this.__ols);
-            }
-                        
-            layer = this._getOLSOverlay(this.getAngle(), this.__map);
-            
-            if (layer != null) {
-                this.__map.addLayer(layer);
-            }
-            
-            this.__ols = layer;
         },
         
         

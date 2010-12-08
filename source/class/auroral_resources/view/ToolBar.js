@@ -52,6 +52,7 @@ Rob Redmon - rob.redmon@noaa.gov
 #asset(qx/icon/Tango/22/actions/view-refresh.png)
 #asset(qx/icon/Tango/22/apps/preferences-theme.png)
 #asset(qx/icon/Tango/22/actions/help-about.png)
+#asset(qx/icon/Tango/22/actions/help-contents.png)
 
 ************************************************************************ */
 
@@ -110,11 +111,54 @@ qx.Class.define("auroral_resources.view.ToolBar",
         var infoPart = new qx.ui.toolbar.Part;
         this.add(infoPart);
 
+        // Tutorial button
+        var tutBtn = new qx.ui.toolbar.Button(this.tr("Tutorial"), "icon/22/actions/help-contents.png");
+        tutBtn.setToolTipText(this.tr("Open a quick start guide"));
+        tutBtn.addListener("mouseup", function() {
+            
+            // add introductory/welcome text
+            var req = new qx.io.remote.Request(
+                "resource/auroral_resources/static/html/IntroductionWindow.html",
+                "GET",
+                "text/html"
+            );
+
+            // ensure this content is grabbed fresh
+            req.setProhibitCaching(false);
+            req.addListener("completed", gotResponse);
+            req.send();
+            
+            function gotResponse(result) {
+                var html = result.getContent();
+                dialog.Dialog.wide_alert(html);
+            }
+        });
+        infoPart.add(tutBtn);
+        
+        // Add a sepearator
+        infoPart.addSeparator();
+
         // Help button
         var aboutBtn = new qx.ui.toolbar.Button(this.tr("About"), "icon/22/actions/help-about.png");
         aboutBtn.setToolTipText(this.tr("Credits"));
         aboutBtn.addListener("mouseup", function() {
-            dialog.Dialog.alert('<h3>Auroral Resources Toolkit</h3>A collection of data, metadata, and visualizations regarding aurorae<br/><h3>NOAA/NGDC</h3>Rob Redmon<br/>Peter Elespuru<br/>Eric Kihn<br/><br/><h3>Russian Academy of Science</h3>Dmitry Medvedev<br/>Mikhail Zhizhin<br/>Sasha Godunov<br/>Dmitry Kokovin<br/><br/><br/>');
+            
+            // add about
+            var req = new qx.io.remote.Request(
+                "resource/auroral_resources/static/html/about.html",
+                "GET",
+                "text/html"
+            );
+
+            // ensure this content is grabbed fresh
+            req.setProhibitCaching(false);
+            req.addListener("completed", gotResponse);
+            req.send();
+            
+            function gotResponse(result) {
+                var html = result.getContent();
+                dialog.Dialog.med_alert(html);
+            }
         });
         infoPart.add(aboutBtn);
     },
