@@ -65,6 +65,12 @@ qx.Class.define("auroral_resources.view.Header",
         this.base(arguments);
         this.setLayout(new qx.ui.layout.HBox);
         this.setAppearance("app-header");
+        this.setPaddingTop(0);
+        this.setPaddingBottom(0);
+        this.setPaddingRight(0);
+        this.setMarginTop(0);
+        this.setMarginBottom(0);
+        this.setMarginRight(0);
 
         // add the logo
         var logo = new qx.ui.basic.Image("resource/auroral_resources/ngdclogo.png");
