@@ -92,7 +92,7 @@ qx.Class.define("auroral_resources.view.Footer",
         this.add(new qx.ui.core.Spacer, {flex : 1});
 
         var quesLink = new qx.ui.basic.Label().set({
-            value: "<a style='color:white;text-decoration:none;' href='mailto:ionosphere@noaa.gov?Subject=Auroral%20Resources%20Question'>questions: (Rob Redmon) ionosphere@noaa.gov</a>",
+            value: "<a style='color:white;text-decoration:none;' href='mailto:ionosphere@noaa.gov?Subject=Auroral%20Resources%20Question'>questions: Rob Redmon</a>",
             rich : true
         });
         this.add(quesLink);
