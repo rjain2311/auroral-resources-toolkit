@@ -125,13 +125,10 @@ qx.Class.define("auroral_resources.view.ToolBar",
 
             // ensure this content is grabbed fresh
             req.setProhibitCaching(false);
-            req.addListener("completed", gotResponse);
+            req.addListener("completed", function(result) {
+                dialog.Dialog.wide_alert(result.getContent());
+            });
             req.send();
-            
-            function gotResponse(result) {
-                var html = result.getContent();
-                dialog.Dialog.wide_alert(html);
-            }
         });
         infoPart.add(tutBtn);
         
@@ -152,13 +149,10 @@ qx.Class.define("auroral_resources.view.ToolBar",
 
             // ensure this content is grabbed fresh
             req.setProhibitCaching(false);
-            req.addListener("completed", gotResponse);
+            req.addListener("completed", function(result){
+                dialog.Dialog.med_alert(result.getContent());
+            });
             req.send();
-            
-            function gotResponse(result) {
-                var html = result.getContent();
-                dialog.Dialog.med_alert(html);
-            }
         });
         infoPart.add(aboutBtn);
     },

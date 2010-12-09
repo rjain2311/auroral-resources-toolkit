@@ -410,14 +410,11 @@ qx.Class.define("auroral_resources.Application",
 
                 // ensure this content is grabbed fresh
                 req.setProhibitCaching(false);
-                req.addListener("completed", gotResponse);
+                req.addListener("completed", function(result) {
+                    window.location = result.getContent();
+                });
                 req.send();
 
-                function gotResponse(result) {
-                    var html = result.getContent();
-                    window.location = html;
-                }
-                
                 return;
             }
             
