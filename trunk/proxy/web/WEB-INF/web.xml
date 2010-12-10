@@ -16,6 +16,19 @@
   </servlet>
   
   <servlet>
+    <servlet-name>SSJ4Proxy</servlet-name>
+    <servlet-class>ru.gcras.proxy.ProxyServlet</servlet-class>
+    <init-param>
+      <param-name>url</param-name>
+      <param-value>http://poseidon.wdcb.ru:8080/spidr/servlet/GetData2?</param-value>
+    </init-param>
+    <init-param>
+      <param-name>contentType</param-name>
+      <param-value>text/plain</param-value>
+    </init-param>
+  </servlet>
+  
+  <servlet>
     <servlet-name>LisirdProxy</servlet-name>
     <servlet-class>ru.gcras.proxy.ProxyServlet</servlet-class>
     <init-param>
@@ -36,6 +49,11 @@
   <servlet-mapping>
     <servlet-name>LisirdProxy</servlet-name>
     <url-pattern>/LisirdProxy/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>SSJ4Proxy</servlet-name>
+    <url-pattern>/SSJ4Proxy/*</url-pattern>
   </servlet-mapping>
   
 </web-app>

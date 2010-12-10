@@ -1,0 +1,171 @@
+<html>
+  <head>
+    <title>Heatmap</title>
+    <link rel="stylesheet" type="text/css" href="ex.css"/>
+    <script type="text/javascript" src="protovis-r3.2.js"></script>
+    <script type="text/javascript" src="heatmap.js"></script>
+    <script type="text/javascript">
+	
+	var date_from = '2010-07-01T00:00:00UTC';
+	var date_to = '2010-07-01T00:01:00UTC';
+	
+	var heatmap_width = 64*16;
+	var heatmap_height = 300;
+	var label_font = "14px sans-serif";
+	var text_margin = 7;
+	var panels_margin = 30;
+	
+	var no_channels = 20;
+	var no_loaded_channels = 0;
+	var heatmap = new Array(no_channels);
+	var max_energy = 3000000;
+	var min_time;
+	var max_time;
+	
+	function getData(reqv_url) {
+		var http_request = new XMLHttpRequest();
+		http_request.open( "GET", reqv_url, true );
+		http_request.send(null);
+		http_request.onreadystatechange = function () {
+			if ( http_request.readyState == 4 ) {
+				var data = eval('(' + http_request.responseText + ')');
+				var curr_channel = parseInt(data.variables[4].name.substr(28)); //DIFF_FLUX_E_ElectronChannel_2
+				heatmap[curr_channel-1] = data.variables[4].values;
+				no_loaded_channels += 1;
+				if (no_loaded_channels == no_channels) {
+					min_time = new Date(data.variables[0].values[0]*86400000);
+					max_time = new Date(data.variables[0].values[data.variables[0].values.length-1]*86400000);
+					drawHeatmap();
+				}
+				http_request = null;
+			}
+		};
+	}
+	function loadData() {
+		for(var i=1;i<=no_channels;i++) {
+			var reqv_url = 'SSJ4Proxy?format=json&callbackID=10&location=ALL&datefrom='+ date_from +'&dateto='+ date_to +'&dataset=DIFF_FLUX_E.ElectronChannel.'+ i +'@Test';
+			getData(reqv_url);
+		}
+	}
+	Array.prototype.min = function() {
+	var min = this[0];
+	var len = this.length;
+	for (var i = 1; i < len; i++) if (this[i] < min) min = this[i];
+	return min;
+	}
+	function drawHeatmap() {
+		var w = heatmap[0].length,
+			h = heatmap.length;
+			
+		var vis = new pv.Panel()
+			.width(heatmap_width)
+			.height(heatmap_height)
+			.margin(panels_margin)
+			.top(panels_margin/2)
+			.antialias(false);
+	
+		var koeff_w = heatmap_width/w;
+		var koeff_h = heatmap_height/h;
+		if (koeff_w > 5) { koeff_w = 5; }
+		if (koeff_h > 5) { koeff_h = 5; }
+		if (koeff_w < 1) { koeff_w = 1; }
+		if (koeff_h < 1) { koeff_h = 1; }
+		
+		vis.add(pv.Image)
+			.imageWidth(w*koeff_w)
+			.imageHeight(h*koeff_h)
+			.image(pv.Scale.linear()
+				.domain(0, .2*max_energy, .4*max_energy, .6*max_energy, .8*max_energy, max_energy)
+				.range('magenta', 'blue', 'cyan', 'green', 'yellow', 'red')
+				.by(function(i, j) heatmap[Math.floor(j/koeff_h)][Math.floor(i/koeff_w)]));
+				
+	var x = pv.Scale.linear(min_time, max_time).range(0,heatmap_width);
+	var y = pv.Scale.linear(0, 20).range(0, heatmap_height);
+	
+	if (heatmap_width/w > 10) {
+		var r = pv.Scale.linear(0, w).range(0,heatmap_width);
+		vis.add(pv.Rule)
+			.data(r.ticks(w))
+			.left(r)
+			.bottom(0)
+			.strokeStyle("black");
+	}
+		
+	vis.add(pv.Rule)
+		.data(y.ticks(21))
+		.bottom(y)
+		.strokeStyle("black");
+		
+	var deltat = max_time-min_time;
+	format = "%m/%d/%y";
+	// delta < 10min
+	if (deltat < 10*60000) { format = "%M:%S"; }
+	// 10min < deltat <= 10h
+	if (10*60000 < deltat && deltat <= 10*3600000) { format = "%H:%M"; }
+	// 10h < deltat
+	if (10*3600000 < deltat) { format = "%d %Hh"; }
+	
+	vis.add(pv.Label)
+		.font(label_font)
+		.data(x.ticks())
+		.left(x)
+		.bottom(0)
+		.textBaseline("top")
+		.textAlign("center")
+		.textMargin(text_margin)
+		.text(pv.Format.date(format));
+		
+	vis.add(pv.Label)
+		.font(label_font)
+		.data([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20])
+		.bottom(y)
+		.textAlign("right")
+		.textBaseline("top")
+		.textMargin(text_margin);
+		
+		vis.render();
+	}
+	</script>
+    <style type="text/css">
+
+body {
+  background: #ccc;
+}
+
+    </style>
+  </head>
+  <body>
+	<div id="center">
+		<script type="text/javascript+protovis">
+			loadData();
+		</script>
+	</div>
+ 	<div id="colorbardiv">
+    <script type="text/javascript+protovis">
+		var vis = new pv.Panel()
+			.margin(panels_margin)
+			.width(heatmap_width)
+			.height(32);
+			
+		vis.add(pv.Bar)
+			.data(pv.range(0, 1, 1/64))
+			.left(function() this.index * heatmap_width/64)
+			.width(heatmap_width/64)
+			.height(32)
+			.fillStyle(pv.Scale.linear(0, .2, .4, .6, .8, 1).range('magenta', 'blue', 'cyan', 'green', 'yellow', 'red'));
+			
+		var x = pv.Scale.linear(0,max_energy).range(0,heatmap_width);
+		vis.add(pv.Label)
+			.data(x.ticks())
+			.left(x)
+			.bottom(0)
+			.font(label_font)
+			.textBaseline("top")
+			.textAlign("center")
+			.textMargin(text_margin);
+			
+		vis.render();
+    </script>
+	</div>
+ </body>
+</html>
