@@ -202,11 +202,17 @@ qx.Class.define("auroral_resources.view.SideBar",
                 parent.add(item);
 
             } else if (index == 1) {
-                var item = new qx.ui.tree.TreeFolder("Ovation Aurora Coastal Relief");
+                
+                var item = new qx.ui.tree.TreeFolder("Ovation Prime Real-Time");
+                item.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_nowcast_aacgm.png","Ovation Prime Real-Time Nowcast {Ergs/cm^2/s}"));
+                item.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_forecast_aacgm.png","Ovation Prime Real-Time Forecast {Ergs/cm^2/s}"));
+                parent.add(item);
+                
+                item = new qx.ui.tree.TreeFolder("Ovation Aurora Coastal Relief");
                 item.add(new auroral_resources.widget.MapTreeFile('21EFE0E5-C280-9A20-D309-61938C843585','openlayers', 'ECS', 'north_nowcast', "Nowcast {Ergs/cm^2/s}"));
                 item.add(new auroral_resources.widget.MapTreeFile('21EFE0E5-C280-9A20-D309-61938C843585','openlayers', 'ECS', 'north_forecast', "Forecast {Ergs/cm^2/s}"));
                 parent.add(item);
-
+                
                 item = new qx.ui.tree.TreeFolder("Ovation Aurora Nighttime Lights");
                 item.add(new auroral_resources.widget.MapTreeFile('21EFE0E5-C280-9A20-D309-61938C843585','openlayers', 'DMSP', 'north_nowcast', "Nowcast {Ergs/cm^2/s}"));
                 item.add(new auroral_resources.widget.MapTreeFile('21EFE0E5-C280-9A20-D309-61938C843585','openlayers', 'DMSP', 'north_forecast', "Forecast {Ergs/cm^2/s}"));

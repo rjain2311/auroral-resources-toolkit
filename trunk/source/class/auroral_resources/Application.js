@@ -171,6 +171,7 @@ qx.Class.define("auroral_resources.Application",
 
         /**
         *****************************************************************************
+        * Ensure the time messaging bus is in a good inital state
         *****************************************************************************
         */
         initializeTimeBus : function()
@@ -292,14 +293,19 @@ qx.Class.define("auroral_resources.Application",
         }, // end buildGui
         
         //
-        //
+        // empty the workspace, nuke all widgets
         //
         emptyWorkspace : function() {
             this.__mainWindow.removeAll();
         },
 
         //
+        // parse the workspace for widgets and build a URL that can be copied+pasted
+        // and shared via email etc.
         //
+        // TODO: add server side serialization of the workspace so that sharing
+        // doesn't involve such a long URL... as it stands now, it's parsed
+        // and handled entirely from the client.
         //
         shareUrl : function() {
             
@@ -369,7 +375,7 @@ qx.Class.define("auroral_resources.Application",
         }, // end shareUrl
 
         //
-        //
+        // does the request include modifications to time ?
         //
         _parseQueryStringForTimes : function() {
             // check for time mods
@@ -395,12 +401,21 @@ qx.Class.define("auroral_resources.Application",
         },
 
         //
-        //
+        // does the request include any widgets 
         //
         _parseQueryStringForWidgets : function() {
             
+            //
+            // either the user has requested nothing...
+            //
             if (window.location.toString().indexOf("?") == -1) {
                 
+                //
+                // IE bombs on this window.location via AJAX call...
+                // gotta build the UI manually afterall when doing
+                // the initial page redirect :(
+                //
+                /*
                 // add introductory/welcome text
                 var req = new qx.io.remote.Request(
                     "resource/auroral_resources/static/html/startpage.html",
@@ -414,43 +429,73 @@ qx.Class.define("auroral_resources.Application",
                     window.location = result.getContent();
                 });
                 req.send();
+                */
+                
+                var mW = this.__mainWindow;
+                var wD = this.__widgets;
+                
+                var pieces = [0,210,"TimeSeriesWindow",446,214,"imf_bz.ACE_RT","ACE%20Bz%20%7BnT%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
+                addWidget(stringToClass, mW, pieces, wD);
+                
+                pieces = [2,424,"TimeSeriesIndexWindow",444,204,"index_kp.est","Kp","geomInd"];
+                addWidget(stringToClass, mW, pieces, wD);
+                
+                pieces = [-3,629,"TimeSeriesWindow",449,152,"iono_foF2.BC840","Boulder%20(BC840)%20foF2%20%7BMHz%7D","IonoStationsBC840"];
+                addWidget(stringToClass, mW, pieces, wD);
+                
+                pieces = [-1,783,"TimeSeriesWindow",449,163,"iono_foF2.GA762","Gakona%20(GA762)%20foF2%20%7BMHz%7D","IonoStationsGA762"];
+                addWidget(stringToClass, mW, pieces, wD);
 
+                pieces = [1,0,"TimeSeriesWindow",444,209,"vsw_x.ACE_RT","ACE%20Flow%20%7BKm/s%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
+                addWidget(stringToClass, mW, pieces, wD);
+                
+                pieces = [446,1,"ExternalImageWindow",454,479,"http://www.swpc.noaa.gov/pmap/gif/pmapN.gif","Northern%20Statistical%20Auroral%20Oval"];
+                addWidget(stringToClass, mW, pieces, wD);
+                
+                pieces = [447,480,"ExternalImageWindow",452,477,"http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_nowcast_aacgm.png","Ovation%20Prime%20Real-Time%20Nowcast"];
+                addWidget(stringToClass, mW, pieces, wD);
+                
                 return;
-            }
+                
+            //
+            // or they've requested a specific layout/workspace
+            //
+            } else {
             
-            // parse get query for initial state modifications
-            // check for widget additions
-            var i = 0;
-            for (i=0;i<42;i++) {
-                var w = getQueryVariable("w"+i);
-                if (w != null) {
-                    
-                    // parse
-                    var pieces = qx.util.StringSplit.split(w,',');
-                    
-                    // instantiate
-                    var x = parseInt(pieces[0]);
-                    var y = parseInt(pieces[1]);
-                    var className = pieces[2];
-                    var instance = stringToClass("auroral_resources.widget."+className);
-                    var win = instance.fromArray(pieces);
-                    win.open();
-                    
-                    // add
-                    this.__mainWindow.add(win, { left: x, top: y });
-                    
-                    var wid = x + ',' + y + ',' + className;
-                    var j = 3;
-                    for(j=3;j<pieces.length;j++) {
-                        wid = wid + ',' + pieces[j];
+                // parse get query for initial state modifications
+                // check for widget additions
+                var i = 0;
+                for (i=0;i<42;i++) {
+                    var w = getQueryVariable("w"+i);
+                    if (w != null) {
+
+                        // parse
+                        var pieces = qx.util.StringSplit.split(w,',');
+
+                        // instantiate
+                        var x = parseInt(pieces[0]);
+                        var y = parseInt(pieces[1]);
+                        var className = pieces[2];
+                        var instance = stringToClass("auroral_resources.widget."+className);
+                        var win = instance.fromArray(pieces);
+                        win.open();
+
+                        // add
+                        this.__mainWindow.add(win, { left: x, top: y });
+
+                        var wid = x + ',' + y + ',' + className;
+                        var j = 3;
+                        for(j=3;j<pieces.length;j++) {
+                            wid = wid + ',' + pieces[j];
+                        }
+
+                        this.__widgets.push(wid);
+                    } else {
+                        // do nothing
                     }
-                    
-                    this.__widgets.push(wid);
-                } else {
-                    // do nothing
                 }
             }
-
+            
             function getQueryVariable(variable) { 
                 var query = window.location.search.substring(1); 
                 var vars = query.split("&"); 
@@ -472,7 +517,22 @@ qx.Class.define("auroral_resources.Application",
                     throw new Error("function not found");
                 }
                 return  fn;
-            };            
+            }
+            
+            function addWidget(stringToClass, mainWindow, pieces, widgets) {
+                var prfx = "auroral_resources.widget.";
+                var instance = stringToClass(prfx+pieces[2]);
+                var win = instance.fromArray(pieces);
+                win.open();
+                mainWindow.add(win, { left: pieces[0], top: pieces[1] });
+                var wid = x + ',' + y + ',' + pieces[2];
+                var j = 3;
+                for(j=3;j<pieces.length;j++) {
+                    wid = wid + ',' + pieces[j];
+                }
+                widgets.push(wid);
+            }
+            
         },
         
         //
