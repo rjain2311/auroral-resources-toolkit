@@ -436,28 +436,28 @@ qx.Class.define("auroral_resources.Application",
                 var pieces = [];
                 
                 // IE bombs on the volume of data in these ACE data sets
-                // don't add them if IE until this is resolved
+                // don't add them if IE until this is resolved 
                 if (!qx.bom.client.Engine.MSHTML) {
-                    pieces = [0,0,"TimeSeriesWindow",444,209,"vsw_x.ACE_RT","ACE%20Flow%20%7BKm/s%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
+                    pieces = [0,487,"TimeSeriesWindow",445,209,"vsw_x.ACE_RT","ACE%20Flow%20%7BKm/s%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
                     addWidget(stringToClass, mW, pieces, wD);
 
-                    pieces = [0,210,"TimeSeriesWindow",446,214,"imf_bz.ACE_RT","ACE%20Bz%20%7BnT%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
+                    pieces = [0,684,"TimeSeriesWindow",445,197,"imf_bz.ACE_RT","ACE%20Bz%20%7BnT%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
                     addWidget(stringToClass, mW, pieces, wD);
                 }
                 
-                pieces = [0,424,"TimeSeriesIndexWindow",444,204,"index_kp.est","Kp","geomInd"];
+                pieces = [0,0,"TimeSeriesIndexWindow",445,161,"index_kp.est","Kp","geomInd"];
                 addWidget(stringToClass, mW, pieces, wD);
                 
-                pieces = [0,629,"TimeSeriesWindow",449,152,"iono_foF2.BC840","Boulder%20(BC840)%20foF2%20%7BMHz%7D","IonoStationsBC840"];
+                pieces = [0,161,"TimeSeriesWindow",445,161,"iono_foF2.BC840","Boulder%20(BC840)%20foF2%20%7BMHz%7D","IonoStationsBC840"];
                 addWidget(stringToClass, mW, pieces, wD);
                 
-                pieces = [0,783,"TimeSeriesWindow",449,163,"iono_foF2.GA762","Gakona%20(GA762)%20foF2%20%7BMHz%7D","IonoStationsGA762"];
+                pieces = [0,321,"TimeSeriesWindow",445,161,"iono_foF2.GA762","Gakona%20(GA762)%20foF2%20%7BMHz%7D","IonoStationsGA762"];
                 addWidget(stringToClass, mW, pieces, wD);
                 
-                pieces = [446,0,"ExternalImageWindow",454,479,"http://www.swpc.noaa.gov/pmap/gif/pmapN.gif","Northern%20Statistical%20Auroral%20Oval"];
+                pieces = [446,0,"ExternalImageWindow",456,506,"http://www.swpc.noaa.gov/pmap/gif/pmapN.gif","Northern%20Statistical%20Auroral%20Oval"];
                 addWidget(stringToClass, mW, pieces, wD);
                 
-                pieces = [447,480,"ExternalImageWindow",452,477,"http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_nowcast_aacgm.png","Ovation%20Prime%20Real-Time%20Nowcast"];
+                pieces = [447,480,"ExternalImageWindow",454,504,"http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_nowcast_aacgm.png","Ovation%20Prime%20Real-Time%20Nowcast"];
                 addWidget(stringToClass, mW, pieces, wD);
                 
                 return;
