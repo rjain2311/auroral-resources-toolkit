@@ -186,10 +186,12 @@ qx.Class.define("auroral_resources.view.SideBar",
                 iono.add(item);
                 parent.add(iono);
 
-                item = new qx.ui.tree.TreeFolder("Solar");
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','imf_bz.ACE_RT',"ACE Bz {nT}"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','vsw_x.ACE_RT',"ACE Flow {Km/s}"));
-                parent.add(item);
+                if (!qx.bom.client.Engine.MSHTML && qx.bom.client.Engine.NAME != "mshtml") {
+                    item = new qx.ui.tree.TreeFolder("Solar");
+                    item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','imf_bz.ACE_RT',"ACE Bz {nT}"));
+                    item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','vsw_x.ACE_RT',"ACE Flow {Km/s}"));
+                    parent.add(item);
+                }
 
                 item = new qx.ui.tree.TreeFolder("Geomagnetic Indices");
                 item.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('geomInd','index_dst', "Dst {nT}"));

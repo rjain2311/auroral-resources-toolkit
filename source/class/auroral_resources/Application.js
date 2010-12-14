@@ -437,7 +437,7 @@ qx.Class.define("auroral_resources.Application",
                 
                 // IE bombs on the volume of data in these ACE data sets
                 // don't add them if IE until this is resolved 
-                if (!qx.bom.client.Engine.MSHTML) {
+                if (!qx.bom.client.Engine.MSHTML && qx.bom.client.Engine.NAME != "mshtml") {
                     pieces = [0,487,"TimeSeriesWindow",445,209,"vsw_x.ACE_RT","ACE%20Flow%20%7BKm/s%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
                     addWidget(stringToClass, mW, pieces, wD);
 
@@ -459,7 +459,7 @@ qx.Class.define("auroral_resources.Application",
                 
                 pieces = [447,480,"ExternalImageWindow",454,504,"http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_nowcast_aacgm.png","Ovation%20Prime%20Real-Time%20Nowcast"];
                 addWidget(stringToClass, mW, pieces, wD);
-                
+                            
                 return;
                 
             //
