@@ -434,7 +434,7 @@ qx.Class.define("auroral_resources.Application",
                 var mW = this.__mainWindow;
                 var wD = this.__widgets;
                 var pieces = [];
-                
+                                
                 // IE bombs on the volume of data in these ACE data sets
                 // don't add them if IE until this is resolved 
                 if (!qx.bom.client.Engine.MSHTML && qx.bom.client.Engine.NAME != "mshtml") {
@@ -451,7 +451,7 @@ qx.Class.define("auroral_resources.Application",
                 pieces = [0,161,"TimeSeriesWindow",445,161,"iono_foF2.BC840","Boulder%20(BC840)%20foF2%20%7BMHz%7D","IonoStationsBC840"];
                 addWidget(stringToClass, mW, pieces, wD);
                 
-                pieces = [0,321,"TimeSeriesWindow",445,161,"iono_foF2.GA762","Gakona%20(GA762)%20foF2%20%7BMHz%7D","IonoStationsGA762"];
+                pieces = [0,321,"TimeSeriesWindow",445,161,"iono_foF2.TR170","Tromso%20(TR170)%20foF2%20%7BMHz%7D","IonoStationsTR170"];
                 addWidget(stringToClass, mW, pieces, wD);
                 
                 pieces = [446,0,"ExternalImageWindow",456,506,"http://www.swpc.noaa.gov/pmap/gif/pmapN.gif","Northern%20Statistical%20Auroral%20Oval"];
@@ -466,6 +466,25 @@ qx.Class.define("auroral_resources.Application",
             // or they've requested a specific layout/workspace
             //
             } else {
+                
+                //
+                // handle special initial pages
+                // 
+                var mW = this.__mainWindow;
+                var wD = this.__widgets;
+                var pieces = [];
+                var special = getQueryVariable("special");
+                if (special != null) {
+                    
+                    if (special == "chapman2011") {
+                        pieces = [0,0,"LocalImageGalleryWindow",820,650,"Chapman%20Conference%202011%20User%20Gallery"];
+                        addWidget(stringToClass, mW, pieces, wD);
+                        //
+                        // EXIT AFTER DISPLAYING SPECIAL WIDGET
+                        //
+                        return;
+                    }
+                }                
             
                 // parse get query for initial state modifications
                 // check for widget additions

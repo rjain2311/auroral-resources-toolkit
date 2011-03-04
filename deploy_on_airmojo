@@ -5,4 +5,6 @@ rm -fr build &&\
 ./generate.py build &&\
 cp -pR build ../ar &&\
 cp -pR inspector ../ar/ &&\
-cp source/inspector.html ../ar/
+cp source/inspector.html ../ar/ &&\
+find ../ar -name '.svn' | xargs rm -fr &&\
+echo "w00t"
