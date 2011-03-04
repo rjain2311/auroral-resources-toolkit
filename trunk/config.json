@@ -76,7 +76,12 @@
 
         {
           "manifest" : "contrib/QxDyGraphs/trunk/Manifest.json"
+        },
+
+        {
+          "manifest" : "contrib/QxGalleria/trunk/Manifest.json"
         }
+
       ]
     },
 

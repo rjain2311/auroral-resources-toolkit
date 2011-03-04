@@ -45,7 +45,13 @@ Rob Redmon - rob.redmon@noaa.gov
 
 *************************************************************************/
 
+/*
+#asset(galleria/*)
+*/
 
+//
+//
+//
 qx.Class.define("auroral_resources.widget.LocalImageGalleryWindow",
 {
 
@@ -75,8 +81,6 @@ qx.Class.define("auroral_resources.widget.LocalImageGalleryWindow",
     */
     construct : function(width, height, title)
     {
-        title = title + ' (coming soon, submit your photos now!)';
-        
         this.base(arguments, title);
 
         this.set({
@@ -86,17 +90,30 @@ qx.Class.define("auroral_resources.widget.LocalImageGalleryWindow",
             showMinimize: false,
             showClose: true,
             status: title,
+            height: height,
+            width: width,
             layout: new qx.ui.layout.Grow()
         });
-        
-        /* for now ignore width, height given
-        this.setWidth(width);
-        this.setHeight(height);
-        */
 
-        // hard coded example. need a JSON mapping of what's in the local folder 
-        // so it can be randomly walked
-        this.add(new qx.ui.basic.Image("resource/auroral_resources/imagery/Milner.jpg"));
+        /*
+        var data = [
+            {
+                image:'/resource/auroral_resources/chapman2011/20110301_022851_JFS.jpg',
+                link:'/resource/auroral_resources/chapman2011/20110301_022851_JFS.jpg'
+            }
+        ];
+
+        var options = [{data_source: data, width: 800, height: 600 }];
+        var html = new qx.ui.embed.Html();
+//?!?!        this.setHtml("<div id='gallery'/>");
+        this.__gallery = new qxgalleria.Gallery("gallery", data, options);
+        this.add(this.__gallery);
+        */
+        
+        var frame = new qx.ui.embed.ThemedIframe();
+        frame.setSource("resource/auroral_resources/static/html/galleria_images.html");
+        this.add(frame);
+        
         this.addListener("close", function(evt) { this.destroy() });
         this.addListener("mouseup", this._rightClick, this);
 
@@ -111,12 +128,15 @@ qx.Class.define("auroral_resources.widget.LocalImageGalleryWindow",
     */
     members :
     {
+        __title : null,
+        __gallery : null,        
+        
         //
         //
         //
         _rightClick : function(evt) { 
             if(evt.isRightPressed()) { 
-                dialog.Dialog.alert('This window does not have any additional options');
+                dialog.Dialog.alert('ALL RIGHTS TO CONTRIBUTED PHOTOS ARE RETAINED BY THE ORIGINAL PHOTOGRAPHER!');
             }
         }
     },

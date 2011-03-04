@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+rm -fr ar &&\
+rm -fr build &&\
+./generate.py build &&\
+cp -pR build ar &&\
+cp -pR inspector ar/ &&\
+cp source/inspector.html ar/ &&\
+find ar -name '.svn' | xargs rm -fr &&\
+rm -f ar.tar &&\
+tar cf ar.tar ar &&\
+rm -f ar.tar.bz2 &&\
+bzip2 ar.tar &&\
+rm -fr ar &&\
+echo "w00t" &&\
+exit 0
+
+echo "UH OH!"
+exit 1

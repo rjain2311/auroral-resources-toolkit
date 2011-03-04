@@ -233,9 +233,9 @@ qx.Class.define("auroral_resources.view.SideBar",
 
             } else if (index == 2) {
                 var item = new qx.ui.tree.TreeFolder("Photos of Aurorae");
+                item.add(new auroral_resources.widget.ImageryTreeFile("User Gallery"));
                 item.add(new auroral_resources.widget.FlickrImageTreeFile("Flickr Map Gallery"));
                 item.add(new auroral_resources.widget.MapTreeFile('','olayerskml', 'ECS', '', "Solar Storm Watch Map Gallery"));
-                item.add(new auroral_resources.widget.ImageryTreeFile("User Gallery"));
                 parent.add(item);
                 
                 item = new qx.ui.tree.TreeFolder("Videos of Aurorae");                

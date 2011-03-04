@@ -86,7 +86,7 @@ qx.Class.define("auroral_resources.widget.ImageryTreeFile",
             var type = e.getCurrentType();
             var result = null;
 
-            this.__window = new auroral_resources.widget.LocalImageGalleryWindow(256, 256, this.__title);
+            this.__window = new auroral_resources.widget.LocalImageGalleryWindow(820, 650, this.__title);
 
             if (type === "widget") {
                 result = this.__window;

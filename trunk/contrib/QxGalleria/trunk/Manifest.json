@@ -1,0 +1,34 @@
+{
+  "info" : 
+  {
+    "name" : "QxGalleria",
+
+    "summary" : "QxGalleria Contribution",
+    "description" : "Makes Galleria JavaScript library available to Qooxdoo applications",
+    
+    "homepage" : "http://contrib.qooxdoo.org/project/QxGalleria",
+
+    "license" : "LGPL/EPL",
+    "authors" : 
+    [
+      {
+        "name" : "Peter Elespuru",
+        "email" : "peter.elespuru@noaa.gov"
+      }
+    ],
+
+    "version" : "trunk",
+    "qooxdoo-versions": ["1.3"]
+  },
+  
+  "provides" : 
+  {
+    "namespace"   : "qxgalleria",
+    "encoding"    : "utf-8",
+    "class"       : "source/class",
+    "resource"    : "source/resource",
+    "translation" : "source/translation",
+    "type"        : "contribution"
+  }
+}
+
