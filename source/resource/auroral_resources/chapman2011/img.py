@@ -1,20 +1,11 @@
 #!/usr/bin/env python
 
-"""
-    {
-        image: 'img1.jpg',
-        thumb: 'thumb1.jpg',
-        title: 'my first image',
-        description: 'Lorem ipsum caption',
-        link: 'http://domain.com'
-    },
-"""
-
 import glob, csv, re
 
 images = []
 thumbs = []
-meta = {}
+metaTitle = {}
+metaDescr = {}
 
 # grab them all
 raw_images = glob.glob('*.jpg')
@@ -26,25 +17,33 @@ for image in raw_images:
   if match != None:
     thumbs.append(image)
 
+# nifty list comprehension to get only the ones that aren't thumbs
 images = [img for img in raw_images if img not in thumbs]
 
 # grab the metadata for later reference
 metadata = csv.reader(open("img.csv", "rb"))
 for row in metadata:
-  meta[row[0]] = row[2]
+  metaTitle[row[0]] = row[1]
+  metaDescr[row[0]] = row[2]
 
 # spit out the list
 print "var data = ["
 
 for image in sorted(images):
   img = str(image).strip()
+  
+  # normal sized thumb
+  im = Image.open(img)
+  im.thumbnail((128, 128), Image.ANTIALIAS)
+  im.save("T_" + infile, "JPEG")
+  
   thm = img.replace('.jpg', '_thumb.jpg')
   sthm = img.replace('.jpg', '_smallthumb.jpg')
   print "    {\n        image:'/art/resource/auroral_resources/chapman2011/"+thm+\
   "',\n        link:'/art/resource/auroral_resources/chapman2011/"+img+\
   "',\n        thumb:'/art/resource/auroral_resources/chapman2011/"+sthm+\
-  "',\n        title:'"+img+\
-  "',\n        description:'"+meta[img]+\
+  "',\n        title:'"+metaTitle[img]+\
+  "',\n        description:'"+metaDescr[img]+\
   "'\n    },\n"
 
 print "];\n"
