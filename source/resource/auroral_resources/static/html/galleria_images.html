@@ -15,381 +15,2236 @@
 
             Galleria.loadTheme('/art/resource/galleria/themes/classic/galleria.classic.min.js');
 
-			/*
-			    {
-			        image: 'img1.jpg',
-			        thumb: 'thumb1.jpg',
-			        title: 'my first image',
-			        description: 'Lorem ipsum caption',
-			        link: 'http://domain.com'
-			    },
-			*/
-			
 			var data = [
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_022851_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_022851_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110227_152121-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110227_152121-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110227_152121-1000_RJR_smallthumb.jpg',
+			        title:'20110227_152121-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110227_152432-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110227_152432-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110227_152432-1000_RJR_smallthumb.jpg',
+			        title:'20110227_152432-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110227_152524-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110227_152524-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110227_152524-1000_RJR_smallthumb.jpg',
+			        title:'20110227_152524-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110227_152619-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110227_152619-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110227_152619-1000_RJR_smallthumb.jpg',
+			        title:'20110227_152619-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110227_152826-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110227_152826-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110227_152826-1000_RJR_smallthumb.jpg',
+			        title:'20110227_152826-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110227_154348-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110227_154348-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110227_154348-1000_RJR_smallthumb.jpg',
+			        title:'20110227_154348-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110227_154443-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110227_154443-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110227_154443-1000_RJR_smallthumb.jpg',
+			        title:'20110227_154443-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110227_154453-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110227_154453-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110227_154453-1000_RJR_smallthumb.jpg',
+			        title:'20110227_154453-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110227_154829-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110227_154829-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110227_154829-1000_RJR_smallthumb.jpg',
+			        title:'20110227_154829-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110227_154931-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110227_154931-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110227_154931-1000_RJR_smallthumb.jpg',
+			        title:'20110227_154931-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110227_154939-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110227_154939-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110227_154939-1000_RJR_smallthumb.jpg',
+			        title:'20110227_154939-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110227_155113-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110227_155113-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110227_155113-1000_RJR_smallthumb.jpg',
+			        title:'20110227_155113-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110228_002835-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110228_002835-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110228_002835-1000_FB_smallthumb.jpg',
+			        title:'20110228_002835-1000_FB.jpg',
+			        description:'Flight to Fairbanks'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_023416_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_023416_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110228_003805-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110228_003805-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110228_003805-1000_FB_smallthumb.jpg',
+			        title:'20110228_003805-1000_FB.jpg',
+			        description:'Flight to Fairbanks'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_023529_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_023529_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110228_003947-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110228_003947-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110228_003947-1000_FB_smallthumb.jpg',
+			        title:'20110228_003947-1000_FB.jpg',
+			        description:'Flight to Fairbanks'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_024026_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_024026_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110228_004511-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110228_004511-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110228_004511-1000_FB_smallthumb.jpg',
+			        title:'20110228_004511-1000_FB.jpg',
+			        description:'Flight to Fairbanks'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_033608_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_033608_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110228_015527-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110228_015527-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110228_015527-1000_FB_smallthumb.jpg',
+			        title:'20110228_015527-1000_FB.jpg',
+			        description:'Flight to Fairbanks'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_033752_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_033752_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110228_020211-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110228_020211-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110228_020211-1000_FB_smallthumb.jpg',
+			        title:'20110228_020211-1000_FB.jpg',
+			        description:'Flight to Fairbanks'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_033847_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_033847_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110228_033027-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110228_033027-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110228_033027-1000_FB_smallthumb.jpg',
+			        title:'20110228_033027-1000_FB.jpg',
+			        description:'Flight to Fairbanks'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_033923_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_033923_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110228_205530-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110228_205530-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110228_205530-1000_JFS_smallthumb.jpg',
+			        title:'20110228_205530-1000_JFS.jpg',
+			        description:''
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_034329_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_034329_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110228_232851-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110228_232851-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110228_232851-1000_JFS_smallthumb.jpg',
+			        title:'20110228_232851-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_034516_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_034516_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110228_233416-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110228_233416-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110228_233416-1000_JFS_smallthumb.jpg',
+			        title:'20110228_233416-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_035933_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_035933_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110228_233529-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110228_233529-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110228_233529-1000_JFS_smallthumb.jpg',
+			        title:'20110228_233529-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_040100_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_040100_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110228_233928-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110228_233928-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110228_233928-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110228_233928-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_040133_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_040133_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110228_233957-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110228_233957-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110228_233957-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110228_233957-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_040320_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_040320_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110228_234026-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110228_234026-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110228_234026-1000_JFS_smallthumb.jpg',
+			        title:'20110228_234026-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_040346_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_040346_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110228_234632-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110228_234632-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110228_234632-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110228_234632-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_040407_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_040407_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110228_235248-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110228_235248-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110228_235248-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110228_235248-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_040427_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_040427_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_001148-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_001148-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_001148-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_001148-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_040501_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_040501_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_003608-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_003608-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_003608-1000_JFS_smallthumb.jpg',
+			        title:'20110301_003608-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_040522_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_040522_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_003752-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_003752-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_003752-1000_JFS_smallthumb.jpg',
+			        title:'20110301_003752-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_040605_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_040605_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_003847-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_003847-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_003847-1000_JFS_smallthumb.jpg',
+			        title:'20110301_003847-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_040716_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_040716_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_003923-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_003923-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_003923-1000_JFS_smallthumb.jpg',
+			        title:'20110301_003923-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_040744_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_040744_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_004214-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_004214-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_004214-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_004214-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_040811_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_040811_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_004329-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_004329-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_004329-1000_JFS_smallthumb.jpg',
+			        title:'20110301_004329-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_040910_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_040910_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_004516-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_004516-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_004516-1000_JFS_smallthumb.jpg',
+			        title:'20110301_004516-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_040934_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_040934_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_005902-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_005902-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_005902-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_005902-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_041040_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_041040_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_005933-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_005933-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_005933-1000_JFS_smallthumb.jpg',
+			        title:'20110301_005933-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_041102_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_041102_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010006-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010006-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010006-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_010006-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_041139_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_041139_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010100-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010100-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010100-1000_JFS_smallthumb.jpg',
+			        title:'20110301_010100-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/20110301_041216_JFS.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/20110301_041216_JFS.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010133-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010133-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010133-1000_JFS_smallthumb.jpg',
+			        title:'20110301_010133-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_012909-0700_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_012909-0700_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010144-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010144-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010144-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_010144-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_013103-0700_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_013103-0700_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010228-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010228-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010228-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_010228-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_032338-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_032338-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010320-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010320-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010320-1000_JFS_smallthumb.jpg',
+			        title:'20110301_010320-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_032448-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_032448-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010346-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010346-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010346-1000_JFS_smallthumb.jpg',
+			        title:'20110301_010346-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_032621-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_032621-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010354-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010354-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010354-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_010354-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_032703-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_032703-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010407-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010407-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010407-1000_JFS_smallthumb.jpg',
+			        title:'20110301_010407-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_032802-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_032802-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010427-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010427-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010427-1000_JFS_smallthumb.jpg',
+			        title:'20110301_010427-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_032837-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_032837-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010438-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010438-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010438-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_010438-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_033128-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_033128-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010501-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010501-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010501-1000_JFS_smallthumb.jpg',
+			        title:'20110301_010501-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_033221-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_033221-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010518-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010518-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010518-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_010518-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_033313-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_033313-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010522-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010522-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010522-1000_JFS_smallthumb.jpg',
+			        title:'20110301_010522-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_033521-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_033521-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010546-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010546-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010546-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_010546-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_033644-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_033644-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010605-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010605-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010605-1000_JFS_smallthumb.jpg',
+			        title:'20110301_010605-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_033852-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_033852-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010626-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010626-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010626-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_010626-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_033953-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_033953-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010648-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010648-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010648-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_010648-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_034240-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_034240-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010716-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010716-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010716-1000_JFS_smallthumb.jpg',
+			        title:'20110301_010716-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_034321-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_034321-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010740-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010740-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010740-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_010740-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_034734-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_034734-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010744-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010744-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010744-1000_JFS_smallthumb.jpg',
+			        title:'20110301_010744-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_034951-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_034951-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010811-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010811-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010811-1000_JFS_smallthumb.jpg',
+			        title:'20110301_010811-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_035132-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_035132-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010820-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010820-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010820-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_010820-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_035436-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_035436-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010858-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010858-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010858-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_010858-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_043906-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_043906-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010910-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010910-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010910-1000_JFS_smallthumb.jpg',
+			        title:'20110301_010910-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_044650-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_044650-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010928-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010928-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010928-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_010928-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_044830-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_044830-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010934-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010934-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010934-1000_JFS_smallthumb.jpg',
+			        title:'20110301_010934-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_045534-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_045534-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_010954-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_010954-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_010954-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_010954-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_045732-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_045732-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011040-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011040-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011040-1000_JFS_smallthumb.jpg',
+			        title:'20110301_011040-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_050350-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_050350-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011058-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011058-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011058-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_011058-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_050622-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_050622-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011102-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011102-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011102-1000_JFS_smallthumb.jpg',
+			        title:'20110301_011102-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_050855-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_050855-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011114-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011114-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011114-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_011114-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051135-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051135-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011124-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011124-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011124-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_011124-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051208-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051208-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011136-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011136-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011136-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_011136-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051223-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051223-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011139-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011139-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011139-1000_JFS_smallthumb.jpg',
+			        title:'20110301_011139-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051236-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051236-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011148-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011148-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011148-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_011148-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051302-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051302-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011208-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011208-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011208-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_011208-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051311-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051311-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011216-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011216-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011216-1000_JFS_smallthumb.jpg',
+			        title:'20110301_011216-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051320-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051320-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011222-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011222-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011222-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_011222-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051329-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051329-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011332-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011332-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011332-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_011332-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051338-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051338-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011342-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011342-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011342-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_011342-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051354-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051354-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011626-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011626-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011626-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_011626-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051437-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051437-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011706-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011706-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011706-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_011706-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051513-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051513-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011810-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011810-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011810-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_011810-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051944-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_051944-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011840-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011840-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011840-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_011840-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052106-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052106-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_011926-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_011926-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_011926-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_011926-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052224-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052224-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_012020-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_012020-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_012020-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_012020-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052236-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052236-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_012052-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_012052-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_012052-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_012052-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052252-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052252-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_012150-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_012150-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_012150-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_012150-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052313-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052313-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_012232-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_012232-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_012232-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_012232-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052323-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052323-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_012510-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_012510-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_012510-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_012510-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052336-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052336-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_012610-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_012610-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_012610-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_012610-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052742-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052742-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_012636-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_012636-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_012636-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_012636-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052813-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052813-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_012710-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_012710-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_012710-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_012710-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052908-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052908-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_012816-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_012816-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_012816-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_012816-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052928-0500_NO_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110301_052928-0500_NO_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_012832-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_012832-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_012832-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_012832-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110302_011833-0700_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110302_011833-0700_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_214738-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_214738-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_214738-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_214738-1000_RSTJEAN.jpg',
+			        description:'Chena Hot Springs'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110302_011913-0700_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110302_011913-0700_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_214856-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_214856-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_214856-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_214856-1000_RSTJEAN.jpg',
+			        description:'Chena Hot Springs'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110302_011953-0700_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110302_011953-0700_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_215012-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_215012-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_215012-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_215012-1000_RSTJEAN.jpg',
+			        description:'Chena Hot Springs'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110302_012059-0700_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110302_012059-0700_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_215013-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_215013-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_215013-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_215013-1000_RSTJEAN.jpg',
+			        description:'Chena Hot Springs'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110302_012843-0700_RJR-2.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110302_012843-0700_RJR-2.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_215132-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_215132-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_215132-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_215132-1000_RSTJEAN.jpg',
+			        description:'Chena Hot Springs'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110302_012843-0700_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110302_012843-0700_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_215258-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_215258-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_215258-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_215258-1000_RSTJEAN.jpg',
+			        description:'Chena Hot Springs'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110302_012931-0700_RJR.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110302_012931-0700_RJR.jpg'
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_215420-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_215420-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_215420-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_215420-1000_RSTJEAN.jpg',
+			        description:'Chena Hot Springs'
 			    },
+
 			    {
-			        image:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110302_012931-0700_RJR_2.jpg',
-			        link:'/art/resource/auroral_resources/chapman2011/CHAPMAN_20110302_012931-0700_RJR_2.jpg'
-			    }
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_215542-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_215542-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_215542-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_215542-1000_RSTJEAN.jpg',
+			        description:'Chena Hot Springs'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_215638-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_215638-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_215638-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_215638-1000_RSTJEAN.jpg',
+			        description:'Chena Hot Springs'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_215722-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_215722-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_215722-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_215722-1000_RSTJEAN.jpg',
+			        description:'Chena Hot Springs'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_215812-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_215812-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_215812-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_215812-1000_RSTJEAN.jpg',
+			        description:'Chena Hot Springs'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_215858-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_215858-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_215858-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_215858-1000_RSTJEAN.jpg',
+			        description:'Chena Hot Springs'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_215940-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_215940-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_215940-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_215940-1000_RSTJEAN.jpg',
+			        description:'Chena Hot Springs'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_220012-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_220012-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_220012-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_220012-1000_RSTJEAN.jpg',
+			        description:'Chena Hot Springs'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_220038-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_220038-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_220038-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_220038-1000_RSTJEAN.jpg',
+			        description:'Chena Hot Springs'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_220106-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_220106-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_220106-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110301_220106-1000_RSTJEAN.jpg',
+			        description:'Chena Hot Springs'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_221833-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_221833-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_221833-1000_RJR_smallthumb.jpg',
+			        title:'20110301_221833-1000_RJR.jpg',
+			        description:'Chena Hot Springs'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_221953-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_221953-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_221953-1000_RJR_smallthumb.jpg',
+			        title:'20110301_221953-1000_RJR.jpg',
+			        description:'Chena Hot Springs'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_222059-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_222059-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_222059-1000_RJR_smallthumb.jpg',
+			        title:'20110301_222059-1000_RJR.jpg',
+			        description:'Chena Hot Springs'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_222843-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_222843-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_222843-1000_RJR_smallthumb.jpg',
+			        title:'20110301_222843-1000_RJR.jpg',
+			        description:'Chena Hot Springs'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_222931-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_222931-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_222931-1000_RJR_smallthumb.jpg',
+			        title:'20110301_222931-1000_RJR.jpg',
+			        description:'Chena Hot Springs'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_233128-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_233128-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_233128-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110301_233128-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_233521-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_233521-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_233521-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110301_233521-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_233852-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_233852-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_233852-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110301_233852-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_234321-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_234321-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_234321-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110301_234321-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_234734-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_234734-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_234734-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110301_234734-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_235132-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_235132-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_235132-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110301_235132-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110301_235436-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110301_235436-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110301_235436-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110301_235436-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_003906-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_003906-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_003906-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110302_003906-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_004830-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_004830-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_004830-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110302_004830-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_005732-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_005732-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_005732-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110302_005732-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_010350-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_010350-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_010350-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110302_010350-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_010622-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_010622-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_010622-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110302_010622-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_010855-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_010855-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_010855-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110302_010855-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_011302-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_011302-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_011302-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110302_011302-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_011338-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_011338-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_011338-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110302_011338-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_011437-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_011437-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_011437-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110302_011437-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_011513-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_011513-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_011513-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110302_011513-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_012224-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_012224-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_012224-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110302_012224-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_012236-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_012236-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_012236-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110302_012236-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_012252-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_012252-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_012252-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110302_012252-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_012313-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_012313-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_012313-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110302_012313-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_012323-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_012323-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_012323-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110302_012323-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_012336-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_012336-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_012336-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110302_012336-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_012742-1000_NOZ_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_012742-1000_NOZ_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_012742-1000_NOZ_RJR_smallthumb.jpg',
+			        title:'20110302_012742-1000_NOZ_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_013842-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_013842-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_013842-1000_FB_smallthumb.jpg',
+			        title:'20110302_013842-1000_FB.jpg',
+			        description:'Birch Hill Cross Country Skiing'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_015938-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_015938-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_015938-1000_FB_smallthumb.jpg',
+			        title:'20110302_015938-1000_FB.jpg',
+			        description:'Birch Hill Cross Country Skiing'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_021848-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_021848-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_021848-1000_FB_smallthumb.jpg',
+			        title:'20110302_021848-1000_FB.jpg',
+			        description:'Birch Hill Cross Country Skiing'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_021858-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_021858-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_021858-1000_FB_smallthumb.jpg',
+			        title:'20110302_021858-1000_FB.jpg',
+			        description:'Birch Hill Cross Country Skiing'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_030706-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_030706-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_030706-1000_FB_smallthumb.jpg',
+			        title:'20110302_030706-1000_FB.jpg',
+			        description:'Birch Hill Cross Country Skiing'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_030713-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_030713-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_030713-1000_FB_smallthumb.jpg',
+			        title:'20110302_030713-1000_FB.jpg',
+			        description:'Birch Hill Cross Country Skiing'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_071143-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_071143-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_071143-1000_FB_smallthumb.jpg',
+			        title:'20110302_071143-1000_FB.jpg',
+			        description:'Chena Hot Springs'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_194212-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_194212-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_194212-1000_JFS_smallthumb.jpg',
+			        title:'20110302_194212-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_194345-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_194345-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_194345-1000_JFS_smallthumb.jpg',
+			        title:'20110302_194345-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_194359-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_194359-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_194359-1000_JFS_smallthumb.jpg',
+			        title:'20110302_194359-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_194427-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_194427-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_194427-1000_JFS_smallthumb.jpg',
+			        title:'20110302_194427-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_194445-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_194445-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_194445-1000_JFS_smallthumb.jpg',
+			        title:'20110302_194445-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_194507-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_194507-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_194507-1000_JFS_smallthumb.jpg',
+			        title:'20110302_194507-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_194538-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_194538-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_194538-1000_JFS_smallthumb.jpg',
+			        title:'20110302_194538-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_194612-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_194612-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_194612-1000_JFS_smallthumb.jpg',
+			        title:'20110302_194612-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_194644-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_194644-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_194644-1000_JFS_smallthumb.jpg',
+			        title:'20110302_194644-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_194705-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_194705-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_194705-1000_JFS_smallthumb.jpg',
+			        title:'20110302_194705-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_194756-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_194756-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_194756-1000_JFS_smallthumb.jpg',
+			        title:'20110302_194756-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_194823-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_194823-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_194823-1000_JFS_smallthumb.jpg',
+			        title:'20110302_194823-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_194858-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_194858-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_194858-1000_JFS_smallthumb.jpg',
+			        title:'20110302_194858-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_203318-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_203318-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_203318-1000_JFS_smallthumb.jpg',
+			        title:'20110302_203318-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_203536-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_203536-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_203536-1000_JFS_smallthumb.jpg',
+			        title:'20110302_203536-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_203629-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_203629-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_203629-1000_JFS_smallthumb.jpg',
+			        title:'20110302_203629-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_203709-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_203709-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_203709-1000_JFS_smallthumb.jpg',
+			        title:'20110302_203709-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_203723-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_203723-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_203723-1000_JFS_smallthumb.jpg',
+			        title:'20110302_203723-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_203750-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_203750-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_203750-1000_JFS_smallthumb.jpg',
+			        title:'20110302_203750-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_203804-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_203804-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_203804-1000_JFS_smallthumb.jpg',
+			        title:'20110302_203804-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_203818-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_203818-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_203818-1000_JFS_smallthumb.jpg',
+			        title:'20110302_203818-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_203829-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_203829-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_203829-1000_JFS_smallthumb.jpg',
+			        title:'20110302_203829-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_203840-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_203840-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_203840-1000_JFS_smallthumb.jpg',
+			        title:'20110302_203840-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_203903-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_203903-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_203903-1000_JFS_smallthumb.jpg',
+			        title:'20110302_203903-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_203915-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_203915-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_203915-1000_JFS_smallthumb.jpg',
+			        title:'20110302_203915-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_203944-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_203944-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_203944-1000_JFS_smallthumb.jpg',
+			        title:'20110302_203944-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_203952-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_203952-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_203952-1000_JFS_smallthumb.jpg',
+			        title:'20110302_203952-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_204010-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_204010-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_204010-1000_JFS_smallthumb.jpg',
+			        title:'20110302_204010-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_204040-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_204040-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_204040-1000_JFS_smallthumb.jpg',
+			        title:'20110302_204040-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_204050-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_204050-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_204050-1000_JFS_smallthumb.jpg',
+			        title:'20110302_204050-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_204133-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_204133-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_204133-1000_JFS_smallthumb.jpg',
+			        title:'20110302_204133-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_204500-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_204500-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_204500-1000_JFS_smallthumb.jpg',
+			        title:'20110302_204500-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_204616-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_204616-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_204616-1000_JFS_smallthumb.jpg',
+			        title:'20110302_204616-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_204700-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_204700-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_204700-1000_JFS_smallthumb.jpg',
+			        title:'20110302_204700-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_204736-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_204736-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_204736-1000_JFS_smallthumb.jpg',
+			        title:'20110302_204736-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_205123-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_205123-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_205123-1000_JFS_smallthumb.jpg',
+			        title:'20110302_205123-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_205215-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_205215-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_205215-1000_JFS_smallthumb.jpg',
+			        title:'20110302_205215-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_205316-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_205316-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_205316-1000_JFS_smallthumb.jpg',
+			        title:'20110302_205316-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_205404-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_205404-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_205404-1000_JFS_smallthumb.jpg',
+			        title:'20110302_205404-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_205503-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_205503-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_205503-1000_JFS_smallthumb.jpg',
+			        title:'20110302_205503-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_210105-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_210105-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_210105-1000_JFS_smallthumb.jpg',
+			        title:'20110302_210105-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_210643-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_210643-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_210643-1000_JFS_smallthumb.jpg',
+			        title:'20110302_210643-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_210734-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_210734-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_210734-1000_JFS_smallthumb.jpg',
+			        title:'20110302_210734-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_211042-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_211042-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_211042-1000_JFS_smallthumb.jpg',
+			        title:'20110302_211042-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110302_211143-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110302_211143-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110302_211143-1000_JFS_smallthumb.jpg',
+			        title:'20110302_211143-1000_JFS.jpg',
+			        description:'Banquet'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_144728-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_144728-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_144728-1000_JFS_smallthumb.jpg',
+			        title:'20110303_144728-1000_JFS.jpg',
+			        description:'Westmark Hotel'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_172344-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_172344-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_172344-1000_JFS_smallthumb.jpg',
+			        title:'20110303_172344-1000_JFS.jpg',
+			        description:'Pipeline'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_172509-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_172509-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_172509-1000_JFS_smallthumb.jpg',
+			        title:'20110303_172509-1000_JFS.jpg',
+			        description:'Pipeline'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_172554-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_172554-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_172554-1000_JFS_smallthumb.jpg',
+			        title:'20110303_172554-1000_JFS.jpg',
+			        description:'Pipeline'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_172600-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_172600-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_172600-1000_JFS_smallthumb.jpg',
+			        title:'20110303_172600-1000_JFS.jpg',
+			        description:'Pipeline'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_172627-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_172627-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_172627-1000_JFS_smallthumb.jpg',
+			        title:'20110303_172627-1000_JFS.jpg',
+			        description:'Pipeline'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_172651-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_172651-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_172651-1000_JFS_smallthumb.jpg',
+			        title:'20110303_172651-1000_JFS.jpg',
+			        description:'Pipeline'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_173558-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_173558-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_173558-1000_JFS_smallthumb.jpg',
+			        title:'20110303_173558-1000_JFS.jpg',
+			        description:'En route to Poker Flat'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_175258-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_175258-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_175258-1000_JFS_smallthumb.jpg',
+			        title:'20110303_175258-1000_JFS.jpg',
+			        description:'En route to Poker Flat'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_180309-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_180309-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_180309-1000_JFS_smallthumb.jpg',
+			        title:'20110303_180309-1000_JFS.jpg',
+			        description:'En route to Poker Flat'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_182024-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_182024-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_182024-1000_JFS_smallthumb.jpg',
+			        title:'20110303_182024-1000_JFS.jpg',
+			        description:'En route to Poker Flat'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_182029-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_182029-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_182029-1000_JFS_smallthumb.jpg',
+			        title:'20110303_182029-1000_JFS.jpg',
+			        description:'En route to Poker Flat'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_182036-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_182036-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_182036-1000_JFS_smallthumb.jpg',
+			        title:'20110303_182036-1000_JFS.jpg',
+			        description:'En route to Poker Flat'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_190145-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_190145-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_190145-1000_JFS_smallthumb.jpg',
+			        title:'20110303_190145-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_190211-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_190211-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_190211-1000_JFS_smallthumb.jpg',
+			        title:'20110303_190211-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_190316-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_190316-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_190316-1000_JFS_smallthumb.jpg',
+			        title:'20110303_190316-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_190622-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_190622-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_190622-1000_JFS_smallthumb.jpg',
+			        title:'20110303_190622-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_222350-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_222350-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_222350-1000_JFS_smallthumb.jpg',
+			        title:'20110303_222350-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_223030-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_223030-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_223030-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110303_223030-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_223214-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_223214-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_223214-1000_JFS_smallthumb.jpg',
+			        title:'20110303_223214-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_223322-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_223322-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_223322-1000_JFS_smallthumb.jpg',
+			        title:'20110303_223322-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_223424-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_223424-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_223424-1000_JFS_smallthumb.jpg',
+			        title:'20110303_223424-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_223514-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_223514-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_223514-1000_JFS_smallthumb.jpg',
+			        title:'20110303_223514-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110303_223621-1000_JFS_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110303_223621-1000_JFS.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110303_223621-1000_JFS_smallthumb.jpg',
+			        title:'20110303_223621-1000_JFS.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_000825-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_000825-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_000825-1000_RJR_smallthumb.jpg',
+			        title:'20110304_000825-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_001100-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_001100-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_001100-1000_RJR_smallthumb.jpg',
+			        title:'20110304_001100-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_001158-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_001158-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_001158-1000_RJR_smallthumb.jpg',
+			        title:'20110304_001158-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_010627-1000_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_010627-1000.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_010627-1000_smallthumb.jpg',
+			        title:'20110304_010627-1000.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_010706-1000_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_010706-1000.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_010706-1000_smallthumb.jpg',
+			        title:'20110304_010706-1000.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_010856-1000_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_010856-1000.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_010856-1000_smallthumb.jpg',
+			        title:'20110304_010856-1000.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_011213-1000_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_011213-1000.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_011213-1000_smallthumb.jpg',
+			        title:'20110304_011213-1000.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_011719-1000_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_011719-1000.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_011719-1000_smallthumb.jpg',
+			        title:'20110304_011719-1000.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_011730-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_011730-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_011730-1000_FB_smallthumb.jpg',
+			        title:'20110304_011730-1000_FB.jpg',
+			        description:'Birch Hill Cross Country Skiing'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_020700-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_020700-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_020700-1000_RJR_smallthumb.jpg',
+			        title:'20110304_020700-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_020740-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_020740-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_020740-1000_RJR_smallthumb.jpg',
+			        title:'20110304_020740-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_020834-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_020834-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_020834-1000_RJR_smallthumb.jpg',
+			        title:'20110304_020834-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_020918-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_020918-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_020918-1000_RJR_smallthumb.jpg',
+			        title:'20110304_020918-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_021013-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_021013-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_021013-1000_RJR_smallthumb.jpg',
+			        title:'20110304_021013-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_021106-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_021106-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_021106-1000_RJR_smallthumb.jpg',
+			        title:'20110304_021106-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_021145-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_021145-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_021145-1000_RJR_smallthumb.jpg',
+			        title:'20110304_021145-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_021211-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_021211-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_021211-1000_RJR_smallthumb.jpg',
+			        title:'20110304_021211-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_021315-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_021315-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_021315-1000_RJR_smallthumb.jpg',
+			        title:'20110304_021315-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_021445-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_021445-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_021445-1000_RJR_smallthumb.jpg',
+			        title:'20110304_021445-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_021609-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_021609-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_021609-1000_RJR_smallthumb.jpg',
+			        title:'20110304_021609-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_021635-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_021635-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_021635-1000_RJR_smallthumb.jpg',
+			        title:'20110304_021635-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_021738-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_021738-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_021738-1000_RJR_smallthumb.jpg',
+			        title:'20110304_021738-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_021821-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_021821-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_021821-1000_RJR_smallthumb.jpg',
+			        title:'20110304_021821-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_021934-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_021934-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_021934-1000_RJR_smallthumb.jpg',
+			        title:'20110304_021934-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_022240-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_022240-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_022240-1000_RJR_smallthumb.jpg',
+			        title:'20110304_022240-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_022330-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_022330-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_022330-1000_RJR_smallthumb.jpg',
+			        title:'20110304_022330-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_022404-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_022404-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_022404-1000_RJR_smallthumb.jpg',
+			        title:'20110304_022404-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_022434-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_022434-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_022434-1000_RJR_smallthumb.jpg',
+			        title:'20110304_022434-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_022618-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_022618-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_022618-1000_FB_smallthumb.jpg',
+			        title:'20110304_022618-1000_FB.jpg',
+			        description:'Birch Hill Cross Country Skiing'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_024542-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_024542-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_024542-1000_RJR_smallthumb.jpg',
+			        title:'20110304_024542-1000_RJR.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_042801-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_042801-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_042801-1000_FB_smallthumb.jpg',
+			        title:'20110304_042801-1000_FB.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_043018-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_043018-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_043018-1000_FB_smallthumb.jpg',
+			        title:'20110304_043018-1000_FB.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_045209-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_045209-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_045209-1000_FB_smallthumb.jpg',
+			        title:'20110304_045209-1000_FB.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_074154-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_074154-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_074154-1000_FB_smallthumb.jpg',
+			        title:'20110304_074154-1000_FB.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_074218-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_074218-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_074218-1000_FB_smallthumb.jpg',
+			        title:'20110304_074218-1000_FB.jpg',
+			        description:'Poker Flat Research Range'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_194157-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_194157-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_194157-1000_RJR_smallthumb.jpg',
+			        title:'20110304_194157-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_194415-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_194415-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_194415-1000_RJR_smallthumb.jpg',
+			        title:'20110304_194415-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_194550-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_194550-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_194550-1000_RJR_smallthumb.jpg',
+			        title:'20110304_194550-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_194607-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_194607-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_194607-1000_RJR_smallthumb.jpg',
+			        title:'20110304_194607-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_194856-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_194856-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_194856-1000_RJR_smallthumb.jpg',
+			        title:'20110304_194856-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_195619-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_195619-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_195619-1000_RJR_smallthumb.jpg',
+			        title:'20110304_195619-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_201156-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_201156-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_201156-1000_RJR_smallthumb.jpg',
+			        title:'20110304_201156-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_201603-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_201603-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_201603-1000_RJR_smallthumb.jpg',
+			        title:'20110304_201603-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_201844-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_201844-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_201844-1000_RJR_smallthumb.jpg',
+			        title:'20110304_201844-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_202233-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_202233-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_202233-1000_RJR_smallthumb.jpg',
+			        title:'20110304_202233-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_202342-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_202342-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_202342-1000_RJR_smallthumb.jpg',
+			        title:'20110304_202342-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_203050-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_203050-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_203050-1000_RJR_smallthumb.jpg',
+			        title:'20110304_203050-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_203234-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_203234-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_203234-1000_RJR_smallthumb.jpg',
+			        title:'20110304_203234-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_203329-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_203329-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_203329-1000_RJR_smallthumb.jpg',
+			        title:'20110304_203329-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_203336-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_203336-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_203336-1000_RJR_smallthumb.jpg',
+			        title:'20110304_203336-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_203601-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_203601-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_203601-1000_RJR_smallthumb.jpg',
+			        title:'20110304_203601-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_203808-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_203808-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_203808-1000_RJR_smallthumb.jpg',
+			        title:'20110304_203808-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_203836-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_203836-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_203836-1000_RJR_smallthumb.jpg',
+			        title:'20110304_203836-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_204125-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_204125-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_204125-1000_RJR_smallthumb.jpg',
+			        title:'20110304_204125-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110304_204313-1000_RJR_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110304_204313-1000_RJR.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110304_204313-1000_RJR_smallthumb.jpg',
+			        title:'20110304_204313-1000_RJR.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110305_054059-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110305_054059-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110305_054059-1000_FB_smallthumb.jpg',
+			        title:'20110305_054059-1000_FB.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110305_054729-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110305_054729-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110305_054729-1000_FB_smallthumb.jpg',
+			        title:'20110305_054729-1000_FB.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110305_054834-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110305_054834-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110305_054834-1000_FB_smallthumb.jpg',
+			        title:'20110305_054834-1000_FB.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110305_055306-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110305_055306-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110305_055306-1000_FB_smallthumb.jpg',
+			        title:'20110305_055306-1000_FB.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110305_061641-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110305_061641-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110305_061641-1000_FB_smallthumb.jpg',
+			        title:'20110305_061641-1000_FB.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110305_062709-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110305_062709-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110305_062709-1000_FB_smallthumb.jpg',
+			        title:'20110305_062709-1000_FB.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110305_063310-1000_FB_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110305_063310-1000_FB.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110305_063310-1000_FB_smallthumb.jpg',
+			        title:'20110305_063310-1000_FB.jpg',
+			        description:'World Ice Art Championships'
+			    },
+
+			    {
+			        image:'/art/resource/auroral_resources/chapman2011/20110307_111555-1000_RSTJEAN_thumb.jpg',
+			        link:'/art/resource/auroral_resources/chapman2011/20110307_111555-1000_RSTJEAN.jpg',
+			        thumb:'/art/resource/auroral_resources/chapman2011/20110307_111555-1000_RSTJEAN_smallthumb.jpg',
+			        title:'20110307_111555-1000_RSTJEAN.jpg',
+			        description:'Poker Flat Research Range'
+			    },
 			];
 			
             $("#gallery").galleria({
-				autoplay: 3000,
+//				autoplay: 3000,
+				preload: 2,
+				showInfo: true,
 				popupLinks: true,
 				data_source: data,
                 width: 800,
