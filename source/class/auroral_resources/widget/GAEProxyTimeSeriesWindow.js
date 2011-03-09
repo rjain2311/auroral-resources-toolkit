@@ -103,7 +103,8 @@ qx.Class.define("auroral_resources.widget.GAEProxyTimeSeriesWindow",
         this.__startDate = start;
         this.__stopDate = stop;
 
-        var args = encodeURI("param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop);
+        var args = escape("param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop);
+        alert("/proxy?service=spidr.ngdc.GetData&args="+args);
         this.__plot = new qxdygraphs.Plot(
             "/proxy?service=spidr.ngdc.GetData&args="+args,
             {
@@ -164,7 +165,7 @@ qx.Class.define("auroral_resources.widget.GAEProxyTimeSeriesWindow",
                 var data = new qx.ui.form.Button("Download Data");
                 data.addListener("click", function(evt) {
                     
-                    var args = encodeURI("param="+parameter+"&format=zip&dateFrom="+start+"&dateTo="+stop);
+                    var args = escape("param="+parameter+"&format=zip&dateFrom="+start+"&dateTo="+stop);
                     var dlurl = "/proxy?service=spidr.ngdc.GetData&args="+args;
                     window.open(dlurl,"");
                     popup.hide();
@@ -260,7 +261,7 @@ qx.Class.define("auroral_resources.widget.GAEProxyTimeSeriesWindow",
             var now = this.__timeBus.getNow();
             var parameter = this.__parameter;
             
-            var args = encodeURI("param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop);
+            var args = escape("param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop);
             this.__plot = new qxdygraphs.Plot(
                 "/proxy?service=spidr.ngdc.GetData&args="+args,
                 {
@@ -293,7 +294,7 @@ qx.Class.define("auroral_resources.widget.GAEProxyTimeSeriesWindow",
             var now = this.__timeBus.getNow();
             var parameter = this.__parameter;
 
-            var args = encodeURI("param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop);
+            var args = escape("param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop);
             this.__plot = new qxdygraphs.Plot(
                 "/proxy?service=spidr.ngdc.GetData&args="+args,
                 {
@@ -326,7 +327,7 @@ qx.Class.define("auroral_resources.widget.GAEProxyTimeSeriesWindow",
             this.__now = now;
             var parameter = this.__parameter;
 
-            var args = encodeURI("param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop);
+            var args = escape("param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop);
             this.__plot = new qxdygraphs.Plot(
                 "/proxy?service=spidr.ngdc.GetData&args="+args,
                 {
