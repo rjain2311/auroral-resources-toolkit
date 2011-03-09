@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+rm -fr ar &&\
+rm -fr build &&\
+./generate.py build &&\
+rm -fr build/resource/auroral_resources/chapman2011 &&\
+mv build google-appengine/art &&\
+cp -pR inspector google-appengine/art/ &&\
+cp source/inspector.html google-appengine/art/ &&\
+find google-appengine/art/ -name '.svn' | xargs rm -fr &&\
+appcfg.py update google-appengine &&\
+rm -fr google-appengine/art &&\
+echo "w00t" &&\
+exit 0
+
+echo "UH OH!"
+exit 1

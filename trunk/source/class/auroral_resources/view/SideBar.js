@@ -203,6 +203,11 @@ qx.Class.define("auroral_resources.view.SideBar",
                 item.add(new auroral_resources.widget.ProxiedTimeSeriesTreeFile("http://lasp.colorado.edu/lisird/tss/sorce_tsi_6hr.html","SORCE 6hr TSI {W/m^2}"));
                 parent.add(item);
 
+                item = new qx.ui.tree.TreeFolder("SPIDR (via google app engine)");
+                item.add(new auroral_resources.widget.GAEProxyTimeSeriesTreeFile('IonoStationsBC840','iono_foF2.BC840',"Boulder (BC840) foF2 {MHz}"));
+                item.add(new auroral_resources.widget.GAEProxyTimeSeriesTreeFile('IonoStationsTR170','iono_foF2.TR170',"Tromso (TR170) foF2 {MHz}"));
+                parent.add(item);
+
             } else if (index == 1) {
                 
                 var item = new qx.ui.tree.TreeFolder("Ovation Prime Real-Time");
