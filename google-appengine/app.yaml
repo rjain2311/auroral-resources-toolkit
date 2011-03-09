@@ -1,0 +1,27 @@
+application: auroral-resources
+version: w00tz
+runtime: python
+api_version: 1
+
+handlers:
+
+- url: /crossdomain.xml
+  static_files: proxy_config.xml
+  upload: proxy_config.xml
+  secure: optional
+
+- url: /proxy
+  script: proxy.py
+  secure: optional
+
+- url: /art/
+  script: main.py
+  secure: optional
+    
+- url: /art
+  static_dir: art
+  secure: optional
+      
+- url: /(art)*(.*)
+  script: main.py
+  secure: optional
