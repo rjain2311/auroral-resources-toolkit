@@ -104,7 +104,6 @@ qx.Class.define("auroral_resources.widget.GAEProxyTimeSeriesWindow",
         this.__stopDate = stop;
 
         var args = escape("param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop);
-        alert("/proxy?service=spidr.ngdc.GetData&args="+args);
         this.__plot = new qxdygraphs.Plot(
             "/proxy?service=spidr.ngdc.GetData&args="+args,
             {
