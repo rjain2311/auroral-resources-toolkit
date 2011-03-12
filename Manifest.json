@@ -25,13 +25,18 @@
       },
 
       {
+        "name" : "Erik Kihn",
+        "email" : "Erik.A.Kihn@noaa.gov"
+      },
+
+      {
         "name" : "Rob Redmon",
         "email" : "rob.redmon@noaa.gov"
       }
     ],
 
     "version" : "trunk",
-    "qooxdoo-versions": ["1.3"]
+    "qooxdoo-versions": ["1.4-pre"]
   },
   
   "provides" : 
