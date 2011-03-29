@@ -276,7 +276,7 @@ qx.Class.define("auroral_resources.Application",
             
             // LAST: add the introduction window if the user hasn't requested that it be ignored from now on
             // TODO: add a generic cookie get/set class(es) so we aren't doing this low level everywhere...
-            /* this window is more annoying than helpful apparantly
+            /* this window is more annoying than helpful apparently
             var intro = auroral_resources.persistence.KVStore.getInstance().get("intro");            
             
             if (intro == null || intro != "false") {

@@ -187,9 +187,10 @@ qx.Class.define("auroral_resources.view.SideBar",
                 parent.add(iono);
 
                 if (!qx.bom.client.Engine.MSHTML && qx.bom.client.Engine.NAME != "mshtml") {
-                    item = new qx.ui.tree.TreeFolder("Solar");
+                    item = new qx.ui.tree.TreeFolder("Solar Related");
                     item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','imf_bz.ACE_RT',"ACE Bz {nT}"));
                     item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','vsw_x.ACE_RT',"ACE Flow {Km/s}"));
+                    item.add(new auroral_resources.widget.ProxiedTimeSeriesTreeFile("http://lasp.colorado.edu/lisird/tss/sorce_tsi_6hr.html","SORCE 6hr TSI {W/m^2}"));
                     parent.add(item);
                 }
 
@@ -199,14 +200,13 @@ qx.Class.define("auroral_resources.view.SideBar",
                 item.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('geomInd','index_ap', "Ap"));
                 parent.add(item);
                 
-                item = new qx.ui.tree.TreeFolder("LASP (external source)");
-                item.add(new auroral_resources.widget.ProxiedTimeSeriesTreeFile("http://lasp.colorado.edu/lisird/tss/sorce_tsi_6hr.html","SORCE 6hr TSI {W/m^2}"));
-                parent.add(item);
 
+                /*
                 item = new qx.ui.tree.TreeFolder("SPIDR (via google app engine)");
                 item.add(new auroral_resources.widget.GAEProxyTimeSeriesTreeFile('IonoStationsBC840','iono_foF2.BC840',"Boulder (BC840) foF2 {MHz}"));
                 item.add(new auroral_resources.widget.GAEProxyTimeSeriesTreeFile('IonoStationsTR170','iono_foF2.TR170',"Tromso (TR170) foF2 {MHz}"));
                 parent.add(item);
+                */
 
             } else if (index == 1) {
                 
@@ -230,7 +230,7 @@ qx.Class.define("auroral_resources.view.SideBar",
                 item.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.swpc.noaa.gov/pmap/gif/pmapS.gif","Southern Statistical Auroral Oval"));
                 parent.add(item);
                 
-                item = new qx.ui.tree.TreeFolder("NASA SOHO");
+                item = new qx.ui.tree.TreeFolder("NASA SOHO Imagery");
                 item.add(new auroral_resources.widget.ExternalImageTreeFile("http://sohowww.nascom.nasa.gov/data/realtime/mdi_igr/512/latest.jpg","MDI Continuum"));
                 item.add(new auroral_resources.widget.ExternalImageTreeFile("http://sohowww.nascom.nasa.gov/data/realtime/mdi_mag/512/latest.jpg","MDI Magnetogram"));
                 item.add(new auroral_resources.widget.ExternalImageTreeFile("http://sohowww.nascom.nasa.gov/data/realtime/eit_304/512/latest.jpg","EIT 304"));
