@@ -10,7 +10,7 @@
     "authors" : 
     [
       {
-        "name" : "Peter Elespuru",
+        "name" : "Peter R. Elespuru",
         "email" : "peter.elespuru@noaa.gov"
       },
 
@@ -36,7 +36,7 @@
     ],
 
     "version" : "trunk",
-    "qooxdoo-versions": ["1.4-pre"]
+    "qooxdoo-versions": ["1.4"]
   },
   
   "provides" : 

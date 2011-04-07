@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 
-rm -fr ../ar/ &&\
+rm -fr ../ar/art &&\
 rm -fr build &&\
 ./generate.py build &&\
-cp -pR build ../ar &&\
-cp -pR inspector ../ar/ &&\
-cp source/inspector.html ../ar/ &&\
-find ../ar -name '.svn' | xargs rm -fr &&\
-mv ../ar ../art &&\
-mkdir ../ar &&\
-mv ../art ../ar/ &&\
+cp -pR build ../ar/art &&\
+cp -pR inspector ../ar/art/ &&\
+cp source/inspector.html ../ar/art &&\
+find ../ar/art -name '.svn' | xargs rm -fr &&\
+cp -pR api ../ar/ &&\
 echo "w00t"
