@@ -37,6 +37,7 @@
     "API_EXCLUDE"  : ["qx.test.*", "${APPLICATION}.theme.*", "${APPLICATION}.test.*"],
     "LOCALES"      : [ "en" ],
     "CACHE"        : "${TMPDIR}/cache",
+    "DEBUG"        : false,
     "ROOT"         : "."
   },
 

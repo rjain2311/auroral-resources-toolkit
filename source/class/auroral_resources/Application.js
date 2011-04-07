@@ -2,8 +2,8 @@
 
 COPYRIGHTS:
 
-Copyright (c) 2010, National Geophysical Data Center, NOAA
-Copyright (c) 2010, Geophysical Center, Russian Academy of Sciences
+Copyright (c) 2011, National Geophysical Data Center, NOAA
+Copyright (c) 2011, Geophysical Center, Russian Academy of Sciences
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -39,9 +39,6 @@ EPL: http://www.eclipse.org/org/documents/epl-v10.php
 AUTHORS:
 
 Peter Elespuru - peter.elespuru@noaa.gov
-Dmitry Medvedev - dmedv@wdcb.ru
-Mikhail Zhizhin - jjn@wdcb.ru
-Rob Redmon - rob.redmon@noaa.gov
 
 ************************************************************************ */
 
@@ -84,6 +81,7 @@ qx.Class.define("auroral_resources.Application",
         __prefWindow : null,
         __mainWindow : null,
         __sideBar : null,
+        __sideBarScroller : null,
         __mouseX : null,
         __mouseY : null,
         __widgets : null,
@@ -214,28 +212,46 @@ qx.Class.define("auroral_resources.Application",
 
             // Create footer
             this.__footer = new auroral_resources.view.Footer();
+            this.__footer.setMargin(0);
+            this.__footer.setPadding(2);
+            this.__footer.setPaddingLeft(5);
+            this.__footer.setPaddingRight(5);
+            this.__footer.setHeight(20);
+            this.__footer.setMinHeight(20);
+            this.__footer.setMaxHeight(20);
             dockLayoutComposite.add(this.__footer, {edge: "south"});
 
-            // Create toolbar (0) or menubar (1)
-            var menubar = 0;
+            // create the toggle for the toolbar
+            var toolbarHider = new qx.ui.form.Button("", "resource/auroral_resources/icons/up_arrow_orange.png");
+            toolbarHider.setFocusable("false");
+            toolbarHider.setDecorator(null);
+            toolbarHider.setMargin(0);
+            toolbarHider.setPadding(0);
+            toolbarHider.setHeight(12);
+            toolbarHider.setMinHeight(12);
+            toolbarHider.setMaxHeight(12);
+            toolbarHider.setToolTipText(this.tr("Hide/Show the menu bar"));
+            dockLayoutComposite.add(toolbarHider, {edge: "north"});
 
-            // create toolbar
-            if (menubar == 0) {
-                this.__toolBarView = new auroral_resources.view.ToolBar(this);
-                dockLayoutComposite.add(this.__toolBarView, {edge: "north"});
-            }
+            toolbarHider.addListener("execute", function(e) {
+                if(this.__toolBarView.isExcluded()) {
+                    this.__toolBarView.show();
+                    toolbarHider.setIcon("resource/auroral_resources/icons/up_arrow_orange.png");
+                } else {
+                    this.__toolBarView.exclude();
+                    toolbarHider.setIcon("resource/auroral_resources/icons/down_arrow_orange.png");
+                }
+            }, this);
 
-            // Or create menubar
-            if(menubar == 1) {
-                this.__menuBarView = new auroral_resources.view.MenuBar(this);
-                dockLayoutComposite.add(this.__menuBarView,{edge: "north"});
-            }
+            // Add the toolbar
+            this.__toolBarView = new auroral_resources.view.ToolBar(this);
+            dockLayoutComposite.add(this.__toolBarView, {edge: "north"});
 
             // Create horizontal splitpane
             this.__horizontalSplitPane = new qx.ui.splitpane.Pane();
             dockLayoutComposite.add(this.__horizontalSplitPane);
 
-            var scroller = new qx.ui.container.Scroll();
+            this.__sideBarScroller = new qx.ui.container.Scroll();
             var box = new qx.ui.layout.Basic();
 
             var container = new qx.ui.container.Composite(box).set({
@@ -263,13 +279,13 @@ qx.Class.define("auroral_resources.Application",
             chooser.setLayoutFormat("below/vertical");
             container.add(chooser);
 
-            scroller.add(container);
-            scroller.setWidth(280);
-            scroller.setBackgroundColor("silver");
+            this.__sideBarScroller.add(container);
+            this.__sideBarScroller.setWidth(300);
+            this.__sideBarScroller.setBackgroundColor("silver");
 
             // add the sidebar
             this.__sideBar = new auroral_resources.view.SideBar(this, this.__mainWindow);
-            scroller.add(this.__sideBar);
+            this.__sideBarScroller.add(this.__sideBar);
 
             // add any query added widgets to the display
             this._parseQueryStringForWidgets();
@@ -286,8 +302,33 @@ qx.Class.define("auroral_resources.Application",
             }
             */
 
-            // put it all together
-            this.__horizontalSplitPane.add(scroller, 0);
+
+            // create the toggle for the sidebar
+            var sidebarHider = new qx.ui.form.Button("", "resource/auroral_resources/icons/left_arrow_orange.png");
+            sidebarHider.setFocusable("false");
+            sidebarHider.setDecorator(null);
+            sidebarHider.setMargin(0);
+            sidebarHider.setPadding(0);
+            sidebarHider.setWidth(12);
+            sidebarHider.setMinWidth(12);
+            sidebarHider.setMaxWidth(12);
+            sidebarHider.setToolTipText(this.tr("Hide/Show the time settings and tools"));
+            dockLayoutComposite.add(sidebarHider, {edge: "west"});
+
+            sidebarHider.addListener("execute", function(e) {
+                if(this.__sideBarScroller.isExcluded()) {
+                    this.__sideBarScroller.show();
+                    sidebarHider.setIcon("resource/auroral_resources/icons/left_arrow_orange.png");
+                } else {
+                    this.__sideBarScroller.exclude();
+                    sidebarHider.setIcon("resource/auroral_resources/icons/right_arrow_orange.png");
+                }
+            }, this);
+
+            // add side bar to the split pane
+            this.__horizontalSplitPane.add(this.__sideBarScroller, 0);
+
+            // main area
             var scroller2 = new qx.ui.container.Scroll();
             scroller2.add(this.__mainWindow);
             this.__horizontalSplitPane.add(scroller2, 1);
@@ -299,6 +340,17 @@ qx.Class.define("auroral_resources.Application",
         //
         emptyWorkspace : function() {
             this.__mainWindow.removeAll();
+        },
+
+        //
+        // toggle the tool area off/on
+        //
+        toggleTools : function() {
+            if(this.__sideBarScroller.isExcluded()) {
+                this.__sideBarScroller.show();
+            } else {
+                this.__sideBarScroller.exclude();
+            }
         },
 
         //
@@ -437,9 +489,11 @@ qx.Class.define("auroral_resources.Application",
                 var wD = this.__widgets;
                 var pieces = [];
                                 
+                /*
                 // IE bombs on the volume of data in these ACE data sets
                 // don't add them if IE until this is resolved 
                 if (!qx.bom.client.Engine.MSHTML && qx.bom.client.Engine.NAME != "mshtml") {
+
                     pieces = [0,487,"TimeSeriesWindow",445,209,"vsw_x.ACE_RT","ACE%20Flow%20%7BKm/s%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
                     addWidget(stringToClass, mW, pieces, wD);
 
@@ -461,7 +515,8 @@ qx.Class.define("auroral_resources.Application",
                 
                 pieces = [447,480,"ExternalImageWindow",454,504,"http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_nowcast_aacgm.png","Ovation%20Prime%20Real-Time%20Nowcast"];
                 addWidget(stringToClass, mW, pieces, wD);
-                            
+                */
+
                 return;
                 
             //
