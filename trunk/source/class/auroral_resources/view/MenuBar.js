@@ -39,9 +39,6 @@ EPL: http://www.eclipse.org/org/documents/epl-v10.php
 AUTHORS:
 
 Peter Elespuru - peter.elespuru@noaa.gov
-Dmitry Medvedev - dmedv@wdcb.ru
-Mikhail Zhizhin - jjn@wdcb.ru
-Rob Redmon - rob.redmon@noaa.gov
 
 ************************************************************************ */
 
@@ -62,7 +59,7 @@ qx.Class.define("auroral_resources.view.MenuBar",
     construct : function(e)
     {
         var frame = new qx.ui.container.Composite(new qx.ui.layout.Grow);
-        var menubar = new qx.ui.menubar.MenuBar;
+        var menubar = new auroral_resources.ui.menubar.MenuBar;
         menubar.setWidth(600);
         frame.add(menubar);
 
