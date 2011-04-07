@@ -1,5 +1,5 @@
 /* ************************************************************************
-
+ 
 COPYRIGHTS:
 
 Copyright (c) 2010, National Geophysical Data Center, NOAA
@@ -39,9 +39,9 @@ EPL: http://www.eclipse.org/org/documents/epl-v10.php
 AUTHORS:
 
 Peter Elespuru - peter.elespuru@noaa.gov
-Dmitry Medvedev - dmedv@wdcb.ru
-Mikhail Zhizhin - jjn@wdcb.ru
-Rob Redmon - rob.redmon@noaa.gov
+
+
+
 
 ************************************************************************ */
 
@@ -73,7 +73,7 @@ qx.Class.define("auroral_resources.view.Header",
         this.setMarginRight(0);
 
         // add the logo
-        var logo = new qx.ui.basic.Image("resource/auroral_resources/ngdclogo.png");
+        var logo = new qx.ui.basic.Image("resource/auroral_resources/ngdclogo_small.png");
         logo.addListener("mouseup", function() {
             window.location = "http://www.ngdc.noaa.gov";
         });
@@ -90,7 +90,8 @@ qx.Class.define("auroral_resources.view.Header",
         this.add(new qx.ui.core.Spacer, {flex : 1});
 
         // add the right logo
-        var rlogo = new qx.ui.basic.Image("resource/auroral_resources/logo_beta.png");
+        //var rlogo = new qx.ui.basic.Image("resource/auroral_resources/logo_beta.png");
+        var rlogo = new qx.ui.basic.Image("resource/auroral_resources/logo.png");
         rlogo.addListener("mouseup", function() {
             window.location = "http://spidr.ngdc.noaa.gov/art/";
         });

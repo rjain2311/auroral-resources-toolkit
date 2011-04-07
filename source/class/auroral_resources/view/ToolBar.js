@@ -2,8 +2,8 @@
 
 COPYRIGHTS:
 
-Copyright (c) 2010, National Geophysical Data Center, NOAA
-Copyright (c) 2010, Geophysical Center, Russian Academy of Sciences
+Copyright (c) 2011, National Geophysical Data Center, NOAA
+Copyright (c) 2011, Geophysical Center, Russian Academy of Sciences
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,11 +37,7 @@ or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
 AUTHORS:
-
 Peter Elespuru - peter.elespuru@noaa.gov
-Dmitry Medvedev - dmedv@wdcb.ru
-Mikhail Zhizhin - jjn@wdcb.ru
-Rob Redmon - rob.redmon@noaa.gov
 
 ************************************************************************ */
 
@@ -87,6 +83,17 @@ qx.Class.define("auroral_resources.view.ToolBar",
         prefBtn.setToolTipText(this.tr("Open Preferences Window."));
         mainPart.add(prefBtn);
         */
+
+        /* for consistency, a long button like the one for hiding the toolbar is used instead
+        // add the hide tools container button
+        var hideToolsBtn = new qx.ui.toolbar.Button(this.tr("Toggle Tools"), "icon/22/actions/edit-clear.png");
+        hideToolsBtn.setToolTipText(this.tr("Hide/Show the left tools area"));
+        hideToolsBtn.addListener("mouseup", application.toggleTools, application);
+        mainPart.add(hideToolsBtn);
+        
+        // Add a sepearator
+        mainPart.addSeparator();
+        */
         
         var sharebtn = new qx.ui.toolbar.Button(this.tr("Share Workspace"), "icon/22/actions/document-send.png");
         sharebtn.setToolTipText(this.tr("Share your current workspaace via URL"));
@@ -100,10 +107,10 @@ qx.Class.define("auroral_resources.view.ToolBar",
         clearbtn.setToolTipText(this.tr("Clean off your workspace, remove all widgets"));
         clearbtn.addListener("mouseup", application.emptyWorkspace, application);
         mainPart.add(clearbtn);
-        
+
         // Add a sepearator
         mainPart.addSeparator();
-        
+                
         // Add a spacer
         this.addSpacer();
 

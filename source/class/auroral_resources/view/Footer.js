@@ -39,9 +39,9 @@ EPL: http://www.eclipse.org/org/documents/epl-v10.php
 AUTHORS:
 
 Peter Elespuru - peter.elespuru@noaa.gov
-Dmitry Medvedev - dmedv@wdcb.ru
-Mikhail Zhizhin - jjn@wdcb.ru
-Rob Redmon - rob.redmon@noaa.gov
+
+
+
 
 ************************************************************************ */
 
@@ -91,8 +91,14 @@ qx.Class.define("auroral_resources.view.Footer",
 
         this.add(new qx.ui.core.Spacer, {flex : 1});
 
+        var privLink = new qx.ui.basic.Label().set({
+            value: "<a style='color:white;text-decoration:none;' href='http://ngdc.noaa.gov/ngdcinfo/privacy.html'>privacy policy</a>&nbsp;&nbsp;|&nbsp;&nbsp;",
+            rich : true
+        });
+        this.add(privLink);
+
         var quesLink = new qx.ui.basic.Label().set({
-            value: "<a style='color:white;text-decoration:none;' href='mailto:ionosphere@noaa.gov?Subject=Auroral%20Resources%20Question'>questions: Rob Redmon</a>",
+            value: "<a style='color:white;text-decoration:none;' href='mailto:ionosphere@noaa.gov?Subject=Auroral%20Resources%20Question'>questions</a>",
             rich : true
         });
         this.add(quesLink);
