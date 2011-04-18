@@ -3,6 +3,7 @@
 rm -fr ../ar/art &&\
 rm -fr build &&\
 ./generate.py build &&\
+./generate.py compress &&\
 cp -pR build ../ar/art &&\
 cp -pR inspector ../ar/art/ &&\
 cp source/inspector.html ../ar/art &&\

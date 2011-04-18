@@ -67,6 +67,7 @@ qx.Class.define("auroral_resources.widget.GAEProxyTimeSeriesTreeFile",
         this.__parameter = parameter;
         this.__mddocname = mddocname;
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
+        this.setToolTipText("Drag to the gray workspace to the right");
         return this;
     },
 

@@ -92,7 +92,7 @@ qx.Class.define("auroral_resources.view.Footer",
         this.add(new qx.ui.core.Spacer, {flex : 1});
 
         var privLink = new qx.ui.basic.Label().set({
-            value: "<a style='color:white;text-decoration:none;' href='http://ngdc.noaa.gov/ngdcinfo/privacy.html'>privacy policy</a>&nbsp;&nbsp;|&nbsp;&nbsp;",
+            value: "<a style='color:white;text-decoration:none;' target='_blank' href='http://ngdc.noaa.gov/ngdcinfo/privacy.html'>privacy policy</a>&nbsp;&nbsp;|&nbsp;&nbsp;",
             rich : true
         });
         this.add(privLink);

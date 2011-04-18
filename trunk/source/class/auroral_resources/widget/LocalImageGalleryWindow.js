@@ -37,16 +37,12 @@ or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
 AUTHORS:
-
 Peter Elespuru - peter.elespuru@noaa.gov
-Dmitry Medvedev - dmedv@wdcb.ru
-Mikhail Zhizhin - jjn@wdcb.ru
-Rob Redmon - rob.redmon@noaa.gov
 
 *************************************************************************/
 
 /*
-#asset(galleria/*)
+//asset(galleria/*)
 */
 
 //

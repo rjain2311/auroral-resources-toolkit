@@ -63,6 +63,7 @@ qx.Class.define("auroral_resources.widget.ExternalVidTreeFile",
         this.__filename = filename;
         this.__title = title;
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
+        this.setToolTipText("Drag to the gray workspace to the right");
         return this;
     },
 

@@ -3,6 +3,7 @@
 rm -fr ar &&\
 rm -fr build &&\
 ./generate.py build &&\
+./generate.py compress &&\
 rm -fr build/resource/auroral_resources/chapman2011 &&\
 mv build google-appengine/art &&\
 cp -pR inspector google-appengine/art/ &&\

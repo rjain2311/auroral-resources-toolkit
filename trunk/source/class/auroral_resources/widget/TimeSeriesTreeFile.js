@@ -37,11 +37,7 @@ or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
 AUTHORS:
-
 Peter Elespuru - peter.elespuru@noaa.gov
-Dmitry Medvedev - dmedv@wdcb.ru
-Mikhail Zhizhin - jjn@wdcb.ru
-Rob Redmon - rob.redmon@noaa.gov
 
 *************************************************************************/
 
@@ -67,6 +63,9 @@ qx.Class.define("auroral_resources.widget.TimeSeriesTreeFile",
         this.__parameter = parameter;
         this.__mddocname = mddocname;
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
+        this.setIcon("auroral_resources/icons/noaa24.png");
+        this.setToolTipText("Drag to the gray workspace to the right");
+
         return this;
     },
 
@@ -95,9 +94,8 @@ qx.Class.define("auroral_resources.widget.TimeSeriesTreeFile",
             var type = e.getCurrentType();
             var result = null;
 
-            this.__window = new auroral_resources.widget.TimeSeriesWindow(600, 400, this.__parameter, this.__title, this.__mddocname);
-
             if (type === "widget") {
+                this.__window = new auroral_resources.widget.TimeSeriesWindow(600, 400, this.__parameter, this.__title, this.__mddocname);
                 result = this.__window;
                 e.addData(type, result);
             }

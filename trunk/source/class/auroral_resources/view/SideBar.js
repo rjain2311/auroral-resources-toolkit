@@ -54,6 +54,15 @@ qx.Class.define("auroral_resources.view.SideBar",
 
     extend : qx.ui.container.Resizer,
 
+    /*
+    *****************************************************************************
+        STATIC MEMBERS
+    *****************************************************************************
+    */
+    statics : {
+        __DMSP_URL_PREFIX : "ftp://ftp.ngdc.noaa.gov/STP/satellite_data/DMSP/F16/SSJ"
+        
+    },
 
     /*
     *****************************************************************************
@@ -111,7 +120,7 @@ qx.Class.define("auroral_resources.view.SideBar",
 
         // tool label and class index must match up 1-1 for the
         // introspective constructor call to work later in this block
-        var toolLabels = ["Time-Series Data", "Maps and Overlays", "Photos and Videos"];
+        var toolLabels = ["Time-Series Data", "Maps and Imagery", "Photos and Videos"];
         for ( var i=0; i < toolLabels.length; i++) {
 
             var panel = new collapsablepanel.Panel( toolLabels[i] );
@@ -121,7 +130,7 @@ qx.Class.define("auroral_resources.view.SideBar",
             panels.push(panel);
 
             var tree = new qx.ui.tree.Tree().set({ width : 350, height : 200, rootOpenClose: true });
-            var root = new qx.ui.tree.TreeFolder(toolLabels[i]);
+            var root = new auroral_resources.ui.tree.TouchEnabledTreeFolder(toolLabels[i]);
 
             root.setOpen(true);
             tree.setRoot(root);
@@ -167,42 +176,75 @@ qx.Class.define("auroral_resources.view.SideBar",
         _addItems : function(index, parent) {
 
             if (index == 0) {
-                var iono = new qx.ui.tree.TreeFolder("Ionosphere");
-                var item = new qx.ui.tree.TreeFolder("foF2");
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsGA762','iono_foF2.GA762',"Gakona (GA762) foF2 {MHz}"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsSMJ67','iono_foF2.SMJ67',"Sondrestrom (SMJ67) foF2 {MHz}"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsTR170','iono_foF2.TR170',"Tromso (TR170) foF2 {MHz}"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsNO369','iono_foF2.NO369',"Norilsk (NO369) foF2 {MHz}"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsBC840','iono_foF2.BC840',"Boulder (BC840) foF2 {MHz}"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsMW26P','iono_foF2.MW26P',"Mawson (MW26P) foF2 {MHz}"));
-                iono.add(item);
-                item = new qx.ui.tree.TreeFolder("h'F");
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsGA762','iono_hpF.GA762',"Gakona (GA762) h'F {Km}"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsSMJ67','iono_hpF.SMJ67',"Sondrestrom (SMJ67) h'F {Km}"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsTR170','iono_hpF.TR170',"Tromso (TR170) h'F {Km}"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsNO369','iono_hpF.NO369',"Norilsk (NO369) h'F {Km}"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsBC840','iono_hpF.BC840',"Boulder (BC840) h'F {Km}"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsMW26P','iono_hpF.MW26P',"Mawson (MW26P) h'F {Km}"));
-                iono.add(item);
-                parent.add(iono);
+                var item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Ionosphere");
+                var item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Ionosonde");
 
-                if (!qx.bom.client.Engine.MSHTML && qx.bom.client.Engine.NAME != "mshtml") {
-                    item = new qx.ui.tree.TreeFolder("Solar Related");
-                    item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','imf_bz.ACE_RT',"ACE Bz {nT}"));
-                    item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','vsw_x.ACE_RT',"ACE Flow {Km/s}"));
-                    item.add(new auroral_resources.widget.ProxiedTimeSeriesTreeFile("http://lasp.colorado.edu/lisird/tss/sorce_tsi_6hr.html","SORCE 6hr TSI {W/m^2}"));
-                    parent.add(item);
-                }
-
-                item = new qx.ui.tree.TreeFolder("Geomagnetic Indices");
-                item.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('geomInd','index_dst', "Dst {nT}"));
-                item.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('geomInd','index_kp.est', "Kp"));
-                item.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('geomInd','index_ap', "Ap"));
+                var item3 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("foF2");
+                item3.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsGA762','iono_foF2.GA762',"Gakona (GA762) foF2 {MHz}"));
+                item3.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsSMJ67','iono_foF2.SMJ67',"Sondrestrom (SMJ67) foF2 {MHz}"));
+                item3.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsTR170','iono_foF2.TR170',"Tromso (TR170) foF2 {MHz}"));
+                item3.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsNO369','iono_foF2.NO369',"Norilsk (NO369) foF2 {MHz}"));
+                item3.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsBC840','iono_foF2.BC840',"Boulder (BC840) foF2 {MHz}"));
+                item3.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsMW26P','iono_foF2.MW26P',"Mawson (MW26P) foF2 {MHz}"));
+                item2.add(item3);
+                item.add(item2);
                 parent.add(item);
-                
+
+                item3 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("h'F");
+                item3.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsGA762','iono_hpF.GA762',"Gakona (GA762) h'F {Km}"));
+                item3.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsSMJ67','iono_hpF.SMJ67',"Sondrestrom (SMJ67) h'F {Km}"));
+                item3.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsTR170','iono_hpF.TR170',"Tromso (TR170) h'F {Km}"));
+                item3.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsNO369','iono_hpF.NO369',"Norilsk (NO369) h'F {Km}"));
+                item3.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsBC840','iono_hpF.BC840',"Boulder (BC840) h'F {Km}"));
+                item3.add(new auroral_resources.widget.TimeSeriesTreeFile('IonoStationsMW26P','iono_hpF.MW26P',"Mawson (MW26P) h'F {Km}"));
+                item2.add(item3);
+                item.add(item2);
+                parent.add(item);
+
+                item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Solar Wind");
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','imf_bz.ACE_RT',"ACE Bz {nT}"));
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','vsw_x.ACE_RT',"ACE Flow {Km/s}"));
+                item.add(new auroral_resources.widget.ProxiedTimeSeriesTreeFile("http://lasp.colorado.edu/lisird/tss/sorce_tsi_6hr.html","SORCE 6hr TSI {W/m^2}"));
+                parent.add(item);
+
+                item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Indices");
+                item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Geomagnetic");
+                item2.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('geomInd','index_dst', "Dst {nT}"));
+                item2.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('geomInd','index_kp.est', "Kp"));
+                item2.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('geomInd','index_ap', "Ap"));
+                item.add(item2);
+                parent.add(item);
+
+                item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("DMSP");
+                item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("F16");
+
+                item3 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("SSJ Precipitating Electrons");
+                /*
+                item3.add(new auroral_resources.ui.tree.AutoplotTreeFile("Differential", auroral_resources.view.SideBar.__DMSP_URL_PREFIX, "hdf5", "DIFF_ENERGY_FLUX_E"));
+                item3.add(new auroral_resources.ui.tree.AutoplotTreeFile("Average", auroral_resources.view.SideBar.__DMSP_URL_PREFIX, "hdf5", "DIFF_ENERGY_FLUX_E"));
+                item3.add(new auroral_resources.ui.tree.AutoplotTreeFile("Total", auroral_resources.view.SideBar.__DMSP_URL_PREFIX, "hdf5", "DIFF_ENERGY_FLUX_E"));
+                */
+                item3.add(new auroral_resources.ui.tree.AutoplotTreeFile("DIFF_ENERGY_FLUX_E", "http://autoplot.org/autoplot.jnlp?vap:http://dl.dropbox.com/u/9834776/tmp/j4f1298144.h5?AVG_ENERGY_E "));
+                item3.add(new auroral_resources.ui.tree.AutoplotTreeFile("AVG_ENERGY_E", "http://autoplot.org/autoplot.jnlp?vap:http://dl.dropbox.com/u/9834776/tmp/j4f1298144.h5?AVG_ENERGY_E "));
+                item3.add(new auroral_resources.ui.tree.AutoplotTreeFile("TOTAL_ENERGY_FLUX_E", "http://autoplot.org/autoplot.jnlp?vap:http://dl.dropbox.com/u/9834776/tmp/j4f1298144.h5?AVG_ENERGY_E "));
+                item2.add(item3);
+
+                item3 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("SSJ Precipitating Ions");
+                /*
+                item3.add(new auroral_resources.ui.tree.AutoplotTreeFile("DIFF_ENERGY_FLUX_I", "http://autoplot.org/autoplot.jnlp?vap:"+url));
+                item3.add(new auroral_resources.ui.tree.AutoplotTreeFile("AVG_ENERGY_I", "http://autoplot.org/autoplot.jnlp?vap:"+url));
+                item3.add(new auroral_resources.ui.tree.AutoplotTreeFile("TOTAL_ENERGY_FLUX_I", "http://autoplot.org/autoplot.jnlp?vap:"+url));
+                */
+                item3.add(new auroral_resources.ui.tree.AutoplotTreeFile("DIFF_ENERGY_FLUX_I", "http://autoplot.org/autoplot.jnlp?vap:http://dl.dropbox.com/u/9834776/tmp/j4f1298144.h5?AVG_ENERGY_E "));
+                item3.add(new auroral_resources.ui.tree.AutoplotTreeFile("AVG_ENERGY_I", "http://autoplot.org/autoplot.jnlp?vap:http://dl.dropbox.com/u/9834776/tmp/j4f1298144.h5?AVG_ENERGY_E "));
+                item3.add(new auroral_resources.ui.tree.AutoplotTreeFile("TOTAL_ENERGY_FLUX_I", "http://autoplot.org/autoplot.jnlp?vap:http://dl.dropbox.com/u/9834776/tmp/j4f1298144.h5?AVG_ENERGY_E "));
+                item2.add(item3);
+
+                item.add(item2);
+                parent.add(item);
 
                 /*
-                item = new qx.ui.tree.TreeFolder("SPIDR (via google app engine)");
+                item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("SPIDR (via google app engine)");
                 item.add(new auroral_resources.widget.GAEProxyTimeSeriesTreeFile('IonoStationsBC840','iono_foF2.BC840',"Boulder (BC840) foF2 {MHz}"));
                 item.add(new auroral_resources.widget.GAEProxyTimeSeriesTreeFile('IonoStationsTR170','iono_foF2.TR170',"Tromso (TR170) foF2 {MHz}"));
                 parent.add(item);
@@ -210,44 +252,49 @@ qx.Class.define("auroral_resources.view.SideBar",
 
             } else if (index == 1) {
                 
-                var item = new qx.ui.tree.TreeFolder("Ovation Prime Real-Time");
-                item.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_nowcast_aacgm.png","Ovation Prime Real-Time Nowcast {Ergs/cm^2/s}"));
-                item.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_forecast_aacgm.png","Ovation Prime Real-Time Forecast {Ergs/cm^2/s}"));
+                var item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Ovation Prime");
+                var item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Real-Time");
+                item2.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_nowcast_aacgm.png","Nowcast {Ergs/cm^2/s}"));
+                item2.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_forecast_aacgm.png","Forecast {Ergs/cm^2/s}"));
+                item.add(item2);
                 parent.add(item);
                 
-                item = new qx.ui.tree.TreeFolder("Ovation Aurora Coastal Relief");
-                item.add(new auroral_resources.widget.MapTreeFile('21EFE0E5-C280-9A20-D309-61938C843585','openlayers', 'ECS', 'north_nowcast', "Nowcast {Ergs/cm^2/s}"));
-                item.add(new auroral_resources.widget.MapTreeFile('21EFE0E5-C280-9A20-D309-61938C843585','openlayers', 'ECS', 'north_forecast', "Forecast {Ergs/cm^2/s}"));
+                item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Ovation Aurora");
+                item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Coastal Relief");
+                item2.add(new auroral_resources.widget.MapTreeFile('21EFE0E5-C280-9A20-D309-61938C843585','openlayers', 'ECS', 'north_nowcast', "Nowcast {Ergs/cm^2/s}"));
+                item2.add(new auroral_resources.widget.MapTreeFile('21EFE0E5-C280-9A20-D309-61938C843585','openlayers', 'ECS', 'north_forecast', "Forecast {Ergs/cm^2/s}"));
+                item.add(item2);
+                item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Nighttime Lights");
+                item2.add(new auroral_resources.widget.MapTreeFile('21EFE0E5-C280-9A20-D309-61938C843585','openlayers', 'DMSP', 'north_nowcast', "Nowcast {Ergs/cm^2/s}"));
+                item2.add(new auroral_resources.widget.MapTreeFile('21EFE0E5-C280-9A20-D309-61938C843585','openlayers', 'DMSP', 'north_forecast', "Forecast {Ergs/cm^2/s}"));
+                item.add(item2);
                 parent.add(item);
                 
-                item = new qx.ui.tree.TreeFolder("Ovation Aurora Nighttime Lights");
-                item.add(new auroral_resources.widget.MapTreeFile('21EFE0E5-C280-9A20-D309-61938C843585','openlayers', 'DMSP', 'north_nowcast', "Nowcast {Ergs/cm^2/s}"));
-                item.add(new auroral_resources.widget.MapTreeFile('21EFE0E5-C280-9A20-D309-61938C843585','openlayers', 'DMSP', 'north_forecast', "Forecast {Ergs/cm^2/s}"));
-                parent.add(item);
-                
-                item = new qx.ui.tree.TreeFolder("Space Weather Prediction Center");
-                item.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.swpc.noaa.gov/pmap/gif/pmapN.gif","Northern Statistical Auroral Oval"));
-                item.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.swpc.noaa.gov/pmap/gif/pmapS.gif","Southern Statistical Auroral Oval"));
-                parent.add(item);
-                
-                item = new qx.ui.tree.TreeFolder("NASA SOHO Imagery");
-                item.add(new auroral_resources.widget.ExternalImageTreeFile("http://sohowww.nascom.nasa.gov/data/realtime/mdi_igr/512/latest.jpg","MDI Continuum"));
-                item.add(new auroral_resources.widget.ExternalImageTreeFile("http://sohowww.nascom.nasa.gov/data/realtime/mdi_mag/512/latest.jpg","MDI Magnetogram"));
-                item.add(new auroral_resources.widget.ExternalImageTreeFile("http://sohowww.nascom.nasa.gov/data/realtime/eit_304/512/latest.jpg","EIT 304"));
+                item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Imagery");
+                item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("SWPC");
+                item2.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.swpc.noaa.gov/pmap/gif/pmapN.gif","Northern Statistical Auroral Oval"));
+                item2.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.swpc.noaa.gov/pmap/gif/pmapS.gif","Southern Statistical Auroral Oval"));
+                item.add(item2);
+                item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("NASA");
+                item2.add(new auroral_resources.widget.ExternalImageTreeFile("http://sohowww.nascom.nasa.gov/data/realtime/mdi_igr/512/latest.jpg","SOHO MDI Continuum"));
+                item2.add(new auroral_resources.widget.ExternalImageTreeFile("http://sohowww.nascom.nasa.gov/data/realtime/mdi_mag/512/latest.jpg","SOHO MDI Magnetogram"));
+                item2.add(new auroral_resources.widget.ExternalImageTreeFile("http://sohowww.nascom.nasa.gov/data/realtime/eit_304/512/latest.jpg","SOHO EIT 304"));
+                item.add(item2);
                 parent.add(item);
 
             } else if (index == 2) {
-                var item = new qx.ui.tree.TreeFolder("Photos of Aurorae");
+
+                var item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Photos");
                 item.add(new auroral_resources.widget.ImageryTreeFile("User Gallery"));
                 item.add(new auroral_resources.widget.FlickrImageTreeFile("Flickr Map Gallery"));
                 item.add(new auroral_resources.widget.MapTreeFile('','olayerskml', 'ECS', '', "Solar Storm Watch Map Gallery"));
                 parent.add(item);
                 
-                item = new qx.ui.tree.TreeFolder("Videos of Aurorae");                
+                item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Videos");                
                 item.add(new auroral_resources.widget.ExternalVidTreeFile("http://www.youtube.com/v/_Y2gv-MoQx4","Halloween Storm (NASA) 2003"));
                 item.add(new auroral_resources.widget.ExternalVidTreeFile("http://www.youtube.com/v/9AoIBt-zgn0","Tromsø Norway 2009"));
                 parent.add(item);
-                
+
             } else {
                 // unknown index
             }
@@ -366,6 +413,7 @@ qx.Class.define("auroral_resources.view.SideBar",
             group.value.setWidth(220);
             group.value.setTextAlign("center");
             slider.addListener("changeValue", this._sliderChanged, this);
+            slider.addListener("touchmove", this._sliderChanged, this);
             slider.addListener("mouseup", this._sliderChangeDone, this);
             slider.addListener("keyup", this._sliderKeyChangeDone, this);
             this.__sliderGroup = group;

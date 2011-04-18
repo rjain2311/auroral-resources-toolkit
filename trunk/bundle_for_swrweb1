@@ -2,7 +2,8 @@
 
 rm -fr ar &&\
 rm -fr build &&\
-./generate.py build &&\
+./generate.py default &&\
+./generate.py compress &&\
 cp -pR build ar &&\
 cp -pR inspector ar/ &&\
 cp source/inspector.html ar/ &&\
