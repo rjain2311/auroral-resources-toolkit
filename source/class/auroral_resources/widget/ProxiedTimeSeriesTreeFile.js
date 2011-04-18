@@ -65,6 +65,8 @@ qx.Class.define("auroral_resources.widget.ProxiedTimeSeriesTreeFile",
         this.addListener("droprequest", this._dropRequest, this);
         this.__title = title;
         this.__mdlink = mdlink;
+        this.setToolTipText("(external) Drag to the gray workspace to the right");
+        this.setIcon("resource/auroral_resources/icons/lasp24.png");
         return this;
     },
 

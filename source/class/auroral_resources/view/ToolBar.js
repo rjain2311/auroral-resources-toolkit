@@ -119,8 +119,8 @@ qx.Class.define("auroral_resources.view.ToolBar",
         this.add(infoPart);
 
         // Tutorial button
-        var tutBtn = new qx.ui.toolbar.Button(this.tr("Tutorial"), "icon/22/actions/help-contents.png");
-        tutBtn.setToolTipText(this.tr("Open a quick start guide"));
+        var tutBtn = new qx.ui.toolbar.Button(this.tr("Tutorials"), "icon/22/actions/help-contents.png");
+        tutBtn.setToolTipText(this.tr("Opens a quick start guide, with links and videos"));
         tutBtn.addListener("mouseup", function() {
             
             // add introductory/welcome text

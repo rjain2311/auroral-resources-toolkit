@@ -65,6 +65,7 @@ qx.Class.define("auroral_resources.widget.HistogramTreeFile",
         this.addListener("droprequest", this._dropRequest, this);
         this.__title = title;
         this.__paramater = parameter;
+        this.setToolTipText("Drag to the gray workspace to the right");
         return this;
     },
 

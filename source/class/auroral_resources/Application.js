@@ -64,6 +64,16 @@ qx.Class.define("auroral_resources.Application",
 
     /*
     *****************************************************************************
+        STATIC METHODS AND VARIABLES
+    *****************************************************************************
+    */
+    statics :
+    {
+        __mainWindow : null
+    },
+
+    /*
+    *****************************************************************************
         CLASS VARIABLES AND METHODS
     *****************************************************************************
     */
@@ -79,7 +89,6 @@ qx.Class.define("auroral_resources.Application",
         __horizontalSplitPane : null,
         __verticalSplitPane : null,
         __prefWindow : null,
-        __mainWindow : null,
         __sideBar : null,
         __sideBarScroller : null,
         __mouseX : null,
@@ -98,6 +107,9 @@ qx.Class.define("auroral_resources.Application",
         {
             // Call super class
             this.base(arguments);
+
+            // monkey patch the default namespace
+            this.monkeyPatch();
 
             this.initializeTimeBus();
             this._parseQueryStringForTimes();
@@ -147,7 +159,6 @@ qx.Class.define("auroral_resources.Application",
                     this.buildGui();
             } // end if/else
             
-            this.monkeyPatch();
         }, // end main
 
 
@@ -179,9 +190,10 @@ qx.Class.define("auroral_resources.Application",
             this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
             var now = this.__timeBus.getCurrentTime();
             var begin = now;
-            begin -= (((86400) * 7) * 1000); //one week of millis
+            var nDays = 2;
+            begin -= (((86400) * nDays) * 1000); // nDays of millis
             var end = now;
-            var cur = end - (((86400) * 3.5) * 1000); //half a week of millis
+            var cur = end - (((86400) * nDays/2) * 1000); //half nDays of millis
             // round to nearest 5 minutes
             cur = Math.ceil(cur/(5000*60))*(5000*60);
             cur = cur - 1000000;
@@ -260,8 +272,8 @@ qx.Class.define("auroral_resources.Application",
             });
 
             // define the workspace container
-            this.__mainWindow = new qx.ui.window.Desktop(new qx.ui.window.Manager());
-            this.__mainWindow.set({
+            auroral_resources.Application.__mainWindow = new qx.ui.window.Desktop(new qx.ui.window.Manager());
+            auroral_resources.Application.__mainWindow.set({
                 decorator: "main", 
                 backgroundColor: "silver",
                 width: 700,
@@ -269,8 +281,7 @@ qx.Class.define("auroral_resources.Application",
                 enabled: true
             });
 
-            this.__mainWindow.addListener("drop", this._widgetDropListener, this);
-            this.__mainWindow.addListener("mousemove", this._mouseMove, this);
+            auroral_resources.Application.__mainWindow.addListener("drop", this._widgetDropListener, this);
 
             // create and add the date/time chooser
             //var utc = this.getNowUTC();
@@ -284,7 +295,7 @@ qx.Class.define("auroral_resources.Application",
             this.__sideBarScroller.setBackgroundColor("silver");
 
             // add the sidebar
-            this.__sideBar = new auroral_resources.view.SideBar(this, this.__mainWindow);
+            this.__sideBar = new auroral_resources.view.SideBar(this, auroral_resources.Application.__mainWindow);
             this.__sideBarScroller.add(this.__sideBar);
 
             // add any query added widgets to the display
@@ -298,10 +309,9 @@ qx.Class.define("auroral_resources.Application",
             if (intro == null || intro != "false") {
                 var iwin = new auroral_resources.widget.IntroductionWindow("Introduction");
                 iwin.open();
-                this.__mainWindow.add( iwin, { left: 50, top: 50 } );
+                auroral_resources.Application.__mainWindow.add( iwin, { left: 50, top: 50 } );
             }
             */
-
 
             // create the toggle for the sidebar
             var sidebarHider = new qx.ui.form.Button("", "resource/auroral_resources/icons/left_arrow_orange.png");
@@ -330,7 +340,7 @@ qx.Class.define("auroral_resources.Application",
 
             // main area
             var scroller2 = new qx.ui.container.Scroll();
-            scroller2.add(this.__mainWindow);
+            scroller2.add(auroral_resources.Application.__mainWindow);
             this.__horizontalSplitPane.add(scroller2, 1);
 
         }, // end buildGui
@@ -339,7 +349,7 @@ qx.Class.define("auroral_resources.Application",
         // empty the workspace, nuke all widgets
         //
         emptyWorkspace : function() {
-            this.__mainWindow.removeAll();
+            auroral_resources.Application.__mainWindow.removeAll();
         },
 
         //
@@ -377,7 +387,7 @@ qx.Class.define("auroral_resources.Application",
             */
             
             // add widgets by probing the workspace for details
-            var windows = this.__mainWindow.getWindows();
+            var windows = auroral_resources.Application.__mainWindow.getWindows();
             
             if (windows == null || windows.length == 0) {
                 dialog.Dialog.error("You don't have any widgets on your workspace, there's nothing to share!");
@@ -485,7 +495,7 @@ qx.Class.define("auroral_resources.Application",
                 req.send();
                 */
                 
-                var mW = this.__mainWindow;
+                var mW = auroral_resources.Application.__mainWindow;
                 var wD = this.__widgets;
                 var pieces = [];
                                 
@@ -500,6 +510,9 @@ qx.Class.define("auroral_resources.Application",
                     pieces = [0,684,"TimeSeriesWindow",445,197,"imf_bz.ACE_RT","ACE%20Bz%20%7BnT%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
                     addWidget(stringToClass, mW, pieces, wD);
                 }
+
+
+                all commented out for now
                 
                 pieces = [0,0,"TimeSeriesIndexWindow",445,161,"index_kp.est","Kp","geomInd"];
                 addWidget(stringToClass, mW, pieces, wD);
@@ -527,9 +540,11 @@ qx.Class.define("auroral_resources.Application",
                 //
                 // handle special initial pages
                 // 
-                var mW = this.__mainWindow;
+                var mW = auroral_resources.Application.__mainWindow;
                 var wD = this.__widgets;
                 var pieces = [];
+
+                // check for special sites, like chapman 2011
                 var special = getQueryVariable("special");
                 if (special != null) {
                     
@@ -537,16 +552,48 @@ qx.Class.define("auroral_resources.Application",
                         pieces = [0,0,"LocalImageGalleryWindow",820,650,"Chapman%20Conference%202011%20User%20Gallery"];
                         addWidget(stringToClass, mW, pieces, wD);
                         //
-                        // EXIT AFTER DISPLAYING SPECIAL WIDGET
+                        // EXIT AFTER DISPLAYING SPECIAL WIDGET, don't want other stuff
+                        // showing up even if they've tried to do so...
                         //
                         return;
                     }
                 }                
+
+                // check for hides
+                var hideMenuBar = getQueryVariable("hideMenuBar");
+                if (hideMenuBar != null) {
+                    if(hideMenuBar === "true") {
+                        this.__toolBarView.exclude();
+                    }
+                }
+                var hideSideBar = getQueryVariable("hideSideBar");
+                if (hideSideBar != null) {
+                    if(hideSideBar === "true") {
+                        this.__sideBarScroller.exclude();
+                    }
+                }
+                var hideCruft = getQueryVariable("hideCruft");
+                if (hideCruft != null) {
+                    if(hideCruft === "true") {
+                        this.__header.exclude();
+                        this.__footer.exclude();
+                    }
+                }
+                var hideAll = getQueryVariable("hideAll");
+                if (hideAll != null) {
+                    if(hideAll === "true") {
+                        this.__header.exclude();
+                        this.__footer.exclude();
+                        this.__sideBarScroller.exclude();
+                        this.__toolBarView.exclude();
+                    }
+                }
             
                 // parse get query for initial state modifications
                 // check for widget additions
                 var i = 0;
-                for (i=0;i<42;i++) {
+                // artificially limits to 16 widgets by URL at the moment
+                for (i=0;i<16;i++) {
                     var w = getQueryVariable("w"+i);
                     if (w != null) {
 
@@ -562,7 +609,7 @@ qx.Class.define("auroral_resources.Application",
                         win.open();
 
                         // add
-                        this.__mainWindow.add(win, { left: x, top: y });
+                        auroral_resources.Application.__mainWindow.add(win, { left: x, top: y });
 
                         var wid = x + ',' + y + ',' + className;
                         var j = 3;
@@ -615,25 +662,20 @@ qx.Class.define("auroral_resources.Application",
             }
             
         },
-        
-        //
-        // keep track of the mouse cursor's location
-        // so we can drop widgets right under the cursor
-        //
-        _mouseMove : function(e) {
-            this.__mouseX = e.getDocumentLeft();
-            this.__mouseY = e.getDocumentTop();
-        }, // end mouseMove
 
         //
         // add the widget to the workspace at the cursor
         //
         _widgetDropListener : function(e) {
+
             var w = e.getData("widget");
+            var xBuffer = 285;
+            var yBuffer = 97;
+            var x = e.getDocumentLeft() - xBuffer; //sub off extra to center it more
+            var y = e.getDocumentTop() - yBuffer;  //ditto
+            auroral_resources.Application.__mainWindow.add( w, { left:x, top:y });
             w.open();
-            var x = this.__mouseX - 285; //sub off extra to center it more
-            var y = this.__mouseY - 97;  //ditto
-            this.__mainWindow.add( w, { left:x, top:y });
+
         } // end widgetDropListener
     } // end members
 });

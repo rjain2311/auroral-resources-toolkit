@@ -37,12 +37,7 @@ or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
 AUTHORS:
-
 Peter Elespuru - peter.elespuru@noaa.gov
-Dmitry Medvedev - dmedv@wdcb.ru
-Mikhail Zhizhin - jjn@wdcb.ru
-Dmitry Kokovin - 
-Rob Redmon - rob.redmon@noaa.gov
 
 *************************************************************************/
 
@@ -59,6 +54,10 @@ qx.Class.define("auroral_resources.widget.MapWindow",
     */
     statics : 
     {
+        
+        //
+        //
+        //
         fromArray : function(argArray) { 
             return new auroral_resources.widget.MapWindow(
                 parseInt(decodeURI(argArray[3])), 
@@ -72,7 +71,6 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         }
     },
     
-
     /*
     *****************************************************************************
         CONSTRUCTOR

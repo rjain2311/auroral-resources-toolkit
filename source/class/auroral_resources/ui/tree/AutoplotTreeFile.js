@@ -2,8 +2,8 @@
 
 COPYRIGHTS:
 
-Copyright (c) 2010, National Geophysical Data Center, NOAA
-Copyright (c) 2010, Geophysical Center, Russian Academy of Sciences
+Copyright (c) 2011, National Geophysical Data Center, NOAA
+Copyright (c) 2011, Geophysical Center, Russian Academy of Sciences
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,34 +36,43 @@ LGPL: http://www.gnu.org/licenses/lgpl.html
 or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
-AUTHORS:
-
-Peter Elespuru - peter.elespuru@noaa.gov
-Dmitry Medvedev - dmedv@wdcb.ru
-Mikhail Zhizhin - jjn@wdcb.ru
-Rob Redmon - rob.redmon@noaa.gov
+AUTHOR(S) OF THE CODE IN THIS FILE:
+Peter R. Elespuru - peter.elespuru@noaa.gov
 
 *************************************************************************/
 
-qx.Class.define("auroral_resources.widget.ExternalImageTreeFile",
+
+qx.Class.define("auroral_resources.ui.tree.AutoplotTreeFile",
 {
+
     extend : qx.ui.tree.TreeFile,
+
+    /*
+    *****************************************************************************
+        STATIC MEMBERS
+    *****************************************************************************
+    */
+    statics : {
+        __AUTOPLOT_URL_PREFIX : "http://autoplot.org/autoplot.jnlp?"        
+    },
 
     /*
     *****************************************************************************
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(filename, title)
+    construct : function(title, uri, format, parameters)
     {
         this.base(arguments, title);
-        this.setDraggable(true);
-        this.addListener("dragstart", this._dragStart, this);
-        this.addListener("droprequest", this._dropRequest, this);
-        this.__filename = filename;
+        this.setDraggable(false);
+        this.addListener("dblclick", this._doubleClicked, this);
         this.__title = title;
+        this.__uri = uri;
+        this.__format = format;
+        this.__parameters = parameters;
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
-        this.setToolTipText("Drag to the gray workspace to the right");
+        this.setToolTipText("(external) Double-click to launch AutoPlot and load this data");
+        this.setIcon("resource/auroral_resources/icons/autoplot24.png");
         return this;
     },
 
@@ -78,30 +87,28 @@ qx.Class.define("auroral_resources.widget.ExternalImageTreeFile",
         __window : null,
         __title : null,
         __timeBus : null,
-        __filename : null,
+        __uri : null,
+        __format : null,
+        __parameters : null,
 
-        //
-        //
-        //
-        _dragStart : function(e) {
-            e.addAction("copy");
-            e.addAction("move");
-            e.addType("widget");
-        },
+        _doubleClicked : function(e) {
 
-        //
-        //
-        //
-        _dropRequest : function(e) {
-            var action = e.getCurrentAction();
-            var type = e.getCurrentType();
-            var result = null;
+            if (this.__uri !== undefined) {
+/*
+                var cur = this.__timeBus.getNow();
+                cur = new Date(cur);
+                var yr = cur.getUTCFullYear();
+                var yy = yr.toString().substring(2,4);
+                var mo = cur.getUTCMonth()+1; //0-based indexing
+                if ( mo.toString().length == 1 ) { mo = "0" + mo; }
+                var doy = cur.getDOY();
+                if ( doy.toString().length == 2 ) { doy = "0" + doy; }
+                if ( doy.toString().length == 1 ) { doy = "00" + doy; }
 
-            this.__window = new auroral_resources.widget.ExternalImageWindow(450,450, this.__filename, this.__title);
-
-            if (type === "widget") {
-                result = this.__window;
-                e.addData(type, result);
+                var url = this.__uri+"/"+yr+"/"+mo+"/"+"j5f16"+yy+doy+".gz?"+this.__title;
+                window.open(url);
+*/
+                window.open(this.__uri);
             }
         }
     },
@@ -114,8 +121,6 @@ qx.Class.define("auroral_resources.widget.ExternalImageTreeFile",
     */
     destruct : function()
     {
-        // TODO: add destructor code...
     }
-    
 
 });

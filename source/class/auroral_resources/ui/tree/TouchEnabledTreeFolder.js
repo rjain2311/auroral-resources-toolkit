@@ -2,8 +2,8 @@
 
 COPYRIGHTS:
 
-Copyright (c) 2010, National Geophysical Data Center, NOAA
-Copyright (c) 2010, Geophysical Center, Russian Academy of Sciences
+Copyright (c) 2011, National Geophysical Data Center, NOAA
+Copyright (c) 2011, Geophysical Center, Russian Academy of Sciences
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -39,31 +39,34 @@ EPL: http://www.eclipse.org/org/documents/epl-v10.php
 AUTHORS:
 
 Peter Elespuru - peter.elespuru@noaa.gov
-Dmitry Medvedev - dmedv@wdcb.ru
-Mikhail Zhizhin - jjn@wdcb.ru
-Rob Redmon - rob.redmon@noaa.gov
 
 *************************************************************************/
 
-qx.Class.define("auroral_resources.widget.ExternalImageTreeFile",
+/*
+
+    This is a very basic TreeFolder extension that attaches a folder
+    open to 'mouseup' so that single and double click open the folder
+    on a normal mouse based browser, and a tap opens the folder on
+    mobile browsers (iOS, Android, etc). Recent versions of Qx properly
+    handle mouse up touch events, so just need to associate a handler...
+
+ */
+
+qx.Class.define("auroral_resources.ui.tree.TouchEnabledTreeFolder",
 {
-    extend : qx.ui.tree.TreeFile,
+
+    extend : qx.ui.tree.TreeFolder,
+
 
     /*
     *****************************************************************************
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(filename, title)
+    construct : function(title)
     {
         this.base(arguments, title);
-        this.setDraggable(true);
-        this.addListener("dragstart", this._dragStart, this);
-        this.addListener("droprequest", this._dropRequest, this);
-        this.__filename = filename;
-        this.__title = title;
-        this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
-        this.setToolTipText("Drag to the gray workspace to the right");
+        this.addListener("mouseup", this._openFolder, this);
         return this;
     },
 
@@ -75,47 +78,9 @@ qx.Class.define("auroral_resources.widget.ExternalImageTreeFile",
     */
     members :
     {
-        __window : null,
-        __title : null,
-        __timeBus : null,
-        __filename : null,
-
-        //
-        //
-        //
-        _dragStart : function(e) {
-            e.addAction("copy");
-            e.addAction("move");
-            e.addType("widget");
-        },
-
-        //
-        //
-        //
-        _dropRequest : function(e) {
-            var action = e.getCurrentAction();
-            var type = e.getCurrentType();
-            var result = null;
-
-            this.__window = new auroral_resources.widget.ExternalImageWindow(450,450, this.__filename, this.__title);
-
-            if (type === "widget") {
-                result = this.__window;
-                e.addData(type, result);
-            }
+        _openFolder : function(e) {
+            this.toggleOpen();
         }
-    },
-    
-    
-    /*
-    *****************************************************************************
-        DESTRUCTOR
-    *****************************************************************************
-    */
-    destruct : function()
-    {
-        // TODO: add destructor code...
     }
     
-
 });

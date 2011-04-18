@@ -61,6 +61,7 @@ qx.Class.define("auroral_resources.widget.ImageryTreeFile",
         this.addListener("dragstart", this._dragStart, this);
         this.addListener("droprequest", this._dropRequest, this);
         this.__title = title;
+        this.setToolTipText("Drag to the gray workspace to the right");
         return this;
     },
 
