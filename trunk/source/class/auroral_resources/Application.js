@@ -36,9 +36,8 @@ LGPL: http://www.gnu.org/licenses/lgpl.html
 or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
-AUTHORS:
-
-Peter Elespuru - peter.elespuru@noaa.gov
+AUTHOR(S) OF THIS FILE:
+Peter R. Elespuru - peter.elespuru@noaa.gov
 
 ************************************************************************ */
 
@@ -275,6 +274,7 @@ qx.Class.define("auroral_resources.Application",
             auroral_resources.Application.__mainWindow = new qx.ui.window.Desktop(new qx.ui.window.Manager());
             auroral_resources.Application.__mainWindow.set({
                 decorator: "main", 
+                toolTipText: "Drag components from the 'Available Resources' area at left, to anywhere inside this gray box's boundaries (even on top of other widgets)",
                 backgroundColor: "silver",
                 width: 700,
                 droppable: true,
@@ -413,13 +413,15 @@ qx.Class.define("auroral_resources.Application",
             url = encodeURI(url);
             
             var pageData = [{
-                "message" : "Copy this URL to share your workspace with others.",
+                "message" : "The text below should already been highlighted for you, copy (CTRL+C, CMD+C, etc) and push the 'Email A Link' button to share a link to your workspace.",
                 "formData" : {
-                    'url' : {
-                        'type'  : "TextArea",
-                        'label' : "URL",
-                        'lines' : 12,
-                        'value' : url
+
+                    'share_url'   : {
+                        'id'      : "share_url_1",
+                        'type'    : "TextArea",
+                        'label'   : "URL",
+                        'lines'   : 12,
+                        'value'   : url
                     }
                 }
             }];
@@ -435,7 +437,12 @@ qx.Class.define("auroral_resources.Application",
                 callback : function(map) {},
                 context : this
             });
+
             wizard.start();
+
+            // highlight the text
+            document.getElementById('share_url_1').select();
+
         }, // end shareUrl
 
         //
@@ -675,6 +682,7 @@ qx.Class.define("auroral_resources.Application",
             var y = e.getDocumentTop() - yBuffer;  //ditto
             auroral_resources.Application.__mainWindow.add( w, { left:x, top:y });
             w.open();
+            auroral_resources.Application.__mainWindow.setBlockToolTip(true);
 
         } // end widgetDropListener
     } // end members

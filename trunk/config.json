@@ -159,8 +159,10 @@
       {
          "command" :
          [ 
+           "cp -pR ./build/resource/auroral_resources/OpenLayers/theme ./build", // HACK ALERT, FIXME: WTF is resource losing relative path ?!?
+           "cp -pR ./build/resource/auroral_resources/OpenLayers/img ./build",   // HACK ALERT, SAME ?!?!
            "gzip -9 ./build/script/auroral_resources.js ; rm -f ./build/script/auroral_resources.js",
-           "gzip -9 ./build/script/auroral_resources_mobile.js ; rm -f ./build/script/auroral_resources_mobile.js" 
+           "gzip -9 ./build/script/auroral_resources_mobile.js ; rm -f ./build/script/auroral_resources_mobile.js"
          ]
       }
     }

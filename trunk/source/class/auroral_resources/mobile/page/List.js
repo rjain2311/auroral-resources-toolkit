@@ -1,3 +1,7 @@
+//
+// AUTHOR(S) OF THIS FILE:
+// Peter R. Elespuru - peter.elespuru@noaa.gov
+
 /* ************************************************************************
 
 #asset(qx/icon/Tango/22/apps/internet-mail.png)

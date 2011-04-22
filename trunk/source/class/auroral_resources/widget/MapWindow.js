@@ -2,8 +2,8 @@
 
 COPYRIGHTS:
 
-Copyright (c) 2010, National Geophysical Data Center, NOAA
-Copyright (c) 2010, Geophysical Center, Russian Academy of Sciences
+Copyright (c) 2011, National Geophysical Data Center, NOAA
+Copyright (c) 2011, Geophysical Center, Russian Academy of Sciences
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,11 +36,27 @@ LGPL: http://www.gnu.org/licenses/lgpl.html
 or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
-AUTHORS:
-Peter Elespuru - peter.elespuru@noaa.gov
+AUTHOR(S) OF THIS FILE:
+Peter R. Elespuru - peter.elespuru@noaa.gov
 
 *************************************************************************/
 
+/* ************************************************************************
+
+#asset(auroral_resources/proj4js-combined.js)
+#asset(auroral_resources/proj4js-combined.js.gz)
+#asset(auroral_resources/OpenLayers/OpenLayers.js)
+#asset(auroral_resources/OpenLayers/OpenLayers.js.gz)
+#asset(auroral_resources/OpenLayers/img)
+#asset(auroral_resources/OpenLayers/img/*)
+#asset(auroral_resources/OpenLayers/theme)
+#asset(auroral_resources/OpenLayers/theme/*)
+#asset(auroral_resources/OpenLayers/theme/default)
+#asset(auroral_resources/OpenLayers/theme/default/*)
+#asset(auroral_resources/OpenLayers/theme/default/img)
+#asset(auroral_resources/OpenLayers/theme/default/img/*)
+
+************************************************************************ */
 
 qx.Class.define("auroral_resources.widget.MapWindow",
 {
@@ -49,11 +65,27 @@ qx.Class.define("auroral_resources.widget.MapWindow",
 
     /*
     *****************************************************************************
+        EVENTS
+    *****************************************************************************
+    */
+    events : 
+    {
+        scriptLoaded: 'qx.event.type.Event'
+    },
+
+
+    /*
+    *****************************************************************************
         STATICS
     *****************************************************************************
     */
     statics : 
     {
+        //
+        // used to account for async loaded dependencies
+        //
+        LOADED: {},
+        LOADING: {},
         
         //
         //
@@ -70,6 +102,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
             );
         }
     },
+
     
     /*
     *****************************************************************************
@@ -105,17 +138,25 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         this.setHeight(height);
         this.setContentPadding(0,0,0,0);
 
+        this.add(new qx.ui.basic.Image(qx.util.ResourceManager.getInstance().toUri("auroral_resources/loading_map.png")));
+
+        var olScripts = [
+            qx.util.ResourceManager.getInstance().toUri("auroral_resources/proj4js-combined.js.gz"),
+            qx.util.ResourceManager.getInstance().toUri("auroral_resources/OpenLayers/OpenLayers.js.gz")
+        ];
+
         // maps currently support either google or openlayers based on what was requested
+        // and these callback driven functions are asyncronous
         if(mapper.toString().toLowerCase() == 'openlayers') {
-            this.add(this._createOpenLayersMap(baselayer, period, this));
+            this._loadScripts(olScripts, qx.lang.Function.bind(this._createOpenLayersMap,this,baselayer,period,this));
         } else if (mapper.toString().toLowerCase() == 'google') {
-            this.add(this._createGoogleMap(baselayer, period, this));
+            this._loadScripts(null,qx.lang.Function.bind(this._createGoogleMap,this,baselayer,this));
         } else if (mapper.toString().toLowerCase() == 'olayerskml') {
-            this.add(this._createOpenLayersMapKML(baselayer, period, this));
+            this._loadScripts(olScripts, qx.lang.Function.bind(this._createOpenLayersMapKML,this,baselayer,period,this));
         } else if (mapper.toString().toLowerCase() == 'olayersols') {
-            this.add(this._createOpenLayersMapOLS(baselayer, period, this));
+            this._loadScripts(olScripts, qx.lang.Function.bind(this._createOpenLayersMapOLS,this,baselayer,period,this));
         } else {
-            this.add(this._createOpenLayersMap(baselayer, period, this));
+            this._loadScripts(olScripts, qx.lang.Function.bind(this._createOpenLayersMap,this,baselayer,period,this));
         }
         
         this.addListener("close", function(evt) { this.destroy() });
@@ -413,13 +454,31 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                 
             request.open("GET", servletPath, false);
             request.send(null);
+
+            // validate response
+            if (request.status != 200) {
+
+                var ndmWidth = 512;
+                var ndmHeight = 512;
+
+                layer = new OpenLayers.Layer.Image(
+                    "",
+                    qx.util.ResourceManager.getInstance().toUri("auroral_resources/errorloading_map.png"),
+                    map.maxExtent,
+                    new OpenLayers.Size(ndmWidth, ndmHeight)
+                );
+
+                return layer;
+            }
+
             response = request.responseText;
 
             var files = response.split('\n');
             var link = "";
-            
             var layer = null;
-            if (files.length != 0 && files[0] != "") {
+
+            if (files != null && files.length != 0 && files[0] != "") {
+
                 var baseUrl = "http://ngdc.noaa.gov/stp/ovation_prime/data/";
                 
                 link = baseUrl + yr + "/"
@@ -434,8 +493,19 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                     isBaseLayer : false,
                     displayProjection : new OpenLayers.Projection("EPSG:4326")
                 });
+
             } else {
-                dialog.Dialog.error("Sorry. No ovation data is available for your current time.");
+
+                var ndmWidth = 512;
+                var ndmHeight = 512;
+
+                layer = new OpenLayers.Layer.Image(
+                    "",
+                    qx.util.ResourceManager.getInstance().toUri("auroral_resources/nodata_map.png"),
+                    map.maxExtent,
+                    new OpenLayers.Size(ndmWidth, ndmHeight)
+                );
+
             }
             
             return layer;
@@ -516,16 +586,62 @@ qx.Class.define("auroral_resources.widget.MapWindow",
 
 
         //
+        // generic load scripts function with callbacks
+        //
+        _loadScripts : function(scripts, handler) {
+
+            var script = scripts.shift();
+
+            if (script) {
+
+                if (auroral_resources.widget.MapWindow.LOADING[script]) {
+
+                    auroral_resources.widget.MapWindow.LOADING[script].addListenerOnce('scriptLoaded',function() {
+                        this._loadScripts(scripts, handler);
+
+                    }, this);
+
+                } else if ( auroral_resources.widget.MapWindow.LOADED[script]) {
+
+                    this._loadScripts(scripts, handler);
+
+                } else {
+
+                    auroral_resources.widget.MapWindow.LOADING[script] = this;
+                    var sl = new qx.io.ScriptLoader();
+                    var src = qx.util.ResourceManager.getInstance().toUri(script);
+
+                    sl.load(src, function(status){
+
+                        if (status == 'success'){
+                            this._loadScripts(scripts, handler);
+                            auroral_resources.widget.MapWindow.LOADED[script] = true;
+                        }
+
+                        auroral_resources.widget.MapWindow.LOADING[script] = null;
+                        this.fireDataEvent('scriptLoaded',script);
+
+                    },this);
+                }
+
+            } else {
+                handler();
+            }
+        },
+
+
+        //
         //
         //
         _createOpenLayersMapOLS : function(baselayer, period, self) {
+
             var isle = new qx.ui.core.Widget().set({
                 width: 450,
                 height: 400
             });
 
             isle.addListenerOnce("appear", function() {
-                                                
+
                 var map = new OpenLayers.Map(
                     isle.getContentElement().getDomElement(),
                     {
@@ -560,7 +676,8 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                 map.setCenter(new OpenLayers.LonLat(0.0, 0.0), 1);
             });
 
-            return isle;
+            self.removeAll();
+            self.add(isle);
         },
         
         
@@ -568,6 +685,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         //
         //
         _createOpenLayersMap : function(baselayer, period, self) {
+
             var isle = new qx.ui.core.Widget().set({
                 width: 450,
                 height: 400
@@ -627,7 +745,8 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                 }
             });
 
-            return isle;
+            self.removeAll();
+            self.add(isle);
         },
         
         
@@ -642,7 +761,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
             });
 
             isle.addListenerOnce("appear", function() {
-                
+
                 var map = new OpenLayers.Map(
                     isle.getContentElement().getDomElement(),
                     {
@@ -663,7 +782,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
 
                 var kml = new OpenLayers.Layer.GML(
                     "KML", 
-                    "resource/auroral_resources/aurorae.kml", 
+                    qx.util.ResourceManager.getInstance().toUri("auroral_resources/aurorae.kml"), 
                     {
                         format: OpenLayers.Format.KML,
                         formatOptions: 
@@ -717,14 +836,15 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                 map.zoomToExtent(new OpenLayers.Bounds(-180, -90, 180, 90), true);
             });
 
-            return isle;          
+            self.removeAll();
+            self.add(isle);     
         },
 
 
         //
         //
         //
-        _createGoogleMap : function(baselayer) {
+        _createGoogleMap : function(baselayer, self) {
             var isle = new qx.ui.core.Widget().set({
                 width: 450,
                 height: 400
@@ -744,7 +864,8 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                 );
             });
 
-            return isle;
+            self.removeAll();
+            self.add(isle);
         }
     },
 

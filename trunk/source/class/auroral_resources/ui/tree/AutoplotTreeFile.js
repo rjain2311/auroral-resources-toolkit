@@ -71,7 +71,7 @@ qx.Class.define("auroral_resources.ui.tree.AutoplotTreeFile",
         this.__format = format;
         this.__parameters = parameters;
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
-        this.setToolTipText("(external) Double-click to launch AutoPlot and load this data");
+        this.setToolTipText("(external) Double-click to launch AutoPlot and load this data set within autoplot");
         this.setIcon("resource/auroral_resources/icons/autoplot24.png");
         return this;
     },

@@ -66,6 +66,7 @@ qx.Class.define("auroral_resources.ui.tree.TouchEnabledTreeFolder",
     construct : function(title)
     {
         this.base(arguments, title);
+        this.setToolTipText("Click to expand this folder and see the items within");
         this.addListener("mouseup", this._openFolder, this);
         return this;
     },
