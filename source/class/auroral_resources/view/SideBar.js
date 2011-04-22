@@ -127,6 +127,7 @@ qx.Class.define("auroral_resources.view.SideBar",
             panel.setAppearance( "collapsable-panel" );
             panel.setValue(false);
             panel.setGroup(group);
+            panel.setToolTipText("Click to expand this folder and see the items within");
             panels.push(panel);
 
             var tree = new qx.ui.tree.Tree().set({ width : 350, height : 200, rootOpenClose: true });
@@ -209,7 +210,7 @@ qx.Class.define("auroral_resources.view.SideBar",
 
                 item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Indices");
                 item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Geomagnetic");
-                item2.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('geomInd','index_dst', "Dst {nT}"));
+                item2.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('geomInd','index_dstql', "Dst {nT}"));
                 item2.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('geomInd','index_kp.est', "Kp"));
                 item2.add(new auroral_resources.widget.TimeSeriesIndexTreeFile('geomInd','index_ap', "Ap"));
                 item.add(item2);

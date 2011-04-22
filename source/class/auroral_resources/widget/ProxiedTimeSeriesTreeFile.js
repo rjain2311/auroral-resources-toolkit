@@ -36,12 +36,8 @@ LGPL: http://www.gnu.org/licenses/lgpl.html
 or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
-AUTHORS:
-
-Peter Elespuru - peter.elespuru@noaa.gov
-Dmitry Medvedev - dmedv@wdcb.ru
-Mikhail Zhizhin - jjn@wdcb.ru
-Rob Redmon - rob.redmon@noaa.gov
+AUTHOR(S) OF THIS FILE:
+Peter R. Elespuru - peter.elespuru@noaa.gov
 
 *************************************************************************/
 
@@ -65,7 +61,7 @@ qx.Class.define("auroral_resources.widget.ProxiedTimeSeriesTreeFile",
         this.addListener("droprequest", this._dropRequest, this);
         this.__title = title;
         this.__mdlink = mdlink;
-        this.setToolTipText("(external) Drag to the gray workspace to the right");
+        this.setToolTipText("(external provider) Drag this widget anywhere into the gray workspace to the right");
         this.setIcon("resource/auroral_resources/icons/lasp24.png");
         return this;
     },

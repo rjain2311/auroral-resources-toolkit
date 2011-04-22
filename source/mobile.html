@@ -1,18 +1,293 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
-		<title>Auroral Resources Toolkit</title>
+
+		<title>Auroral Resources Toolkit - Mobile Edition</title>
+
+		<meta charset="utf-8">
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="format-detection" content="telephone=no">
-        <link rel="stylesheet" type="text/css" media="screen" href="resource/qx/mobile/css/common/main.css">
-        <link rel="stylesheet" type="text/css" media="screen" href="resource/qx/mobile/css/ios/ios.css">
-        <link rel="stylesheet" type="text/css" media="screen" href="resource/auroral_resources_mobile/css/styles.css">
-		<script type="text/javascript" src="script/auroral_resources_mobile.js.gz"></script>
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+
+		<!-- device specific scaling so it behaves native-esque consistently across all -->
+		<script type="text/javascript">
+
+			var viz_url;
+			function setViz(prefix, target) {
+				viz_url = prefix+target;
+				return true;
+			}
+			function setSwpc(file) {
+				var urlPrefix = "http://www.swpc.noaa.gov/pmap/gif/";
+				setViz(urlPrefix, file);
+				return true;
+			}
+			function setSwpc2(file) {
+				var urlPrefix = "http://www.swpc.noaa.gov/tiger/";
+				setViz(urlPrefix, file);
+				return true;
+			}
+			function setOvation(file) {
+				var urlPrefix = "http://www.ngdc.noaa.gov/stp/ovation_prime/data/";
+				setViz(urlPrefix, file);
+				return true;
+			}
+			function loadViz() {
+				$('#viz-content').html("<img src='"+viz_url+"'/>");
+				return true;
+			}
+
+			var plot_url;
+			function setPlot(param) {
+
+                var today = new Date();
+                var yyyy = today.getUTCFullYear();
+                var mo = today.getUTCMonth()+1; //0-based indexing
+                if ( mo.toString().length == 1 ) { mo = "0" + mo; }
+                var dy = today.getUTCDate();
+                if ( dy.toString().length == 1 ) { dy = "0" + dy; }
+                var to = yyyy + mo + dy;
+                var yesterday = new Date(today.getTime()-(86400+86400+86400));
+                yyyy = yesterday.getUTCFullYear();
+                mo = yesterday.getUTCMonth()+1; //0-based indexing
+                if ( mo.toString().length == 1 ) { mo = "0" + mo; }
+                dy = yesterday.getUTCDate();
+                if ( dy.toString().length == 1 ) { dy = "0" + dy; }
+                var from = yyyy + mo + dy;
+				var width = Math.floor($(document).width() - 70);
+				var height = Math.floor(width / 2);
+				plot_url = "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?width="+width+"&height="+height+"&format=image&param="+param+"&dateFrom="+from+"&dateTo="+to;
+				return true;
+			}
+			function loadPlot() {
+				$('#plot-content').html("<img src='"+plot_url+"'/>");
+				return true;
+			}
+
+			var deviceAgent = navigator.userAgent.toLowerCase();
+			function shrink() {
+		  		var metatags = document.getElementsByTagName('meta');
+		  		for(cnt = 0; cnt < metatags.length; cnt++) { 
+		   			var element = metatags[cnt];
+		   			if(element.getAttribute('name') == 'viewport') {
+		    			element.setAttribute('content','width=device-width, minimum-scale=0.70, maximum-scale=0.70');
+		   			}
+		  		}
+		 	}			
+
+    		if (deviceAgent.match(/(iphone|ipod|blackberry|android|symbian|opera mobi|opera mini)/)) {
+    			shrink();
+    		}
+    	</script>
+
+		<link rel="stylesheet" type="text/css" href="resource/auroral_resources_mobile/css/jquery.mobile-1.0a4.1.min.css">
+
+		<script type="text/javascript" src="resource/auroral_resources_mobile/js/jquery-1.5.2.min.js.gz"></script>
+		<script type="text/javascript" src="resource/auroral_resources_mobile/js/jquery.mobile-1.0a4.1.min.js.gz"></script>
+
+		<style type="text/css">
+			.plain a:link { color:white; text-decoration:none; }
+			.plain a:visited { color:white; text-decoration:none; }
+		</style>
+
 	</head>
+
 	<body>
+
+		<!-- define the main page -->
+		<div data-role="page" data-theme="a" id="main">
+
+			<div data-role="header" data-position="fixed">
+				<h4>ART - Mobile Edition</h4>
+			</div>
+
+			<div data-role="content">
+
+				<h4>The Auroral Resources Toolkit (ART)<br/>A rich internet, open source application for visualization and collaboration of auroral phenomenology utilizing VxO best practices.
+				</h4>
+
+				<div data-role="collapsible" data-collapsed="true">
+					<h4>Time-Series Data</h4>
+					<ul data-role="listview" data-inset="true" data-theme="e" data-dividertheme="b">
+						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('index_ap');">Ap</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('index_kp.est');">Kp</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('imf_bz.ACE_RT');">ACE Bz {nT}</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('vsw_x.ACE_RT');">ACE Flow {KM/s}</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('index_dstql');">Dst {nT}</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('foF2.BC840');">foF2 Boulder (BC840) {MHz}</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('foF2.WP937');">foF2 Wallops (WP937) {MHz}</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('foF2.GA762');">foF2 Gakona (GA762) {MHz}</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('foF2.TR170');">foF2 Tromso (TR170) {MHz}</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('foF2.MW26P');">foF2 Mawson (MW26P) {MHz}</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('foF2.NO369');">foF2 Norilsk (NO369) {MHz}</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('foF2.SMJ67');">foF2 Sondrestrom (SMJ67) {MHz}</a></li> 
+					</ul> 
+				</div>
+
+				<div data-role="collapsible" data-collapsed="true">
+					<h4>Visualizations</h4>
+					<ul data-role="listview" data-inset="true" data-theme="e" data-dividertheme="b">
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setOvation('north_nowcast_aacgm.png');">Ovation Prime North Nowcast</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setOvation('north_forecast_aacgm.png');">Ovation Prime North Forecast</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setOvation('south_nowcast_aacgm.png');">Ovation Prime South Nowcast</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setOvation('south_forecast_aacgm.png');">Ovation Prime South Forecast</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setSwpc('pmapN.gif');">SWPC Northern Statistical Auroral Oval</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setSwpc('pmapS.gif');">SWPC Southern Statistical Auroral Oval</a></li>
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setSwpc2('tigsample.gif');">SWPC POES Energetic Particle Relative Intensities</a></li>
+					</ul> 
+				</div>
+
+				<div data-role="collapsible" data-collapsed="true">
+					<h4>Photos</h4>
+				</div>
+
+				<div data-role="collapsible" data-collapsed="true">
+					<h4>Videos</h4>
+				</div>
+
+			</div>
+
+			<div data-role="footer" data-position="fixed">
+
+				<h4 class="plain">
+					<a class="plain" href="http://www.noaa.gov/">NOAA</a> | 
+					<a class="plain" href="http://www.nesdis.noaa.gov/">NESDIS</a> | 
+					<a class="plain" href="http://www.ngdc.noaa.gov/">NGDC</a> | 
+					<a class="plain" href="http://www.ngdc.noaa.gov/stp/">STP</a>
+				</h4>
+
+			</div>
+		</div>
+
+		<!-- define the other pages/dialogs -->
+		<div data-role="page" data-theme="e" id="plot">
+			<div data-role="header">
+				<h4>ART - Mobile Edition</h4>
+			</div>
+			<div data-role="content">
+				<div id="plot-content"></div>
+				<h4>Description</h4>
+				<h4>Metadata</h4>
+			</div>
+			<div data-role="footer">
+				<h4 class="plain">
+					<a class="plain" href="http://www.noaa.gov/">NOAA</a> | 
+					<a class="plain" href="http://www.nesdis.noaa.gov/">NESDIS</a> | 
+					<a class="plain" href="http://www.ngdc.noaa.gov/">NGDC</a> | 
+					<a class="plain" href="http://www.ngdc.noaa.gov/stp/">STP</a>
+				</h4>
+			</div>
+		</div>
+
+		<div data-role="page" data-theme="e" id="viz">
+			<div data-role="header">
+				<h4>ART - Mobile Edition</h4>
+			</div>
+			<div data-role="content">
+				<div id="viz-content"></div>
+				<h4>Description</h4>
+				<h4>Metadata</h4>
+			</div>
+			<div data-role="footer">
+				<h4 class="plain">
+					<a class="plain" href="http://www.noaa.gov/">NOAA</a> | 
+					<a class="plain" href="http://www.nesdis.noaa.gov/">NESDIS</a> | 
+					<a class="plain" href="http://www.ngdc.noaa.gov/">NGDC</a> | 
+					<a class="plain" href="http://www.ngdc.noaa.gov/stp/">STP</a>
+				</h4>
+			</div>
+		</div>
+
+		<div data-role="page" data-theme="e" id="photo">
+			<div data-role="header">
+				<h4>ART - Mobile Edition</h4>
+			</div>
+			<div data-role="content">
+				<div id="photo-content"></div>
+				<h4>Description</h4>
+				<h4>Metadata</h4>
+			</div>
+			<div data-role="footer">
+				<h4 class="plain">
+					<a class="plain" href="http://www.noaa.gov/">NOAA</a> | 
+					<a class="plain" href="http://www.nesdis.noaa.gov/">NESDIS</a> | 
+					<a class="plain" href="http://www.ngdc.noaa.gov/">NGDC</a> | 
+					<a class="plain" href="http://www.ngdc.noaa.gov/stp/">STP</a>
+				</h4>
+			</div>
+		</div>
+
+		<div data-role="page" data-theme="e" id="video">
+			<div data-role="header">
+				<h4>ART - Mobile Edition</h4>
+			</div>
+			<div data-role="content">
+				<div id="video-content"></div>
+				<h4>Description</h4>
+				<h4>Metadata</h4>
+			</div>
+			<div data-role="footer">
+				<h4 class="plain">
+					<a class="plain" href="http://www.noaa.gov/">NOAA</a> | 
+					<a class="plain" href="http://www.nesdis.noaa.gov/">NESDIS</a> | 
+					<a class="plain" href="http://www.ngdc.noaa.gov/">NGDC</a> | 
+					<a class="plain" href="http://www.ngdc.noaa.gov/stp/">STP</a>
+				</h4>
+			</div>
+		</div>
+
+		<!-- bind all the dialog loads -->
+		<script type="text/javascript">
+
+		    $('#plot').bind('pagebeforeshow', function() {
+				$.mobile.pageLoading();
+				$('#plot-content').html('<h4>Loading...</h4>');
+		    });
+		    $('#plot').bind('pagebeforehide', function() {
+				$('#plot-content').html('');
+		    });
+		    $('#plot').bind('pageshow', function() {
+		    	loadPlot();
+				$.mobile.pageLoading(true);
+		    });
+
+		    $('#viz').bind('pagebeforeshow', function() {
+				$.mobile.pageLoading();
+				$('#viz-content').html('<h4>Loading...</h4>');
+		    });
+		    $('#viz').bind('pagebeforehide', function() {
+				$('#viz-content').html('');
+		    });
+		    $('#viz').bind('pageshow', function() {
+		    	loadViz();
+				$.mobile.pageLoading(true);
+		    });
+
+		    $('#photo').bind('pagebeforeshow', function() {
+				$.mobile.pageLoading();
+				$('#photo-content').html('<h4>Loading...</h4>');
+		    });
+		    $('#photo').bind('pagebeforehide', function() {
+				$('#photo-content').html('');
+		    });
+		    $('#photo').bind('pageshow', function() {
+				$.mobile.pageLoading(true);
+		    });
+
+		    $('#video').bind('pagebeforeshow', function() {
+				$.mobile.pageLoading();
+				$('#video-content').html('<h4>Loading...</h4>');
+		    });
+		    $('#video').bind('pagebeforehide', function() {
+				$('#video-content').html('');
+		    });
+		    $('#video').bind('pageshow', function() {
+				$.mobile.pageLoading(true);
+		    });
+
+		</script>		
+
+		<!-- GA -->
 	    <script type="text/javascript">
 	        var _gaq = _gaq || [];
 	        _gaq.push(['_setAccount', 'UA-19659842-1']);
@@ -23,5 +298,7 @@
 		        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		    })();
 		</script>
+
 	</body>
+
 </html>

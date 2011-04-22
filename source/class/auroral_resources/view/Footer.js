@@ -2,8 +2,8 @@
 
 COPYRIGHTS:
 
-Copyright (c) 2010, National Geophysical Data Center, NOAA
-Copyright (c) 2010, Geophysical Center, Russian Academy of Sciences
+Copyright (c) 2011, National Geophysical Data Center, NOAA
+Copyright (c) 2011, Geophysical Center, Russian Academy of Sciences
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,12 +36,8 @@ LGPL: http://www.gnu.org/licenses/lgpl.html
 or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
-AUTHORS:
-
-Peter Elespuru - peter.elespuru@noaa.gov
-
-
-
+AUTHOR(S) OF THIS FILE:
+Peter R. Elespuru - peter.elespuru@noaa.gov
 
 ************************************************************************ */
 
@@ -96,6 +92,18 @@ qx.Class.define("auroral_resources.view.Footer",
             rich : true
         });
         this.add(privLink);
+
+        var disLink = new qx.ui.basic.Label().set({
+            value: "<a style='color:white;text-decoration:none;' target='_blank' href='http://ngdc.noaa.gov/ngdcinfo/privacy.html#disclaimer'>disclaimer</a>&nbsp;&nbsp;|&nbsp;&nbsp;",
+            rich : true
+        });
+        this.add(disLink);
+
+        var copyLink = new qx.ui.basic.Label().set({
+            value: "<a style='color:white;text-decoration:none;' target='_blank' href='http://ngdc.noaa.gov/ngdcinfo/privacy.html#copyright'>copyright</a>&nbsp;&nbsp;|&nbsp;&nbsp;",
+            rich : true
+        });
+        this.add(copyLink);
 
         var quesLink = new qx.ui.basic.Label().set({
             value: "<a style='color:white;text-decoration:none;' href='mailto:ionosphere@noaa.gov?Subject=Auroral%20Resources%20Question'>questions</a>",

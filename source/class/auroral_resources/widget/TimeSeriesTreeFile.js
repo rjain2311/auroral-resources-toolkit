@@ -36,8 +36,8 @@ LGPL: http://www.gnu.org/licenses/lgpl.html
 or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
-AUTHORS:
-Peter Elespuru - peter.elespuru@noaa.gov
+AUTHOR(S) OF THIS FILE:
+Peter R. Elespuru - peter.elespuru@noaa.gov
 
 *************************************************************************/
 
@@ -64,7 +64,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesTreeFile",
         this.__mddocname = mddocname;
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
         this.setIcon("auroral_resources/icons/noaa24.png");
-        this.setToolTipText("Drag to the gray workspace to the right");
+        this.setToolTipText("Drag this widget anywhere into the gray workspace to the right");
 
         return this;
     },

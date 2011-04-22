@@ -36,13 +36,8 @@ LGPL: http://www.gnu.org/licenses/lgpl.html
 or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
-AUTHORS:
-
-Peter Elespuru - peter.elespuru@noaa.gov
-Dmitry Medvedev - dmedv@wdcb.ru
-Mikhail Zhizhin - jjn@wdcb.ru
-Rob Redmon - rob.redmon@noaa.gov
-Sasha Godunov - goduy@mail.ru
+AUTHOR(S) OF THIS FILE:
+Peter R. Elespuru - peter.elespuru@noaa.gov
 
 *************************************************************************/
 
@@ -62,7 +57,7 @@ qx.Class.define("auroral_resources.widget.FlickrImageTreeFile",
         this.addListener("dragstart", this._dragStart, this);
         this.addListener("droprequest", this._dropRequest, this);
         this.__title = title;
-        this.setToolTipText("Drag to the gray workspace to the right");
+        this.setToolTipText("Drag this widget anywhere into the gray workspace to the right");
         return this;
     },
 

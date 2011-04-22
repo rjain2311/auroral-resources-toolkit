@@ -1,4 +1,6 @@
-
+//
+// AUTHOR(S) OF THIS FILE:
+// Peter R. Elespuru - peter.elespuru@noaa.gov
 
 /* ************************************************************************
 

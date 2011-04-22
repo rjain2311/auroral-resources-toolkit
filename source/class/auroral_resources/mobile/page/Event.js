@@ -1,3 +1,7 @@
+//
+// AUTHOR(S) OF THIS FILE:
+// Peter R. Elespuru - peter.elespuru@noaa.gov
+
 qx.Class.define("auroral_resources.mobile.page.Event",
 {
   extend : qx.ui.mobile.page.NavigationPage,

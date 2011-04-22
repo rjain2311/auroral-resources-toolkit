@@ -36,8 +36,8 @@ LGPL: http://www.gnu.org/licenses/lgpl.html
 or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
-AUTHORS:
-Peter Elespuru - peter.elespuru@noaa.gov
+AUTHOR(S) OF THIS FILE:
+Peter R. Elespuru - peter.elespuru@noaa.gov
 
 *************************************************************************/
 
@@ -45,40 +45,6 @@ qx.Class.define("auroral_resources.widget.MapTreeFile",
 {
     extend : qx.ui.tree.TreeFile,
 
-    statics :
-    {
-        LOADED: {},
-        LOADING: {},
-
-        //
-        //
-        //
-        __loadScript: function(script) {
-
-            if ( !(script in LOADING) || LOADING[script] !== true) {
-
-                if ( !(script in LOADED) || LOADED[script] !== true) {
-
-                    LOADING[script] = true;
-
-                    var sl = new qx.io.ScriptLoader();
-                    sl.load(script, function(status) {
-
-                        if (status === 'success') {
-                            LOADED[script] = true;
-                            alert('loaded '+script);
-                        } else {
-                            LOADED[script] = false;
-                        }
-
-                    });
-
-                    LOADING[script] = false;
-                }
-            }
-        }
-
-    },
 
     /*
     *****************************************************************************
@@ -97,7 +63,7 @@ qx.Class.define("auroral_resources.widget.MapTreeFile",
         this.__title = title;
         this.__period = period;
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
-        this.setToolTipText("Drag to the gray workspace to the right");
+        this.setToolTipText("Drag this widget anywhere into the gray workspace to the right");
         return this;
     },
 
@@ -130,19 +96,13 @@ qx.Class.define("auroral_resources.widget.MapTreeFile",
         //
         //
         _dropRequest : function(e) {
+            
             var action = e.getCurrentAction();
             var type = e.getCurrentType();
             var result = null;
 
-            // load all the JS dependencies first
-            if (this.__baseLayer === 'openlayers') {
-                auroral_resources.widget.MapTreeFile.__loadScript("/art/resource/auroral_resources/proj4js-combined.js.gz");
-                auroral_resources.widget.MapTreeFile.__loadScript("/art/resource/auroral_resources/OpenLayers/OpenLayers.js.gz");
-            }
-
-            this.__window = new auroral_resources.widget.MapWindow(512,512,this.__mapper, this.__baselayer, this.__period, this.__title, this.__mddocname);
-
             if (type === "widget") {
+                this.__window = new auroral_resources.widget.MapWindow(512,512,this.__mapper, this.__baselayer, this.__period, this.__title, this.__mddocname);
                 result = this.__window;
                 e.addData(type, result);
             }
