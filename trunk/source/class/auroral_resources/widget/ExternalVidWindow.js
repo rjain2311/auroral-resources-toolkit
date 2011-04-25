@@ -36,15 +36,16 @@ LGPL: http://www.gnu.org/licenses/lgpl.html
 or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
-AUTHORS:
-
-Peter Elespuru - peter.elespuru@noaa.gov
-Dmitry Medvedev - dmedv@wdcb.ru
-Mikhail Zhizhin - jjn@wdcb.ru
-Rob Redmon - rob.redmon@noaa.gov
+AUTHOR(S) OF THIS FILE:
+Peter R. Elespuru - peter.elespuru@noaa.gov
 
 *************************************************************************/
 
+/* ************************************************************************
+
+#asset(auroral_resources/*)
+
+************************************************************************ */
 
 qx.Class.define("auroral_resources.widget.ExternalVidWindow",
 {
@@ -98,10 +99,12 @@ qx.Class.define("auroral_resources.widget.ExternalVidWindow",
         
         this.addListener("close", function(evt) { this.destroy() });
         this.addListener("mouseup", this._rightClick, this);
-        
-        var frame = new qx.ui.embed.Flash(this.__filename);
+
+        var frame = new qx.ui.embed.Flash("http://www.youtube.com/v/"+this.__filename);
         this.add(frame);
-        
+        this.scheduleLayoutUpdate();
+        this.updateAppearance();
+
         return this;
     },
 

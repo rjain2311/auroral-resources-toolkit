@@ -56,9 +56,9 @@ qx.Class.define("qxdygraphs.Plot", {
         }
         var codeArr = [];
         if ( qx.bom.client.Engine.MSHTML && qx.bom.client.Engine.VERSION < 9.0 && !window.G_vmlCanvasManager){
-            codeArr.push("excanvas"+min+".js");
+            codeArr.push("excanvas"+min+".js.gz");
         }
-        codeArr.push("dygraph-combined.js");
+        codeArr.push("dygraph-combined.js.gz");
 
         this.__loadScriptArr(codeArr,qx.lang.Function.bind(this.__addCanvas,this,data,options));
     },

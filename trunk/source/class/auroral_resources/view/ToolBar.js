@@ -49,6 +49,7 @@ Peter Elespuru - peter.elespuru@noaa.gov
 #asset(qx/icon/Tango/22/apps/preferences-theme.png)
 #asset(qx/icon/Tango/22/actions/help-about.png)
 #asset(qx/icon/Tango/22/actions/help-contents.png)
+#asset(qx/icon/Tango/22/emblems/emblem-important.png)
 
 ************************************************************************ */
 
@@ -118,6 +119,31 @@ qx.Class.define("auroral_resources.view.ToolBar",
         var infoPart = new qx.ui.toolbar.Part;
         this.add(infoPart);
 
+        // about button
+        var aboutBtn = new qx.ui.toolbar.Button(this.tr("About"), "icon/22/actions/help-about.png");
+        aboutBtn.setToolTipText(this.tr("Credits"));
+        aboutBtn.addListener("mouseup", function() {
+            
+            // add about
+            var req = new qx.io.remote.Request(
+                "resource/auroral_resources/static/html/about.html",
+                "GET",
+                "text/html"
+            );
+
+            // ensure this content is grabbed fresh
+            req.setProhibitCaching(false);
+            req.addListener("completed", function(result){
+                var d = dialog.Dialog.med_alert(result.getContent());
+                d.setWidth(600);
+            });
+            req.send();
+        });
+        infoPart.add(aboutBtn);
+
+        // Add a sepearator
+        infoPart.addSeparator();
+        
         // Tutorial button
         var tutBtn = new qx.ui.toolbar.Button(this.tr("Tutorials"), "icon/22/actions/help-contents.png");
         tutBtn.setToolTipText(this.tr("Opens a quick start guide, with links and videos"));
@@ -142,26 +168,14 @@ qx.Class.define("auroral_resources.view.ToolBar",
         // Add a sepearator
         infoPart.addSeparator();
 
-        // Help button
-        var aboutBtn = new qx.ui.toolbar.Button(this.tr("About"), "icon/22/actions/help-about.png");
-        aboutBtn.setToolTipText(this.tr("Credits"));
-        aboutBtn.addListener("mouseup", function() {
-            
-            // add about
-            var req = new qx.io.remote.Request(
-                "resource/auroral_resources/static/html/about.html",
-                "GET",
-                "text/html"
-            );
-
-            // ensure this content is grabbed fresh
-            req.setProhibitCaching(false);
-            req.addListener("completed", function(result){
-                dialog.Dialog.med_alert(result.getContent());
-            });
-            req.send();
+        // Bug button
+        var bugBtn = new qx.ui.toolbar.Button(this.tr("Report A Bug"), "icon/22/emblems/emblem-important.png");
+        bugBtn.setToolTipText(this.tr("Report A Bug"));
+        bugBtn.addListener("mouseup", function() {
+            window.open("http://code.google.com/p/auroral-resources-toolkit/issues/entry","Report A Bug");
         });
-        infoPart.add(aboutBtn);
+        infoPart.add(bugBtn);
+
     },
 
 

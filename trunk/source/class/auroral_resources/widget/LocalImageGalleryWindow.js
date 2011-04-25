@@ -36,13 +36,13 @@ LGPL: http://www.gnu.org/licenses/lgpl.html
 or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
-AUTHORS:
-Peter Elespuru - peter.elespuru@noaa.gov
+AUTHOR(S) OF THIS FILE:
+Peter R. Elespuru - peter.elespuru@noaa.gov
 
 *************************************************************************/
 
 /*
-//asset(galleria/*)
+#asset(galleria/*)
 */
 
 //

@@ -64,7 +64,8 @@
         { "manifest" : "contrib/QxDyGraphs/trunk/Manifest.json" },
         { "manifest" : "contrib/OpenFlashChart/trunk/Manifest.json" },
         { "manifest" : "contrib/QxGalleria/trunk/Manifest.json" },
-        { "manifest" : "contrib/QxJqPlot/trunk/Manifest.json" }
+        { "manifest" : "contrib/QxJqPlot/trunk/Manifest.json" },
+        { "manifest" : "contrib/QxHighcharts/trunk/Manifest.json" }
       ]
     },
 
@@ -161,8 +162,8 @@
          [ 
            "cp -pR ./build/resource/auroral_resources/OpenLayers/theme ./build", // HACK ALERT, FIXME: WTF is resource losing relative path ?!?
            "cp -pR ./build/resource/auroral_resources/OpenLayers/img ./build",   // HACK ALERT, SAME ?!?!
-           "gzip -9 ./build/script/auroral_resources.js ; rm -f ./build/script/auroral_resources.js",
-           "gzip -9 ./build/script/auroral_resources_mobile.js ; rm -f ./build/script/auroral_resources_mobile.js"
+           "gzip -9 -c ./build/script/auroral_resources.js > ./build/script/auroral_resources.js.gz",
+           "gzip -9 -c ./build/script/auroral_resources_mobile.js > ./build/script/auroral_resources_mobile.js"
          ]
       }
     }

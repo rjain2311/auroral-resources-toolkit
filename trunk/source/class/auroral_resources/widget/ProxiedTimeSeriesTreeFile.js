@@ -53,7 +53,7 @@ qx.Class.define("auroral_resources.widget.ProxiedTimeSeriesTreeFile",
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(mdlink, title)
+    construct : function(mdlink, title, provider, iconName)
     {
         this.base(arguments, title);
         this.setDraggable(true);
@@ -61,8 +61,8 @@ qx.Class.define("auroral_resources.widget.ProxiedTimeSeriesTreeFile",
         this.addListener("droprequest", this._dropRequest, this);
         this.__title = title;
         this.__mdlink = mdlink;
-        this.setToolTipText("(external provider) Drag this widget anywhere into the gray workspace to the right");
-        this.setIcon("resource/auroral_resources/icons/lasp24.png");
+        this.setToolTipText("(external-"+provider+") Drag this widget anywhere into the gray workspace to the right");
+        this.setIcon("resource/auroral_resources/icons/"+iconName);
         return this;
     },
 
@@ -89,9 +89,8 @@ qx.Class.define("auroral_resources.widget.ProxiedTimeSeriesTreeFile",
             var type = e.getCurrentType();
             var result = null;
 
-            this.__window = new auroral_resources.widget.ProxiedTimeSeriesWindow(600, 400, this.__title, this.__mdlink);
-
             if (type === "widget") {
+                this.__window = new auroral_resources.widget.ProxiedTimeSeriesWindow(600, 400, this.__title, this.__mdlink);
                 result = this.__window;
                 e.addData(type, result);
             }
