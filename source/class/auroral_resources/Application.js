@@ -45,6 +45,7 @@ Peter R. Elespuru - peter.elespuru@noaa.gov
 
 #asset(auroral_resources/*)
 #asset(collapsablepanel/*)
+#asset(galleria/*)
 #asset(qx/icon/${qx.icontheme}/16/actions/*)
 #asset(qx/icon/${qx.icontheme}/22/actions/*)
 #asset(qx/icon/${qx.icontheme}/16/apps/utilities-help.png)
@@ -93,6 +94,8 @@ qx.Class.define("auroral_resources.Application",
         __mouseX : null,
         __mouseY : null,
         __widgets : null,
+        __toolBarHider : null,
+        __sideBarHider : null,
 
         /**
         *****************************************************************************
@@ -233,24 +236,24 @@ qx.Class.define("auroral_resources.Application",
             dockLayoutComposite.add(this.__footer, {edge: "south"});
 
             // create the toggle for the toolbar
-            var toolbarHider = new qx.ui.form.Button("", "resource/auroral_resources/icons/up_arrow_orange.png");
-            toolbarHider.setFocusable("false");
-            toolbarHider.setDecorator(null);
-            toolbarHider.setMargin(0);
-            toolbarHider.setPadding(0);
-            toolbarHider.setHeight(12);
-            toolbarHider.setMinHeight(12);
-            toolbarHider.setMaxHeight(12);
-            toolbarHider.setToolTipText(this.tr("Hide/Show the menu bar"));
-            dockLayoutComposite.add(toolbarHider, {edge: "north"});
+            this.__toolBarHider = new qx.ui.form.Button("", "resource/auroral_resources/icons/up_arrow_orange.png");
+            this.__toolBarHider.setFocusable("false");
+            this.__toolBarHider.setDecorator(null);
+            this.__toolBarHider.setMargin(0);
+            this.__toolBarHider.setPadding(0);
+            this.__toolBarHider.setHeight(12);
+            this.__toolBarHider.setMinHeight(12);
+            this.__toolBarHider.setMaxHeight(12);
+            this.__toolBarHider.setToolTipText(this.tr("Hide/Show the menu bar"));
+            dockLayoutComposite.add(this.__toolBarHider, {edge: "north"});
 
-            toolbarHider.addListener("execute", function(e) {
+            this.__toolBarHider.addListener("execute", function(e) {
                 if(this.__toolBarView.isExcluded()) {
                     this.__toolBarView.show();
-                    toolbarHider.setIcon("resource/auroral_resources/icons/up_arrow_orange.png");
+                    this.__toolBarHider.setIcon("resource/auroral_resources/icons/up_arrow_orange.png");
                 } else {
                     this.__toolBarView.exclude();
-                    toolbarHider.setIcon("resource/auroral_resources/icons/down_arrow_orange.png");
+                    this.__toolBarHider.setIcon("resource/auroral_resources/icons/down_arrow_orange.png");
                 }
             }, this);
 
@@ -274,12 +277,13 @@ qx.Class.define("auroral_resources.Application",
             auroral_resources.Application.__mainWindow = new qx.ui.window.Desktop(new qx.ui.window.Manager());
             auroral_resources.Application.__mainWindow.set({
                 decorator: "main", 
-                toolTipText: "Drag components from the 'Available Resources' area at left, to anywhere inside this gray box's boundaries (even on top of other widgets)",
                 backgroundColor: "silver",
                 width: 700,
                 droppable: true,
                 enabled: true
             });
+            // behavior is too annoying...
+            // toolTipText: "Drag components from the 'Available Resources' area at left, to anywhere inside this gray box's boundaries (even on top of other widgets)",
 
             auroral_resources.Application.__mainWindow.addListener("drop", this._widgetDropListener, this);
 
@@ -297,9 +301,6 @@ qx.Class.define("auroral_resources.Application",
             // add the sidebar
             this.__sideBar = new auroral_resources.view.SideBar(this, auroral_resources.Application.__mainWindow);
             this.__sideBarScroller.add(this.__sideBar);
-
-            // add any query added widgets to the display
-            this._parseQueryStringForWidgets();
             
             // LAST: add the introduction window if the user hasn't requested that it be ignored from now on
             // TODO: add a generic cookie get/set class(es) so we aren't doing this low level everywhere...
@@ -314,24 +315,24 @@ qx.Class.define("auroral_resources.Application",
             */
 
             // create the toggle for the sidebar
-            var sidebarHider = new qx.ui.form.Button("", "resource/auroral_resources/icons/left_arrow_orange.png");
-            sidebarHider.setFocusable("false");
-            sidebarHider.setDecorator(null);
-            sidebarHider.setMargin(0);
-            sidebarHider.setPadding(0);
-            sidebarHider.setWidth(12);
-            sidebarHider.setMinWidth(12);
-            sidebarHider.setMaxWidth(12);
-            sidebarHider.setToolTipText(this.tr("Hide/Show the time settings and tools"));
-            dockLayoutComposite.add(sidebarHider, {edge: "west"});
+            this.__sideBarHider = new qx.ui.form.Button("", "resource/auroral_resources/icons/left_arrow_orange.png");
+            this.__sideBarHider.setFocusable("false");
+            this.__sideBarHider.setDecorator(null);
+            this.__sideBarHider.setMargin(0);
+            this.__sideBarHider.setPadding(0);
+            this.__sideBarHider.setWidth(12);
+            this.__sideBarHider.setMinWidth(12);
+            this.__sideBarHider.setMaxWidth(12);
+            this.__sideBarHider.setToolTipText(this.tr("Hide/Show the time settings and tools"));
+            dockLayoutComposite.add(this.__sideBarHider, {edge: "west"});
 
-            sidebarHider.addListener("execute", function(e) {
+            this.__sideBarHider.addListener("execute", function(e) {
                 if(this.__sideBarScroller.isExcluded()) {
                     this.__sideBarScroller.show();
-                    sidebarHider.setIcon("resource/auroral_resources/icons/left_arrow_orange.png");
+                    this.__sideBarHider.setIcon("resource/auroral_resources/icons/left_arrow_orange.png");
                 } else {
                     this.__sideBarScroller.exclude();
-                    sidebarHider.setIcon("resource/auroral_resources/icons/right_arrow_orange.png");
+                    this.__sideBarHider.setIcon("resource/auroral_resources/icons/right_arrow_orange.png");
                 }
             }, this);
 
@@ -343,6 +344,9 @@ qx.Class.define("auroral_resources.Application",
             scroller2.add(auroral_resources.Application.__mainWindow);
             this.__horizontalSplitPane.add(scroller2, 1);
 
+            // add any query added widgets to the display
+            this._parseQueryStringForWidgets();
+            
         }, // end buildGui
         
         //
@@ -402,7 +406,7 @@ qx.Class.define("auroral_resources.Application",
                     var w = b["width"];
                     var h = b["height"];
                     var className = win.constructor.classname;
-                    className = className.substring(className.lastIndexOf('.')+1,className.length);
+                    //className = className.substring(className.lastIndexOf('.')+1,className.length);
                     
                     if (className.toLowerCase() != "introductionwindow") {
                         url = url + "&w" + i + '=' + x + ',' + y + ',' + className + ',' + w + ',' + h + ',' + win.getStatus();
@@ -410,39 +414,8 @@ qx.Class.define("auroral_resources.Application",
                 }
             }
             
-            url = encodeURI(url);
-            
-            var pageData = [{
-                "message" : "The text below should already been highlighted for you, copy (CTRL+C, CMD+C, etc) and push the 'Email A Link' button to share a link to your workspace.",
-                "formData" : {
-
-                    'share_url'   : {
-                        'id'      : "share_url_1",
-                        'type'    : "TextArea",
-                        'label'   : "URL",
-                        'lines'   : 12,
-                        'value'   : url
-                    }
-                }
-            }];
-            
-            var wizard = new dialog.BareWizard({
-                width: 600,
-                height: 300,
-                maxWidth: 600,
-                pageData : pageData,
-                allowCancel: false,
-                allowBack: false,
-                allowNext: false,
-                callback : function(map) {},
-                context : this
-            });
-
-            wizard.start();
-
-            // highlight the text
-            document.getElementById('share_url_1').select();
-
+            var bitly = new auroral_resources.io.shortener.Bitly();
+            bitly.shortenAndEmail(url);
         }, // end shareUrl
 
         //
@@ -506,36 +479,30 @@ qx.Class.define("auroral_resources.Application",
                 var wD = this.__widgets;
                 var pieces = [];
                                 
-                /*
-                // IE bombs on the volume of data in these ACE data sets
-                // don't add them if IE until this is resolved 
                 if (!qx.bom.client.Engine.MSHTML && qx.bom.client.Engine.NAME != "mshtml") {
 
-                    pieces = [0,487,"TimeSeriesWindow",445,209,"vsw_x.ACE_RT","ACE%20Flow%20%7BKm/s%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
+                    pieces = [0,487,"auroral_resources.widget.TimeSeriesWindow",445,209,"vsw_x.ACE_RT","ACE%20Flow%20%7BKm/s%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
                     addWidget(stringToClass, mW, pieces, wD);
 
-                    pieces = [0,684,"TimeSeriesWindow",445,197,"imf_bz.ACE_RT","ACE%20Bz%20%7BnT%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
+                    pieces = [0,684,"auroral_resources.widget.TimeSeriesWindow",445,197,"imf_bz.ACE_RT","ACE%20Bz%20%7BnT%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
                     addWidget(stringToClass, mW, pieces, wD);
                 }
 
 
-                all commented out for now
-                
-                pieces = [0,0,"TimeSeriesIndexWindow",445,161,"index_kp.est","Kp","geomInd"];
+                pieces = [0,0,"auroral_resources.widget.TimeSeriesIndexWindow",445,161,"index_kp.est","Kp","geomInd"];
                 addWidget(stringToClass, mW, pieces, wD);
                 
-                pieces = [0,161,"TimeSeriesWindow",445,161,"iono_foF2.BC840","Boulder%20(BC840)%20foF2%20%7BMHz%7D","IonoStationsBC840"];
+                pieces = [0,161,"auroral_resources.widget.TimeSeriesWindow",445,161,"iono_foF2.BC840","Boulder%20(BC840)%20foF2%20%7BMHz%7D","IonoStationsBC840"];
                 addWidget(stringToClass, mW, pieces, wD);
                 
-                pieces = [0,321,"TimeSeriesWindow",445,161,"iono_foF2.TR170","Tromso%20(TR170)%20foF2%20%7BMHz%7D","IonoStationsTR170"];
+                pieces = [0,321,"auroral_resources.widget.TimeSeriesWindow",445,161,"iono_foF2.TR169","Tromso%20(TR169)%20foF2%20%7BMHz%7D","IonoStationsTR169"];
                 addWidget(stringToClass, mW, pieces, wD);
                 
-                pieces = [446,0,"ExternalImageWindow",456,506,"http://www.swpc.noaa.gov/pmap/gif/pmapN.gif","Northern%20Statistical%20Auroral%20Oval"];
+                pieces = [446,0,"auroral_resources.widget.ExternalImageWindow",456,506,"http://www.swpc.noaa.gov/pmap/gif/pmapN.gif","Northern%20Statistical%20Auroral%20Oval"];
                 addWidget(stringToClass, mW, pieces, wD);
                 
-                pieces = [447,480,"ExternalImageWindow",454,504,"http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_nowcast_aacgm.png","Ovation%20Prime%20Real-Time%20Nowcast"];
+                pieces = [447,480,"auroral_resources.widget.ExternalImageWindow",454,504,"http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_nowcast_aacgm.png","Ovation%20Prime%20Real-Time%20Nowcast"];
                 addWidget(stringToClass, mW, pieces, wD);
-                */
 
                 return;
                 
@@ -552,16 +519,17 @@ qx.Class.define("auroral_resources.Application",
                 var pieces = [];
 
                 // check for special sites, like chapman 2011
+                // TODO: make this more dynamic, so it doesn't require code changes here.
+                // perhaps a separate file (rather than a DB or something similarly heavy)
                 var special = getQueryVariable("special");
-                if (special != null) {
+                if (special !== null) {
                     
-                    if (special == "chapman2011") {
-                        pieces = [0,0,"LocalImageGalleryWindow",820,650,"Chapman%20Conference%202011%20User%20Gallery"];
+                    if (special === "chapman2011") {
+                        pieces = [0,0,"auroral_resources.widget.LocalImageGalleryWindow",625,450,"Chapman%20Conference%202011%20User%20Gallery"];
                         addWidget(stringToClass, mW, pieces, wD);
-                        //
-                        // EXIT AFTER DISPLAYING SPECIAL WIDGET, don't want other stuff
-                        // showing up even if they've tried to do so...
-                        //
+                        return;
+                    } else if (special === "galaxy15") {
+                        window.location = "http://bit.ly/dSyCvH";
                         return;
                     }
                 }                
@@ -571,12 +539,14 @@ qx.Class.define("auroral_resources.Application",
                 if (hideMenuBar != null) {
                     if(hideMenuBar === "true") {
                         this.__toolBarView.exclude();
+                        this.__toolBarHider.setIcon("resource/auroral_resources/icons/down_arrow_orange.png");
                     }
                 }
                 var hideSideBar = getQueryVariable("hideSideBar");
                 if (hideSideBar != null) {
                     if(hideSideBar === "true") {
                         this.__sideBarScroller.exclude();
+                        this.__sideBarHider.setIcon("resource/auroral_resources/icons/right_arrow_orange.png");
                     }
                 }
                 var hideCruft = getQueryVariable("hideCruft");
@@ -593,6 +563,8 @@ qx.Class.define("auroral_resources.Application",
                         this.__footer.exclude();
                         this.__sideBarScroller.exclude();
                         this.__toolBarView.exclude();
+                        this.__toolBarHider.setIcon("resource/auroral_resources/icons/down_arrow_orange.png");
+                        this.__sideBarHider.setIcon("resource/auroral_resources/icons/right_arrow_orange.png");
                     }
                 }
             
@@ -611,7 +583,8 @@ qx.Class.define("auroral_resources.Application",
                         var x = parseInt(pieces[0]);
                         var y = parseInt(pieces[1]);
                         var className = pieces[2];
-                        var instance = stringToClass("auroral_resources.widget."+className);
+                        //var instance = stringToClass("auroral_resources.widget."+className);
+                        var instance = stringToClass(className);
                         var win = instance.fromArray(pieces);
                         win.open();
 
@@ -655,8 +628,7 @@ qx.Class.define("auroral_resources.Application",
             }
             
             function addWidget(stringToClass, mainWindow, pieces, widgets) {
-                var prfx = "auroral_resources.widget.";
-                var instance = stringToClass(prfx+pieces[2]);
+                var instance = stringToClass(pieces[2]);
                 var win = instance.fromArray(pieces);
                 win.open();
                 mainWindow.add(win, { left: pieces[0], top: pieces[1] });
@@ -676,13 +648,14 @@ qx.Class.define("auroral_resources.Application",
         _widgetDropListener : function(e) {
 
             var w = e.getData("widget");
+            if (typeof w !== undefined && w !== null && w === "launcher") { return; }
             var xBuffer = 285;
             var yBuffer = 97;
             var x = e.getDocumentLeft() - xBuffer; //sub off extra to center it more
             var y = e.getDocumentTop() - yBuffer;  //ditto
             auroral_resources.Application.__mainWindow.add( w, { left:x, top:y });
             w.open();
-            auroral_resources.Application.__mainWindow.setBlockToolTip(true);
+            //auroral_resources.Application.__mainWindow.setBlockToolTip(true);
 
         } // end widgetDropListener
     } // end members

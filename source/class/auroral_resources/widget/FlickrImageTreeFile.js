@@ -41,6 +41,12 @@ Peter R. Elespuru - peter.elespuru@noaa.gov
 
 *************************************************************************/
 
+/* ************************************************************************
+
+#asset(auroral_resources/icons/*)
+
+************************************************************************ */
+
 qx.Class.define("auroral_resources.widget.FlickrImageTreeFile",
 {
     extend : qx.ui.tree.TreeFile,
@@ -58,6 +64,7 @@ qx.Class.define("auroral_resources.widget.FlickrImageTreeFile",
         this.addListener("droprequest", this._dropRequest, this);
         this.__title = title;
         this.setToolTipText("Drag this widget anywhere into the gray workspace to the right");
+        this.setIcon(qx.util.ResourceManager.getInstance().toUri("auroral_resources/icons/flickr_logo_24.png"));
         return this;
     },
 

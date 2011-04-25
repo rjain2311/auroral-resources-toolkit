@@ -128,6 +128,16 @@ qx.Class.define("dialog.Dialog",
       })).show();
     },
 
+    vid_alert : function( message, callback, context )
+    {
+      (new dialog.BareAlert({
+        "message"   : message,
+        "callback"  : callback || null,
+        "context"   : context || null,
+        "image"     : "icon/48/actions/help-contents.png"
+      })).show();
+    },
+
     error : function( message, callback, context )
     {
       (new dialog.Alert({

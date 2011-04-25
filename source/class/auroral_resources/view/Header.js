@@ -36,12 +36,8 @@ LGPL: http://www.gnu.org/licenses/lgpl.html
 or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
-AUTHORS:
-
-Peter Elespuru - peter.elespuru@noaa.gov
-
-
-
+AUTHOR(S) OF THIS FILE:
+Peter R. Elespuru - peter.elespuru@noaa.gov
 
 ************************************************************************ */
 
@@ -74,6 +70,7 @@ qx.Class.define("auroral_resources.view.Header",
 
         // add the logo
         var logo = new qx.ui.basic.Image("resource/auroral_resources/ngdclogo_small.png");
+
         logo.addListener("mouseup", function() {
             window.location = "http://www.ngdc.noaa.gov";
         });
@@ -91,7 +88,8 @@ qx.Class.define("auroral_resources.view.Header",
 
         // add the right logo
         //var rlogo = new qx.ui.basic.Image("resource/auroral_resources/logo_beta.png");
-        var rlogo = new qx.ui.basic.Image("resource/auroral_resources/logo.png");
+        var rlogo = new qx.ui.basic.Image("resource/auroral_resources/logo_small_beta.png");
+
         rlogo.addListener("mouseup", function() {
             window.location = "http://spidr.ngdc.noaa.gov/art/";
         });

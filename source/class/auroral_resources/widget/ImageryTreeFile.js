@@ -41,6 +41,12 @@ Peter R. Elespuru - peter.elespuru@noaa.gov
 
 *************************************************************************/
 
+/* ************************************************************************
+
+#asset(auroral_resources/icons/*)
+
+************************************************************************ */
+
 qx.Class.define("auroral_resources.widget.ImageryTreeFile",
 {
     extend : qx.ui.tree.TreeFile,
@@ -58,6 +64,7 @@ qx.Class.define("auroral_resources.widget.ImageryTreeFile",
         this.addListener("droprequest", this._dropRequest, this);
         this.__title = title;
         this.setToolTipText("Drag this widget anywhere into the gray workspace to the right");
+        this.setIcon(qx.util.ResourceManager.getInstance().toUri("auroral_resources/icons/pgallery.png"));
         return this;
     },
 
@@ -83,7 +90,7 @@ qx.Class.define("auroral_resources.widget.ImageryTreeFile",
             var type = e.getCurrentType();
             var result = null;
 
-            this.__window = new auroral_resources.widget.LocalImageGalleryWindow(820, 650, this.__title);
+            this.__window = new auroral_resources.widget.LocalImageGalleryWindow(625, 450, this.__title);
 
             if (type === "widget") {
                 result = this.__window;

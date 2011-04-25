@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
+QXOPTS="-s" #-v verbose -s exception stack trace on fatal error
+
 rm -fr ar &&\
 rm -fr build &&\
-./generate.py default &&\
-./generate.py compress &&\
+./generate.py ${QXOPTS} default &&\
+./generate.py ${QXOPTS} compress &&\
 cp -pR build ar &&\
 cp -pR inspector ar/ &&\
 cp source/inspector.html ar/ &&\

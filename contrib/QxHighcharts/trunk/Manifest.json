@@ -1,0 +1,34 @@
+{
+  "info" : 
+  {
+    "name" : "QxHighcharts",
+
+    "summary" : "QxHighcharts Contribution",
+    "description" : "Integrate Highcharts into qooxdoo.",
+    
+    "homepage" : "http://contrib.qooxdoo.org/project/QxHighcharts",
+
+    "license" : "LGPL/EPL",
+
+    "authors" : 
+    [
+      {
+        "name" : "Peter R. Elespuru (elespuru)",
+        "email" : "peter.elespuru@noaa.gov"
+      }
+    ],
+
+    "version" : "trunk",
+    "qooxdoo-versions": ["1.1", "1.2", "1.3", "1.4", "1.5-pre"]
+  },
+  
+  "provides" : 
+  {
+    "namespace"   : "qxhighcharts",
+    "encoding"    : "utf-8",
+    "class"       : "source/class",
+    "resource"    : "source/resource",
+    "translation" : "source/translation",
+    "type"        : "contribution"
+  }
+}

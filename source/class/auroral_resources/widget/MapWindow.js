@@ -43,6 +43,7 @@ Peter R. Elespuru - peter.elespuru@noaa.gov
 
 /* ************************************************************************
 
+#asset(auroral_resources/*)
 #asset(auroral_resources/proj4js-combined.js)
 #asset(auroral_resources/proj4js-combined.js.gz)
 #asset(auroral_resources/OpenLayers/OpenLayers.js)
@@ -190,6 +191,8 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         __period : null,
         __now : null,
         __mddocname : null,
+        __isle : null,
+        __hasIsle : 1,
 
         //
         //
@@ -361,6 +364,12 @@ qx.Class.define("auroral_resources.widget.MapWindow",
         //
         _nowChangeBusCallback : function(e) {
             // rotate base layer and get the ovation layer based on current time
+            if(this.__hasIsle === 0) {
+                this.removeAll();
+                this.add(this.__isle);
+                this.__hasIsle = 1;
+            }
+
             this.__map.removeLayer(this.__baseLayer);
             var layer = this._getOvationBaseLayer(this.getAngle(), this.__base, this.__map, this.__period);
             this.__map.addLayer(layer);
@@ -458,17 +467,23 @@ qx.Class.define("auroral_resources.widget.MapWindow",
             // validate response
             if (request.status != 200) {
 
-                var ndmWidth = 512;
-                var ndmHeight = 512;
+                this.removeAll();
+                this.__hasIsle = 0;
+                this.add(new qx.ui.basic.Image(qx.util.ResourceManager.getInstance().toUri("auroral_resources/errorloading_map.png")));
 
+                /*
                 layer = new OpenLayers.Layer.Image(
-                    "",
+                    "Error Loading",
                     qx.util.ResourceManager.getInstance().toUri("auroral_resources/errorloading_map.png"),
                     map.maxExtent,
-                    new OpenLayers.Size(ndmWidth, ndmHeight)
+                    new OpenLayers.Size(512, 512),
+                    { type: 'png', isBaseLayer : false, visibility: true, displayInLayerSwitcher: false }
                 );
 
                 return layer;
+                */
+
+                return null;
             }
 
             response = request.responseText;
@@ -496,15 +511,21 @@ qx.Class.define("auroral_resources.widget.MapWindow",
 
             } else {
 
-                var ndmWidth = 512;
-                var ndmHeight = 512;
+                this.removeAll();
+                this.__hasIsle = 0;
+                this.add(new qx.ui.basic.Image(qx.util.ResourceManager.getInstance().toUri("auroral_resources/nodata_map.png")));
 
+                /*
                 layer = new OpenLayers.Layer.Image(
-                    "",
+                    "No Data",
                     qx.util.ResourceManager.getInstance().toUri("auroral_resources/nodata_map.png"),
                     map.maxExtent,
-                    new OpenLayers.Size(ndmWidth, ndmHeight)
+                    new OpenLayers.Size(512, 512),
+                    { type: 'png', isBaseLayer : false, visibility: true, displayInLayerSwitcher: false }
                 );
+                */
+
+                return null;
 
             }
             
@@ -678,6 +699,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
 
             self.removeAll();
             self.add(isle);
+            self.__isle = isle;
         },
         
         
@@ -747,6 +769,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
 
             self.removeAll();
             self.add(isle);
+            self.__isle = isle;
         },
         
         
@@ -838,6 +861,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
 
             self.removeAll();
             self.add(isle);     
+            self.__isle = isle;
         },
 
 
@@ -866,6 +890,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
 
             self.removeAll();
             self.add(isle);
+            self.__isle = isle;
         }
     },
 

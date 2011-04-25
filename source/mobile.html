@@ -7,10 +7,18 @@
 
 		<meta charset="utf-8">
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"/>
 
-		<!-- device specific scaling so it behaves native-esque consistently across all -->
+		<link rel="stylesheet" type="text/css" href="resource/auroral_resources_mobile/css/jquery.mobile-1.0a4.1.min.css"/>
+
 		<script type="text/javascript">
+
+			var photo = 0;
+			var youtube = 0;
+			var player;
+			var ytvid = 0;
+			var videoContent = "";
+			var photoContent = "";
 
 			var viz_url;
 			function setViz(prefix, target) {
@@ -27,8 +35,23 @@
 				setViz(urlPrefix, file);
 				return true;
 			}
+			function setSwpcGoesRt(file) {
+				var urlPrefix = "http://www.swpc.noaa.gov/rt_plots/";
+				setViz(urlPrefix, file);
+				return true;
+			}
+			function setSwpcDrap(file) {
+				var urlPrefix = "http://www.swpc.noaa.gov/drap/";
+				setViz(urlPrefix, file);
+				return true;
+			}
 			function setOvation(file) {
 				var urlPrefix = "http://www.ngdc.noaa.gov/stp/ovation_prime/data/";
+				setViz(urlPrefix, file);
+				return true;
+			}
+			function setTrend(file) {
+				var urlPrefix = "http://ngdc.noaa.gov/ionosonde/catalog/real_time/trends/";
 				setViz(urlPrefix, file);
 				return true;
 			}
@@ -47,7 +70,7 @@
                 var dy = today.getUTCDate();
                 if ( dy.toString().length == 1 ) { dy = "0" + dy; }
                 var to = yyyy + mo + dy;
-                var yesterday = new Date(today.getTime()-(86400+86400+86400));
+                var yesterday = new Date(today.getTime()-(604800*1000)); //7 days in microseconds
                 yyyy = yesterday.getUTCFullYear();
                 mo = yesterday.getUTCMonth()+1; //0-based indexing
                 if ( mo.toString().length == 1 ) { mo = "0" + mo; }
@@ -61,6 +84,78 @@
 			}
 			function loadPlot() {
 				$('#plot-content').html("<img src='"+plot_url+"'/>");
+				return true;
+			}
+			function initYouTube() {
+				// NOT USED RIGHT NOW
+				if(youtube === 0) {
+				    //Load player api asynchronously.
+				    var tag = document.createElement('script');
+				    tag.src = "http://www.youtube.com/player_api";
+				    var firstScriptTag = document.getElementsByTagName('script')[0];
+				    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+					youtube = 1;
+				} else {
+					onYouTubePlayerAPIReady();
+				}
+				return true;
+			}
+			function loadVideo() {
+				$("#video-content").html(videoContent);
+				return true;
+			}
+			function loadYouTube(video) {
+				videoContent = '<iframe class="youtube-player" width="600" height="200" border="0" type="text/html" src="http://www.youtube.com/embed/'+video+'?autoplay=1" frameborder="0"></iframe>';
+				return true;
+			}
+		    function onPlayerReady(evt) {
+				// NOT USED RIGHT NOW
+	        	evt.target.playVideo();
+			}
+		    function onYouTubePlayerAPIReady() {
+				// NOT USED RIGHT NOW
+	        	player = new YT.Player('player', {
+		            videoId: ytvid,
+					events: { 'onReady': onPlayerReady }
+				});
+			}
+			function loadVimeo(video) {
+				videoContent = '<iframe src="http://player.vimeo.com/video/'+video+'" width="600" height="400" frameborder="0"></iframe>';
+				return true;
+			}
+			function initPhotos() {
+				if(photo === 0) {
+					$('head').append('<link rel="stylesheet" type="text/css" href="resource/auroral_resources_mobile/photoswipe/photoswipe.css"/>');
+					// using document instead of raw jquery append has better cross browser behavior...
+					var script = document.createElement( 'script' );
+					script.type = 'text/javascript';
+					script.src = "resource/auroral_resources_mobile/photoswipe/lib/simple-inheritance.min.js.gz";
+					$("#photo").append(script);
+					script = document.createElement( 'script' );
+					script.type = 'text/javascript';
+					script.src = "resource/auroral_resources_mobile/photoswipe/code-photoswipe-1.0.4.min.js.gz";
+					$("#photo").append(script);
+					photo = 1;
+				}
+				return true;
+			}
+			function loadPhoto() {
+				$.get(photoContent, function(data) {
+					initPhotos();
+					$('#photo-content').html(data);
+					var thumbEls = $("#Gallery a").photoSwipe();
+					var clickEvt = document.createEvent("MouseEvents");
+					clickEvt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+					thumbEls[0].dispatchEvent(clickEvt);					
+				});
+				return true;
+			}
+			function loadUserPhotos() {
+				photoContent = 'resource/auroral_resources_mobile/html/UserPhotos.html';
+				return true;
+			}
+			function loadChapman2011Photos() {
+				photoContent = 'resource/auroral_resources_mobile/html/Chapman2011Alaska.html';
 				return true;
 			}
 
@@ -79,8 +174,6 @@
     			shrink();
     		}
     	</script>
-
-		<link rel="stylesheet" type="text/css" href="resource/auroral_resources_mobile/css/jquery.mobile-1.0a4.1.min.css">
 
 		<script type="text/javascript" src="resource/auroral_resources_mobile/js/jquery-1.5.2.min.js.gz"></script>
 		<script type="text/javascript" src="resource/auroral_resources_mobile/js/jquery.mobile-1.0a4.1.min.js.gz"></script>
@@ -103,46 +196,59 @@
 
 			<div data-role="content">
 
-				<h4>The Auroral Resources Toolkit (ART)<br/>A rich internet, open source application for visualization and collaboration of auroral phenomenology utilizing VxO best practices.
+				<h4>The Auroral Resources Toolkit (ART) Mobile Edition is a rich interface application tailored for mobile devices.  The current version of this app is focused on providing access to recent space weather from various sources.  Future versions will provide user configurable access to historical data sets from high quality Virtual Observatory resources for the visualization of data sets related to studies of auroral phenomenology.
 				</h4>
 
 				<div data-role="collapsible" data-collapsed="true">
 					<h4>Time-Series Data</h4>
 					<ul data-role="listview" data-inset="true" data-theme="e" data-dividertheme="b">
-						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('index_ap');">Ap</a></li> 
-						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('index_kp.est');">Kp</a></li> 
 						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('imf_bz.ACE_RT');">ACE Bz {nT}</a></li> 
 						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('vsw_x.ACE_RT');">ACE Flow {KM/s}</a></li> 
-						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('index_dstql');">Dst {nT}</a></li> 
-						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('foF2.BC840');">foF2 Boulder (BC840) {MHz}</a></li> 
-						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('foF2.WP937');">foF2 Wallops (WP937) {MHz}</a></li> 
-						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('foF2.GA762');">foF2 Gakona (GA762) {MHz}</a></li> 
-						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('foF2.TR170');">foF2 Tromso (TR170) {MHz}</a></li> 
-						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('foF2.MW26P');">foF2 Mawson (MW26P) {MHz}</a></li> 
-						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('foF2.NO369');">foF2 Norilsk (NO369) {MHz}</a></li> 
-						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('foF2.SMJ67');">foF2 Sondrestrom (SMJ67) {MHz}</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('index_ap');">Ap</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('index_kp.est');">Kp</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#plot" onClick="setPlot('index_dstql');">Dst {nT}</a></li>
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setSwpcGoesRt('SatEnv.gif');">GOES Particle Flux</a></li>
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setSwpcGoesRt('Xray_1m.gif');">GOES 6 hour X-Ray Trend</a></li>
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setSwpcGoesRt('Xray.gif');">GOES 3 day X-Ray Trend</a></li>
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setTrend('TR169/TR169_foF2.png');">foF2 MHz Trend @ Tromso(TR169)</a></li>
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setTrend('KS759/KS759_foF2.png');">foF2 MHz Trend @ King Salmon(KS759)</a></li>
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setTrend('THJ77/THJ77_foF2.png');">foF2 MHz Trend @ Thule(THJ77)</a></li>
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setTrend('MW26P/MW26P_foF2.png');">foF2 MHz Trend @ Mawson(MW26P)</a></li>
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setTrend('SMJ67/SMJ67_foF2.png');">foF2 MHz Trend @ Sondrestrom(SMJ67)</a></li>
 					</ul> 
 				</div>
 
 				<div data-role="collapsible" data-collapsed="true">
 					<h4>Visualizations</h4>
 					<ul data-role="listview" data-inset="true" data-theme="e" data-dividertheme="b">
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setSwpcDrap('Global.png');">DRAP Global</a></li>
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setSwpcDrap('North-pole.png');">DRAP North-Pole</a></li>
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setSwpcDrap('South-pole.png');">DRAP South-Pole</a></li>
 						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setOvation('north_nowcast_aacgm.png');">Ovation Prime North Nowcast</a></li> 
 						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setOvation('north_forecast_aacgm.png');">Ovation Prime North Forecast</a></li> 
 						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setOvation('south_nowcast_aacgm.png');">Ovation Prime South Nowcast</a></li> 
 						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setOvation('south_forecast_aacgm.png');">Ovation Prime South Forecast</a></li> 
-						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setSwpc('pmapN.gif');">SWPC Northern Statistical Auroral Oval</a></li> 
-						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setSwpc('pmapS.gif');">SWPC Southern Statistical Auroral Oval</a></li>
-						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setSwpc2('tigsample.gif');">SWPC POES Energetic Particle Relative Intensities</a></li>
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setSwpc('pmapN.gif');">POES Northern Auroral Oval</a></li> 
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setSwpc('pmapS.gif');">POES Southern Auroral Oval</a></li>
+						<li><a data-rel="dialog" data-transition="flip" href="#viz" onClick="setSwpc2('tigsample.gif');">POES Particle Relative Intensities</a></li>
 					</ul> 
 				</div>
 
 				<div data-role="collapsible" data-collapsed="true">
-					<h4>Photos</h4>
+					<h4>Photo Galleries</h4>
+					<ul data-role="listview" data-inset="true" data-theme="e" data-dividertheme="b">
+						<!--<li><a data-rel="dialog" data-transition="flip" href="#photo" onClick="loadUserPhotos();">User Gallery</a></li>-->
+						<li><a data-rel="dialog" data-transition="flip" href="#photo" onClick="loadChapman2011Photos();">Chapman 2011 Alaska Gallery</a></li>
+					</ul> 
 				</div>
 
 				<div data-role="collapsible" data-collapsed="true">
 					<h4>Videos</h4>
+					<ul data-role="listview" data-inset="true" data-theme="e" data-dividertheme="b">
+						<li><a data-rel="dialog" data-transition="flip" href="#video" onClick="loadYouTube('_Y2gv-MoQx4');">Halloween Storm 2003</a></li>
+						<!--<li><a data-rel="dialog" data-transition="flip" href="#video" onClick="loadYouTube('v/9AoIBt-zgn0');">Tromso Norway 2009</a></li>-->
+						<li><a data-rel="dialog" data-transition="flip" href="#video" onClick="loadVimeo('21294655');">Terje Sorgjerd's 'The Aurora'</a></li>
+					</ul>
 				</div>
 
 			</div>
@@ -199,21 +305,8 @@
 		</div>
 
 		<div data-role="page" data-theme="e" id="photo">
-			<div data-role="header">
-				<h4>ART - Mobile Edition</h4>
-			</div>
 			<div data-role="content">
 				<div id="photo-content"></div>
-				<h4>Description</h4>
-				<h4>Metadata</h4>
-			</div>
-			<div data-role="footer">
-				<h4 class="plain">
-					<a class="plain" href="http://www.noaa.gov/">NOAA</a> | 
-					<a class="plain" href="http://www.nesdis.noaa.gov/">NESDIS</a> | 
-					<a class="plain" href="http://www.ngdc.noaa.gov/">NGDC</a> | 
-					<a class="plain" href="http://www.ngdc.noaa.gov/stp/">STP</a>
-				</h4>
 			</div>
 		</div>
 
@@ -223,8 +316,6 @@
 			</div>
 			<div data-role="content">
 				<div id="video-content"></div>
-				<h4>Description</h4>
-				<h4>Metadata</h4>
 			</div>
 			<div data-role="footer">
 				<h4 class="plain">
@@ -241,7 +332,7 @@
 
 		    $('#plot').bind('pagebeforeshow', function() {
 				$.mobile.pageLoading();
-				$('#plot-content').html('<h4>Loading...</h4>');
+				$('#plot-content').html('<h4>Loading Plot...</h4>');
 		    });
 		    $('#plot').bind('pagebeforehide', function() {
 				$('#plot-content').html('');
@@ -253,7 +344,7 @@
 
 		    $('#viz').bind('pagebeforeshow', function() {
 				$.mobile.pageLoading();
-				$('#viz-content').html('<h4>Loading...</h4>');
+				$('#viz-content').html('<h4>Loading Visualization...</h4>');
 		    });
 		    $('#viz').bind('pagebeforehide', function() {
 				$('#viz-content').html('');
@@ -265,38 +356,41 @@
 
 		    $('#photo').bind('pagebeforeshow', function() {
 				$.mobile.pageLoading();
-				$('#photo-content').html('<h4>Loading...</h4>');
+				$('#photo-content').html('<h4>Loading Photo(s)...</h4>');
 		    });
 		    $('#photo').bind('pagebeforehide', function() {
 				$('#photo-content').html('');
 		    });
 		    $('#photo').bind('pageshow', function() {
+		    	loadPhoto();
 				$.mobile.pageLoading(true);
 		    });
 
 		    $('#video').bind('pagebeforeshow', function() {
 				$.mobile.pageLoading();
-				$('#video-content').html('<h4>Loading...</h4>');
+				$('#video-content').html('<h4>Loading Video...</h4>');
 		    });
 		    $('#video').bind('pagebeforehide', function() {
 				$('#video-content').html('');
 		    });
 		    $('#video').bind('pageshow', function() {
+		    	loadVideo();
 				$.mobile.pageLoading(true);
 		    });
 
 		</script>		
 
-		<!-- GA -->
-	    <script type="text/javascript">
-	        var _gaq = _gaq || [];
-	        _gaq.push(['_setAccount', 'UA-19659842-1']);
-	        _gaq.push(['_trackPageview']);
-	        (function() {
-		        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		    })();
+		<script type="text/javascript">
+			if(1) {
+			  var _gaq = _gaq || [];
+			  _gaq.push(['_setAccount', 'UA-22911259-1']);
+			  _gaq.push(['_trackPageview']);
+			  (function() {
+			    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			  })();
+			}
 		</script>
 
 	</body>

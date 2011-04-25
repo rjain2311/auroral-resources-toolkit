@@ -53,7 +53,8 @@ qx.Class.define("auroral_resources.ui.tree.AutoplotTreeFile",
     *****************************************************************************
     */
     statics : {
-        __AUTOPLOT_URL_PREFIX : "http://autoplot.org/autoplot.jnlp?"        
+        __AUTOPLOT_URL_PREFIX : "http://autoplot.org/autoplot.jnlp?",
+        __DMSP_URL_PREFIX : "http://www.ngdc.noaa.gov/stp/satellite/dmsp/"
     },
 
     /*
@@ -61,17 +62,17 @@ qx.Class.define("auroral_resources.ui.tree.AutoplotTreeFile",
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(title, uri, format, parameters)
+    construct : function(title, parameter)
     {
         this.base(arguments, title);
-        this.setDraggable(false);
+        this.setDraggable(true);
         this.addListener("dblclick", this._doubleClicked, this);
+        this.addListener("dragstart", this._dragStart, this);
+        this.addListener("droprequest", this._dropRequest, this);
         this.__title = title;
-        this.__uri = uri;
-        this.__format = format;
-        this.__parameters = parameters;
+        this.__parameter = parameter;
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
-        this.setToolTipText("(external) Double-click to launch AutoPlot and load this data set within autoplot");
+        this.setToolTipText("(external-autoplot) Double-click to launch AutoPlot and load this data set within autoplot");
         this.setIcon("resource/auroral_resources/icons/autoplot24.png");
         return this;
     },
@@ -85,30 +86,61 @@ qx.Class.define("auroral_resources.ui.tree.AutoplotTreeFile",
     members :
     {
         __window : null,
-        __title : null,
         __timeBus : null,
-        __uri : null,
-        __format : null,
-        __parameters : null,
+        __title : null,
+        __parameter : null,
 
+        //
+        //
+        //
         _doubleClicked : function(e) {
 
-            if (this.__uri !== undefined) {
-/*
+            if (this.__parameter !== undefined) {
+
                 var cur = this.__timeBus.getNow();
                 cur = new Date(cur);
                 var yr = cur.getUTCFullYear();
                 var yy = yr.toString().substring(2,4);
                 var mo = cur.getUTCMonth()+1; //0-based indexing
                 if ( mo.toString().length == 1 ) { mo = "0" + mo; }
+
+                var dy = cur.getUTCDate(); //1-based indexing
+                if ( dy.toString().length == 1 ) { dy = "0" + dy; }
+
+                /* the old format needed day of year
                 var doy = cur.getDOY();
                 if ( doy.toString().length == 2 ) { doy = "0" + doy; }
                 if ( doy.toString().length == 1 ) { doy = "00" + doy; }
+                */
 
-                var url = this.__uri+"/"+yr+"/"+mo+"/"+"j5f16"+yy+doy+".gz?"+this.__title;
+                // need to add this to the base URL e.g. f16/ssj/2011/03/f16_20110331_ssj.h5
+                var url = auroral_resources.ui.tree.AutoplotTreeFile.__AUTOPLOT_URL_PREFIX +
+                          "vap:" + auroral_resources.ui.tree.AutoplotTreeFile.__DMSP_URL_PREFIX +
+                          "f16/"+"ssj/"+yr+"/"+mo+"/"+"f16_"+yr+mo+dy+"_ssj.h5?"+this.__parameter;
+
                 window.open(url);
-*/
-                window.open(this.__uri);
+            }
+        },
+
+        //
+        //
+        //
+        _dragStart : function(e) {
+            e.addAction("copy");
+            e.addAction("move");
+            e.addType("widget");
+        },
+
+        //
+        //
+        //
+        _dropRequest : function(e) {
+            var action = e.getCurrentAction();
+            var type = e.getCurrentType();
+ 
+            if (type === "widget") {
+                e.addData(type, "launcher");
+                this._doubleClicked(e);
             }
         }
     },
