@@ -32,7 +32,12 @@ qx.Class.define("dialog.FormRenderer",
   {
     _row : 0,
     _buttonRow : null,
+    _textArea : null,
     
+    getTextArea : function() {
+        return this._textArea;
+    },
+
     /**
      * Add a group of form items with the corresponding names. The names are
      * displayed as label.
@@ -67,6 +72,10 @@ qx.Class.define("dialog.FormRenderer",
         /*
          * radio group
          */
+        if ( item instanceof qx.ui.form.TextArea ) {
+          this._textArea = item;
+        }
+
         if ( item instanceof qx.ui.form.RadioGroup )
         {
           /*

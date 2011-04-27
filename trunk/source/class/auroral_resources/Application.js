@@ -69,7 +69,8 @@ qx.Class.define("auroral_resources.Application",
     */
     statics :
     {
-        __mainWindow : null
+        __mainWindow : null,
+        __originalUrl : null
     },
 
     /*
@@ -107,6 +108,8 @@ qx.Class.define("auroral_resources.Application",
         */
         main : function()
         {
+            auroral_resources.Application.__originalUrl = window.location.toString();  
+
             // Call super class
             this.base(arguments);
 
@@ -348,12 +351,34 @@ qx.Class.define("auroral_resources.Application",
             this._parseQueryStringForWidgets();
             
         }, // end buildGui
+
+        //
+        //
+        //
+        goFullScreen : function () {
+            this.__sideBarHider.execute();
+            this.__toolBarHider.execute();
+        },
         
+        //
+        //
+        //
+        showUrl : function () {
+            this.shareUrl("shorten-no");
+        },
+
         //
         // empty the workspace, nuke all widgets
         //
         emptyWorkspace : function() {
             auroral_resources.Application.__mainWindow.removeAll();
+        },
+
+        //
+        // revert workspace to its state when the session began
+        //
+        revertWorkspace : function() {
+            window.location = auroral_resources.Application.__originalUrl;
         },
 
         //
@@ -375,7 +400,7 @@ qx.Class.define("auroral_resources.Application",
         // doesn't involve such a long URL... as it stands now, it's parsed
         // and handled entirely from the client.
         //
-        shareUrl : function() {
+        shareUrl : function(shorten) {
             
             var url = window.location.protocol + '//' + window.location.host + window.location.pathname;
             url = url + '?time.startDate=' + this.__timeBus.getStartDate();
@@ -414,8 +439,44 @@ qx.Class.define("auroral_resources.Application",
                 }
             }
             
-            var bitly = new auroral_resources.io.shortener.Bitly();
-            bitly.shortenAndEmail(url);
+            if(typeof shorten !== undefined && shorten !== null && shorten === "shorten-no") {
+
+                url = encodeURIComponent(url);
+                
+                var pageData = [{
+                    "message" : "The encoded URL below represents your current workspace, pre-selected for copy+paste convenience",
+                    "formData" : {
+
+                        'share_url'   : {
+                            'type'    : "TextArea",
+                            'label'   : "URL",
+                            'lines'   : 14,
+                            'value'   : url
+                        }
+                    }
+                }];
+                
+                var wizard = new dialog.BareWizard({
+                    width: 600,
+                    height: 300,
+                    maxWidth: 600,
+                    pageData : pageData,
+                    allowCancel: false,
+                    allowBack: false,
+                    allowNext: false,
+                    callback : function(map) {},
+                    context : this
+                });
+
+                wizard.start('share_url');
+
+            } else {
+
+                var bitly = new auroral_resources.io.shortener.Bitly();
+                bitly.shortenAndEmail(url);
+                return;
+                    
+            }
         }, // end shareUrl
 
         //
@@ -427,7 +488,7 @@ qx.Class.define("auroral_resources.Application",
             if (startDate != null) { this.__timeBus.setStartDate(parseInt(startDate)); }
             
             var now = getQueryVariable("time.now");
-            if (now != null) { this.__timeBus.setNow(now); }
+            if (now != null) { this.__timeBus.setNow(parseInt(now)); }
             
             var stopDate = getQueryVariable("time.stopDate");
             if (stopDate != null) { this.__timeBus.setStopDate(parseInt(stopDate)); }
@@ -479,15 +540,11 @@ qx.Class.define("auroral_resources.Application",
                 var wD = this.__widgets;
                 var pieces = [];
                                 
-                if (!qx.bom.client.Engine.MSHTML && qx.bom.client.Engine.NAME != "mshtml") {
+                pieces = [0,487,"auroral_resources.widget.TimeSeriesWindow",445,209,"vsw_x.ACE_RT","ACE%20Flow%20%7BKm/s%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
+                addWidget(stringToClass, mW, pieces, wD);
 
-                    pieces = [0,487,"auroral_resources.widget.TimeSeriesWindow",445,209,"vsw_x.ACE_RT","ACE%20Flow%20%7BKm/s%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
-                    addWidget(stringToClass, mW, pieces, wD);
-
-                    pieces = [0,684,"auroral_resources.widget.TimeSeriesWindow",445,197,"imf_bz.ACE_RT","ACE%20Bz%20%7BnT%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
-                    addWidget(stringToClass, mW, pieces, wD);
-                }
-
+                pieces = [0,684,"auroral_resources.widget.TimeSeriesWindow",445,197,"imf_bz.ACE_RT","ACE%20Bz%20%7BnT%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
+                addWidget(stringToClass, mW, pieces, wD);
 
                 pieces = [0,0,"auroral_resources.widget.TimeSeriesIndexWindow",445,161,"index_kp.est","Kp","geomInd"];
                 addWidget(stringToClass, mW, pieces, wD);
@@ -529,7 +586,7 @@ qx.Class.define("auroral_resources.Application",
                         addWidget(stringToClass, mW, pieces, wD);
                         return;
                     } else if (special === "galaxy15") {
-                        window.location = "http://bit.ly/dSyCvH";
+                        window.location = "http://1.usa.gov/galaxy15_2010";
                         return;
                     }
                 }                

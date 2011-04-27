@@ -41,43 +41,11 @@ Peter R. Elespuru - peter.elespuru@noaa.gov
 
 *************************************************************************/
 
-/* ************************************************************************
 
-#asset(auroral_resources/*)
-
-************************************************************************ */
-
-qx.Class.define("auroral_resources.ui.window.VimeoWindow",
+qx.Class.define("auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile",
 {
 
-    extend : qx.ui.window.Window,
-
-
-    /*
-    *****************************************************************************
-        STATICS
-    *****************************************************************************
-    */
-    statics : 
-    {
-        __playerUrlPrfx : "http://player.vimeo.com/video/",
-        __userUrlPrfx : "http://vimeo.com/",
-        __vimeoUrlPrfx : "http://vimeo.com/",
-
-        //
-        // allow static creation of a parameterized instance of this class
-        // used to restore from URL
-        //
-        fromArray : function(argArray) { 
-            return new auroral_resources.ui.window.VimeoWindow(
-                parseInt(decodeURI(argArray[3])),
-                parseInt(decodeURI(argArray[4])),
-                decodeURI(argArray[5]), 
-                decodeURI(argArray[6]),
-                decodeURI(argArray[7])
-            );
-        }
-    },
+    extend : qx.ui.tree.TreeFile,
 
 
     /*
@@ -85,36 +53,19 @@ qx.Class.define("auroral_resources.ui.window.VimeoWindow",
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(width, height, title, uri, vuser)
+    construct : function(mddocname, parameter, title)
     {
         this.base(arguments, title);
-
-        this.__uri = uri;
+        this.setDraggable(true);
+        this.addListener("dragstart", this._dragStart, this);
+        this.addListener("droprequest", this._dropRequest, this);
         this.__title = title;
-        this.__vuser = vuser;
+        this.__parameter = parameter;
+        this.__mddocname = mddocname;
+        this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
+        this.setIcon("auroral_resources/icons/nasa24.png");
+        this.setToolTipText("(external-cdaweb) Drag this widget anywhere into the gray workspace to the right");
 
-        this.set({
-            allowMaximize: false,
-            allowMinimize: false,
-            showMaximize: false,
-            showMinimize: false,
-            showClose: true,
-            status: title + ',' + uri,
-            layout: new qx.ui.layout.Grow()
-        });
-
-        this.setCaption(this.getCaption()+" -- (Flashblockers break Vimeo, enable Flash 'always' for ART)");
-
-        this.setWidth(width);
-        this.setHeight(height);
-        this.setContentPadding(0,0,0,0);
-        
-        this.addListener("close", function(evt) { this.destroy() });
-        this.addListener("mouseup", this._rightClick, this);
-        
-        var frame = new qx.ui.embed.Iframe(auroral_resources.ui.window.VimeoWindow.__playerUrlPrfx+this.__uri+"?autoplay=1&portrait=1&loop=1");
-        this.add(frame);
-               
         return this;
     },
 
@@ -126,22 +77,32 @@ qx.Class.define("auroral_resources.ui.window.VimeoWindow",
     */
     members :
     {
+        __window : null,
         __title : null,
-        __uri : null,
-        __vuser : null,
+        __timeBus : null,
+        __parameter : null,
+        __mddocname : null,
 
-        //
-        //
-        //
-        _rightClick : function(evt) { 
-            // it's an embedded flash video, which overrides with it's own right click
-            // nothing we can do here that will ever take affect on more than the title
-            // bar....
-            return;
+        _dragStart : function(e) {
+            e.addAction("copy");
+            e.addAction("move");
+            e.addType("widget");
+        },
+
+        _dropRequest : function(e) {
+            var action = e.getCurrentAction();
+            var type = e.getCurrentType();
+            var result = null;
+
+            if (type === "widget") {
+                this.__window = new auroral_resources.ui.window.CDAWebTimeSeriesWindow(600, 400, this.__parameter, this.__title, this.__mddocname);
+                result = this.__window;
+                e.addData(type, result);
+            }
         }
     },
-
-
+    
+    
     /*
     *****************************************************************************
         DESTRUCTOR

@@ -418,7 +418,8 @@ qx.Class.define("auroral_resources.widget.MapWindow",
       		        getURL: get_url, 
       		        maxExtent : new OpenLayers.Bounds(-12332000.0,-12332000.0,12332000.0,12332000.0),
       		        maxResolution : 12332000.0 * 2 / 256.0,
-      		        isBaseLayer: false, 
+      		        isBaseLayer : false, 
+                    minZoomLevel : 1,
       		        displayProjection: new OpenLayers.Projection("EPSG:4326")
       		    }
       	    );
@@ -506,6 +507,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                     maxExtent : new OpenLayers.Bounds(-12332000.0, -12332000.0, 12332000.0, 12332000.0),
                     maxResolution : 12332000.0 * 2 / 256.0,
                     isBaseLayer : false,
+                    minZoomLevel : 1,
                     displayProjection : new OpenLayers.Projection("EPSG:4326")
                 });
 
@@ -566,6 +568,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
             resource + angle + "/", {
                 type : 'png',
                 getURL : get_url,
+                minZoomLevel : 1,
                 maxExtent : new OpenLayers.Bounds(-12332000.0, -12332000.0,
                     12332000.0, 12332000.0),
                     maxResolution : 12332000.0 * 2 / 256.0,
@@ -600,7 +603,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
             var base = new OpenLayers.Layer.WMS(
                 "Blue Marble", 
                 "http://www.class.ngdc.noaa.gov/geoserver/wms", 
-                { layers: 'bluemarble' }
+                { layers: 'bluemarble', minZoomLevel : 1 }
             );
             return base;
         },      

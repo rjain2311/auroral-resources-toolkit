@@ -36,12 +36,8 @@ LGPL: http://www.gnu.org/licenses/lgpl.html
 or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
-AUTHORS:
-
-Peter Elespuru - peter.elespuru@noaa.gov
-
-
-
+AUTHOR(S) OF THIS FILE:
+Peter R. Elespuru - peter.elespuru@noaa.gov
 
 ************************************************************************ */
 
@@ -53,16 +49,6 @@ qx.Class.define("auroral_resources.view.SideBar",
 {
 
     extend : qx.ui.container.Resizer,
-
-    /*
-    *****************************************************************************
-        STATIC MEMBERS
-    *****************************************************************************
-    */
-    statics : {
-        __DMSP_URL_PREFIX : "ftp://ftp.ngdc.noaa.gov/STP/satellite_data/DMSP/F16/SSJ"
-        
-    },
 
     /*
     *****************************************************************************
@@ -222,8 +208,31 @@ qx.Class.define("auroral_resources.view.SideBar",
                 parent.add(item);
 
                 item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Solar Wind");
+                /*
+                item.add(new auroral_resources.ui.tree.ACETimeSeriesTreeFile('','Bmag@ACE.mag_level2_data_1hr','ACE Bmag 1hr lvl2'));
+                item.add(new auroral_resources.ui.tree.ACETimeSeriesTreeFile('','Bmag@ACE.mag_level2_data_4min','ACE Bmag 4min lvl2'));
+                item.add(new auroral_resources.ui.tree.ACETimeSeriesTreeFile('','Bmag@ACE.mag_level2_data_16sec','ACE Bmag 16sec lvl2'));
+                item.add(new auroral_resources.ui.tree.ACETimeSeriesTreeFile('','Bmag@ACE.mag_level2_data_1sec','ACE Bmag 1sec lvl2'));
+                */
                 item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','imf_bz.ACE_RT',"ACE Bz {nT}"));
                 item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','vsw_x.ACE_RT',"ACE Flow {Km/s}"));
+                /*
+                item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','BX_GSE@CDAS.OMNI_HRO_1MIN','OMNI BX_GSE 1min'));
+                item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','BY_GSE@CDAS.OMNI_HRO_1MIN','OMNI BY_GSE 1min'));
+                item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','BZ_GSE@CDAS.OMNI_HRO_1MIN','OMNI BZ_GSE 1min'));
+                item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','BY_GSM@CDAS.OMNI_HRO_1MIN','OMNI BY_GSM 1min'));
+                item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','BZ_GSM@CDAS.OMNI_HRO_1MIN','OMNI BZ_GSM 1min'));
+                item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','flow_speed@CDAS.OMNI_HRO_1MIN','OMNI Flow Spd. 1min'));
+                item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','Vx@CDAS.OMNI_HRO_1MIN','OMNI Vx 1min'));
+                item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','Vy@CDAS.OMNI_HRO_1MIN','OMNI Vy 1min'));
+                item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','Vz@CDAS.OMNI_HRO_1MIN','OMNI Vz 1min'));
+                item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','proton_density@CDAS.OMNI_HRO_1MIN','OMNI Pr. Dens. 1min'));
+                item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','T@CDAS.OMNI_HRO_1MIN','OMNI T 1min'));
+                item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','Pressure@CDAS.OMNI_HRO_1MIN','OMNI Pressure 1min'));
+                item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','E@CDAS.OMNI_HRO_1MIN','OMNI E 1min'));
+                item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','Beta@CDAS.OMNI_HRO_1MIN','OMNI Beta 1min'));
+                item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','Mach_num@CDAS.OMNI_HRO_1MIN','OMNI Mach# 1min'));
+                */
                 item.add(new auroral_resources.widget.ProxiedTimeSeriesTreeFile("http://lasp.colorado.edu/lisird/tss/sorce_tsi_6hr.html","SORCE 6hr TSI {W/m^2}","lasp","lasp24.png"));
                 parent.add(item);
 
@@ -290,7 +299,7 @@ qx.Class.define("auroral_resources.view.SideBar",
                 parent.add(item);
 
                 item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Vimeo");
-                item2.add(new auroral_resources.ui.tree.VimeoTreeFile(640,385,"Terje Sorgjerd's 'The Aurora'","21294655"));
+                item2.add(new auroral_resources.ui.tree.VimeoTreeFile(640,385,"Terje Sorgjerd's 'The Aurora'","21294655","terjes"));
                 item.add(item2);
                 parent.add(item);
 

@@ -55,14 +55,20 @@ qx.Class.define("qxdygraphs.Plot", {
             min = '';
         }
         var codeArr = [];
-        if ( qx.bom.client.Engine.MSHTML && qx.bom.client.Engine.VERSION < 9.0 && !window.G_vmlCanvasManager){
-            codeArr.push("excanvas"+min+".js.gz");
-        }
-        codeArr.push("dygraph-combined.js.gz");
 
+        if ( !document.createElement('canvas').getContext && qx.bom.client.Engine.MSHTML ) {
+//            codeArr.push("iefriendly/excanvas"+min+".js.gz");
+            codeArr.push("iefriendly/excanvas.js.gz");
+        }
+        //codeArr.push("dygraph-combined.js.gz");
+        codeArr.push("iefriendly/strftime-min.js.gz");
+        codeArr.push("iefriendly/rgbcolor.js.gz");
+        codeArr.push("iefriendly/dygraph-canvas.js.gz");
+        codeArr.push("iefriendly/dygraph.js.gz");
         this.__loadScriptArr(codeArr,qx.lang.Function.bind(this.__addCanvas,this,data,options));
     },
     statics : { 
+
         /**
          * map of loaded scripts
          */
@@ -100,9 +106,15 @@ qx.Class.define("qxdygraphs.Plot", {
         scriptLoaded: 'qx.event.type.Event'
     },
     members : {        
+        /**
+         * our copy of the plot object
+         */        
+        __plotObject: null,
+
         getPlotObject: function(){
             return this.__plotObject;
-        },        
+        },
+
         /**
          * Chain loading scripts.
          */
@@ -135,10 +147,7 @@ qx.Class.define("qxdygraphs.Plot", {
                 handler();
             }
         },
-        /**
-         * our copy of the plot object
-         */        
-        __plotObject: null,
+
         /**
          * Create the canvas once everything is renderad
          * 
