@@ -70,7 +70,49 @@ qx.Class.define("auroral_resources.Application",
     statics :
     {
         __mainWindow : null,
-        __originalUrl : null
+        __originalUrl : null,
+        __shortUrl : null,
+        __longUrl : null,
+
+        //
+        // supports JSONP callback for use by the bit.ly API
+        // 
+        bitlyJsonCallback : function(response) 
+        {
+            var sUrl = auroral_resources.Application.__shortUrl = response.data.url;
+            var url = auroral_resources.Application.__longUrl;
+            auroral_resources.Application.openUrlDialog(sUrl, url);
+        },
+
+        // modularizes the dialog a tad better than bundling with/above
+        openUrlDialog : function(sUrl, url) 
+        {
+            var pageData = [{
+                "message" : "The short URL and long encoded URL below BOTH represent your current workspace, they're pre-selected for copy+paste convenience",
+                "formData" : {
+                    'share_url'   : {
+                        'type'    : "TextArea",
+                        'label'   : "URL",
+                        'lines'   : 14,
+                        'value'   : sUrl + "\n\n" + url
+                    }
+                }
+            }];
+                
+            var wizard = new dialog.BareWizard({
+                width: 600,
+                height: 300,
+                maxWidth: 600,
+                pageData : pageData,
+                allowCancel: false,
+                allowBack: false,
+                allowNext: false,
+                callback : function() {},
+                context : null
+            });
+
+            wizard.start('share_url');
+        }
     },
 
     /*
@@ -298,6 +340,7 @@ qx.Class.define("auroral_resources.Application",
             container.add(chooser);
 
             this.__sideBarScroller.add(container);
+            this.__sideBarScroller.setMinWidth(190);
             this.__sideBarScroller.setWidth(300);
             this.__sideBarScroller.setBackgroundColor("silver");
 
@@ -356,15 +399,21 @@ qx.Class.define("auroral_resources.Application",
         //
         //
         goFullScreen : function () {
-            this.__sideBarHider.execute();
-            this.__toolBarHider.execute();
+
+            if (!this.__sideBarScroller.isExcluded()) {
+                this.__sideBarHider.execute();
+            }
+
+            if (!this.__toolBarView.isExcluded()) {
+                this.__toolBarHider.execute();
+            }
         },
         
         //
         //
         //
         showUrl : function () {
-            this.shareUrl("shorten-no");
+            this.shareUrl("email-no");
         },
 
         //
@@ -439,40 +488,19 @@ qx.Class.define("auroral_resources.Application",
                 }
             }
             
-            if(typeof shorten !== undefined && shorten !== null && shorten === "shorten-no") {
+            var bitly = new auroral_resources.io.shortener.Bitly();
+            if(typeof shorten !== undefined && shorten !== null && shorten === "email-no") {
 
-                url = encodeURIComponent(url);
+                // this encodes too much
+                //url = encodeURIComponent(url);
+                var unencUrl = url;
+                url = encodeURI(url);
+                auroral_resources.Application.__longUrl = url;
+                var sUrl = bitly.shortenWithCallback(unencUrl);
+                return;
                 
-                var pageData = [{
-                    "message" : "The encoded URL below represents your current workspace, pre-selected for copy+paste convenience",
-                    "formData" : {
-
-                        'share_url'   : {
-                            'type'    : "TextArea",
-                            'label'   : "URL",
-                            'lines'   : 14,
-                            'value'   : url
-                        }
-                    }
-                }];
-                
-                var wizard = new dialog.BareWizard({
-                    width: 600,
-                    height: 300,
-                    maxWidth: 600,
-                    pageData : pageData,
-                    allowCancel: false,
-                    allowBack: false,
-                    allowNext: false,
-                    callback : function(map) {},
-                    context : this
-                });
-
-                wizard.start('share_url');
-
             } else {
 
-                var bitly = new auroral_resources.io.shortener.Bitly();
                 bitly.shortenAndEmail(url);
                 return;
                     

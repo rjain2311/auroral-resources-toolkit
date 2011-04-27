@@ -80,13 +80,12 @@ qx.Class.define("auroral_resources.view.ToolBar",
         var mainPart = new qx.ui.toolbar.Part;
         this.add(mainPart);
 
-        var urlbtn = new qx.ui.toolbar.Button(this.tr("URL"), "icon/22/actions/document-send.png");
+        var urlbtn = new qx.ui.toolbar.Button(this.tr("URLs"), "icon/22/actions/document-send.png");
         urlbtn.setToolTipText(this.tr("Display the URL for your current workspace"));
         urlbtn.addListener("mouseup", application.showUrl, application);
         mainPart.add(urlbtn);
 
         // Add a sepearator
-
         mainPart.addSeparator();
         
         var sharebtn = new qx.ui.toolbar.Button(this.tr("Share"), "icon/22/actions/mail-forward.png");
@@ -119,7 +118,6 @@ qx.Class.define("auroral_resources.view.ToolBar",
         mainPart.add(fullscrnbtn);
 
         // Add a sepearator
-
         mainPart.addSeparator();
 
         // Add a spacer

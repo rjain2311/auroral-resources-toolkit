@@ -89,6 +89,8 @@ qx.Class.define("auroral_resources.ui.window.ACETimeSeriesWindow",
             status: parameter + ',' + title + ',' + mddocname,
             layout: new qx.ui.layout.Grow()
         });
+
+        this.setCaption(' (ACE Science Center) ' + this.getCaption());
         
         this.setWidth(width);
         this.setHeight(height);

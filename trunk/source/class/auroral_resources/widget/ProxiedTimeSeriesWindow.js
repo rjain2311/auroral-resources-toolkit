@@ -36,12 +36,8 @@ LGPL: http://www.gnu.org/licenses/lgpl.html
 or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
-AUTHORS:
-
-Peter Elespuru - peter.elespuru@noaa.gov
-Dmitry Medvedev - dmedv@wdcb.ru
-Mikhail Zhizhin - jjn@wdcb.ru
-Rob Redmon - rob.redmon@noaa.gov
+AUTHOR(S) OF THIS FILE:
+Peter R. Elespuru - peter.elespuru@noaa.gov
 
 *************************************************************************/
 
@@ -92,6 +88,8 @@ qx.Class.define("auroral_resources.widget.ProxiedTimeSeriesWindow",
             layout: new qx.ui.layout.Grow()
         });
         
+        this.setCaption(' (LASP) ' + this.getCaption());
+
         this.setWidth(width);
         this.setHeight(height);
 
