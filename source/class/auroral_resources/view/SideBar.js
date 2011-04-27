@@ -208,15 +208,12 @@ qx.Class.define("auroral_resources.view.SideBar",
                 parent.add(item);
 
                 item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Solar Wind");
-                /*
                 item.add(new auroral_resources.ui.tree.ACETimeSeriesTreeFile('','Bmag@ACE.mag_level2_data_1hr','ACE Bmag 1hr lvl2'));
                 item.add(new auroral_resources.ui.tree.ACETimeSeriesTreeFile('','Bmag@ACE.mag_level2_data_4min','ACE Bmag 4min lvl2'));
                 item.add(new auroral_resources.ui.tree.ACETimeSeriesTreeFile('','Bmag@ACE.mag_level2_data_16sec','ACE Bmag 16sec lvl2'));
                 item.add(new auroral_resources.ui.tree.ACETimeSeriesTreeFile('','Bmag@ACE.mag_level2_data_1sec','ACE Bmag 1sec lvl2'));
-                */
                 item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','imf_bz.ACE_RT',"ACE Bz {nT}"));
                 item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','vsw_x.ACE_RT',"ACE Flow {Km/s}"));
-                /*
                 item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','BX_GSE@CDAS.OMNI_HRO_1MIN','OMNI BX_GSE 1min'));
                 item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','BY_GSE@CDAS.OMNI_HRO_1MIN','OMNI BY_GSE 1min'));
                 item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','BZ_GSE@CDAS.OMNI_HRO_1MIN','OMNI BZ_GSE 1min'));
@@ -232,7 +229,6 @@ qx.Class.define("auroral_resources.view.SideBar",
                 item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','E@CDAS.OMNI_HRO_1MIN','OMNI E 1min'));
                 item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','Beta@CDAS.OMNI_HRO_1MIN','OMNI Beta 1min'));
                 item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','Mach_num@CDAS.OMNI_HRO_1MIN','OMNI Mach# 1min'));
-                */
                 item.add(new auroral_resources.widget.ProxiedTimeSeriesTreeFile("http://lasp.colorado.edu/lisird/tss/sorce_tsi_6hr.html","SORCE 6hr TSI {W/m^2}","lasp","lasp24.png"));
                 parent.add(item);
 
@@ -255,8 +251,8 @@ qx.Class.define("auroral_resources.view.SideBar",
                 
                 var item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Ovation Aurora");
                 var item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Real-Time (static)");
-                item2.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_nowcast_aacgm.png","Current Nowcast {Ergs/cm^2/s}"));
-                item2.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_forecast_aacgm.png","Current Forecast {Ergs/cm^2/s}"));
+                item2.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_nowcast_aacgm.png","Latest Nowcast {Ergs/cm^2/s}"));
+                item2.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_forecast_aacgm.png","Latest Forecast {Ergs/cm^2/s}"));
                 item.add(item2);
                 item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Coastal Relief (interactive)");
                 item2.add(new auroral_resources.widget.MapTreeFile('21EFE0E5-C280-9A20-D309-61938C843585','openlayers', 'ECS', 'north_nowcast', "Nowcast {Ergs/cm^2/s}"));
@@ -270,14 +266,14 @@ qx.Class.define("auroral_resources.view.SideBar",
                 
                 item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Imagery");
                 item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("SWPC");
-                item2.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.swpc.noaa.gov/pmap/gif/pmapN.gif","Current Northern Auroral Oval"));
-                item2.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.swpc.noaa.gov/pmap/gif/pmapS.gif","Current Southern Auroral Oval"));
+                item2.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.swpc.noaa.gov/pmap/gif/pmapN.gif","Latest Northern Auroral Oval"));
+                item2.add(new auroral_resources.widget.ExternalImageTreeFile("http://www.swpc.noaa.gov/pmap/gif/pmapS.gif","Latest Southern Auroral Oval"));
                 item.add(item2);
                 item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("NASA");
                 var item3 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("SOHO");
-                item3.add(new auroral_resources.widget.ExternalImageTreeFile("http://sohowww.nascom.nasa.gov/data/realtime/mdi_igr/512/latest.jpg","Current MDI Continuum"));
-                item3.add(new auroral_resources.widget.ExternalImageTreeFile("http://sohowww.nascom.nasa.gov/data/realtime/mdi_mag/512/latest.jpg","Current MDI Magnetogram"));
-                item3.add(new auroral_resources.widget.ExternalImageTreeFile("http://sohowww.nascom.nasa.gov/data/realtime/eit_304/512/latest.jpg","Current EIT 304"));
+                item3.add(new auroral_resources.widget.ExternalImageTreeFile("http://sohowww.nascom.nasa.gov/data/realtime/mdi_igr/512/latest.jpg","Latest MDI Continuum"));
+                item3.add(new auroral_resources.widget.ExternalImageTreeFile("http://sohowww.nascom.nasa.gov/data/realtime/mdi_mag/512/latest.jpg","Latest MDI Magnetogram"));
+                item3.add(new auroral_resources.widget.ExternalImageTreeFile("http://sohowww.nascom.nasa.gov/data/realtime/eit_304/512/latest.jpg","Latest EIT 304"));
                 item2.add(item3);
                 item.add(item2);
                 parent.add(item);

@@ -88,6 +88,11 @@ qx.Class.define("auroral_resources.widget.ExternalImageWindow",
             allowMinimize: false,
             showMaximize: false,
             showMinimize: false,
+            resizable: false,
+            allowGrowX: false,
+            allowGrowY: false,
+            allowShrinkX: false,
+            allowShrinkY: false,
             showClose: true,
             status: filename + ',' + title,
             layout: new qx.ui.layout.Grow()
@@ -111,13 +116,13 @@ qx.Class.define("auroral_resources.widget.ExternalImageWindow",
         frame.setSource(filename);
         this.add(frame);
         */
-        
+
         var img = new qx.ui.basic.Image(filename);
         img.setWidth(width);
         img.setHeight(height);
         img.setScale(true);
         this.add(img);
-        
+
         return this;
     },
 

@@ -90,6 +90,8 @@ qx.Class.define("auroral_resources.ui.window.CDAWebTimeSeriesWindow",
             layout: new qx.ui.layout.Grow()
         });
         
+        this.setCaption(' (CDAWeb) ' + this.getCaption());
+
         this.setWidth(width);
         this.setHeight(height);
 

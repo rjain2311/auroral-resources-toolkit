@@ -159,6 +159,18 @@ qx.Class.define("auroral_resources.io.shortener.Bitly",
         //
         //
         //
+        shortenWithCallback: function (longUrl, f) 
+        {
+            this.__callbackHandler = "auroral_resources.Application.bitlyJsonCallback";
+            var head = document.getElementsByTagName("head")[0];
+            var e = document.createElement("script");
+            e.src = this.constructUrl(longUrl);
+            head.appendChild(e);
+        },
+
+        //
+        //
+        //
         shortenAndEmail: function (longUrl) 
         {
             this.__callbackHandler = "auroral_resources.io.shortener.Bitly.jsonCallbackEmail";
