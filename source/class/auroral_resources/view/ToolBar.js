@@ -37,7 +37,7 @@ or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
 AUTHOR(S) OF THIS FILE:
-Peter Elespuru - peter.elespuru@noaa.gov
+Peter R. Elespuru - peter.elespuru@noaa.gov
 
 ************************************************************************ */
 
@@ -49,6 +49,8 @@ Peter Elespuru - peter.elespuru@noaa.gov
 #asset(qx/icon/Tango/22/apps/preferences-theme.png)
 #asset(qx/icon/Tango/22/actions/help-about.png)
 #asset(qx/icon/Tango/22/actions/help-contents.png)
+#asset(qx/icon/Tango/22/actions/mail-forward.png)
+#asset(qx/icon/Tango/22/actions/view-fullscreen.png)
 #asset(qx/icon/Tango/22/emblems/emblem-important.png)
 
 ************************************************************************ */
@@ -78,25 +80,16 @@ qx.Class.define("auroral_resources.view.ToolBar",
         var mainPart = new qx.ui.toolbar.Part;
         this.add(mainPart);
 
-        // Preferences button
-        /*
-        var prefBtn = new qx.ui.toolbar.Button(this.tr("Preferences"), "icon/22/apps/preferences-theme.png");
-        prefBtn.setToolTipText(this.tr("Open Preferences Window."));
-        mainPart.add(prefBtn);
-        */
+        var urlbtn = new qx.ui.toolbar.Button(this.tr("URL"), "icon/22/actions/document-send.png");
+        urlbtn.setToolTipText(this.tr("Display the URL for your current workspace"));
+        urlbtn.addListener("mouseup", application.showUrl, application);
+        mainPart.add(urlbtn);
 
-        /* for consistency, a long button like the one for hiding the toolbar is used instead
-        // add the hide tools container button
-        var hideToolsBtn = new qx.ui.toolbar.Button(this.tr("Toggle Tools"), "icon/22/actions/edit-clear.png");
-        hideToolsBtn.setToolTipText(this.tr("Hide/Show the left tools area"));
-        hideToolsBtn.addListener("mouseup", application.toggleTools, application);
-        mainPart.add(hideToolsBtn);
-        
         // Add a sepearator
+
         mainPart.addSeparator();
-        */
         
-        var sharebtn = new qx.ui.toolbar.Button(this.tr("Share Workspace"), "icon/22/actions/document-send.png");
+        var sharebtn = new qx.ui.toolbar.Button(this.tr("Share"), "icon/22/actions/mail-forward.png");
         sharebtn.setToolTipText(this.tr("Share your current workspaace via URL"));
         sharebtn.addListener("mouseup", application.shareUrl, application);
         mainPart.add(sharebtn);
@@ -104,14 +97,31 @@ qx.Class.define("auroral_resources.view.ToolBar",
         // Add a sepearator
         mainPart.addSeparator();
 
-        var clearbtn = new qx.ui.toolbar.Button(this.tr("Empty Workspace"), "icon/22/actions/edit-clear.png");
+        var clearbtn = new qx.ui.toolbar.Button(this.tr("Empty"), "icon/22/actions/edit-clear.png");
         clearbtn.setToolTipText(this.tr("Clean off your workspace, remove all widgets"));
         clearbtn.addListener("mouseup", application.emptyWorkspace, application);
         mainPart.add(clearbtn);
 
         // Add a sepearator
         mainPart.addSeparator();
-                
+
+        var refreshbtn = new qx.ui.toolbar.Button(this.tr("Revert"), "icon/22/actions/view-refresh.png");
+        refreshbtn.setToolTipText(this.tr("Revert the workspace to its state when you started"));
+        refreshbtn.addListener("mouseup", application.revertWorkspace, application);
+        mainPart.add(refreshbtn);
+
+        // Add a sepearator
+        mainPart.addSeparator();
+
+        var fullscrnbtn = new qx.ui.toolbar.Button(this.tr("Hide"), "icon/22/actions/view-fullscreen.png");
+        fullscrnbtn.setToolTipText(this.tr("Hide both the top and side tool bars, enter full screen mode"));
+        fullscrnbtn.addListener("mouseup", application.goFullScreen, application);
+        mainPart.add(fullscrnbtn);
+
+        // Add a sepearator
+
+        mainPart.addSeparator();
+
         // Add a spacer
         this.addSpacer();
 

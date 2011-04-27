@@ -37,7 +37,7 @@ or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
 AUTHOR(S) OF THIS FILE:
-Peter Elespuru - peter.elespuru@noaa.gov
+Peter R. Elespuru - peter.elespuru@noaa.gov
 
 ************************************************************************ */
 
@@ -150,7 +150,7 @@ qx.Class.define("dialog.BareWizard",
     _backButton : null,
     _nextButton : null,
     _finishButton : null,
-    
+
     /*
     ---------------------------------------------------------------------------
        WIDGET LAYOUT
@@ -366,7 +366,9 @@ qx.Class.define("dialog.BareWizard",
     start : function()
     {
       this.show();
-      this.setPage( 0 );
+      this.setPage(0);
+      var fr = this._formContainer.getChildren()[0];
+      fr.getTextArea().selectAllText();
     },
 
     /**

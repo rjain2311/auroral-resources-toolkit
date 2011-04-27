@@ -1,6 +1,10 @@
 <FilesMatch "\\.js.gz$">
   ForceType text/javascript
   Header set Content-Encoding: gzip
+  RewriteEngine On
+  RewriteCond %{HTTP_USER_AGENT} .*Safari.*
+  Header set Content-Disposition: "inline;filename='$1\.jgz'"
+  ForceType "application/x-javascript;charset=UTF-8"
 </FilesMatch>
 
 <FilesMatch "\\.js$">
@@ -8,5 +12,12 @@
   RewriteCond %{HTTP:Accept-Encoding} gzip
   RewriteCond %{REQUEST_FILENAME}.gz -f
   RewriteRule (.*)\.js$ $1\.js.gz [L]
+  ForceType text/javascript
+</FilesMatch>
+
+<FilesMatch "\\.jgz$">
+  RewriteEngine On
+  RewriteCond %{HTTP:Accept-Encoding} gzip
+  RewriteRule (.*)\.jgz$ $1\.js.gz [L]
   ForceType text/javascript
 </FilesMatch>

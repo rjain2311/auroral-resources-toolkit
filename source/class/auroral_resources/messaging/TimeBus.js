@@ -110,6 +110,34 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
         },
 
         //
+        // start date getter, in the format SPIDR GetData2 WS format 2008-08-01T00:00:00UTC
+        //
+        getStartDateForSPIDRWS2 : function() {
+            var start = this.__startDate;
+            start = new Date(start);
+            //var mo = start.getUTCMonth() + 1;
+            var mo = start.getMonth() + 1;
+            mo = "" + mo;
+            if (mo.length == 1 ) { mo = "0" + mo; }
+            //var dy = start.getUTCDate();
+            var dy = start.getDate();
+            dy = "" + dy;
+            if (dy.length == 1) { dy = "0" + dy; }
+            // start = start.getUTCFullYear() + "" + mo + "" + dy;
+            var ymd = start.getFullYear() + "-" + mo + "-" + dy + "T";
+            var hr = start.getHours();
+            if (hr.length == 1 ) { hr = "0" + hr; }
+            ymd += hr + ":";
+            var mn = start.getMinutes();
+            if (mn.length == 1 ) { mn = "0" + mn; }
+            ymd += mn + ":";
+            var sc = start.getSeconds();
+            if (sc.length == 1 ) { sc = "0" + sc; }
+            ymd += sc + "UTC";
+            return ymd;
+        },
+
+        //
         // start date getter, in the format SPIDR WS needs
         //
         getStartDateForSPIDRWS : function() {
@@ -147,6 +175,32 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
             return start;
         },
         
+        //
+        // stop date getter, in the format SPIDR GetData2 WS format 2008-08-01T00:00:00UTC
+        //
+        getStopDateForSPIDRWS2 : function() {
+            var stop = this.__stopDate;
+            stop = new Date(stop);
+            var mo = stop.getMonth() + 1;
+            mo = "" + mo;
+            if (mo.length == 1 ) { mo = "0" + mo; }
+            var dy = stop.getDate();
+            dy = "" + dy;
+            if (dy.length == 1) { dy = "0" + dy; }
+            var ymd = stop.getFullYear() + "-" + mo + "-" + dy + "T";
+            var hr = stop.getHours();
+            if (hr.length == 1 ) { hr = "0" + hr; }
+            ymd += hr + ":";
+            var mn = stop.getMinutes();
+            if (mn.length == 1 ) { mn = "0" + mn; }
+            ymd += mn + ":";
+            var sc = stop.getSeconds();
+            if (sc.length == 1 ) { sc = "0" + sc; }
+            ymd += sc + "UTC";
+
+            return ymd;
+        },
+
         //
         // stop date getter, in the format SPIDR WS needs
         //
@@ -203,6 +257,34 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
             time = time.getFullYear() + "" + mo + "" + dy;
             return time;
         },      
+
+        //
+        //
+        //
+        convertToSPIDRWS2 : function(timeinmillis) {
+            var time = timeinmillis;
+            time = new Date(time);
+            // var mo = time.getUTCMonth() + 1;
+            var mo = time.getMonth() + 1;
+            mo = "" + mo;
+            if (mo.length == 1 ) { mo = "0" + mo; }
+            // var dy = time.getUTCDate();
+            var dy = time.getDate();
+            dy = "" + dy;
+            if (dy.length == 1) { dy = "0" + dy; }
+            // time = time.getUTCFullYear() + "" + mo + "" + dy;
+            var ymd = time.getFullYear() + "-" + mo + "-" + dy + "T";
+            var hr = time.getHours();
+            if (hr.length == 1 ) { hr = "0" + hr; }
+            ymd += hr + ":";
+            var mn = time.getMinutes();
+            if (mn.length == 1 ) { mn = "0" + mn; }
+            ymd += mn + ":";
+            var sc = time.getSeconds();
+            if (sc.length == 1 ) { sc = "0" + sc; }
+            ymd += sc + "UTC";
+            return ymd;
+        },
 
         //
         //

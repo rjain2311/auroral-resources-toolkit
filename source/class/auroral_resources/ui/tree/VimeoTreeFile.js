@@ -57,7 +57,7 @@ qx.Class.define("auroral_resources.ui.tree.VimeoTreeFile",
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(width, height, title, uri)
+    construct : function(width, height, title, uri, vuser)
     {
         this.base(arguments, title);
         this.setDraggable(true);
@@ -67,6 +67,7 @@ qx.Class.define("auroral_resources.ui.tree.VimeoTreeFile",
         this.__uri = uri;
         this.__width = width;
         this.__height = height;
+        this.__vuser = vuser;
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
         this.setToolTipText("(external-vimeo) Drag this widget anywhere into the gray workspace to the right");
         this.setIcon(qx.util.ResourceManager.getInstance().toUri("auroral_resources/icons/vimeo_logo_24.png"));
@@ -87,6 +88,7 @@ qx.Class.define("auroral_resources.ui.tree.VimeoTreeFile",
         __uri : null,
         __width: null,
         __height: null,
+        __vuser : null,
 
 
         //
@@ -113,7 +115,8 @@ qx.Class.define("auroral_resources.ui.tree.VimeoTreeFile",
                     this.__width,
                     this.__height, 
                     this.__title, 
-                    this.__uri
+                    this.__uri,
+                    this.__vuser
                 );
 
                 result = this.__window;
