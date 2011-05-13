@@ -36,12 +36,8 @@ LGPL: http://www.gnu.org/licenses/lgpl.html
 or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
-AUTHORS:
-
-Peter Elespuru - peter.elespuru@noaa.gov
-Dmitry Medvedev - dmedv@wdcb.ru
-Mikhail Zhizhin - jjn@wdcb.ru
-Rob Redmon - rob.redmon@noaa.gov
+AUTHOR(S) OF THIS FILE:
+Peter R. Elespuru - peter.elespuru@noaa.gov
 
 ************************************************************************ */
 
@@ -66,7 +62,7 @@ qx.Class.define("auroral_resources.persistence.KVStore",
     construct : function()
     {
         this.base(arguments);
-        //persist isn't working, punting for now using cookies
+        //persist isn't working, punting for now and using cookies
         //this.__store = new persist.Store(this.__key_prefix);
     },
 

@@ -55,6 +55,11 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
     */
     statics : 
     {
+        getCsvUrl : function(parameter, start, stop) {
+            return "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
+            //return "/art/resource/auroral_resources/ionofof2.txt";
+        },
+
         fromArray : function(argArray) {
             return new auroral_resources.widget.TimeSeriesIndexWindow(
                 parseInt(decodeURI(argArray[3])),
@@ -101,7 +106,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
         this.__stopDate = stop;
 
         this.__plot = new qxdygraphs.Plot(
-            "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop,
+            auroral_resources.widget.TimeSeriesIndexWindow.getCsvUrl(parameter,start,stop),
             //'resource/auroral_resources/ionofof2.txt',
             {
                 labelsKMB: true,
@@ -159,14 +164,14 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
                 
                 var data = new qx.ui.form.Button("Download Data");
                 data.addListener("click", function(evt) {
-                    var dlurl = "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+param+"&format=zip&dateFrom="+start+"&dateTo="+stop;
+                    var dlurl ="http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?param="+param+"&format=zip&dateFrom="+start+"&dateTo="+stop;
                     window.open(dlurl,"");
                     popup.hide();
                 });
                 
                 var mdata = new qx.ui.form.Button("View Metadata");
                 mdata.addListener("click", function(evt) {
-                    var mdurl = "http://spidr.ngdc.noaa.gov/spidrvo/viewdata.do?docname="+mddoc;
+                    var mdurl = "http://"+auroral_resources.Application.getHost()+"/spidrvo/viewdata.do?docname="+mddoc;
                     window.open(mdurl,"");
                     popup.hide();
                 });
@@ -290,7 +295,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
             //alert("http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop);
 
             this.__plot = new qxdygraphs.Plot(
-                "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop,
+                auroral_resources.widget.TimeSeriesIndexWindow.getCsvUrl(parameter,start,stop),
                 //'resource/auroral_resources/ionofof2.txt',
                 {
                     labelsKMB: true,
@@ -346,7 +351,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
             //alert("http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+parameter+"&format=csv&header=false&dateFrom="+start+"&dateTo="+stop);
 
             this.__plot = new qxdygraphs.Plot(
-                "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop,
+                auroral_resources.widget.TimeSeriesIndexWindow.getCsvUrl(parameter,start,stop),
                 //'resource/auroral_resources/ionofof2.txt',
                 {
                     labelsKMB: true,
@@ -373,7 +378,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesIndexWindow",
             var now = e.getData();
             this.__now = now;
             var parameter = this.__parameter;
-            var csv = "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
+            var csv = "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
 
             var h = new qx.io.request.Xhr();
             h.setAsync(true);

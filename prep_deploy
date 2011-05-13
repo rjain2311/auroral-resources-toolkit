@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+./generate.py api &&\
+cp -pR api ../ar/ &&\
+./generate.py inspector &&\
+cp -pR inspector ../ar/ &&\
+cp source/inspector.html ../ar/ &&\
+echo "w00t &&\
+exit 0

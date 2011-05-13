@@ -36,12 +36,9 @@ LGPL: http://www.gnu.org/licenses/lgpl.html
 or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
-AUTHORS:
-
-Peter Elespuru - peter.elespuru@noaa.gov
-Dmitry Medvedev - dmedv@wdcb.ru
-Mikhail Zhizhin - jjn@wdcb.ru
-Rob Redmon - rob.redmon@noaa.gov
+AUTHOR(S) OF THIS FILE:
+Peter Elespuru - peter.elespuru@noaa.gov - merge into Qx
+Sasha Godunov - goduy@mail.ru - standalone
 
 *************************************************************************/
 
@@ -83,11 +80,6 @@ qx.Class.define("auroral_resources.widget.HistogramWindow",
 
         this.__startDate = start;
         this.__stopDate = stop;
-
-        /////////////////////////////////////////////////////////////////////        
-        // NEED MORE TIME TO INTEGRATE PROTOVIS DYNAMICALLY...
-        // REVERTING TO DYGRAPHS FOR NOW
-        /////////////////////////////////////////////////////////////////////        
 
         /*
         this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);

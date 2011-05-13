@@ -183,43 +183,46 @@ qx.Class.define("qxhighcharts.Plot",
 
                     // Split the lines
                     var lines = data.split('\n');
-                    
+
                     // Iterate over the lines and add categories or series
                     $.each(lines, function(lineNo, line) {
                         var items = line.split(',');
-                        
-                        // header line containes categories
-                        if (lineNo == 0) {
 
-                            /* ignore
-                            $.each(items, function(itemNo, item) {
-                                if (itemNo > 0) qxParm.xAxis.categories.push(item);
-                            });
-                            */
+                        if (lineNo > 0) {
+                            qxParm.series[0].data.push([ new Date(items[0]).getTime(), parseFloat(items[1]) ]);
 
-
-                        } else {
-
-                            // response will be time, data, ... stuff
-                            // we'll be ignoring '... stuff' for now
-                            //
-                            // 0123456789012345678
-                            // yyyy-mm-dd hh:mm:ss
-                            //
-                            var yr = items[0].substring(0,3);
-                            var mo = items[0].substring(5,6);;
-                            var dy = items[0].substring(8,9);
-                            var hr = items[0].substring(11,12);
-                            var mn = items[0].substring(14,15);
-                            var sc = items[0].substring(17,18);
-                            qxParm.series[0].data.push([ Date.UTC(yr,mo,dy,hr,mn,sc), parseFloat(items[1]) ]);
                         }
+
                     });
 
                     var id = 'hcId'+(qxhighcharts.Plot.INSTANCE_COUNTER++);
                     qx.bom.element.Attribute.set(el, 'id', id);
                     qxParm.chart.renderTo = id;
+
+                    qxParm.xAxis.plotLines = [{
+                        color: 'red',
+                        width: 3,
+                        value: auroral_resources.messaging.TimeBus.getInstance().getNow()
+                    }];
+                    
                     var plot = qxThis.__plotObject = new Highcharts.Chart(qxParm);
+
+                    // globals and lang cannot be set plot by plot, must be applied globally to HC itself!
+                    Highcharts.setOptions({
+                        global: {
+                            useUTC: true
+                        },
+
+                        lang: {
+                            downloadPNG: "Download PNG",
+                            downloadJPEG: "Download JPG",
+                            downloadPDF: "Download PDF",
+                            downloadSVG: "Download SVG",
+                            loading: "Loading, Please Stand By...",
+                            resetZoom: "restore zoom level"
+                        }
+                    });
+
                     qxThis.fireDataEvent('plotCreated', plot);
                     // FIXME: sort out why it doesn't respond correctly if registered in here...
                     //qxThis.addListener('resize',qx.lang.Function.bind(qxThis.__redraw,qxThis,plot,w,h),qxThis);

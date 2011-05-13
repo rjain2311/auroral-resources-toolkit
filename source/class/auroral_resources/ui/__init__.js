@@ -1,3 +1,3 @@
 /**
- * UI
+ * UI components
  */

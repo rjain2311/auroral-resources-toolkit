@@ -36,8 +36,8 @@ LGPL: http://www.gnu.org/licenses/lgpl.html
 or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
-AUTHOR(S) OF THE CODE IN THIS FILE:
-Peter R. Elespuru - peter.elespuru@noaa.gov
+AUTHOR(S) OF THIS FILE:
+Peter Elespuru - peter.elespuru@noaa.gov
 
 *************************************************************************/
 
