@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>heatmap</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<style type="text/css" media="screen">
+		html, body { height:100%; background-color: #cccccc;}
+		body { margin:0; padding:0; overflow:hidden; }
+		#flashContent { width:100%; height:100%; }
+		</style>
+		
+		<script type="text/javascript">
+			var dateFrom = 1293840000000;
+			var dateTo =   1293843600000;
+
+			var dateCenter = 1293840000000 + (1293843600000 - 1293840000000)/2;
+			var dateInterval = (1293843600000 - 1293840000000)/2;
+			
+			function getMovie() {
+				var M$ =  navigator.appName.indexOf("Microsoft")!=-1
+				return (M$ ? window : document)["heatmap"]
+			}
+			
+			var isSWFLoaded = false;
+			function swfIsLoaded() {
+				isSWFLoaded = true;
+				var movie = getMovie();
+				movie.setRequestStr('http://localhost:8080/proxy/TestProxy?');
+			}
+			
+			function sendTimeRange () {
+				if (isSWFLoaded) {
+					var movie = getMovie();
+					dateFrom = document.getElementById('dateFrom').value;
+					dateTo = document.getElementById('dateTo').value;
+					
+					movie.setTimeRangeFromJS(dateFrom, dateTo);
+				}
+			}
+			
+			function sendTimeCenter () {
+				if (isSWFLoaded) {
+					var movie = getMovie();
+					dateCenter = document.getElementById('dateCenter').value;
+					dateInterval = document.getElementById('dateInterval').value;
+					
+					movie.setTimeCenterFromJS(dateCenter, dateInterval);
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="html2flash">
+			from:
+			<textarea id="dateFrom">1293840000000</textarea>
+			to:
+			<textarea id="dateTo">1293843600000</textarea>
+			<input type="button" value="Show" onclick="sendTimeRange()" />
+			<br/>
+			center:
+			<textarea id="dateCenter">1293841800000</textarea>
+			interval/2:
+			<textarea id="dateInterval">1800000</textarea>
+			<input type="button" value="Show" onclick="sendTimeCenter()" />
+		</div>
+		
+		<div id="flashContent">
+			<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="650" height="410" id="heatmap" align="middle">
+				<param name="movie" value="heatmap.swf" />
+				<param name="quality" value="high" />
+				<param name="bgcolor" value="#cccccc" />
+				<param name="play" value="true" />
+				<param name="loop" value="false" />
+				<param name="wmode" value="window" />
+				<param name="scale" value="showall" />
+				<param name="menu" value="true" />
+				<param name="devicefont" value="false" />
+				<param name="salign" value="" />
+				<param name="allowScriptAccess" value="sameDomain" />
+				<embed
+					src="heatmap.swf" 
+					name="heatmap" align="middle"
+					play="true" loop="false" quality="high" allowScriptAccess="sameDomain"
+					width="650" height="410" scale="showall" 
+					type="application/x-shockwave-flash"
+					pluginspage="http://www.adobe.com/go/getflash">
+				</embed>
+				<!--embed src="heatmap.swf" quality="high" bgcolor="#cccccc" width="650" height="410" name="heatmap" align="middle" allowScriptAccess="sameDomain" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" /-->
+			</object>
+		</div>
+	</body>
+</html>

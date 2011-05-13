@@ -37,7 +37,7 @@ or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
 AUTHOR(S) OF THIS FILE:
-Peter R. Elespuru - peter.elespuru@noaa.gov
+Peter Elespuru - peter.elespuru@noaa.gov
 
 *************************************************************************/
 

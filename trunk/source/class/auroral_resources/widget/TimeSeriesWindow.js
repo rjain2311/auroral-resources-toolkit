@@ -55,7 +55,7 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
     statics : 
     {
         getCsvUrl : function(parameter, start, stop) {
-            return "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
+            return "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
             //return "/art/resource/auroral_resources/ionofof2.txt";
         },
 
@@ -163,14 +163,14 @@ qx.Class.define("auroral_resources.widget.TimeSeriesWindow",
                 
                 var data = new qx.ui.form.Button("Download Data");
                 data.addListener("click", function(evt) {
-                    var dlurl = "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+param+"&format=zip&dateFrom="+start+"&dateTo="+stop;
+                    var dlurl = "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?param="+param+"&format=zip&dateFrom="+start+"&dateTo="+stop;
                     window.open(dlurl,"");
                     popup.hide();
                 });
                 
                 var mdata = new qx.ui.form.Button("View Metadata");
                 mdata.addListener("click", function(evt) {
-                    var mdurl = "http://spidr.ngdc.noaa.gov/spidrvo/viewdata.do?docname="+mddoc;
+                    var mdurl = "http://"+auroral_resources.Application.getHost()+"/spidrvo/viewdata.do?docname="+mddoc;
                     window.open(mdurl,"");
                     popup.hide();
                 });

@@ -164,7 +164,7 @@ qx.Class.define("auroral_resources.view.SideBar",
 
             if (index == 0) {
 
-                //parent.add(new auroral_resources.ui.plot.highcharts.TimeSeriesTreeFile('IonoStationsBC840','iono_foF2.BC840',"Boulder (BC840) foF2 {MHz}"));
+                parent.add(new auroral_resources.ui.plot.highcharts.TimeSeriesTreeFile('IonoStationsBC840','iono_foF2.BC840',"Boulder (BC840) foF2 {MHz}", "MHz"));
 
                 var item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Ionosphere");                
                 var item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Ionosonde");
@@ -212,8 +212,8 @@ qx.Class.define("auroral_resources.view.SideBar",
                 item.add(new auroral_resources.ui.tree.ACETimeSeriesTreeFile('','Bmag@ACE.mag_level2_data_4min','ACE Bmag 4min lvl2'));
                 item.add(new auroral_resources.ui.tree.ACETimeSeriesTreeFile('','Bmag@ACE.mag_level2_data_16sec','ACE Bmag 16sec lvl2'));
                 item.add(new auroral_resources.ui.tree.ACETimeSeriesTreeFile('','Bmag@ACE.mag_level2_data_1sec','ACE Bmag 1sec lvl2'));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','imf_bz.ACE_RT',"ACE Bz {nT}"));
-                item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','vsw_x.ACE_RT',"ACE Flow {Km/s}"));
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','imf_bz.ACE_RT',"ACE-RT Bz {nT}"));
+                item.add(new auroral_resources.widget.TimeSeriesTreeFile('78A5B86C-71AF-3D4D-A054-EE8E765CF8D6','vsw_x.ACE_RT',"ACE-RT Flow {Km/s}"));
                 item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','BX_GSE@CDAS.OMNI_HRO_1MIN','OMNI BX_GSE 1min'));
                 item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','BY_GSE@CDAS.OMNI_HRO_1MIN','OMNI BY_GSE 1min'));
                 item.add(new auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile('','BZ_GSE@CDAS.OMNI_HRO_1MIN','OMNI BZ_GSE 1min'));

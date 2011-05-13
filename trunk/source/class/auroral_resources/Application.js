@@ -75,6 +75,20 @@ qx.Class.define("auroral_resources.Application",
         __longUrl : null,
 
         //
+        //
+        //
+        getHost : function() 
+        {
+            if ( window.location.host.indexOf(".") < 0 ) {
+                if ( window.location.host.substr(0,4) === "spidr" ) {
+                    return window.location.host + ".ngdc.noaa.gov";
+                }
+            }
+
+            return window.location.host;
+        },
+
+        //
         // supports JSONP callback for use by the bit.ly API
         // 
         bitlyJsonCallback : function(response) 
@@ -84,7 +98,9 @@ qx.Class.define("auroral_resources.Application",
             auroral_resources.Application.openUrlDialog(sUrl, url);
         },
 
+        //
         // modularizes the dialog a tad better than bundling with/above
+        //
         openUrlDialog : function(sUrl, url) 
         {
             var pageData = [{
@@ -447,7 +463,8 @@ qx.Class.define("auroral_resources.Application",
         //
         // TODO: add server side serialization of the workspace so that sharing
         // doesn't involve such a long URL... as it stands now, it's parsed
-        // and handled entirely from the client.
+        // and handled entirely from the client. currently using bit.ly as a URL
+        // shortener to address this, which may be sufficient, need a decision on it
         //
         shareUrl : function(shorten) {
             
@@ -564,6 +581,11 @@ qx.Class.define("auroral_resources.Application",
                 req.send();
                 */
                 
+                // if 
+                var host = window.location.host.substr(0,6);
+                if ( typeof host !== undefined && host !== null && host === "spidrd") { return; }
+                if ( typeof host !== undefined && host !== null && host === "localh") { return; }
+
                 var mW = auroral_resources.Application.__mainWindow;
                 var wD = this.__widgets;
                 var pieces = [];
@@ -656,8 +678,10 @@ qx.Class.define("auroral_resources.Application",
                 // parse get query for initial state modifications
                 // check for widget additions
                 var i = 0;
+
                 // artificially limits to 16 widgets by URL at the moment
                 for (i=0;i<16;i++) {
+
                     var w = getQueryVariable("w"+i);
                     if (w != null) {
 
@@ -683,6 +707,7 @@ qx.Class.define("auroral_resources.Application",
                         }
 
                         this.__widgets.push(wid);
+
                     } else {
                         // do nothing
                     }
@@ -691,12 +716,12 @@ qx.Class.define("auroral_resources.Application",
             
             function getQueryVariable(variable) { 
                 var query = window.location.search.substring(1); 
-                var vars = query.split("&"); 
-                for (var i=0;i<vars.length;i++) { 
-                    var pair = vars[i].split("="); 
-                    if (pair[0] == variable) { 
-                        return pair[1]; 
-                    } 
+                var vars = query.split("&");
+                for (var i=0;i<vars.length;i++) {
+                    var pair = vars[i].split("=");
+                    if (pair[0] == variable) {
+                        return pair[1];
+                    }
                 }
             }
             
@@ -724,7 +749,7 @@ qx.Class.define("auroral_resources.Application",
                 }
                 widgets.push(wid);
             }
-            
+ 
         },
 
         //

@@ -54,6 +54,11 @@ qx.Class.define("auroral_resources.widget.ProxiedTimeSeriesWindow",
     */
     statics : 
     {
+        getCsvUrl : function(start, stop) {
+            return "http://"+auroral_resources.Application.getHost()+"/spidr/LisirdProxy/?time>="+start+"&time<"+stop;
+            //return "/art/resource/auroral_resources/ionofof2.txt";
+        },
+
         fromArray : function(argArray) { 
             return new auroral_resources.widget.ProxiedTimeSeriesWindow(
                 parseInt(decodeURI(argArray[3])), 
@@ -100,7 +105,7 @@ qx.Class.define("auroral_resources.widget.ProxiedTimeSeriesWindow",
         this.__stopDate = stop;
 
         this.__plot = new qxdygraphs.Plot(
-            "http://spidr.ngdc.noaa.gov/spidr/LisirdProxy/?time>="+start+"&time<"+stop,
+            auroral_resources.widget.ProxiedTimeSeriesWindow.getCsvUrl(start,stop),            
             {
                 labelsKMB: false,
                 drawPoints: true,
@@ -156,7 +161,7 @@ qx.Class.define("auroral_resources.widget.ProxiedTimeSeriesWindow",
                 
                 var data = new qx.ui.form.Button("Download Data");
                 data.addListener("click", function(evt) {
-                    var dlurl = "http://spidr.ngdc.noaa.gov/spidr/LisirdProxy/?time>="+start+"&time<"+stop;
+                    var dlurl = auroral_resources.widget.ProxiedTimeSeriesWindow.getCsvUrl(start,stop);
                     window.open(dlurl,"");
                     popup.hide();
                 });
@@ -235,7 +240,7 @@ qx.Class.define("auroral_resources.widget.ProxiedTimeSeriesWindow",
             var now = this.__timeBus.getNow();
             
             this.__plot = new qxdygraphs.Plot(
-                "http://spidr.ngdc.noaa.gov/spidr/LisirdProxy/?time>="+start+"&time<"+stop,
+                auroral_resources.widget.ProxiedTimeSeriesWindow.getCsvUrl(start,stop),            
                 {
                     labelsKMB: false,
                     errorBars: false,
@@ -266,7 +271,7 @@ qx.Class.define("auroral_resources.widget.ProxiedTimeSeriesWindow",
             var now = this.__timeBus.getNow();
 
             this.__plot = new qxdygraphs.Plot(
-                "http://spidr.ngdc.noaa.gov/spidr/LisirdProxy/?time>="+start+"&time<"+stop,
+                auroral_resources.widget.ProxiedTimeSeriesWindow.getCsvUrl(start,stop),            
                 {
                     labelsKMB: false,
                     errorBars: false,
@@ -297,7 +302,7 @@ qx.Class.define("auroral_resources.widget.ProxiedTimeSeriesWindow",
             this.__now = now;
 
             this.__plot = new qxdygraphs.Plot(
-                "http://spidr.ngdc.noaa.gov/spidr/LisirdProxy/?time>="+start+"&time<"+stop,
+                auroral_resources.widget.ProxiedTimeSeriesWindow.getCsvUrl(start,stop),            
                 {
                     labelsKMB: false,
                     errorBars: false,

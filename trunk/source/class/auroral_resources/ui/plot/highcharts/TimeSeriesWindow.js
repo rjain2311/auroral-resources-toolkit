@@ -37,7 +37,39 @@ or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
 AUTHOR(S) OF THIS FILE:
-Peter R. Elespuru - peter.elespuru@noaa.gov
+Peter Elespuru - peter.elespuru@noaa.gov
+
+THIS WIDGET USES HIGHCHARTS, WHICH IS !!! NOT !!! FREE FOR COMMERCIAL USE
+
+Here is the email approval we received to use it for this project from
+the owner of the company responsible for Highcharts. If at some point
+ART gets funded, we'll buy a license, Highcharts is AWESOME!
+
+> Hi Peter,
+> 
+> Yes, this is confirmed. As a non-commercial project you can use Highcharts JS under the free license.
+>
+> Best regards,
+> Torstein Hønsi: torstein@highsoft.com
+> CTO/owner
+> Highslide Software
+> 
+>> 2011/5/2 Peter Elespuru wrote:
+>>
+>>    Hello,
+>>
+>>    I just wanted to confirm again that based on your description, we
+>>    definitely fit in the non-commercial category, and if there's any
+>>    way to get an email approval in response from you, that would
+>>    be a huge help.
+>>
+>>    Thanks!
+>>
+>>    Regards,
+>>    -Peter
+>>
+>>    __________________________________________________________________
+>>    This is an enquiry e-mail via http://www.highcharts.com/ from:
 
 *************************************************************************/
 
@@ -71,13 +103,19 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
         LOADED: {},
         LOADING: {},
 
+        getCsvUrl : function(parameter, start, stop) {
+            return "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
+            //return "resource/auroral_resources/ionofof2.txt";
+        },
+
         fromArray : function(argArray) { 
             return new auroral_resources.ui.plot.highcharts.TimeSeriesWindow(
                 parseInt(decodeURI(argArray[3])), 
                 parseInt(decodeURI(argArray[4])), 
                 decodeURI(argArray[5]), 
                 decodeURI(argArray[6]),
-                decodeURI(argArray[7])
+                decodeURI(argArray[7]),
+                decodeURI(argArray[8])
             );
         }
     },
@@ -88,7 +126,7 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(width, height, parameter, title, mddocname)
+    construct : function(width, height, parameter, title, mddocname, units)
     {
         this.base(arguments, title);
 
@@ -96,6 +134,7 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
         this.__parameter = parameter;
         this.__mddocname = mddocname;
         this.__title = title;
+        this.__units = units;
 
         this.set({
             allowMaximize: false,
@@ -118,11 +157,20 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
 
         var parameters = {
 
+            exporting: {
+                buttons: {
+                    printButton: {
+                        enabled: false
+                    }                    
+                }
+            },
+
             chart: {
                 renderTo: 0,
-                zoomType: 'x',
+                zoomType: 'xy',
                 spacingRight: 20,
-                defaultSeriesType: 'area'
+                defaultSeriesType: 'area',
+                type: 'area'
             },
 
             title: {
@@ -130,6 +178,7 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
             },
 
             xAxis: {
+                //tickInterval: 15 * 60 * 1000,
                 type: 'datetime',
                 title: {
                     text: null
@@ -137,10 +186,11 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
             },
 
             yAxis: {
+                type: 'linear',
+                allowDecimals: true,
                 startOnTick: false,
-                dateTimeLabelFormats: {}, 
                 title: {
-                    text: 'foF2 {MHz}'
+                    text: this.__units
                 }
             },
             
@@ -159,18 +209,15 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
             series: [{ type: 'area', data: [] }]
         };
 
-        var data = "resource/auroral_resources/ionofof2.txt";
-
-        this.__plot = new qxhighcharts.Plot(parameters, data);
+        this.__plot = new qxhighcharts.Plot(parameters, auroral_resources.ui.plot.highcharts.TimeSeriesWindow.getCsvUrl(parameter,start,stop));
         this.add(this.__plot);
         
         this.addListener("close", function(evt) { this.destroy() });
         this.addListener("mouseup", this._rightClick, this);
+        this.addListener('resize',qx.lang.Function.bind(this._resize),this);
         this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
         this.__timeBus.getBus().subscribe("time.now", this._nowChangeBusCallback, this);
         this.__timeBus.getBus().subscribe("time.stopDate", this._stopDateChangeBusCallback, this);
-
-        this.addListener('resize',qx.lang.Function.bind(this._resize),this);
 
         return this;
     },
@@ -191,6 +238,7 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
         __stopDate : null,
         __plot : null,
         __now : null,
+        __units : null,
         
 
         //
@@ -235,22 +283,28 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
         // callback for the 'startDate' message channel
         // 
         _startDateChangeBusCallback : function(e) {
+            this.__plot.getPlotObject().showLoading();
+            this.__plot.getPlotObject().hideLoading();
         },
 
         // 
         // callback for the 'stopDate' message channel
         // 
         _stopDateChangeBusCallback : function(e) {
+            this.__plot.getPlotObject().showLoading();
+            this.__plot.getPlotObject().hideLoading();
         },	
 
         // 
-        // 
+        // callback for the 'now' message channel
         // 
         _nowChangeBusCallback : function(e) {
+            this.__plot.getPlotObject().showLoading();
+            this.__plot.getPlotObject().hideLoading();
         },
 
         // 
-        // 
+        // window was resized take appropriate action
         // 
         _resize : function(e) {
 

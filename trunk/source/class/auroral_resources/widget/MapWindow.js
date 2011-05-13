@@ -37,7 +37,9 @@ or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
 AUTHOR(S) OF THIS FILE:
-Peter R. Elespuru - peter.elespuru@noaa.gov
+Peter R. Elespuru - peter.elespuru@noaa.gov - merge into Qx, sizable additions/changes
+Dmitry Medvedev - dmedv@wdcb.ru - OpenLayers additions
+Dmitry Kokovin - ??? - OpenLayers additions
 
 *************************************************************************/
 
@@ -223,7 +225,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                     } else if (basename.toLowerCase() === "olayersols") {
                         dlurl = "http://www.ngdc.noaa.gov/dmsp/";
                     } else {
-                        dlurl = "http://spidr.ngdc.noaa.gov/spidr/";
+                        dlurl = "http://"+auroral_resources.Application.getHost()+"/spidr/";
                     }
                     
                     window.open(dlurl,"");
@@ -233,7 +235,7 @@ qx.Class.define("auroral_resources.widget.MapWindow",
                 
                 var mdata = new qx.ui.form.Button("View Metadata");
                 mdata.addListener("click", function(evt) {
-                    var mdurl = "http://spidr.ngdc.noaa.gov/spidrvo/viewdata.do?docname="+mddoc;
+                    var mdurl = "http://"+auroral_resources.Application.getHost()+"/spidrvo/viewdata.do?docname="+mddoc;
                     window.open(mdurl,"");
                     popup.hide();
                 });

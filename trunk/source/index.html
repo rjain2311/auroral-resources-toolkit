@@ -3,13 +3,20 @@
  
 	<head>
 
-		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9"/> <!-- MUST be 1st -->
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9"/> <!-- MUST be the first item -->
 
 		<title>Auroral Resources Toolkit</title>
 		<script type="text/javascript">
 			var deviceAgent = navigator.userAgent.toLowerCase();
     		var isMobile = deviceAgent.match(/(iphone|ipod|ipad|blackberry|android|webos|symbian|opera mobi|opera mini)/);
     		if (isMobile) { window.location="mobile.html"; }
+    		if ( window.location.host.indexOf(".") < 0 ) {
+    			if ( window.location.host.substr(0,1) !== "l" ) {
+    				var search = "";
+    				if ( typeof window.location.search !== undefined && window.location.search !== null ) { search = window.location.search; }
+    				window.location = window.location.protocol + "//" + window.location.host + ".ngdc.noaa.gov" + window.location.pathname + search;
+    			}
+    		}
 		</script>
 
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>

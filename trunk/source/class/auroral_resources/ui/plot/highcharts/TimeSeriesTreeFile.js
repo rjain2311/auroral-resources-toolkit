@@ -37,7 +37,7 @@ or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
 AUTHOR(S) OF THIS FILE:
-Peter R. Elespuru - peter.elespuru@noaa.gov
+Peter Elespuru - peter.elespuru@noaa.gov
 
 *************************************************************************/
 
@@ -53,7 +53,7 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesTreeFile",
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(mddocname, parameter, title)
+    construct : function(mddocname, parameter, title, units)
     {
         this.base(arguments, title);
         this.setDraggable(true);
@@ -62,6 +62,7 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesTreeFile",
         this.__title = title;
         this.__parameter = parameter;
         this.__mddocname = mddocname;
+        this.__units = units;
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
         this.setIcon("auroral_resources/icons/noaa24.png");
         this.setToolTipText("Drag this widget anywhere into the gray workspace to the right");
@@ -82,6 +83,7 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesTreeFile",
         __timeBus : null,
         __parameter : null,
         __mddocname : null,
+        __units : null,
 
         _dragStart : function(e) {
             e.addAction("copy");
@@ -95,7 +97,7 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesTreeFile",
             var result = null;
 
             if (type === "widget") {
-                this.__window = new auroral_resources.ui.plot.highcharts.TimeSeriesWindow(600, 400, this.__parameter, this.__title, this.__mddocname);
+                this.__window = new auroral_resources.ui.plot.highcharts.TimeSeriesWindow(600, 400, this.__parameter, this.__title, this.__mddocname, this.__units);
                 result = this.__window;
                 e.addData(type, result);
             }

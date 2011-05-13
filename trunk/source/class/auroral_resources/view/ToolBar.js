@@ -178,7 +178,7 @@ qx.Class.define("auroral_resources.view.ToolBar",
 
         // Bug button
         var bugBtn = new qx.ui.toolbar.Button(this.tr("Report A Bug"), "icon/22/emblems/emblem-important.png");
-        bugBtn.setToolTipText(this.tr("Report A Bug"));
+        bugBtn.setToolTipText(this.tr("Report A Bug - (requires a google account)"));
         bugBtn.addListener("mouseup", function() {
             window.open("http://code.google.com/p/auroral-resources-toolkit/issues/entry","Report A Bug");
         });
