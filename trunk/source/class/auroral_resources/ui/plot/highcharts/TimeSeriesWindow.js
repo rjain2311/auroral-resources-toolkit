@@ -104,8 +104,8 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
         LOADING: {},
 
         getCsvUrl : function(parameter, start, stop) {
-            return "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
-            //return "resource/auroral_resources/ionofof2.txt";
+            //return "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
+            return "resource/auroral_resources/ionofof2.txt";
         },
 
         fromArray : function(argArray) { 
@@ -159,6 +159,9 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
 
             exporting: {
                 buttons: {
+                    exportButton: {
+                        enabled: false  
+                    },
                     printButton: {
                         enabled: false
                     }                    
@@ -167,10 +170,11 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
 
             chart: {
                 renderTo: 0,
-                zoomType: 'xy',
+//                zoomType: 'xy',
+                zoomType: 'x',
                 spacingRight: 20,
-                defaultSeriesType: 'area',
-                type: 'area'
+                defaultSeriesType: 'line',
+                type: 'line'
             },
 
             title: {
@@ -186,7 +190,6 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
             },
 
             yAxis: {
-                type: 'linear',
                 allowDecimals: true,
                 startOnTick: false,
                 title: {
@@ -206,7 +209,7 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
                 enabled: false
             },
 
-            series: [{ type: 'area', data: [] }]
+            series: [{ name: parameter, type: 'line', data: [] }]
         };
 
         this.__plot = new qxhighcharts.Plot(parameters, auroral_resources.ui.plot.highcharts.TimeSeriesWindow.getCsvUrl(parameter,start,stop));
@@ -256,7 +259,44 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
                 var start = this.__startDate;
                 var stop = this.__stopDate;
                 var mddoc = this.__mddocname;
+                var plot = this.__plot.getPlotObject();
                 
+                var dlPdf = new qx.ui.form.Button("Download PDF");
+                dlPdf.addListener("click", function(evt) {
+                    plot.exportChart({
+                        type: 'application/pdf',
+                        filename: param
+                    });
+                    popup.hide();
+                });
+
+                var dlPng = new qx.ui.form.Button("Download PNG");
+                dlPng.addListener("click", function(evt) {
+                    plot.exportChart({
+                        type: 'image/png',
+                        filename: param
+                    });
+                    popup.hide();
+                });
+
+                var dlSvg = new qx.ui.form.Button("Download SVG");
+                dlSvg.addListener("click", function(evt) {
+                   plot.exportChart({
+                        type: 'image/svg+xml',
+                        filename: param
+                    });
+                    popup.hide();
+                });
+
+                var dlJpg = new qx.ui.form.Button("Download JPG");
+                dlJpg.addListener("click", function(evt) {
+                    plot.exportChart({
+                        type: 'image/jpeg',
+                        filename: param
+                    });
+                    popup.hide();
+                });
+
                 var data = new qx.ui.form.Button("Download Data");
                 data.addListener("click", function(evt) {
                     var dlurl = "http://spidr.ngdc.noaa.gov/spidr/servlet/GetData?param="+param+"&format=zip&dateFrom="+start+"&dateTo="+stop;
@@ -272,6 +312,10 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
                 });
                 
                 popup.add(new qx.ui.basic.Label("Additional Options"));
+                popup.add(dlPdf);
+                popup.add(dlPng);
+                popup.add(dlSvg);
+                popup.add(dlJpg);
                 popup.add(data);
                 popup.add(mdata);
                 popup.placeToMouse(evt);

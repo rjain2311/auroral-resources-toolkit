@@ -164,7 +164,7 @@ qx.Class.define("auroral_resources.view.SideBar",
 
             if (index == 0) {
 
-                parent.add(new auroral_resources.ui.plot.highcharts.TimeSeriesTreeFile('IonoStationsBC840','iono_foF2.BC840',"Boulder (BC840) foF2 {MHz}", "MHz"));
+                parent.add(new auroral_resources.ui.plot.highcharts.TimeSeriesTreeFile('IonoStationsBC840','iono_foF2.BC840',"HC Example (BC840 foF2)", "MHz"));
 
                 var item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Ionosphere");                
                 var item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Ionosonde");
