@@ -47,8 +47,10 @@ qx.Class.define("qxdygraphs.Plot", {
      * @param options {Map} the option map.
      */
 
-    construct: function(data,options){
+    construct: function(data, options, parent){
         this.base(arguments);
+
+        this.__parent = parent;
 
         var min = '.min';
         if (qx.core.Variant.isSet("qx.debug", "on")) {
@@ -56,15 +58,22 @@ qx.Class.define("qxdygraphs.Plot", {
         }
         var codeArr = [];
 
+        // account for IE < 9 and !canvas
         if ( !document.createElement('canvas').getContext && qx.bom.client.Engine.MSHTML ) {
 //            codeArr.push("iefriendly/excanvas"+min+".js.gz");
             codeArr.push("iefriendly/excanvas.js.gz");
+//            codeArr.push("latest/excanvas.js.gz");
         }
+
         //codeArr.push("dygraph-combined.js.gz");
         codeArr.push("iefriendly/strftime-min.js.gz");
         codeArr.push("iefriendly/rgbcolor.js.gz");
         codeArr.push("iefriendly/dygraph-canvas.js.gz");
         codeArr.push("iefriendly/dygraph.js.gz");
+//        codeArr.push("latest/dygraph-combined.js.gz");
+//        codeArr.push("latest/dygraph-canvas.js.gz");
+//        codeArr.push("latest/dygraph.js.gz");
+
         this.__loadScriptArr(codeArr,qx.lang.Function.bind(this.__addCanvas,this,data,options));
     },
     statics : { 
@@ -110,6 +119,7 @@ qx.Class.define("qxdygraphs.Plot", {
          * our copy of the plot object
          */        
         __plotObject: null,
+        __parent: null,
 
         getPlotObject: function(){
             return this.__plotObject;
@@ -135,7 +145,6 @@ qx.Class.define("qxdygraphs.Plot", {
                     var src = qx.util.ResourceManager.getInstance().toUri("dygraphs/"+script);
                     sl.load(src, function(status){
                         if (status == 'success'){
-                            // this.debug("Dynamically loaded "+src+": "+status);
                             this.__loadScriptArr(codeArr,handler);
                             qxdygraphs.Plot.LOADED[script] = true;
                         }
@@ -153,12 +162,13 @@ qx.Class.define("qxdygraphs.Plot", {
          * 
          * @lint ignoreUndefined(Dygraph)
          */
-        __addCanvas: function(data,options){
+        __addCanvas: function(data, options){
             var el = this.getContentElement().getDomElement();
             /* make sure the element is here yet. Else wait until things show up */
             if (el == null){
                 this.addListenerOnce('appear',qx.lang.Function.bind(this.__addCanvas,this,data,options),this);
             } else {
+
                 // make it use theme fonts
                 qx.bom.element.Style.setStyles(this.getContentElement().getDomElement(),
                     qx.theme.manager.Font.getInstance().resolve('default').getStyles(),
@@ -166,12 +176,16 @@ qx.Class.define("qxdygraphs.Plot", {
                 );
 
                 qx.lang.Object.mergeWith(options,qxdygraphs.Plot.DEFAULT_OPTIONS,false);
+                // clear out any children...
                 var plot = this.__plotObject = new Dygraph(el,data,options);
                 this.addListener('resize',function(e){
                     qx.html.Element.flush();
                     plot.resize();
                 });
                 this.fireDataEvent('plotCreated', plot);
+
+                this.__parent._hideLoading();
+                this.__parent._hideNoData();
             }
         }
     }

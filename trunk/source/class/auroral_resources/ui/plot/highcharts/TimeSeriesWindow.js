@@ -81,33 +81,24 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
 
     /*
     *****************************************************************************
-        EVENTS
-    *****************************************************************************
-    */
-    events : 
-    {
-        scriptLoaded: 'qx.event.type.Event'
-    },
-
-
-    /*
-    *****************************************************************************
         STATICS
     *****************************************************************************
     */
     statics : 
     {
-        //
-        // used to account for async loaded dependencies
-        //
-        LOADED: {},
-        LOADING: {},
 
+        //
+        // centralized control of the URL used to obtain data given appropriate args
+        // also helps for testing, giving a single place to change/update
+        //
         getCsvUrl : function(parameter, start, stop) {
-            //return "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
-            return "resource/auroral_resources/ionofof2.txt";
+            return "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
+            //return "resource/auroral_resources/ionofof3.txt";
         },
 
+        //
+        // build an object from de-serialized HTTP get parameters statically
+        //
         fromArray : function(argArray) { 
             return new auroral_resources.ui.plot.highcharts.TimeSeriesWindow(
                 parseInt(decodeURI(argArray[3])), 
@@ -141,8 +132,15 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
             allowMinimize: false,
             showMaximize: false,
             showMinimize: false,
+            allowGrowX: true,
+            allowGrowY: true,
+            contentPadding: 0,
+            focusable: true,
+            enabled: true,
+            margin: 0,
+            padding: 0,
             showClose: true,
-            status: parameter + ',' + title + ',' + mddocname,
+            status: parameter + ',' + title + ',' + mddocname + ',' + units,
             layout: new qx.ui.layout.Grow()
         });
         
@@ -168,11 +166,30 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
                 }
             },
 
+            plotOptions: {
+
+                scatter: {
+                    marker: { enabled: false },
+                    color: '#0000bb'
+                },
+
+                area:{ 
+                    marker: { enabled: false },
+                    color: '#0000bb'
+                },
+
+                line: {
+                    marker: { enabled: false },
+                    lineWidth: 1,
+                    color: '#0000bb'
+                }
+            },
+
             chart: {
                 renderTo: 0,
 //                zoomType: 'xy',
                 zoomType: 'x',
-                spacingRight: 20,
+                spacingRight: 30,
                 defaultSeriesType: 'line',
                 type: 'line'
             },
@@ -185,7 +202,7 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
                 //tickInterval: 15 * 60 * 1000,
                 type: 'datetime',
                 title: {
-                    text: null
+                    text: 'Time'
                 }
             },
 
@@ -209,12 +226,14 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
                 enabled: false
             },
 
-            series: [{ name: parameter, type: 'line', data: [] }]
+            series: [{ xAxis: 0, name: parameter, type: 'line', data: [] }]
         };
 
-        this.__plot = new qxhighcharts.Plot(parameters, auroral_resources.ui.plot.highcharts.TimeSeriesWindow.getCsvUrl(parameter,start,stop));
+        this.__parameters = parameters;
+        this.__plot = new qxhighcharts.Plot(parameters);
         this.add(this.__plot);
-        
+        this.__plot.addListener("plotCreated",qx.lang.Function.bind(this._initData,this,auroral_resources.ui.plot.highcharts.TimeSeriesWindow.getCsvUrl(parameter,start,stop)),this);
+
         this.addListener("close", function(evt) { this.destroy() });
         this.addListener("mouseup", this._rightClick, this);
         this.addListener('resize',qx.lang.Function.bind(this._resize),this);
@@ -235,6 +254,7 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
     {
         __title : null,
         __parameter : null,
+        __parameters : null,
         __mddocname : null,
         __timeBus : null,
         __startDate : null,
@@ -242,7 +262,67 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
         __plot : null,
         __now : null,
         __units : null,
+        __series : null,
         
+
+        //
+        //
+        //
+        _initData : function(dataResource) {
+
+            var req = new qx.io.remote.Request(
+                dataResource,
+                "GET",
+                "text/plain"
+            );
+
+            req.setProhibitCaching(false);
+            req.addListener("completed", this._getData, this);
+            req.send();
+            
+        },
+
+
+        //
+        //
+        //
+        _getData : function(result) 
+        {
+            result = result.getContent();
+            var lines = qx.util.StringSplit.split(result, /[\r\n]/);
+            var start = 0;
+            var delta = 100000;
+            var qxThis = this;
+            var dat = [];
+
+            for(var i=0, l=lines.length; i<l; i++) {
+                var items = qx.util.StringSplit.split(lines[i], /[,]/);
+                if (i > 0) {
+                    if (typeof items !== undefined && items !== null && items.length >= 2) {
+
+                        // depends on date.js, which is used several places elsewhere so it's not in the deps for this lib
+                        if(i === 1) { start = Date.parse(items[0]).getTime(); }
+                        if(i === 2) { delta = Date.parse(items[0]).getTime() - start; }
+
+                        // using both date and data to populate
+                        // depends on date.js, which is used several places elsewhere so it's not in the deps for this lib
+                        dat.push([ Date.parse(items[0]).getTime(), parseFloat(items[1]) ]);
+                    }
+                }
+            }
+
+            this.__plot.getPlotObject().hideLoading();
+
+            this.__plot.getPlotObject().xAxis[0].plotLines = [{
+                color: 'red',
+                width: 2,
+                value: auroral_resources.messaging.TimeBus.getInstance().getNow()
+            }];
+
+            this.__series = this.__plot.getPlotObject().addSeries({ xAxis: 0, name: this.__parameter, data: dat }, true, true);
+
+        },
+
 
         //
         //
@@ -327,24 +407,36 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
         // callback for the 'startDate' message channel
         // 
         _startDateChangeBusCallback : function(e) {
+            var parameter = this.__parameter;
+            var start = this.__startDate;
+            var stop = this.__stopDate;
             this.__plot.getPlotObject().showLoading();
-            this.__plot.getPlotObject().hideLoading();
+            this.__series.remove(false);
+            this._initData(auroral_resources.ui.plot.highcharts.TimeSeriesWindow.getCsvUrl(parameter,start,stop));
         },
 
         // 
         // callback for the 'stopDate' message channel
         // 
         _stopDateChangeBusCallback : function(e) {
+            var parameter = this.__parameter;
+            var start = this.__startDate;
+            var stop = this.__stopDate;
             this.__plot.getPlotObject().showLoading();
-            this.__plot.getPlotObject().hideLoading();
+            this.__series.remove(false);
+            this._initData(auroral_resources.ui.plot.highcharts.TimeSeriesWindow.getCsvUrl(parameter,start,stop));
         },	
 
         // 
         // callback for the 'now' message channel
         // 
         _nowChangeBusCallback : function(e) {
-            this.__plot.getPlotObject().showLoading();
-            this.__plot.getPlotObject().hideLoading();
+            this.__plot.getPlotObject().xAxis.plotLines = [{
+                color: 'red',
+                width: 2,
+                value: auroral_resources.messaging.TimeBus.getInstance().getNow()
+            }];
+            this.__plot.getPlotObject().redraw();
         },
 
         // 
@@ -358,9 +450,9 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
             }
 
             // values based on the gray theme for HC and the modern theme for Qx
-            // FIXME: parameterize these ASAP
-            var dWidth = 22;
-            var dHeight = 48;
+            // FIXME: parameterize or dynamicize these ASAP
+            var dWidth = 10;
+            var dHeight = 24;
 
             // update it
             this.__plot.getPlotObject().setSize(this.getWidth() - dWidth, this.getHeight() - dHeight, false); 

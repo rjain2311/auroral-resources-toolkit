@@ -140,7 +140,7 @@
 
       "copy-files" : 
       { 
-        "files"  : [ ".htaccess", "mobile.html" ], 
+        "files"  : [ ".htaccess", "mobile.html", "script/date.js.gz", "script/date.js" ], 
         "source" : "source",
         "target" : "build" 
       },

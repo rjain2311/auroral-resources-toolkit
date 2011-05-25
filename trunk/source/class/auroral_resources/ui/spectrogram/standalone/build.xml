@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="spectrogram" basedir=".">
+
+  <property name="FLEX_HOME" value="/sw/flex"/>
+
+  <taskdef resource="flexTasks.tasks"
+      classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+
+  <target name="build">
+    <exec executable="${FLEX_HOME}/bin/mxmlc" failonerror="true">
+        <arg line="'./Main.as'"/>
+        <arg line="-strict=true"/>
+        <arg line="-warnings=true"/>
+        <arg line="-debug=true"/>
+        <arg line="-output './spectrogram.swf'"/>
+    </exec>
+  </target>
+
+</project>
