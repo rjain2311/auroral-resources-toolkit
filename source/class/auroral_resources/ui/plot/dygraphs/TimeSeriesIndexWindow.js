@@ -293,7 +293,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow",
         _startDateChangeBusCallback : function(e) {
 
             this.remove(this.__plot);
-            this.add(this.__loading);
+            this._showLoading();
             
             qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
             this.__plot = null;
@@ -321,8 +321,8 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow",
                 );
                 this.add(this.__plot);
             } catch (e) {
-                this.remove(this.__loading);
-                this.add(this.__nodata);
+                this._hideLoading();
+                this._showNoData();
             }
         },
 
@@ -361,8 +361,8 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow",
                 );
                 this.add(this.__plot);
             } catch(e) {
-                this.remove(this.__loading);
-                this.add(this.__nodata);
+                this._hideLoading();
+                this._showNoData();
             }
         },
 
