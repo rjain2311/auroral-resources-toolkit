@@ -37,7 +37,10 @@ or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
 AUTHOR(S) OF THIS FILE:
+Originally derived from the qxjqplot contrib
 Peter R. Elespuru - peter.elespuru@noaa.gov
+
+THIS WIDGET USES HIGHCHARTS, WHICH IS !!! ___NOT___ !!! FREE FOR COMMERCIAL USE
 
 *************************************************************************/
 
@@ -57,7 +60,7 @@ Peter R. Elespuru - peter.elespuru@noaa.gov
  * href='http://www.highcharts.com/' target='_blank'>Highcharts website</a>
  * for information on how to use highcharts.
  * 
- * Derived from qxjqplot
+ * Originally derived from qxjqplot
  * 
  */
 qx.Class.define("qxhighcharts.Plot", 
@@ -66,9 +69,6 @@ qx.Class.define("qxhighcharts.Plot",
     extend : qx.ui.core.Widget,
 
 
-    //
-    //
-    //
     statics : 
     { 
         INSTANCE_COUNTER : 0,
@@ -77,9 +77,6 @@ qx.Class.define("qxhighcharts.Plot",
     },
 
 
-    //
-    //
-    //
     events : 
     {
         plotCreated: 'qx.event.type.Event',
@@ -87,14 +84,19 @@ qx.Class.define("qxhighcharts.Plot",
     },
 
 
-    //
-    //
-    //
-    construct: function(parameters, data)
+    construct: function(parameters)
     {
         this.base(arguments);
 
+        // bring in deps and hc itself, choosing to use jquery
+        // and explicitly compressed variants since our sys admins won't
+        // change server config to support 'Accept-Encoding' headers 
+        // for .js gzip requests
+
+        // version of jquery
         var jqv = '1.5.2';
+
+        // whether to use the minified version
         var min = '.min';
 
         if (qx.core.Variant.isSet("qx.debug", "on")) {
@@ -104,24 +106,24 @@ qx.Class.define("qxhighcharts.Plot",
         var codeArr = [
             "jquery-"+jqv+min+".js.gz",
             "highcharts.js.gz",
-            "modules/exporting.js.gz",
-            "themes/gray.js.gz"
+            "modules/exporting.js.gz" 
         ];
 
-        this.__loadScriptArr(codeArr,qx.lang.Function.bind(this.__addCanvas,this,parameters,data));
+        // load'em
+        this.__loadScriptArr(codeArr,qx.lang.Function.bind(this.__addCanvas,this,parameters));
     },
 
 
-    //
-    //
-    //
     members : 
     {
 
+        __element: null,
+        __parameters: null,
         __plotObject: null,
 
+
         //
-        //
+        // returns the low level HC plot object, if created, or null if not
         //
         getPlotObject: function()
         {
@@ -130,121 +132,116 @@ qx.Class.define("qxhighcharts.Plot",
 
 
         //
-        //
+        // loads external resources and triggers initialization accordingly
         //
         __loadScriptArr: function(codeArr,handler)
         {
             var script = codeArr.shift();
-            if (script){
-                if (qxjqplot.Plot.LOADING[script]){
-                    qxjqplot.Plot.LOADING[script].addListenerOnce('scriptLoaded',function(){
+
+            if (script) {
+
+                if (qxhighcharts.Plot.LOADING[script]) {
+
+                    qxhighcharts.Plot.LOADING[script].addListenerOnce('scriptLoaded',function() {
+
                         this.__loadScriptArr(codeArr,handler);
+
                     },this);
-                }
-                else if ( qxjqplot.Plot.LOADED[script]){
+
+                } else if ( qxhighcharts.Plot.LOADED[script]) {
+
                      this.__loadScriptArr(codeArr,handler);
-                }
-                else {
-                    qxjqplot.Plot.LOADING[script] = this;
+
+                } else {
+
+                    qxhighcharts.Plot.LOADING[script] = this;
                     var sl = new qx.io.ScriptLoader();
                     var src = qx.util.ResourceManager.getInstance().toUri("highcharts/js/"+script);
-                    sl.load(src, function(status){
-                        if (status == 'success'){
+
+                    sl.load(src, function(status) {
+
+                        if (status == 'success') {
+
                             this.__loadScriptArr(codeArr,handler);
-                            qxjqplot.Plot.LOADED[script] = true;
+                            qxhighcharts.Plot.LOADED[script] = true;
+
+                            if (script === "highcharts.js.gz") {
+
+                                this.__init();
+                            }
                         }
-                        qxjqplot.Plot.LOADING[script] = null;
+
+                        qxhighcharts.Plot.LOADING[script] = null;
                         this.fireDataEvent('scriptLoaded',script);
+
                     },this);
-                }
+                } 
+
             } else {
+
                 handler();
             }
         },
 
+
         //
+        // initialize some of the things that cannot be done on an object, which 
+        // must take place on the HC namespace at large
         //
+        __init: function() {
+
+            // TODO: add something to ensure this only happens once, not a big deal
+            // just a minor efficiency improvement
+
+            // global and lang cannot be set plot by plot, must be applied globally to HC
+            // after the HC JS module has been included
+            Highcharts.setOptions({
+
+                global: {
+
+                    useUTC: false
+
+                },
+
+                lang: {
+
+                    downloadPNG: "Download PNG",
+                    downloadJPEG: "Download JPG",
+                    downloadPDF: "Download PDF",
+                    downloadSVG: "Download SVG",
+                    loading: "Loading data, please stand by...",
+                    resetZoom: "restore zoom"
+
+                }
+
+            });
+        },
+
+
         //
-        __addCanvas: function(parameters, dataResource)
+        // add the plot canvas, trigger loading message, and notify listeners of completion
+        //
+        __addCanvas: function(parameters)
         {
-            var el = this.getContentElement().getDomElement();
+            this.__element = this.getContentElement().getDomElement();
             var qxThis = this;
             var qxParm = parameters;
 
-            if (el == null){
+            if (this.__element == null){
 
-                this.addListenerOnce('appear',qx.lang.Function.bind(this.__addCanvas,this,parameters,dataResource),this);
+                this.addListenerOnce('appear',qx.lang.Function.bind(this.__addCanvas,this,parameters),this);
 
             } else {
 
-                // highcharts already uses jQuery, may as well go with the flow and use jQuery
-                // paradigms for retrieval instead of Qx's
-                $.get(dataResource, function(data) {
+                var id = 'hcId'+(qxhighcharts.Plot.INSTANCE_COUNTER++);
+                qx.bom.element.Attribute.set(this.__element, 'id', id);
+                qxParm.chart.renderTo = id;
+                
+                var plot = qxThis.__plotObject = new Highcharts.Chart(qxParm);
+                plot.showLoading();
+                qxThis.fireDataEvent('plotCreated', plot);
 
-                    // Split the lines
-                    var lines = data.split('\n');
-
-                    // Iterate over the lines and add categories or series
-                    $.each(lines, function(lineNo, line) {
-                        var items = line.split(',');
-
-                        if (lineNo > 0) {
-                            qxParm.series[0].data.push([ new Date(items[0]).getTime(), parseFloat(items[1]) ]);
-
-                        }
-
-                    });
-
-                    var id = 'hcId'+(qxhighcharts.Plot.INSTANCE_COUNTER++);
-                    qx.bom.element.Attribute.set(el, 'id', id);
-                    qxParm.chart.renderTo = id;
-
-                    qxParm.xAxis.plotLines = [{
-                        color: 'red',
-                        width: 3,
-                        value: auroral_resources.messaging.TimeBus.getInstance().getNow()
-                    }];
-                    
-                    var plot = qxThis.__plotObject = new Highcharts.Chart(qxParm);
-
-                    // globals and lang cannot be set plot by plot, must be applied globally to HC itself!
-                    Highcharts.setOptions({
-                        global: {
-                            useUTC: true
-                        },
-
-                        lang: {
-                            downloadPNG: "Download PNG",
-                            downloadJPEG: "Download JPG",
-                            downloadPDF: "Download PDF",
-                            downloadSVG: "Download SVG",
-                            loading: "Loading, Please Stand By...",
-                            resetZoom: "restore zoom level"
-                        }
-                    });
-
-                    qxThis.fireDataEvent('plotCreated', plot);
-                    // FIXME: sort out why it doesn't respond correctly if registered in here...
-                    //qxThis.addListener('resize',qx.lang.Function.bind(qxThis.__redraw,qxThis,plot,w,h),qxThis);
-
-                });
             }
-        },
-
-        //
-        //
-        //
-        resize: function(plot, w, h) 
-        {
-            qx.html.Element.flush();                    
-
-            if (!this.isSeeable()) {
-                return;
-            }
-
-            var dWidth = 22;
-            var dHeight = 48;
-            plot.setSize(w - dWidth, h - dHeight, false);
         }
     }
 });

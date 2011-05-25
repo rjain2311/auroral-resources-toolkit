@@ -1,0 +1,3 @@
+/**
+ * Qx mobile variant application
+ */

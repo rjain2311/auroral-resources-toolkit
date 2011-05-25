@@ -69,10 +69,31 @@ qx.Class.define("auroral_resources.Application",
     */
     statics :
     {
+
+        __X_OFFSET : 285,
+        __Y_OFFSET : 97,
         __mainWindow : null,
         __originalUrl : null,
         __shortUrl : null,
         __longUrl : null,
+        __SAFE_FOR_IE : true,
+
+
+        //
+        //
+        //
+        checkForIE : function() 
+        {
+            if ( qx.core.Environment.get("browser.name") === "IE" ) {
+
+                var ver = qx.core.Environment.get("browser.version");
+
+                // IE 6 or 7 ?
+                if ( ver === "6" || ver === "7" ) {
+                    auroral_resources.Application.__SAFE_FOR_IE = false;
+                }
+            }
+        },
 
         //
         //
@@ -88,6 +109,7 @@ qx.Class.define("auroral_resources.Application",
             return window.location.host;
         },
 
+
         //
         // supports JSONP callback for use by the bit.ly API
         // 
@@ -97,6 +119,7 @@ qx.Class.define("auroral_resources.Application",
             var url = auroral_resources.Application.__longUrl;
             auroral_resources.Application.openUrlDialog(sUrl, url);
         },
+
 
         //
         // modularizes the dialog a tad better than bundling with/above
@@ -167,6 +190,7 @@ qx.Class.define("auroral_resources.Application",
         main : function()
         {
             auroral_resources.Application.__originalUrl = window.location.toString();  
+            auroral_resources.Application.checkForIE();
 
             // Call super class
             this.base(arguments);
@@ -221,6 +245,10 @@ qx.Class.define("auroral_resources.Application",
 
                     this.buildGui();
             } // end if/else
+
+            // nuke the initial loading element
+            var element = document.getElementById("initial_loading");
+            element.parentNode.removeChild(element);
             
         }, // end main
 
@@ -233,11 +261,18 @@ qx.Class.define("auroral_resources.Application",
         */
         monkeyPatch : function() 
         {
-            Date.prototype.getDOY = function() {
-                //var onejan = new Date(this.getUTCFullYear(),0,1);
-                var onejan = new Date(this.getFullYear(),0,1);
-                return Math.ceil((this - onejan) / 86400000);
-            }            
+            //
+            // load date.js, the ninja date library
+            //
+            var sl = new qx.io.ScriptLoader();
+            sl.load("script/date.js.gz", function(status) {
+                if (status == 'success') {
+                    Date.prototype.getDOY = function() {
+                        return new Date().getDayOfYear();
+                    }
+                }
+            });
+
         }, // end monkey patch
 
 
@@ -356,9 +391,13 @@ qx.Class.define("auroral_resources.Application",
             container.add(chooser);
 
             this.__sideBarScroller.add(container);
-            this.__sideBarScroller.setMinWidth(190);
-            this.__sideBarScroller.setWidth(300);
             this.__sideBarScroller.setBackgroundColor("silver");
+            this.__sideBarScroller.setWidth(280);
+            this.__sideBarScroller.setMinWidth(190);
+            this.__sideBarScroller.setMaxWidth(600);
+            this.__sideBarScroller.setHeight(document.body.clientHeight - 450);
+            this.__sideBarScroller.setMinHeight(200);
+            this.__sideBarScroller.setMaxHeight(1024);
 
             // add the sidebar
             this.__sideBar = new auroral_resources.view.SideBar(this, auroral_resources.Application.__mainWindow);
@@ -370,7 +409,7 @@ qx.Class.define("auroral_resources.Application",
             var intro = auroral_resources.persistence.KVStore.getInstance().get("intro");            
             
             if (intro == null || intro != "false") {
-                var iwin = new auroral_resources.widget.IntroductionWindow("Introduction");
+                var iwin = new auroral_resources.ui.tree.IntroductionWindow("Introduction");
                 iwin.open();
                 auroral_resources.Application.__mainWindow.add( iwin, { left: 50, top: 50 } );
             }
@@ -580,35 +619,34 @@ qx.Class.define("auroral_resources.Application",
                 });
                 req.send();
                 */
-                
-                // if 
-                var host = window.location.host.substr(0,6);
-                if ( typeof host !== undefined && host !== null && host === "spidrd") { return; }
-                if ( typeof host !== undefined && host !== null && host === "localh") { return; }
 
                 var mW = auroral_resources.Application.__mainWindow;
                 var wD = this.__widgets;
                 var pieces = [];
                                 
-                pieces = [0,487,"auroral_resources.widget.TimeSeriesWindow",445,209,"vsw_x.ACE_RT","ACE%20Flow%20%7BKm/s%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
+                var host = window.location.host.substr(0,6);
+                if ( typeof host !== undefined && host !== null && host === "spidrd") { return; }
+                if ( typeof host !== undefined && host !== null && host === "localh") { return; }
+
+                pieces = [0,487,"auroral_resources.ui.window.TimeSeriesWindow",445,209,"vsw_x.ACE_RT","ACE%20Flow%20%7BKm/s%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
                 addWidget(stringToClass, mW, pieces, wD);
 
-                pieces = [0,684,"auroral_resources.widget.TimeSeriesWindow",445,197,"imf_bz.ACE_RT","ACE%20Bz%20%7BnT%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
+                pieces = [0,684,"auroral_resources.ui.window.TimeSeriesWindow",445,197,"imf_bz.ACE_RT","ACE%20Bz%20%7BnT%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
                 addWidget(stringToClass, mW, pieces, wD);
 
-                pieces = [0,0,"auroral_resources.widget.TimeSeriesIndexWindow",445,161,"index_kp.est","Kp","geomInd"];
+                pieces = [0,0,"auroral_resources.ui.window.TimeSeriesIndexWindow",445,161,"index_kp.est","Kp","geomInd"];
                 addWidget(stringToClass, mW, pieces, wD);
                 
-                pieces = [0,161,"auroral_resources.widget.TimeSeriesWindow",445,161,"iono_foF2.BC840","Boulder%20(BC840)%20foF2%20%7BMHz%7D","IonoStationsBC840"];
+                pieces = [0,161,"auroral_resources.ui.window.TimeSeriesWindow",445,161,"iono_foF2.BC840","Boulder%20(BC840)%20foF2%20%7BMHz%7D","IonoStationsBC840"];
                 addWidget(stringToClass, mW, pieces, wD);
                 
-                pieces = [0,321,"auroral_resources.widget.TimeSeriesWindow",445,161,"iono_foF2.TR169","Tromso%20(TR169)%20foF2%20%7BMHz%7D","IonoStationsTR169"];
+                pieces = [0,321,"auroral_resources.ui.window.TimeSeriesWindow",445,161,"iono_foF2.TR169","Tromso%20(TR169)%20foF2%20%7BMHz%7D","IonoStationsTR169"];
                 addWidget(stringToClass, mW, pieces, wD);
                 
-                pieces = [446,0,"auroral_resources.widget.ExternalImageWindow",456,506,"http://www.swpc.noaa.gov/pmap/gif/pmapN.gif","Northern%20Statistical%20Auroral%20Oval"];
+                pieces = [446,0,"auroral_resources.ui.window.ExternalImageWindow",456,506,"http://www.swpc.noaa.gov/pmap/gif/pmapN.gif","Northern%20Statistical%20Auroral%20Oval"];
                 addWidget(stringToClass, mW, pieces, wD);
                 
-                pieces = [447,480,"auroral_resources.widget.ExternalImageWindow",454,504,"http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_nowcast_aacgm.png","Ovation%20Prime%20Real-Time%20Nowcast"];
+                pieces = [447,480,"auroral_resources.ui.window.ExternalImageWindow",454,504,"http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_nowcast_aacgm.png","Ovation%20Prime%20Real-Time%20Nowcast"];
                 addWidget(stringToClass, mW, pieces, wD);
 
                 return;
@@ -632,7 +670,7 @@ qx.Class.define("auroral_resources.Application",
                 if (special !== null) {
                     
                     if (special === "chapman2011") {
-                        pieces = [0,0,"auroral_resources.widget.LocalImageGalleryWindow",625,450,"Chapman%20Conference%202011%20User%20Gallery"];
+                        pieces = [0,0,"auroral_resources.ui.tree.LocalImageGalleryWindow",625,450,"Chapman%20Conference%202011%20User%20Gallery"];
                         addWidget(stringToClass, mW, pieces, wD);
                         return;
                     } else if (special === "galaxy15") {
@@ -692,7 +730,6 @@ qx.Class.define("auroral_resources.Application",
                         var x = parseInt(pieces[0]);
                         var y = parseInt(pieces[1]);
                         var className = pieces[2];
-                        //var instance = stringToClass("auroral_resources.widget."+className);
                         var instance = stringToClass(className);
                         var win = instance.fromArray(pieces);
                         win.open();
@@ -713,7 +750,7 @@ qx.Class.define("auroral_resources.Application",
                     }
                 }
             }
-            
+
             function getQueryVariable(variable) { 
                 var query = window.location.search.substring(1); 
                 var vars = query.split("&");
@@ -732,9 +769,9 @@ qx.Class.define("auroral_resources.Application",
                     fn = fn[arr[i]];
                 }
                 if (typeof fn !== "function") {
-                    throw new Error("function not found");
+                    throw new Error("function not found for str '"+str+"' and fn '"+fn+"'");
                 }
-                return  fn;
+                return fn;
             }
             
             function addWidget(stringToClass, mainWindow, pieces, widgets) {
@@ -756,13 +793,10 @@ qx.Class.define("auroral_resources.Application",
         // add the widget to the workspace at the cursor
         //
         _widgetDropListener : function(e) {
-
             var w = e.getData("widget");
             if (typeof w !== undefined && w !== null && w === "launcher") { return; }
-            var xBuffer = 285;
-            var yBuffer = 97;
-            var x = e.getDocumentLeft() - xBuffer; //sub off extra to center it more
-            var y = e.getDocumentTop() - yBuffer;  //ditto
+            var x = e.getDocumentLeft() - auroral_resources.Application.__X_OFFSET; // sub off extra to center it more
+            var y = e.getDocumentTop() - auroral_resources.Application.__Y_OFFSET;  // ditto
             auroral_resources.Application.__mainWindow.add( w, { left:x, top:y });
             w.open();
             //auroral_resources.Application.__mainWindow.setBlockToolTip(true);

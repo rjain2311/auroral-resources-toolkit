@@ -89,7 +89,7 @@ qx.Class.define("auroral_resources.view.ToolBar",
         mainPart.addSeparator();
         
         var sharebtn = new qx.ui.toolbar.Button(this.tr("Share"), "icon/22/actions/mail-forward.png");
-        sharebtn.setToolTipText(this.tr("Share your current workspaace via URL"));
+        sharebtn.setToolTipText(this.tr("Share your current workspaace via E-Mail"));
         sharebtn.addListener("mouseup", application.shareUrl, application);
         mainPart.add(sharebtn);
 
@@ -180,7 +180,7 @@ qx.Class.define("auroral_resources.view.ToolBar",
         var bugBtn = new qx.ui.toolbar.Button(this.tr("Report A Bug"), "icon/22/emblems/emblem-important.png");
         bugBtn.setToolTipText(this.tr("Report A Bug - (requires a google account)"));
         bugBtn.addListener("mouseup", function() {
-            window.open("http://code.google.com/p/auroral-resources-toolkit/issues/entry","Report A Bug");
+            window.location = "http://code.google.com/p/auroral-resources-toolkit/issues/entry";
         });
         infoPart.add(bugBtn);
 
