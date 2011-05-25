@@ -50,7 +50,28 @@ qx.Class.define("auroral_resources.ui.window.TimeSeriesWindow",
      * switching between several different ones easily and quickly
      */
 
-    extend : auroral_resources.ui.plot.dygraphs.TimeSeriesWindow
+    extend : auroral_resources.ui.plot.dygraphs.TimeSeriesWindow,
 
+    /*
+    *****************************************************************************
+        STATICS ARE NOT INHERITED!
+    *****************************************************************************
+    */
+    statics : 
+    {
+        getCsvUrl : function(parameter, start, stop) {
+            return "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
+        },
+
+        fromArray : function(argArray) { 
+            return new auroral_resources.ui.plot.dygraphs.TimeSeriesWindow(
+                parseInt(decodeURI(argArray[3])), 
+                parseInt(decodeURI(argArray[4])), 
+                decodeURI(argArray[5]), 
+                decodeURI(argArray[6]),
+                decodeURI(argArray[7])
+            );
+        }
+    }
 
 });
