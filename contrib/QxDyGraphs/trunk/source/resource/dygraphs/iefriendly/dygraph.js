@@ -50,7 +50,7 @@
  * whether the input data contains error ranges.
  */
 Dygraph = function(div, data, opts) {
-  if (arguments.length > 0) {
+  if (typeof arguments !== undefined && arguments !== null && arguments.length > 0) {
     if (arguments.length == 4) {
       // Old versions of dygraphs took in the series labels as a constructor
       // parameter. This doesn't make sense anymore, but it's easy to continue
@@ -165,7 +165,7 @@ Dygraph.prototype.__old_init__ = function(div, file, labels, attrs) {
   // Labels is no longer a constructor parameter, since it's typically set
   // directly from the data source. It also conains a name for the x-axis,
   // which the previous constructor form did not.
-  if (labels != null) {
+  if (typeof labels !== undefined && labels != null) {
     var new_labels = ["Date"];
     for (var i = 0; i < labels.length; i++) new_labels.push(labels[i]);
     Dygraph.update(attrs, { 'labels': new_labels });
