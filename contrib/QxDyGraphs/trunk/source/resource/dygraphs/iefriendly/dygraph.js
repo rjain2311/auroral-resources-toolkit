@@ -582,14 +582,22 @@ Dygraph.prototype.toPercentXCoord = function(x) {
  * Returns the number of columns (including the independent variable).
  */
 Dygraph.prototype.numColumns = function() {
-  return this.rawData_[0].length;
+  var len = 0;
+  if (typeof this.rawData_[0] !== undefined && this.rawData_[0] !== null) {
+    len = this.rawData_[0].length; 
+  }
+  return len;
 };
 
 /**
  * Returns the number of rows (excluding any header/label row).
  */
 Dygraph.prototype.numRows = function() {
-  return this.rawData_.length;
+  var len = 0;
+  if (typeof this.rawData_ !== undefined && this.rawData_ !== null) {
+    len = this.rawData_.length;
+  }
+  return len;
 };
 
 /**
