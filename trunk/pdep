@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+./bundle_for_swrweb1 && scp ar.tar.bz2 elespuru@janus:/tmp
+
