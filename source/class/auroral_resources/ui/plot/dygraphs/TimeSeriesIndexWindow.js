@@ -415,7 +415,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow",
             h.setAsync(true);
             h.addListener("success", function() {
                 that.__csvData = h.responseText;
-                g.updateOptions({ 'file' : this.__csvData });
+                g.updateOptions({ 'file' : that.__csvData });
             });
             h.setMethod("GET");
             h.setUrl(auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow.getCsvUrl(parameter,start,stop));
