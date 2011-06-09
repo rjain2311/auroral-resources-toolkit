@@ -53,7 +53,7 @@ qx.Class.define("qxdygraphs.Plot", {
         this.__parent = parent;
 
         var min = '.min';
-        if (qx.core.Variant.isSet("qx.debug", "on")) {
+        if (qx.core.Environment.get("qx.debug") === "on") {
             min = '';
         }
         var codeArr = [];
@@ -163,10 +163,14 @@ qx.Class.define("qxdygraphs.Plot", {
          * @lint ignoreUndefined(Dygraph)
          */
         __addCanvas: function(data, options){
+
             var el = this.getContentElement().getDomElement();
-            /* make sure the element is here yet. Else wait until things show up */
+
+            // ensure element is present or wait until event triggers apperance
             if (el == null){
+
                 this.addListenerOnce('appear',qx.lang.Function.bind(this.__addCanvas,this,data,options),this);
+
             } else {
 
                 // make it use theme fonts
@@ -176,16 +180,19 @@ qx.Class.define("qxdygraphs.Plot", {
                 );
 
                 qx.lang.Object.mergeWith(options,qxdygraphs.Plot.DEFAULT_OPTIONS,false);
+
                 // clear out any children...
-                var plot = this.__plotObject = new Dygraph(el,data,options);
-                this.addListener('resize',function(e){
-                    qx.html.Element.flush();
-                    plot.resize();
-                });
+                var plot = this.__plotObject = new Dygraph(el, data, options);
+
                 this.fireDataEvent('plotCreated', plot);
 
                 this.__parent._hideLoading();
                 this.__parent._hideNoData();
+
+                this.addListener('resize',function(e){
+                    qx.html.Element.flush();
+                    plot.resize();
+                });
             }
         }
     }

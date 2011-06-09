@@ -12,9 +12,8 @@
 		<script type="text/javascript">
 			var dateFrom = 1293840000000;
 			var dateTo =   1293843600000;
-
-			var dateCenter = 1293840000000 + (1293843600000 - 1293840000000)/2;
-			var dateInterval = (1293843600000 - 1293840000000)/2;
+			var dateCenter = dateFrom + ((dateTo - dateFrom) / 2);
+			var dateInterval = (dateTo - dateFrom)/2;
 			
 			function getMovie() {
 				var M$ =  navigator.appName.indexOf("Microsoft")!=-1

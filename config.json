@@ -75,6 +75,11 @@
 
       "compile-options" :
       {
+        "uris"  : 
+        { 
+          "add-nocache-param": false 
+        },
+
         "paths" :
         {
           "file"            : "build/script/auroral_resources_mobile.js"
@@ -108,6 +113,11 @@
 
       "compile-options" :
       {
+        "uris"  : 
+        { 
+          "add-nocache-param": false 
+        },
+
         "code" :
         {
           "optimize"        : ["variables", "basecalls", "privates", "strings"]
