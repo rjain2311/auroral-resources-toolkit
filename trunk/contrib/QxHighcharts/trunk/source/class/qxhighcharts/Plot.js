@@ -99,7 +99,7 @@ qx.Class.define("qxhighcharts.Plot",
         // whether to use the minified version
         var min = '.min';
 
-        if (qx.core.Variant.isSet("qx.debug", "on")) {
+        if (qx.core.Environment.get("qx.debug") === "on") {
             min = '';
         }
 

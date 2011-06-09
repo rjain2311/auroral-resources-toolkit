@@ -104,6 +104,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
             value: "<center><h1 style='color:red'>Loading...</h1></center>",
             rich : true
         });
+
         this.__nodata = new qx.ui.basic.Label().set({
             width: width,
             height: height,
@@ -120,22 +121,22 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
         this.__stopDate = stop;
 
         try {
-            this.__plot = new qxdygraphs.Plot(
-                auroral_resources.ui.plot.dygraphs.TimeSeriesWindow.getCsvUrl(parameter,start,stop),
-                {
-                    labelsKMB: true,
-                    drawPoints: true,
-                    errorBars: false,
-                    lables: [title],
-                    highlightCircleSize: 3,
-                    strokeWidth: 1,
-                    underlayCallback: this._vline,
-                    zoomCallback: this._zoom
-                },
-                that
-            );
-            this.add(this.__plot);
+
+            // make the data ajax call ourselves to avoid any
+            // timing issues between all the pieces...
+            var h = new qx.io.request.Xhr();
+            h.setAsync(true);
+            h.addListener("success", function() {
+                that.__csvData = h.getResponseText();
+                that.__plot = that._createPlot(parameter, start, stop, title);
+                that.add(that.__plot);
+            });
+            h.setMethod("GET");
+            h.setUrl(auroral_resources.ui.plot.dygraphs.TimeSeriesWindow.getCsvUrl(parameter,start,stop));
+            h.send();
+
         } catch (e) {
+            this.error("Unable to create initial plot! '"+e+"'");
             this.remove(this.__loading);
             this.add(this.__nodata);
         }
@@ -170,6 +171,32 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
         __now : null,
         __csvUrl : null,
         __csvData : null,
+
+
+        //
+        //
+        //
+        _createPlot : function(parameter, start, stop, title) {
+
+            var that = this;
+
+            var plot = new qxdygraphs.Plot(
+                that.__csvData,
+                {
+                    labelsKMB: true,
+                    drawPoints: true,
+                    errorBars: false,
+                    lables: title,
+                    highlightCircleSize: 3,
+                    strokeWidth: 1,
+                    underlayCallback: that._vline,
+                    zoomCallback: that._zoom
+                },
+                that
+            );
+
+            return plot;
+        },
 
 
         //
@@ -282,10 +309,15 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
         //
         _startDateChangeBusCallback : function(e) {
 
+            // sanity checking
+            if (typeof this.__plot === undefined || this.__plot === null) { return; }
+            var g = this.__plot.getPlotObject();
+            if (typeof g === undefined || g === null) { return; }
+            g.destroy();
+
             this.remove(this.__plot);
             this._showLoading();
 
-            this.__plot.getPlotObject().destroy();
             qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
             this.__plot = null;
             this.__csvData = null;
@@ -296,24 +328,24 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
             var now = this.__timeBus.getNow();
             var parameter = this.__parameter;
             var that = this;
-    
-            try {        
-                this.__plot = new qxdygraphs.Plot(
-                    auroral_resources.ui.plot.dygraphs.TimeSeriesWindow.getCsvUrl(parameter,start,stop),
-                    {
-                        labelsKMB: true,
-                        errorBars: false,
-                        drawPoints: true,
-                        lables: [this.__title],
-                        highlightCircleSize: 3,
-                        strokeWidth: 1,
-                        underlayCallback: this._vline,
-                        zoomCallback: this._zoom
-                    },
-                    that
-                );
-                this.add(this.__plot);
+
+            try {
+
+                // make the data ajax call ourselves to avoid any
+                // timing issues between all the pieces...
+                var h = new qx.io.request.Xhr();
+                h.setAsync(true);
+                h.addListener("success", function() {
+                    that.__csvData = h.getResponseText();
+                    that.__plot = that._createPlot(parameter, start, stop, that.__title);
+                    that.add(that.__plot);
+                });
+                h.setMethod("GET");
+                h.setUrl(auroral_resources.ui.plot.dygraphs.TimeSeriesWindow.getCsvUrl(parameter,start,stop));
+                h.send();
+
             } catch(e) {
+                this.error("Unable to update start time for plot!");
                 this._hideLoading();
                 this._showNoData();
             }
@@ -325,10 +357,15 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
         //
         _stopDateChangeBusCallback : function(e) {
 
+            // sanity checking
+            if (typeof this.__plot === undefined || this.__plot === null) { return; }
+            var g = this.__plot.getPlotObject();
+            if (typeof g === undefined || g === null) { return; }
+            g.destroy();
+
             this.remove(this.__plot);
             this._showLoading();
 
-            this.__plot.getPlotObject().destroy();
             qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
             this.__plot = null;
             this.__csvData = null;
@@ -341,22 +378,22 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
             var that = this;
 
             try {
-                this.__plot = new qxdygraphs.Plot(
-                    auroral_resources.ui.plot.dygraphs.TimeSeriesWindow.getCsvUrl(parameter,start,stop),
-                    {
-                        labelsKMB: true,
-                        errorBars: false,
-                        drawPoints: true,
-                        lables: [this.__title],
-                        highlightCircleSize: 3,
-                        strokeWidth: 1,
-                        underlayCallback: this._vline,
-                        zoomCallback: this._zoom
-                    },
-                    that
-                );
-                this.add(this.__plot);
+
+                // make the data ajax call ourselves to avoid any
+                // timing issues between all the pieces...
+                var h = new qx.io.request.Xhr();
+                h.setAsync(true);
+                h.addListener("success", function() {
+                    that.__csvData = h.getResponseText();
+                    that.__plot = that._createPlot(parameter, start, stop, that.__title);
+                    that.add(that.__plot);
+                });
+                h.setMethod("GET");
+                h.setUrl(auroral_resources.ui.plot.dygraphs.TimeSeriesWindow.getCsvUrl(parameter,start,stop));
+                h.send();
+
             } catch(e) {
+                this.error("Unable to update stop time for plot!");
                 this._hideLoading();
                 this._showNoData();
             }
@@ -368,7 +405,11 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
         //
         _nowChangeBusCallback : function(e) {
 
+            // sanity checking
+            if (typeof this.__plot === undefined || this.__plot === null) { return; }
             var g = this.__plot.getPlotObject();
+            if (typeof g === undefined || g === null) { return; }
+
             var start = this.__timeBus.getStartDateForSPIDRWS();
             var stop = this.__timeBus.getStopDateForSPIDRWS();
             var now = e.getData();

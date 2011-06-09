@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-QXOPTS="-s" #-v verbose -s exception stack trace on fatal error
+QXOPTS="-s -v -w" #-v verbose -s exception stack trace on fatal error
 
 find . -name '.DS_Store' | xargs rm &&\
 rm -fr ../ar/art &&\
 rm -fr build &&\
+./generate.py ${QXOPTS} translation &&\
 ./generate.py ${QXOPTS} default &&\
 ./generate.py ${QXOPTS} compress &&\
 cp -pR build ../ar/art &&\

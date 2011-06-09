@@ -203,20 +203,16 @@ qx.Class.define("auroral_resources.Application",
             
             this.__widgets = new Array();
             
-            // Enable logging in debug variant
-            if (qx.core.Variant.isSet("qx.debug", "on"))
-            {
-                // support native logging capabilities, e.g. Firebug for Firefox
-                qx.log.appender.Native;
+            // support native logging capabilities, e.g. Firebug for Firefox
+            qx.log.appender.Native;
 
-                // support additional cross-browser console. Press F7 to toggle visibility
-                qx.log.appender.Console;
-            }
+            // support additional cross-browser console. Press F7 to toggle visibility
+            qx.log.appender.Console;
 
             qx.io.PartLoader.getInstance().addListener("partLoaded", function(e) {
                 this.debug("part loaded: " + e.getData().getName());
             }, this);
-      
+
             // Load current locale part
             var currentLanguage = qx.locale.Manager.getInstance().getLanguage();
             var knownParts = qx.Part.getInstance().getParts();
@@ -235,15 +231,13 @@ qx.Class.define("auroral_resources.Application",
 
                     }, this);
 
-                } else {
+            } else {
 
-                    // if we cant find the default locale, print a warning and load the gui
-                    this.warn(
-                        "Cannot load locale part for current language " + 
-                        currentLanguage + ", falling back to English."
-                    );
+                // default to english
+                qx.locale.Manager.getInstance().setLocale("en");
 
-                    this.buildGui();
+                this.buildGui();
+
             } // end if/else
 
             // nuke the initial loading element
@@ -580,7 +574,15 @@ qx.Class.define("auroral_resources.Application",
             function getQueryVariable(variable) { 
                 var query = window.location.search.substring(1); 
                 var vars = query.split("&"); 
-                for (var i=0;i<vars.length;i++) { 
+
+                var size = 0;
+                if (typeof vars !== undefined && vars !== null) {
+                    size = vars.length;
+                } else {
+                    this.warn("the query string didn't include anything extra");
+                }
+
+                for (var i=0;i<size;i++) { 
                     var pair = vars[i].split("="); 
                     if (pair[0] == variable) { 
                         return pair[1]; 
@@ -670,11 +672,11 @@ qx.Class.define("auroral_resources.Application",
                 if (special !== null) {
                     
                     if (special === "chapman2011") {
-                        pieces = [0,0,"auroral_resources.ui.tree.LocalImageGalleryWindow",625,450,"Chapman%20Conference%202011%20User%20Gallery"];
+                        pieces = [0,0,"auroral_resources.ui.window.LocalImageGalleryWindow",625,450,"Chapman%20Conference%202011%20User%20Gallery"];
                         addWidget(stringToClass, mW, pieces, wD);
                         return;
                     } else if (special === "galaxy15") {
-                        window.location = "http://1.usa.gov/galaxy15_2010";
+                        window.location = "http://1.usa.gov/mfZUWL";
                         return;
                     }
                 }                
@@ -739,7 +741,17 @@ qx.Class.define("auroral_resources.Application",
 
                         var wid = x + ',' + y + ',' + className;
                         var j = 3;
-                        for(j=3;j<pieces.length;j++) {
+
+                        var size = 0;
+                        if (typeof pieces !== undefined && pieces !== null) {
+                            size = pieces.length;
+                        } else {
+                            this.warn(className+" didn't include any additional pieces to the serialized creation.");
+                        }
+
+                        // the first three are always present, the class name and
+                        // initial x/y coordinate offsets
+                        for(j=3;j<size;j++) {
                             wid = wid + ',' + pieces[j];
                         }
 

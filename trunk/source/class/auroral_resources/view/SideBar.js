@@ -2,8 +2,8 @@
 
 COPYRIGHTS:
 
-Copyright (c) 2010, National Geophysical Data Center, NOAA
-Copyright (c) 2010, Geophysical Center, Russian Academy of Sciences
+Copyright (c) 2011, National Geophysical Data Center, NOAA
+Copyright (c) 2011, Geophysical Center, Russian Academy of Sciences
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -200,8 +200,8 @@ qx.Class.define("auroral_resources.view.SideBar",
                 parent.add(item);
 
                 item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("DMSP");
-                item3 = new auroral_resources.ui.tree.JHUAPLTreeFile("SSJ Spectrogram Viewer");
-                item2.add(item3);
+                item2.add(new auroral_resources.ui.tree.SpectrogramTreeFile("SSJ Spectrogram","#"));
+                item2.add(new auroral_resources.ui.tree.JHUAPLTreeFile("SSJ Spectrogram Viewer"));
                 item3 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("F16 (2011 Jan.-March)");
                 var item4 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("SSJ Precipitating Electrons {keV}");
                 item4.add(new auroral_resources.ui.tree.AutoplotTreeFile("Average Energy", "AVG_ENERGY_ELECTRONS"));

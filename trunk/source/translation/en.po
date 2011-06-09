@@ -11,47 +11,121 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: auroral_resources/Application.js:133
-msgid "Components"
+#: auroral_resources/Application.js:337
+msgid "Hide/Show the menu bar"
 msgstr ""
 
-#: auroral_resources/Application.js:208
+#: auroral_resources/Application.js:421
+msgid "Hide/Show the time settings and tools"
+msgstr ""
+
+#: auroral_resources/view/MenuBar.js:67
 msgid "File"
 msgstr ""
 
-#: auroral_resources/Application.js:209
+#: auroral_resources/view/MenuBar.js:68
 msgid "Edit"
 msgstr ""
 
-#: auroral_resources/Application.js:210
+#: auroral_resources/view/MenuBar.js:69
 msgid "Search"
 msgstr ""
 
-#: auroral_resources/Application.js:211
+#: auroral_resources/view/MenuBar.js:70
 msgid "View"
 msgstr ""
 
-#: auroral_resources/Application.js:212
+#: auroral_resources/view/MenuBar.js:71
 msgid "Format"
 msgstr ""
 
-#: auroral_resources/view/Header.js:32
-msgid "Auroral Resources"
-msgstr ""
-
-#: auroral_resources/view/Header.js:34
-msgid "(alpha)"
-msgstr ""
-
-#: auroral_resources/view/ToolBar.js:46
-msgid "Preferences"
-msgstr ""
-
-#: auroral_resources/view/ToolBar.js:47
-msgid "Open Preferences Window."
-msgstr ""
-
-#: auroral_resources/view/ToolBar.js:61 auroral_resources/view/ToolBar.js:62
-#: auroral_resources/Application.js:213
+#: auroral_resources/view/MenuBar.js:72
 msgid "Help"
 msgstr ""
+
+#: auroral_resources/view/SideBar.js:91
+msgid "Active Time Range"
+msgstr ""
+
+#: auroral_resources/view/SideBar.js:101
+msgid "Available Resources"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:83
+msgid "URLs"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:84
+msgid "Display the URL for your current workspace"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:91
+msgid "Share"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:92
+msgid "Share your current workspaace via E-Mail"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:99
+msgid "Empty"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:100
+msgid "Clean off your workspace, remove all widgets"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:107
+msgid "Revert"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:108
+msgid "Revert the workspace to its state when you started"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:115
+msgid "Hide"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:116
+msgid "Hide both the top and side tool bars, enter full screen mode"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:131
+msgid "About"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:132
+msgid "Credits"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:156
+msgid "Tutorials"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:157
+msgid "Opens a quick start guide, with links and videos"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:180
+msgid "Report A Bug"
+msgstr ""
+
+#: auroral_resources/view/ToolBar.js:181
+msgid "Report A Bug - (requires a google account)"
+msgstr ""
+
+#~ msgid "(alpha)"
+#~ msgstr ""
+
+#~ msgid "Auroral Resources"
+#~ msgstr ""
+
+#~ msgid "Components"
+#~ msgstr ""
+
+#~ msgid "Open Preferences Window."
+#~ msgstr ""
+
+#~ msgid "Preferences"
+#~ msgstr ""
