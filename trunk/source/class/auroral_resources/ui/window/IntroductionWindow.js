@@ -96,9 +96,7 @@ qx.Class.define("auroral_resources.ui.window.IntroductionWindow",
 
         // and it's clicked listener
         hideMe.addListener("click", this._setIgnore, this);
-        
-        // make sure cleanup occurs in all cases
-        this.addListener("close", function(evt) { this.destroy() });
+        this.addListener("close", this._destroy, this); //function(evt) { this.destroy() });
 
         // add it to the mix
         this.add(hideMe);
@@ -134,7 +132,13 @@ qx.Class.define("auroral_resources.ui.window.IntroductionWindow",
             //qx.bom.Cookie.set("NGDC.AR.intro", "ignore", 100000, null, null, null);
             auroral_resources.persistence.KVStore.getInstance().set("intro", "false");
             this.close();
-        }	
+        },
+
+        _destroy : function (event) 
+        {
+            auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE -= 1;        
+            this.destroy();
+        }
     },
 
 
@@ -145,8 +149,8 @@ qx.Class.define("auroral_resources.ui.window.IntroductionWindow",
     */
     destruct : function()
     {
-        // TODO: add destructor code...
+        this.__html = null;
+        this.__content = null;
     }
-
 
 });

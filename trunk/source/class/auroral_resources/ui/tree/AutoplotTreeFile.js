@@ -153,6 +153,10 @@ qx.Class.define("auroral_resources.ui.tree.AutoplotTreeFile",
     */
     destruct : function()
     {
+        this.__window = null;
+        this.__timeBus = null;
+        this.__title = null;
+        this.__parameter = null;
     }
 
 });

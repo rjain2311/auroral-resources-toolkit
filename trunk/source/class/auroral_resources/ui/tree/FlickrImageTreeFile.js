@@ -107,7 +107,8 @@ qx.Class.define("auroral_resources.ui.tree.FlickrImageTreeFile",
     */
     destruct : function()
     {
-        // TODO: add destructor code...
+        this.__window = null;
+        this.__title = null;
     }
     
 

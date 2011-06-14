@@ -111,8 +111,7 @@ qx.Class.define("auroral_resources.ui.tree.SpectrogramTreeFile",
         this.__window = null;
         this.__title = null;
         this.__timeBus = null;
-        this.__mddocname = null;
-        this = null;
+        this.__mddocname = null;        
     }
 
 

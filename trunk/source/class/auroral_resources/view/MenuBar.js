@@ -413,17 +413,6 @@ qx.Class.define("auroral_resources.view.MenuBar",
             this.debug("Change checked: " + this.getLabel() + " = " + e.getData());
         }
 
-    },
-
-
-    /*
-    *****************************************************************************
-        DESTRUCTOR
-    *****************************************************************************
-    */
-    destruct : function()
-    {
-        // TODO: add destructor code...
     }
 
 

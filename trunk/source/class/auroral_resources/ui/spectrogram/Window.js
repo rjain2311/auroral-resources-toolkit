@@ -111,7 +111,7 @@ qx.Class.define("auroral_resources.ui.spectrogram.Window",
         this.__flash.setTimeCenterFromJS(dateCenter, dateInterval);
         */
 
-        this.addListener("close", function(evt) { this.destroy() });
+        this.addListener("close", this._destroy, this); //function(evt) { this.destroy() });
         this.addListener("mouseup", this._rightClick, this);
 
         this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
@@ -172,6 +172,16 @@ qx.Class.define("auroral_resources.ui.spectrogram.Window",
                 popup.placeToMouse(evt);
                 popup.show();            
             }
+        },
+
+
+        //
+        //
+        //
+        _destroy : function () 
+        {
+            auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE -= 1;        
+            this.destroy();
         }
     },
 
@@ -183,12 +193,12 @@ qx.Class.define("auroral_resources.ui.spectrogram.Window",
     */
     destruct : function()
     {
+        this.__flash = null;
         this.__title = null;
         this.__mddocname = null;
         this.__timeBus = null;
         this.__startDate = null;
-        this.__stopDate = null;
-        this = null;
+        this.__stopDate = null;        
     }
 
 

@@ -117,7 +117,13 @@ qx.Class.define("auroral_resources.ui.tree.MapTreeFile",
     */
     destruct : function()
     {
-        // TODO: add destructor code...
+        this.__window = null;
+        this.__title = null;
+        this.__timeBus = null;
+        this.__mapper = null;
+        this.__baseLayer = null;
+        this.__period = null;
+        this.__mddocname = null;        
     }
     
 

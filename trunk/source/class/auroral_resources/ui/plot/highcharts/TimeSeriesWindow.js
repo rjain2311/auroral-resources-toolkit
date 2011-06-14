@@ -234,7 +234,7 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
         this.add(this.__plot);
         this.__plot.addListener("plotCreated",qx.lang.Function.bind(this._initData,this,auroral_resources.ui.plot.highcharts.TimeSeriesWindow.getCsvUrl(parameter,start,stop)),this);
 
-        this.addListener("close", function(evt) { this.destroy() });
+        this.addListener("close", this._destroy, this); //function(evt) { this.destroy() });
         this.addListener("mouseup", this._rightClick, this);
         this.addListener('resize',qx.lang.Function.bind(this._resize),this);
         this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
@@ -456,6 +456,16 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
 
             // update it
             this.__plot.getPlotObject().setSize(this.getWidth() - dWidth, this.getHeight() - dHeight, false); 
+        },
+
+
+        //
+        //
+        //
+        _destroy : function () 
+        {
+            auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE -= 1;        
+            this.destroy();
         }
     },
 
@@ -467,7 +477,17 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesWindow",
     */
     destruct : function()
     {
-        // TODO: add destructor code...
+        this.__title = null;
+        this.__parameter = null;
+        this.__parameters = null;
+        this.__mddocname = null;
+        this.__timeBus = null;
+        this.__startDate = null;
+        this.__stopDate = null;
+        this.__plot = null;
+        this.__now = null;
+        this.__units = null;
+        this.__series = null;        
     }
 
 

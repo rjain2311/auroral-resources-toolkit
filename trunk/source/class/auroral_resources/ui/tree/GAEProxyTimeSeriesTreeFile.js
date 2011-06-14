@@ -109,7 +109,11 @@ qx.Class.define("auroral_resources.ui.tree.GAEProxyTimeSeriesTreeFile",
     */
     destruct : function()
     {
-        // TODO: add destructor code...
+        this.__window = null;
+        this.__title = null;
+        this.__timeBus = null;
+        this.__parameter = null;
+        this.__mddocname = null;        
     }
 
 

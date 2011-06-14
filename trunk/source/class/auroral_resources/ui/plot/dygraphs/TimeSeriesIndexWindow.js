@@ -99,12 +99,20 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow",
         this.setWidth(width);
         this.setHeight(height);
         
+        this.__error = new qx.ui.basic.Label().set({
+            width: width,
+            height: height,
+            value: "<center><h1 style='color:red'>Cannot obtain data!</h1></center>",
+            rich : true
+        });
+
         this.__loading = new qx.ui.basic.Label().set({
             width: width,
             height: height,
             value: "<center><h1 style='color:red'>Loading...</h1></center>",
             rich : true
         });
+
         this.__nodata = new qx.ui.basic.Label().set({
             width: width,
             height: height,
@@ -132,6 +140,11 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow",
                 that.__plot = that._createPlot(parameter, start, stop, title);
                 that.add(that.__plot);
             });
+            h.addListener("error", function() {
+                this.error("Unable to create initial plot!");
+                this.remove(this.__loading);
+                this.add(this.__error);
+            });
             h.setMethod("GET");
             h.setUrl(auroral_resources.ui.plot.dygraphs.TimeSeriesWindow.getCsvUrl(parameter,start,stop));
             h.send();
@@ -142,7 +155,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow",
             this.add(this.__nodata);
         }
 
-        this.addListener("close", function(evt) { this.destroy() });
+        this.addListener("close", this._destroy, this); //function(evt) { this.destroy() });
         this.addListener("mouseup", this._rightClick, this);
 
         this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
@@ -160,6 +173,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow",
     */
     members :
     {
+        __error : null,
         __title : null,
         __loading : null,
         __nodata : null,
@@ -187,7 +201,9 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow",
                     labelsKMB: true,
                     drawPoints: true,
                     errorBars: false,
-                    lables: title,
+                    stepPlot: true,
+                    fillGraph: true,
+                    lables: [that.__title],
                     highlightCircleSize: 3,
                     strokeWidth: 1,
                     underlayCallback: that._vline,
@@ -414,6 +430,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow",
             var h = new qx.io.request.Xhr();
             h.setAsync(true);
             h.addListener("success", function() {
+                if (typeof g === undefined || g === null) { return; }
                 that.__csvData = h.responseText;
                 g.updateOptions({ 'file' : that.__csvData });
             });
@@ -421,6 +438,16 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow",
             h.setUrl(auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow.getCsvUrl(parameter,start,stop));
             h.send();
 
+        },
+
+
+        //
+        //
+        //
+        _destroy : function () 
+        {
+            auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE -= 1;        
+            this.destroy();
         }
     },
 
@@ -432,7 +459,19 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow",
     */
     destruct : function()
     {
-        // TODO: add destructor code...
+        this.__error = null;
+        this.__title = null;
+        this.__loading = null;
+        this.__nodata = null;
+        this.__parameter = null;
+        this.__mddocname = null;
+        this.__timeBus = null;
+        this.__startDate = null;
+        this.__stopDate = null;
+        this.__plot = null;
+        this.__now = null;
+        this.__csvUrl = null;
+        this.__csvData = null;        
     }
 
 
