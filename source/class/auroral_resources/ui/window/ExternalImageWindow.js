@@ -104,7 +104,7 @@ qx.Class.define("auroral_resources.ui.window.ExternalImageWindow",
         this.__timeBus.getBus().subscribe("time.stopDate", this._stopDateChangeBusCallback, this);
         */
 
-        this.addListener("close", function(evt) { this.destroy() });
+        this.addListener("close", this._destroy, this); //function(evt) { this.destroy() });
         this.addListener("mouseup", this._rightClick, this);
         
         /* has cross domain issues...
@@ -159,6 +159,15 @@ qx.Class.define("auroral_resources.ui.window.ExternalImageWindow",
         //
         //
         _nowChangeBusCallback : function(e) {
+        },
+
+        //
+        //
+        //
+        _destroy : function () 
+        {
+            auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE -= 1;        
+            this.destroy();
         }
 
     },
@@ -171,7 +180,9 @@ qx.Class.define("auroral_resources.ui.window.ExternalImageWindow",
     */
     destruct : function()
     {
-        // TODO: add destructor code...
+        this.__title = null;
+        this.__timeBus = null;
+        this.__filename = null;
     }
 
 

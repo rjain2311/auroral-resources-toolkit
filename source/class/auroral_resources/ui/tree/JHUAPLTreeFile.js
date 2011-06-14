@@ -117,6 +117,10 @@ qx.Class.define("auroral_resources.ui.tree.JHUAPLTreeFile",
     */
     destruct : function()
     {
+        this.__window = null;
+        this.__timeBus = null;
+        this.__title = null;
+        this.__jnlpUrl = null;        
     }
 
 });

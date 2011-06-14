@@ -163,7 +163,7 @@ qx.Class.define("auroral_resources.ui.window.MapWindow",
             this._loadScripts(olScripts, qx.lang.Function.bind(this._createOpenLayersMap,this,baselayer,period,this));
         }
         
-        this.addListener("close", function(evt) { this.destroy() });
+        this.addListener("close", this._destroy, this); //function(evt) { this.destroy() });
         this.addListener("mouseup", this._rightClick, this);
         
         //this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
@@ -897,7 +897,18 @@ qx.Class.define("auroral_resources.ui.window.MapWindow",
             self.removeAll();
             self.add(isle);
             self.__isle = isle;
+        },
+
+
+        //
+        //
+        //
+        _destroy : function () 
+        {
+            auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE -= 1;        
+            this.destroy();
         }
+
     },
 
 
@@ -908,7 +919,21 @@ qx.Class.define("auroral_resources.ui.window.MapWindow",
     */
     destruct : function()
     {
-        // TODO: add destructor code...
+        this.__title = null;
+        this.__timeBus = null;
+        this.__startDate = null;
+        this.__stopDate = null;
+        this.__map = null;
+        this.__ovation = null;
+        this.__ols = null;
+        this.__baseLayer = null;
+        this.__mapper = null;
+        this.__base = null;
+        this.__period = null;
+        this.__now = null;
+        this.__mddocname = null;
+        this.__isle = null;
+        this.__hasIsle = null;        
     }
 
 

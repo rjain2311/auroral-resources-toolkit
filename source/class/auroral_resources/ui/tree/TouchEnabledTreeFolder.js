@@ -83,4 +83,5 @@ qx.Class.define("auroral_resources.ui.tree.TouchEnabledTreeFolder",
         }
     }
     
+    
 });

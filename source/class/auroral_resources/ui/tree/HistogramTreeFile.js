@@ -105,7 +105,9 @@ qx.Class.define("auroral_resources.ui.tree.HistogramTreeFile",
     */
     destruct : function()
     {
-        // TODO: add destructor code...
+        this.__window = null;
+        this.__title = null;
+        this.__parameter = null;        
     }
 
 

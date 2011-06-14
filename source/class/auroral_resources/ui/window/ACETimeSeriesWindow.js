@@ -50,7 +50,7 @@ qx.Class.define("auroral_resources.ui.window.ACETimeSeriesWindow",
      * switching between several different ones easily and quickly
      */
 
-    extend : auroral_resources.ui.plot.dygraphs.TimeSeriesWindow,
+    extend : auroral_resources.ui.plot.dygraphs.ACETimeSeriesWindow,
 
     /*
     *****************************************************************************

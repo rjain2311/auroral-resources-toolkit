@@ -70,6 +70,8 @@ qx.Class.define("auroral_resources.Application",
     statics :
     {
 
+        __N_WIDGETS_ON_WORKSPACE : 0,
+        __MAX_WIDGETS_ALLOWED_ON_WORKSPACE : 10,
         __X_OFFSET : 285,
         __Y_OFFSET : 97,
         __mainWindow : null,
@@ -86,11 +88,17 @@ qx.Class.define("auroral_resources.Application",
         {
             if ( qx.core.Environment.get("browser.name") === "IE" ) {
 
+                var iemsg = "Older versions of Internet Explorer may have problems with this site. For the best experience, please download and use Internet Explorer 9 or greater, or, any other modern web browser such as Chrome, Safari, FireFox, Opera etc...";
                 var ver = qx.core.Environment.get("browser.version");
 
+                // IE 8 ?
+                if ( ver === "8" ) {
+                    alert(iemsg);
+                } 
                 // IE 6 or 7 ?
-                if ( ver === "6" || ver === "7" ) {
+                else if ( ver === "6" || ver === "7" ) {
                     auroral_resources.Application.__SAFE_FOR_IE = false;
+                    alert(iemsg);
                 }
             }
         },
@@ -204,10 +212,10 @@ qx.Class.define("auroral_resources.Application",
             this.__widgets = new Array();
             
             // support native logging capabilities, e.g. Firebug for Firefox
-            qx.log.appender.Native;
+            //qx.log.appender.Native;
 
             // support additional cross-browser console. Press F7 to toggle visibility
-            qx.log.appender.Console;
+            //qx.log.appender.Console;
 
             qx.io.PartLoader.getInstance().addListener("partLoaded", function(e) {
                 this.debug("part loaded: " + e.getData().getName());
@@ -260,7 +268,7 @@ qx.Class.define("auroral_resources.Application",
             //
             var sl = new qx.io.ScriptLoader();
             sl.load("script/date.js.gz", function(status) {
-                if (status == 'success') {
+                if (status === 'success') {
                     Date.prototype.getDOY = function() {
                         return new Date().getDayOfYear();
                     }
@@ -372,10 +380,11 @@ qx.Class.define("auroral_resources.Application",
                 droppable: true,
                 enabled: true
             });
-            // behavior is too annoying...
+            // behavior is too annoying... removing this tooltip it's too intrusive
             // toolTipText: "Drag components from the 'Available Resources' area at left, to anywhere inside this gray box's boundaries (even on top of other widgets)",
 
             auroral_resources.Application.__mainWindow.addListener("drop", this._widgetDropListener, this);
+
 
             // create and add the date/time chooser
             //var utc = this.getNowUTC();
@@ -801,12 +810,39 @@ qx.Class.define("auroral_resources.Application",
  
         },
 
+
+        //
+        //
+        //
+        isWidgetDropAllowed : function() {
+
+            if ( auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE+1 >= 
+                (auroral_resources.Application__MAX_WIDGETS_ALLOWED_ON_WORKSPACE) ) {
+
+                dialog.Dialog.wide_alert 
+                (
+                    "No more widgets can be added, you have already added the maximum number allowed ("+
+                    auroral_resources.Application__MAX_WIDGETS_ALLOWED_ON_WORKSPACE+")"
+                );
+
+                return false;
+            }
+            
+            alert(auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE);
+            auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE += 1;
+            return true;
+        },
+
+
         //
         // add the widget to the workspace at the cursor
         //
         _widgetDropListener : function(e) {
+
             var w = e.getData("widget");
             if (typeof w !== undefined && w !== null && w === "launcher") { return; }
+            if (!this.isWidgetDropAllowed()) { return; }
+
             var x = e.getDocumentLeft() - auroral_resources.Application.__X_OFFSET; // sub off extra to center it more
             var y = e.getDocumentTop() - auroral_resources.Application.__Y_OFFSET;  // ditto
             auroral_resources.Application.__mainWindow.add( w, { left:x, top:y });
@@ -814,5 +850,53 @@ qx.Class.define("auroral_resources.Application",
             //auroral_resources.Application.__mainWindow.setBlockToolTip(true);
 
         } // end widgetDropListener
-    } // end members
+    }, // end members
+
+    /*
+    *****************************************************************************
+        DESTRUCTOR
+
+        here's a quick generator for the object disposal call
+
+        ---
+        #!/usr/bin/env bash
+
+        foo=`cat ${1} | gawk '{print $1}'`
+
+        moo="this._disposeObjects("
+
+        for goo in ${foo[*]}
+        do
+                moo="${moo} \"$goo\", "
+        done
+
+        len=`expr ${#moo} - 2`
+        #echo $len
+        tmp="${moo:0:${len}}"
+        echo "${tmp});"
+        ---
+
+    *****************************************************************************
+    */
+    destruct : function()
+    {
+        this.__list = null;
+        this.__currentListItem = null;
+        this.__header = null;
+        this.__footer = null;
+        this.__toolBarView = null;
+        this.__menuBarView = null;
+        this.__timeBus = null;
+        this.__horizontalSplitPane = null;
+        this.__verticalSplitPane = null;
+        this.__prefWindow = null;
+        this.__sideBar = null;
+        this.__sideBarScroller = null;
+        this.__mouseX = null;
+        this.__mouseY = null;
+        this.__widgets = null;
+        this.__toolBarHider = null;
+        this.__sideBarHider = null;        
+    }
+
 });

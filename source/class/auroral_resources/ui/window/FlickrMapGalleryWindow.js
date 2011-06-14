@@ -86,7 +86,7 @@ qx.Class.define("auroral_resources.ui.window.FlickrMapGalleryWindow",
         
         this.setWidth(width);
         this.setHeight(height);
-        this.addListener("close", function(evt) { this.destroy() });
+        this.addListener("close", this._destroy, this); //function(evt) { this.destroy() });
         this.addListener("mouseup", this._rightClick, this);
 
         var frame = new qx.ui.embed.ThemedIframe();
@@ -111,18 +111,16 @@ qx.Class.define("auroral_resources.ui.window.FlickrMapGalleryWindow",
             if(evt.isRightPressed()) { 
                 dialog.Dialog.alert('This window does not have any additional options');
             }
-        }
-    },
+        },
 
-    
-    /*
-    *****************************************************************************
-        DESTRUCTOR
-    *****************************************************************************
-    */
-    destruct : function()
-    {
-        // TODO: add destructor code...
+        //
+        //
+        //
+        _destroy : function () 
+        {
+            auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE -= 1;        
+            this.destroy();
+        }        
     }
 
 

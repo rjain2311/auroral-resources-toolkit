@@ -109,7 +109,7 @@ qx.Class.define("auroral_resources.ui.window.VimeoWindow",
         this.setHeight(height);
         this.setContentPadding(0,0,0,0);
         
-        this.addListener("close", function(evt) { this.destroy() });
+        this.addListener("close", this._destroy, this); //function(evt) { this.destroy() });
         this.addListener("mouseup", this._rightClick, this);
         
         var frame = new qx.ui.embed.Iframe(auroral_resources.ui.window.VimeoWindow.__playerUrlPrfx+this.__uri+"?autoplay=1&portrait=1&loop=1");
@@ -138,7 +138,17 @@ qx.Class.define("auroral_resources.ui.window.VimeoWindow",
             // nothing we can do here that will ever take affect on more than the title
             // bar....
             return;
+        },
+
+        //
+        //
+        //
+        _destroy : function () 
+        {
+            auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE -= 1;        
+            this.destroy();
         }
+
     },
 
 
@@ -149,7 +159,9 @@ qx.Class.define("auroral_resources.ui.window.VimeoWindow",
     */
     destruct : function()
     {
-        // TODO: add destructor code...
+        this.__title = null;
+        this.__uri = null;
+        this.__vuser = null;        
     }
 
 

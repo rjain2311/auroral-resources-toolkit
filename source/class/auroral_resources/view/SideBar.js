@@ -160,7 +160,7 @@ qx.Class.define("auroral_resources.view.SideBar",
         __startPopup : null,
         __startChooser : null,
         __stopPopup : null,
-        __stopChooser: null,
+        __stopChooser : null,
         __dateFormat : null,
         __dateFormatTime : null,
         __testLabel : null,
@@ -588,6 +588,15 @@ qx.Class.define("auroral_resources.view.SideBar",
                 return;
             }
 
+            // 1 month currently
+            var delta = max - min;
+            var max_range_allowed = (60*60*24*7*4)*1000;
+            if ( delta >= max_range_allowed ) {
+                dialog.Dialog.error("At present you may only view up to a month at a time, please try again, you've attempted to view more than a month");
+                this.__startPopup.hide();
+                return;
+            }
+
             this.__sliderGroup.slider.setMinimum(min);
             this.__sliderGroup.minimum.setValue(this.__dateFormat.format(this.__startChooser.getValue()));
             this.__startPopup.hide();
@@ -613,6 +622,15 @@ qx.Class.define("auroral_resources.view.SideBar",
                 return;
             }
 
+            // 1 month currently
+            var delta = max - min;
+            var max_range_allowed = (60*60*24*7*31)*1000;
+            if ( delta >= max_range_allowed ) {
+                dialog.Dialog.error("At present you may only view up to a month at a time, please try again, you've attempted to view more than a month");
+                this.__startPopup.hide();
+                return;
+            }
+
             this.__sliderGroup.slider.setMaximum(max);
             this.__sliderGroup.maximum.setValue(this.__dateFormat.format(this.__stopChooser.getValue()));
             this.__stopPopup.hide();
@@ -630,7 +648,18 @@ qx.Class.define("auroral_resources.view.SideBar",
     */
     destruct : function()
     {
-        // TODO: add destructor code...
+        this.__resize = null;
+        this.__beginDate = null;
+        this.__endDate = null;
+        this.__sliderGroup = null;
+        this.__startPopup = null;
+        this.__startChooser = null;
+        this.__stopPopup = null;
+        this.__stopChooser = null;
+        this.__dateFormat = null;
+        this.__dateFormatTime = null;
+        this.__testLabel = null;
+        this.__timeBus = null;
     }
 
 

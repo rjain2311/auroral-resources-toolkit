@@ -86,8 +86,8 @@ qx.Class.define("auroral_resources.ui.tree.VimeoTreeFile",
         __title : null,
         __timeBus : null,
         __uri : null,
-        __width: null,
-        __height: null,
+        __width : null,
+        __height : null,
         __vuser : null,
 
 
@@ -133,6 +133,13 @@ qx.Class.define("auroral_resources.ui.tree.VimeoTreeFile",
     */
     destruct : function()
     {
+        this.__window = null;
+        this.__title = null;
+        this.__timeBus = null;
+        this.__uri = null;
+        this.__width = null;
+        this.__height = null;
+        this.__vuser = null;        
     }
 
 });

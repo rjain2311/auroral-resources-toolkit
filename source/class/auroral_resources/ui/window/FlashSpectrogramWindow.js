@@ -98,7 +98,7 @@ qx.Class.define("auroral_resources.ui.window.FlashSpectrogramWindow",
             layout: new qx.ui.layout.Grow()
         });
 
-        this.addListener("close", function(evt) { this.destroy() });
+        this.addListener("close", this._destroy, this); //function(evt) { this.destroy() });
         this.addListener("mouseup", this._rightClick, this);
 
         // build UI
@@ -122,7 +122,17 @@ qx.Class.define("auroral_resources.ui.window.FlashSpectrogramWindow",
         //
         _rightClick : function(evt) { 
             return;
+        },
+
+        //
+        //
+        //
+        _destroy : function () 
+        {
+            auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE -= 1;        
+            this.destroy();
         }
+
     },
 
 
@@ -133,8 +143,7 @@ qx.Class.define("auroral_resources.ui.window.FlashSpectrogramWindow",
     */
     destruct : function()
     {
-        // TODO: add destructor code...
+        this.__title = null;
     }
-
 
 });

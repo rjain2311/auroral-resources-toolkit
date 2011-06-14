@@ -97,7 +97,7 @@ qx.Class.define("auroral_resources.ui.window.ExternalVidWindow",
         this.setHeight(height);
         this.setContentPadding(0,0,0,0);
         
-        this.addListener("close", function(evt) { this.destroy() });
+        this.addListener("close", this._destroy, this); //function(evt) { this.destroy() });
         this.addListener("mouseup", this._rightClick, this);
 
         var frame = new qx.ui.embed.Flash("http://www.youtube.com/v/"+this.__filename);
@@ -126,6 +126,15 @@ qx.Class.define("auroral_resources.ui.window.ExternalVidWindow",
             if(evt.isRightPressed()) { 
                 dialog.Dialog.alert('This widget does not have any additional options');
             }
+        },
+
+        //
+        //
+        //
+        _destroy : function () 
+        {
+            auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE -= 1;        
+            this.destroy();
         }
     },
 
@@ -137,8 +146,8 @@ qx.Class.define("auroral_resources.ui.window.ExternalVidWindow",
     */
     destruct : function()
     {
-        // TODO: add destructor code...
+        this.__title = null;
+        this.__filename = null;
     }
-
 
 });

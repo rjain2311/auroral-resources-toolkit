@@ -145,7 +145,8 @@ qx.Class.define("auroral_resources.ui.window.LocalImageGalleryWindow",
     */
     destruct : function()
     {
-        // TODO: add destructor code...
+        this.__title = null;
+        this.__gallery = null;
     }
 
 
