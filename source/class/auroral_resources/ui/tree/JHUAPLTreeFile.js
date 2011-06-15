@@ -103,6 +103,7 @@ qx.Class.define("auroral_resources.ui.tree.JHUAPLTreeFile",
             var type = e.getCurrentType();
 
             if (type === "widget") {
+                if (!auroral_resources.Application.isWidgetDropAllowed()) { e.addData(type, "ignore"); return; }
                 e.addData(type, "launcher");
                 window.open(this.__jnlpUrl);
             }

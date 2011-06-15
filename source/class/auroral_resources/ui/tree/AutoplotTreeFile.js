@@ -139,6 +139,7 @@ qx.Class.define("auroral_resources.ui.tree.AutoplotTreeFile",
             var type = e.getCurrentType();
  
             if (type === "widget") {
+                if (!auroral_resources.Application.isWidgetDropAllowed()) { e.addData(type, "ignore"); return; }
                 e.addData(type, "launcher");
                 this._doubleClicked(e);
             }

@@ -200,7 +200,7 @@ qx.Class.define("auroral_resources.view.SideBar",
                 parent.add(item);
 
                 item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("DMSP");
-                item2.add(new auroral_resources.ui.tree.SpectrogramTreeFile("SSJ Spectrogram","#"));
+                //item2.add(new auroral_resources.ui.tree.SpectrogramTreeFile("SSJ Spectrogram","#"));
                 item2.add(new auroral_resources.ui.tree.JHUAPLTreeFile("SSJ Spectrogram Viewer"));
                 item3 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("F16 (2011 Jan.-March)");
                 var item4 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("SSJ Precipitating Electrons {keV}");

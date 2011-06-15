@@ -95,6 +95,7 @@ qx.Class.define("auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile",
             var result = null;
 
             if (type === "widget") {
+                if (!auroral_resources.Application.isWidgetDropAllowed()) { e.addData(type, "ignore"); return; }
                 this.__window = new auroral_resources.ui.window.CDAWebTimeSeriesWindow(600, 400, this.__parameter, this.__title, this.__mddocname);
                 result = this.__window;
                 e.addData(type, result);
