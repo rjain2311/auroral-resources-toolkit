@@ -114,6 +114,7 @@ qx.Class.define("auroral_resources.ui.window.ExternalImageWindow",
         */
 
         var img = new qx.ui.basic.Image(filename);
+        img.addListener("click", function() { window.open(filename, "_blank"); } );
         img.setWidth(width);
         img.setHeight(height);
         img.setScale(true);
@@ -138,8 +139,32 @@ qx.Class.define("auroral_resources.ui.window.ExternalImageWindow",
         //
         //
         _rightClick : function(evt) { 
-            if(evt.isRightPressed()) { 
-                dialog.Dialog.alert('This widget does not have any additional options');
+            if(evt.isRightPressed()) {
+                
+                var popup = new qx.ui.popup.Popup(new qx.ui.layout.VBox()).set({
+                     autoHide: true
+                });
+
+                // get around namespacing limitiation below
+                var filename = this.__filename;
+                                
+                var dnld = new qx.ui.form.Button("Download Full Resolution Image");
+                dnld.addListener("click", function(evt) {
+                    window.open(filename,"");
+                    popup.hide();
+                });
+                
+                var open = new qx.ui.form.Button("Open Full Resolution Image");
+                open.addListener("click", function(evt) {
+                    window.open(filename,"_blank");
+                    popup.hide();
+                });
+                
+                popup.add(new qx.ui.basic.Label("Additional Options"));
+//                popup.add(dnld);
+                popup.add(open);
+                popup.placeToMouse(evt);
+                popup.show();            
             }
         },
         
