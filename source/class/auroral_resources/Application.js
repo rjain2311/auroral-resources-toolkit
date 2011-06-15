@@ -663,11 +663,26 @@ qx.Class.define("auroral_resources.Application",
                 var mW = auroral_resources.Application.__mainWindow;
                 var wD = this.__widgets;
                 var pieces = [];
-                                
+
+                // don't show the default widgets if running in dev on spidrd or localhost (i.e. laptop)
                 var host = window.location.host.substr(0,6);
                 if ( typeof host !== undefined && host !== null && host === "spidrd") { return; }
-                if ( typeof host !== undefined && host !== null && host === "localh") { return; }
+//                if ( typeof host !== undefined && host !== null && host === "localh") { return; }
 
+                pieces = [0,0,"auroral_resources.ui.window.ExternalImageWindow",325,350,"http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_forecast_aacgm.png","Ovation%20Prime%20Real-Time%20Forecast"];
+                addWidget(stringToClass, mW, pieces, wD);
+
+                pieces = [327,0,"auroral_resources.ui.window.ExternalImageWindow",400,350,"http://www.swpc.noaa.gov/pmap/gif/pmapN.gif","Northern%20Statistical%20Auroral%20Oval"];
+                addWidget(stringToClass, mW, pieces, wD);                
+
+                pieces = [0,377,"auroral_resources.ui.window.TimeSeriesIndexWindow",325,160,"index_kp.est","Kp","geomInd"];
+                addWidget(stringToClass, mW, pieces, wD);                
+
+                pieces = [327,377,"auroral_resources.ui.window.TimeSeriesWindow",400,160,"vsw_x.ACE_RT","ACE%20Flow%20%7BKm/s%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
+                addWidget(stringToClass, mW, pieces, wD);
+                
+
+                /*
                 pieces = [0,487,"auroral_resources.ui.window.TimeSeriesWindow",445,209,"vsw_x.ACE_RT","ACE%20Flow%20%7BKm/s%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
                 addWidget(stringToClass, mW, pieces, wD);
 
@@ -688,6 +703,7 @@ qx.Class.define("auroral_resources.Application",
                 
                 pieces = [447,480,"auroral_resources.ui.window.ExternalImageWindow",454,504,"http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_nowcast_aacgm.png","Ovation%20Prime%20Real-Time%20Nowcast"];
                 addWidget(stringToClass, mW, pieces, wD);
+                */
 
                 return;
                 
