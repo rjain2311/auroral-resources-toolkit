@@ -88,9 +88,9 @@ qx.Class.define("auroral_resources.ui.tree.HistogramTreeFile",
             var type = e.getCurrentType();
             var result = null;
 
-            this.__window = new auroral_resources.ui.window.HistogramWindow(this.__parameter, this.__title);
-
             if (type === "widget") {
+                if (!auroral_resources.Application.isWidgetDropAllowed()) { e.addData(type, "ignore"); return; }
+                this.__window = new auroral_resources.ui.window.HistogramWindow(this.__parameter, this.__title);
                 result = this.__window;
                 e.addData(type, result);
             }

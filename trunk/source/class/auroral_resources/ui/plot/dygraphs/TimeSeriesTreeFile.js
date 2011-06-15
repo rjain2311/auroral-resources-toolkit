@@ -94,8 +94,9 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesTreeFile",
             var action = e.getCurrentAction();
             var type = e.getCurrentType();
             var result = null;
-
+            
             if (type === "widget") {
+                if (!auroral_resources.Application.isWidgetDropAllowed()) { e.addData(type, "ignore"); return; }
                 this.__window = new auroral_resources.ui.plot.dygraphs.TimeSeriesWindow(600, 400, this.__parameter, this.__title, this.__mddocname);
                 result = this.__window;
                 e.addData(type, result);

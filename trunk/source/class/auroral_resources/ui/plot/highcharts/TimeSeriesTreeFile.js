@@ -97,6 +97,7 @@ qx.Class.define("auroral_resources.ui.plot.highcharts.TimeSeriesTreeFile",
             var result = null;
 
             if (type === "widget") {
+                if (!auroral_resources.Application.isWidgetDropAllowed()) { e.addData(type, "ignore"); return; }
                 this.__window = new auroral_resources.ui.plot.highcharts.TimeSeriesWindow(600, 400, this.__parameter, this.__title, this.__mddocname, this.__units);
                 result = this.__window;
                 e.addData(type, result);

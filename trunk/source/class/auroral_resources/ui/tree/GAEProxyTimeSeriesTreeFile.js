@@ -92,9 +92,9 @@ qx.Class.define("auroral_resources.ui.tree.GAEProxyTimeSeriesTreeFile",
             var type = e.getCurrentType();
             var result = null;
 
-            this.__window = new auroral_resources.ui.window.GAEProxyTimeSeriesWindow(600, 400, this.__parameter, this.__title, this.__mddocname);
-
             if (type === "widget") {
+                if (!auroral_resources.Application.isWidgetDropAllowed()) { e.addData(type, "ignore"); return; }
+                this.__window = new auroral_resources.ui.window.GAEProxyTimeSeriesWindow(600, 400, this.__parameter, this.__title, this.__mddocname);
                 result = this.__window;
                 e.addData(type, result);
             }

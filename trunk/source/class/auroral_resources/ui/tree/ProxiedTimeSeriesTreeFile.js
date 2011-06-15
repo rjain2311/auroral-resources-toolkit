@@ -90,6 +90,7 @@ qx.Class.define("auroral_resources.ui.tree.ProxiedTimeSeriesTreeFile",
             var result = null;
 
             if (type === "widget") {
+                if (!auroral_resources.Application.isWidgetDropAllowed()) { e.addData(type, "ignore"); return; }
                 this.__window = new auroral_resources.ui.window.ProxiedTimeSeriesWindow(600, 400, this.__title, this.__mdlink);
                 result = this.__window;
                 e.addData(type, result);

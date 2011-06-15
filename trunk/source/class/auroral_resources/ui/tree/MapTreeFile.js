@@ -100,8 +100,9 @@ qx.Class.define("auroral_resources.ui.tree.MapTreeFile",
             var action = e.getCurrentAction();
             var type = e.getCurrentType();
             var result = null;
-
+            
             if (type === "widget") {
+                if (!auroral_resources.Application.isWidgetDropAllowed()) { e.addData(type, "ignore"); return; }
                 this.__window = new auroral_resources.ui.window.MapWindow(512,512,this.__mapper, this.__baselayer, this.__period, this.__title, this.__mddocname);
                 result = this.__window;
                 e.addData(type, result);

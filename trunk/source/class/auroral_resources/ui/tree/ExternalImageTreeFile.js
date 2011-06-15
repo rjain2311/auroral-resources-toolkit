@@ -93,9 +93,9 @@ qx.Class.define("auroral_resources.ui.tree.ExternalImageTreeFile",
             var type = e.getCurrentType();
             var result = null;
 
-            this.__window = new auroral_resources.ui.window.ExternalImageWindow(450,450, this.__filename, this.__title);
-
             if (type === "widget") {
+                if (!auroral_resources.Application.isWidgetDropAllowed()) { e.addData(type, "ignore"); return; }
+                this.__window = new auroral_resources.ui.window.ExternalImageWindow(450,450, this.__filename, this.__title);
                 result = this.__window;
                 e.addData(type, result);
             }

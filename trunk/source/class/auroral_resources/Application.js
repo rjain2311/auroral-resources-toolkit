@@ -82,6 +82,35 @@ qx.Class.define("auroral_resources.Application",
 
 
         //
+        // I absolutely hate this implementation, but there is _NOT_
+        // a method one could use to tie into either the Desktop or Manager
+        // widget add/remove logic, without creating a custom class of either that is.
+        //
+        // Addressing it this way for add, and having each widget decrement on close
+        // is more maintainable, even if uglier, since we won't have to worry about
+        // merging in changes from Qx proper into a custom derived class. It keeps
+        // maintenance in our realm solely, that's the desired tradeoff...
+        //
+        isWidgetDropAllowed : function() {
+
+            if ( auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE >= 
+                (auroral_resources.Application.__MAX_WIDGETS_ALLOWED_ON_WORKSPACE) ) {
+
+                dialog.Dialog.med_alert 
+                (
+                    "No more widgets can be added, you have already added the maximum number allowed ("+
+                    auroral_resources.Application.__MAX_WIDGETS_ALLOWED_ON_WORKSPACE+")"
+                );
+
+                return false;
+            }
+            
+            auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE += 1;
+            return true;
+        },
+
+
+        //
         //
         //
         checkForIE : function() 
@@ -812,36 +841,13 @@ qx.Class.define("auroral_resources.Application",
 
 
         //
-        //
-        //
-        isWidgetDropAllowed : function() {
-
-            if ( auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE+1 >= 
-                (auroral_resources.Application__MAX_WIDGETS_ALLOWED_ON_WORKSPACE) ) {
-
-                dialog.Dialog.wide_alert 
-                (
-                    "No more widgets can be added, you have already added the maximum number allowed ("+
-                    auroral_resources.Application__MAX_WIDGETS_ALLOWED_ON_WORKSPACE+")"
-                );
-
-                return false;
-            }
-            
-            alert(auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE);
-            auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE += 1;
-            return true;
-        },
-
-
-        //
         // add the widget to the workspace at the cursor
         //
         _widgetDropListener : function(e) {
 
             var w = e.getData("widget");
             if (typeof w !== undefined && w !== null && w === "launcher") { return; }
-            if (!this.isWidgetDropAllowed()) { return; }
+            if (typeof w !== undefined && w !== null && w === "ignore") { return; }
 
             var x = e.getDocumentLeft() - auroral_resources.Application.__X_OFFSET; // sub off extra to center it more
             var y = e.getDocumentTop() - auroral_resources.Application.__Y_OFFSET;  // ditto
@@ -855,27 +861,6 @@ qx.Class.define("auroral_resources.Application",
     /*
     *****************************************************************************
         DESTRUCTOR
-
-        here's a quick generator for the object disposal call
-
-        ---
-        #!/usr/bin/env bash
-
-        foo=`cat ${1} | gawk '{print $1}'`
-
-        moo="this._disposeObjects("
-
-        for goo in ${foo[*]}
-        do
-                moo="${moo} \"$goo\", "
-        done
-
-        len=`expr ${#moo} - 2`
-        #echo $len
-        tmp="${moo:0:${len}}"
-        echo "${tmp});"
-        ---
-
     *****************************************************************************
     */
     destruct : function()
