@@ -11,11 +11,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: auroral_resources/Application.js:374
+#: auroral_resources/Application.js:392
 msgid "Hide/Show the menu bar"
 msgstr ""
 
-#: auroral_resources/Application.js:459
+#: auroral_resources/Application.js:477
 msgid "Hide/Show the time settings and tools"
 msgstr ""
 

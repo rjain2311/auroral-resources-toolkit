@@ -120,9 +120,14 @@ qx.Class.define("qxdygraphs.Plot", {
          */        
         __plotObject: null,
         __parent: null,
+        __canvas: null,
 
         getPlotObject: function(){
             return this.__plotObject;
+        },
+
+        getCanvas : function() {
+            return this.__canvas;
         },
 
         /**
@@ -183,6 +188,8 @@ qx.Class.define("qxdygraphs.Plot", {
 
                 // clear out any children...
                 var plot = this.__plotObject = new Dygraph(el, data, options);
+
+                this.__canvas = el;
 
                 this.fireDataEvent('plotCreated', plot);
 

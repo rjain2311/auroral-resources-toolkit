@@ -642,6 +642,16 @@ Dygraph.cancelEvent = function(e) {
 }
 
 
+Dygraph.prototype.getDynamicCanvas = function() {
+  return this.canvas_;
+}
+
+
+Dygraph.prototype.getStaticCanvas = function() {
+  return this.hidden_;
+}
+
+
 /**
  * Generates interface elements for the Dygraph: a containing div, a div to
  * display the current point, and a textbox to adjust the rolling average
