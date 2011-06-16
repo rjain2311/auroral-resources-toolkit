@@ -275,6 +275,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ProxiedTimeSeriesWindow",
                 var start = this.__startDate;
                 var stop = this.__stopDate;
                 var mddoc = this.__mddocname;
+                var that = this;
                 
                 var png = new qx.ui.form.Button("Download Image (PNG)");
                 png.addListener("click", function(evt) {
