@@ -269,6 +269,14 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow",
                 var stop = this.__stopDate;
                 var mddoc = this.__mddocname;
                 
+                var png = new qx.ui.form.Button("Download Image (PNG)");
+                png.addListener("click", function(evt) {
+                    // TBD add axix content to PNG via the canvas... add some code to dygraphs for this. clone the canvas, add the text, return the object
+                    var canvas = that.__plot.getPlotObject().getStaticCanvas();
+                    Canvas2Image.saveAsPNG(canvas);
+                    popup.hide();
+                });
+
                 var data = new qx.ui.form.Button("Download Data");
                 data.addListener("click", function(evt) {
                     alert('Not Yet Available');
@@ -280,6 +288,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow",
                 });
                 
                 popup.add(new qx.ui.basic.Label("Additional Options"));
+                popup.add(png);
                 popup.add(data);
                 popup.add(mdata);
                 popup.placeToMouse(evt);
