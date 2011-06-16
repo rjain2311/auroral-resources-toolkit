@@ -304,6 +304,24 @@ qx.Class.define("auroral_resources.Application",
                 }
             });
 
+            //
+            // load canvas2image and deps
+            //
+            var sl = new qx.io.ScriptLoader();
+            var script = "script/canvas2image/base64.js.gz";
+            sl.load( script, function(status ) {
+                if (status !== 'success') {
+                    this.error("Unable to load "+script);
+                }
+            });
+            sl = new qx.io.ScriptLoader();
+            script = "script/canvas2image/canvas2image.js.gz";
+            sl.load( script, function(status ) {
+                if (status !== 'success') {
+                    this.error("Unable to load "+script);
+                }
+            });
+
         }, // end monkey patch
 
 

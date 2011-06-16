@@ -150,7 +150,7 @@
 
       "copy-files" : 
       { 
-        "files"  : [ ".htaccess", "mobile.html", "script/date.js.gz", "script/date.js" ], 
+        "files"  : [ ".htaccess", "mobile.html", "script/date.js.gz", "script/date.js", "script/canvas2image" ], 
         "source" : "source",
         "target" : "build" 
       },

@@ -55,8 +55,8 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
     statics : 
     {
         getCsvUrl : function(parameter, start, stop) {
-            return "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
-            //return "/art/resource/auroral_resources/ionofof2.txt";
+            //return "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
+            return "/art/resource/auroral_resources/ionofof2.txt";
         },
 
         fromArray : function(argArray) { 
@@ -261,11 +261,21 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
                 var popup = new qx.ui.popup.Popup(new qx.ui.layout.VBox()).set({
                      autoHide: true
                 });
-                
+
+                var that = this; //avoid namespacing issues in inline functions
                 var param = this.__parameter;
                 var start = this.__startDate;
                 var stop = this.__stopDate;
                 var mddoc = this.__mddocname;
+
+                var png = new qx.ui.form.Button("Download Image (PNG)");
+                png.addListener("click", function(evt) {
+                    // TBD add axix content to PNG via the canvas... add some code to dygraphs for this. clone the canvas, add the text, return the object
+                    var canvas = that.__plot.getPlotObject().getStaticCanvas();
+                    Canvas2Image.saveAsPNG(canvas);
+                    popup.hide();
+                });
+
                 
                 var data = new qx.ui.form.Button("Download Data");
                 data.addListener("click", function(evt) {
@@ -282,6 +292,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
                 });
                 
                 popup.add(new qx.ui.basic.Label("Additional Options"));
+                popup.add(png);
                 popup.add(data);
                 popup.add(mdata);
                 popup.placeToMouse(evt);
@@ -462,6 +473,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
     */
     destruct : function()
     {
+        this.__plot.getPlotObject().destroy();
         this.__error = null;
         this.__title = null;
         this.__loading = null;
