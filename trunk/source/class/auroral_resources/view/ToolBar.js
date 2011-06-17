@@ -80,8 +80,8 @@ qx.Class.define("auroral_resources.view.ToolBar",
         var mainPart = new qx.ui.toolbar.Part;
         this.add(mainPart);
 
-        var urlbtn = new qx.ui.toolbar.Button(this.tr("URLs"), "icon/22/actions/document-send.png");
-        urlbtn.setToolTipText(this.tr("Display the URL for your current workspace"));
+        var urlbtn = new qx.ui.toolbar.Button(this.tr("Link"), "icon/22/actions/document-send.png");
+        urlbtn.setToolTipText(this.tr("Display the short and long form URLs for your current workspace"));
         urlbtn.addListener("mouseup", application.showUrl, application);
         mainPart.add(urlbtn);
 

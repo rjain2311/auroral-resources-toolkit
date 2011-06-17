@@ -52,11 +52,11 @@ msgid "Available Resources"
 msgstr ""
 
 #: auroral_resources/view/ToolBar.js:83
-msgid "URLs"
+msgid "Link"
 msgstr ""
 
 #: auroral_resources/view/ToolBar.js:84
-msgid "Display the URL for your current workspace"
+msgid "Display the short and long form URLs for your current workspace"
 msgstr ""
 
 #: auroral_resources/view/ToolBar.js:91
@@ -124,8 +124,14 @@ msgstr ""
 #~ msgid "Components"
 #~ msgstr ""
 
+#~ msgid "Display the URL for your current workspace"
+#~ msgstr ""
+
 #~ msgid "Open Preferences Window."
 #~ msgstr ""
 
 #~ msgid "Preferences"
+#~ msgstr ""
+
+#~ msgid "URLs"
 #~ msgstr ""

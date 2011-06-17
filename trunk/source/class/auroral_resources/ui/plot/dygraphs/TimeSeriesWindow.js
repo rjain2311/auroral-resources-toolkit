@@ -55,8 +55,8 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
     statics : 
     {
         getCsvUrl : function(parameter, start, stop) {
-            return "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
-            //return "/art/resource/auroral_resources/ionofof2.txt";
+            //return "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
+            return "/art/resource/auroral_resources/ionofof2.txt";
         },
 
         fromArray : function(argArray) { 
