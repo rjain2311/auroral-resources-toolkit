@@ -267,8 +267,8 @@ qx.Class.define("auroral_resources.view.SideBar",
                 
                 item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("Imagery");
                 item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("SWPC");
-                item2.add(new auroral_resources.ui.tree.ExternalImageTreeFile("http://www.swpc.noaa.gov/pmap/gif/pmapN.gif","Latest Northern Auroral Oval"));
-                item2.add(new auroral_resources.ui.tree.ExternalImageTreeFile("http://www.swpc.noaa.gov/pmap/gif/pmapS.gif","Latest Southern Auroral Oval"));
+                item2.add(new auroral_resources.ui.tree.ExternalImageTreeFile("http://www.swpc.noaa.gov/pmap/gif/pmapN.gif","Latest POES Northern Auroral Oval"));
+                item2.add(new auroral_resources.ui.tree.ExternalImageTreeFile("http://www.swpc.noaa.gov/pmap/gif/pmapS.gif","Latest POES Southern Auroral Oval"));
                 item.add(item2);
                 item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("NASA");
                 var item3 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("SOHO");
@@ -592,7 +592,8 @@ qx.Class.define("auroral_resources.view.SideBar",
             var delta = max - min;
             var max_range_allowed = (60*60*24*7*4)*1000;
             if ( delta >= max_range_allowed ) {
-                dialog.Dialog.error("At present you may only view up to a month at a time, please try again, you've attempted to view more than a month");
+                var msg = "You're only allowed to display up to a month of data.  Please adjust the time range accordingly.";
+                dialog.Dialog.error(msg);
                 this.__startPopup.hide();
                 return;
             }

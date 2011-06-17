@@ -99,7 +99,7 @@ qx.Class.define("auroral_resources.Application",
                 dialog.Dialog.med_alert 
                 (
                     "No more widgets can be added, you have already added the maximum number allowed ("+
-                    auroral_resources.Application.__MAX_WIDGETS_ALLOWED_ON_WORKSPACE+")"
+                    auroral_resources.Application.__MAX_WIDGETS_ALLOWED_ON_WORKSPACE+")."
                 );
 
                 return false;
@@ -687,10 +687,10 @@ qx.Class.define("auroral_resources.Application",
                 if ( typeof host !== undefined && host !== null && host === "spidrd") { return; }
 //                if ( typeof host !== undefined && host !== null && host === "localh") { return; }
 
-                pieces = [0,0,"auroral_resources.ui.window.ExternalImageWindow",325,350,"http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_forecast_aacgm.png","Ovation%20Prime%20Real-Time%20Forecast"];
+                pieces = [0,0,"auroral_resources.ui.window.ExternalImageWindow",325,350,"http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_forecast_aacgm.png","Latest Ovation%20Prime%20Real-Time%20Forecast"];
                 addWidget(stringToClass, mW, pieces, wD);
 
-                pieces = [327,0,"auroral_resources.ui.window.ExternalImageWindow",400,350,"http://www.swpc.noaa.gov/pmap/gif/pmapN.gif","Northern%20Statistical%20Auroral%20Oval"];
+                pieces = [327,0,"auroral_resources.ui.window.ExternalImageWindow",400,350,"http://www.swpc.noaa.gov/pmap/gif/pmapN.gif","Latest POES Northern%20Statistical%20Auroral%20Oval"];
                 addWidget(stringToClass, mW, pieces, wD);                
 
                 pieces = [0,377,"auroral_resources.ui.window.TimeSeriesIndexWindow",325,160,"index_kp.est","Kp","geomInd"];
