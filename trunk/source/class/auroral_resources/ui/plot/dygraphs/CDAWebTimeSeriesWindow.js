@@ -141,6 +141,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow",
                 try {
                     that.__plot = that._createPlot(parameter, start, stop, that.__title);
                     that._hideNoData();
+                    that.add(that.__plot);
                 } catch (e) {
                     that._hideLoading();
                     that._showNoData();
@@ -387,6 +388,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow",
                     try {
                         that.__plot = that._createPlot(parameter, start, stop, that.__title);
                         that._hideNoData();
+                        that.add(that.__plot);
                     } catch (e) {
                         that._hideLoading();
                         that._showNoData();
@@ -448,6 +450,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow",
                     try {
                         that.__plot = that._createPlot(parameter, start, stop, that.__title);
                         that._hideNoData();
+                        that.add(that.__plot);
                     } catch (e) {
                         that._hideLoading();
                         that._showNoData();
