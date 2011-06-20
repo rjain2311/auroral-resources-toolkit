@@ -116,7 +116,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow",
         this.__nodata = new qx.ui.basic.Label().set({
             width: width,
             height: height,
-            value: "<center><h1 style='color:red'>No Data!...</h1></center>",
+            value: "<center><h1 style='color:red'>No Data!</h1></center>",
             rich : true
         });
 
@@ -136,9 +136,21 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow",
             var h = new qx.io.request.Xhr();
             h.setAsync(true);
             h.addListener("success", function() {
+
+                that.__csvData = h.getResponseText();
+                try {
+                    that.__plot = that._createPlot(parameter, start, stop, that.__title);
+                    that.add(that.__plot);
+                } catch (e) {
+                    that.remove(that.__loading);
+                    that.add(that.__nodata);
+                }
+
+                /* w/o error handling
                 that.__csvData = h.getResponseText();
                 that.__plot = that._createPlot(parameter, start, stop, title);
                 that.add(that.__plot);
+                */
             });
             h.addListener("error", function() {
                 this.error("Unable to create initial plot!");
@@ -195,6 +207,11 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow",
 
             var that = this;
 
+            // not enough data to do anything meaningful
+            if ( that.__csvData.length <= 256 ) { 
+                throw "no data for "+parameter+" between "+start+" and "+stop;
+            }
+            
             var plot = new qxdygraphs.Plot(
                 that.__csvData,
                 {
@@ -367,9 +384,21 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow",
                 var h = new qx.io.request.Xhr();
                 h.setAsync(true);
                 h.addListener("success", function() {
+
+                    that.__csvData = h.getResponseText();
+                    try {
+                        that.__plot = that._createPlot(parameter, start, stop, that.__title);
+                        that.add(that.__plot);
+                    } catch (e) {
+                        that.remove(that.__loading);
+                        that.add(that.__nodata);
+                    }
+
+                    /*
                     that.__csvData = h.getResponseText();
                     that.__plot = that._createPlot(parameter, start, stop, that.__title);
                     that.add(that.__plot);
+                    */
                 });
                 h.setMethod("GET");
                 h.setUrl(auroral_resources.ui.plot.dygraphs.TimeSeriesWindow.getCsvUrl(parameter,start,stop));
@@ -408,9 +437,21 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesIndexWindow",
                 var h = new qx.io.request.Xhr();
                 h.setAsync(true);
                 h.addListener("success", function() {
+
+                    that.__csvData = h.getResponseText();
+                    try {
+                        that.__plot = that._createPlot(parameter, start, stop, that.__title);
+                        that.add(that.__plot);
+                    } catch (e) {
+                        that.remove(that.__loading);
+                        that.add(that.__nodata);
+                    }
+                    
+                    /*
                     that.__csvData = h.getResponseText();
                     that.__plot = that._createPlot(parameter, start, stop, that.__title);
                     that.add(that.__plot);
+                    */
                 });
                 h.setMethod("GET");
                 h.setUrl(auroral_resources.ui.plot.dygraphs.TimeSeriesWindow.getCsvUrl(parameter,start,stop));

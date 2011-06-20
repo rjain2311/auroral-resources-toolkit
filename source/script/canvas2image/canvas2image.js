@@ -26,7 +26,7 @@ var Canvas2Image = (function() {
 	var bHasDataURL = !!(oCanvas.toDataURL);
 	var bHasBase64 = !!(window.btoa);
 
-	var strDownloadMime = "image/octet-stream";
+	var strDownloadMime = "image/octet-stream;charset=utf-8";
 
 	// ok, we're good
 	var readCanvasData = function(oCanvas) {

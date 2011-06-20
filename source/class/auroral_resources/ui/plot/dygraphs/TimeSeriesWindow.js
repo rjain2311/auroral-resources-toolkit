@@ -55,8 +55,9 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
     statics : 
     {
         getCsvUrl : function(parameter, start, stop) {
-            //return "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
-            return "/art/resource/auroral_resources/ionofof2.txt";
+            return "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
+            //return "/art/resource/auroral_resources/ionofof2.txt";
+            //return "/art/resource/auroral_resources/csvheaderonly.csv";
         },
 
         fromArray : function(argArray) { 
@@ -135,8 +136,13 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
             h.setAsync(true);
             h.addListener("success", function() {
                 that.__csvData = h.getResponseText();
-                that.__plot = that._createPlot(parameter, start, stop, title);
-                that.add(that.__plot);
+                try {
+                    that.__plot = that._createPlot(parameter, start, stop, title);
+                    that.add(that.__plot);
+                } catch (e) {
+                    that.remove(that.__loading);
+                    that.add(that.__nodata);
+                }
             });
             h.addListener("error", function() {
                 this.error("Unable to create initial plot!");
@@ -192,6 +198,11 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
         _createPlot : function(parameter, start, stop, title) {
 
             var that = this;
+
+            // not enough data to do anything meaningful
+            if ( that.__csvData.length <= 256 ) { 
+                throw "no data for "+parameter+" between "+start+" and "+stop;
+            }
 
             var plot = new qxdygraphs.Plot(
                 that.__csvData,
@@ -360,9 +371,21 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
                 var h = new qx.io.request.Xhr();
                 h.setAsync(true);
                 h.addListener("success", function() {
+
+                    that.__csvData = h.getResponseText();
+                    try {
+                        that.__plot = that._createPlot(parameter, start, stop, that.__title);
+                        that.add(that.__plot);
+                    } catch (e) {
+                        that.remove(that.__loading);
+                        that.add(that.__nodata);
+                    }
+
+                    /* w/o error handling
                     that.__csvData = h.getResponseText();
                     that.__plot = that._createPlot(parameter, start, stop, that.__title);
                     that.add(that.__plot);
+                    */
                 });
                 h.setMethod("GET");
                 h.setUrl(auroral_resources.ui.plot.dygraphs.TimeSeriesWindow.getCsvUrl(parameter,start,stop));
@@ -408,9 +431,21 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
                 var h = new qx.io.request.Xhr();
                 h.setAsync(true);
                 h.addListener("success", function() {
+
+                    that.__csvData = h.getResponseText();
+                    try {
+                        that.__plot = that._createPlot(parameter, start, stop, that.__title);
+                        that.add(that.__plot);
+                    } catch (e) {
+                        that.remove(that.__loading);
+                        that.add(that.__nodata);
+                    }
+
+                    /* w/o error handling
                     that.__csvData = h.getResponseText();
                     that.__plot = that._createPlot(parameter, start, stop, that.__title);
                     that.add(that.__plot);
+                    */
                 });
                 h.setMethod("GET");
                 h.setUrl(auroral_resources.ui.plot.dygraphs.TimeSeriesWindow.getCsvUrl(parameter,start,stop));
