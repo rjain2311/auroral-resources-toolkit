@@ -529,6 +529,7 @@ qx.Class.define("auroral_resources.Application",
         // empty the workspace, nuke all widgets
         //
         emptyWorkspace : function() {
+            auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE = 0;
             auroral_resources.Application.__mainWindow.removeAll();
         },
 

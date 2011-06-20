@@ -82,6 +82,8 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ProxiedTimeSeriesWindow",
         this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
         this.__mddocname = mddocname;
         this.__title = title;
+        var parameter = ""; 
+        this.__parameter = "";
 
         this.set({
             allowMaximize: false,
