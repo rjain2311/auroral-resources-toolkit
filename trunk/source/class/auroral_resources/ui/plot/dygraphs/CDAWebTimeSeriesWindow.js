@@ -140,10 +140,10 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow",
                 that.__csvData = h.getResponseText();
                 try {
                     that.__plot = that._createPlot(parameter, start, stop, that.__title);
-                    that.add(that.__plot);
+                    that._hideNoData();
                 } catch (e) {
-                    that.remove(that.__loading);
-                    that.add(that.__nodata);
+                    that._hideLoading();
+                    that._showNoData();
                 }
                 
                 /* w/o error handling
@@ -298,20 +298,22 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow",
                 var data = new qx.ui.form.Button("Download Data");
                 data.addListener("click", function(evt) {
 //                    var dlurl = "http://cdaweb.gsfc.nasa.gov/istp_public/";
-                    var dlurl = "http://cdaweb.gsfc.nasa.gov/"; //better option...
+//                    var dlurl = "http://cdaweb.gsfc.nasa.gov/"; //better option...
+                    var dlurl = "http://vspo.gsfc.nasa.gov/websearch/dispatcher?action=AccessorPromptAction&pID=413&aID=2";
                     window.open(dlurl,"");
                     popup.hide();
                 });
                 
                 var mdata = new qx.ui.form.Button("View Metadata");
                 mdata.addListener("click", function(evt) {
-                    var mdurl = "http://vspo.gsfc.nasa.gov/websearch/dispatcher";
+                    //var mdurl = "http://vspo.gsfc.nasa.gov/websearch/dispatcher";
+                    var mdurl = "http://vspo.gsfc.nasa.gov/websearch/dispatcher?action=RESULT_LIST_PANE_ACTION&command=ProductViewCmd&pid=413";
                     window.open(mdurl,"");
                     popup.hide();
                 });
                 
                 popup.add(new qx.ui.basic.Label("Additional Options"));
-                popup.add(png);
+                //popup.add(png);
                 popup.add(data);
                 popup.add(mdata);
                 popup.placeToMouse(evt);
@@ -352,16 +354,17 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow",
         //
         _startDateChangeBusCallback : function(e) {
 
-            // sanity checking
-            if (typeof this.__plot === undefined || this.__plot === null) { return; }
-            var g = this.__plot.getPlotObject();
-            if (typeof g === undefined || g === null) { return; }
-            g.destroy();
+            // cleanup, if available
+            if (typeof this.__plot !== undefined && this.__plot !== null) {
+                var g = this.__plot.getPlotObject();
+                if (typeof g !== undefined && g !== null) {
+                    g.destroy();
+                    this.remove(this.__plot);
+                    qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
+                }
+            }
 
-            this.remove(this.__plot);
             this._showLoading();
-
-            qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
             this.__plot = null;
             this.__csvData = null;
             
@@ -383,10 +386,10 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow",
                     that.__csvData = h.getResponseText();
                     try {
                         that.__plot = that._createPlot(parameter, start, stop, that.__title);
-                        that.add(that.__plot);
+                        that._hideNoData();
                     } catch (e) {
-                        that.remove(that.__loading);
-                        that.add(that.__nodata);
+                        that._hideLoading();
+                        that._showNoData();
                     }
 
                     /* w/o error handling
@@ -412,16 +415,17 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow",
         //
         _stopDateChangeBusCallback : function(e) {
 
-            // sanity checking
-            if (typeof this.__plot === undefined || this.__plot === null) { return; }
-            var g = this.__plot.getPlotObject();
-            if (typeof g === undefined || g === null) { return; }
-            g.destroy();
+            // cleanup, if available
+            if (typeof this.__plot !== undefined && this.__plot !== null) {
+                var g = this.__plot.getPlotObject();
+                if (typeof g !== undefined && g !== null) {
+                    g.destroy();
+                    this.remove(this.__plot);
+                    qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
+                }
+            }
 
-            this.remove(this.__plot);
             this._showLoading();
-
-            qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
             this.__plot = null;
             this.__csvData = null;
             
@@ -443,10 +447,10 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow",
                     that.__csvData = h.getResponseText();
                     try {
                         that.__plot = that._createPlot(parameter, start, stop, that.__title);
-                        that.add(that.__plot);
+                        that._hideNoData();
                     } catch (e) {
-                        that.remove(that.__loading);
-                        that.add(that.__nodata);
+                        that._hideLoading();
+                        that._showNoData();
                     }
 
                     /* w/o error handling
@@ -516,6 +520,14 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow",
     */
     destruct : function()
     {
+        // cleanup, if available
+        if (typeof this.__plot !== undefined && this.__plot !== null) {
+            var g = this.__plot.getPlotObject();
+            if (typeof g !== undefined && g !== null) {
+                g.destroy();
+            }
+        }
+        
         this.__error = null;
         this.__title = null;
         this.__loading = null;

@@ -55,6 +55,7 @@ qx.Class.define("auroral_resources.ui.tree.MapTreeFile",
     {
         this.base(arguments, title);
         this.setDraggable(true);
+        this.addListener("dblclick", this._doubleClicked, this);
         this.addListener("dragstart", this._dragStart, this);
         this.addListener("droprequest", this._dropRequest, this);
         this.__mddocname = mddocname;
@@ -82,6 +83,13 @@ qx.Class.define("auroral_resources.ui.tree.MapTreeFile",
         __baseLayer : null,
         __period : null,
         __mddocname : null,
+
+        _doubleClicked : function(e) {
+            if (!auroral_resources.Application.isWidgetDropAllowed()) { return; }
+            this.__window = new auroral_resources.ui.window.MapWindow(512,512,this.__mapper, this.__baselayer, this.__period, this.__title, this.__mddocname);
+            var w = this.__window;
+            auroral_resources.Application.addWindow(w);
+        },
 
         //
         //

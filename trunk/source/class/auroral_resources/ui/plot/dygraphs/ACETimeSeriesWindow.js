@@ -137,14 +137,16 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ACETimeSeriesWindow",
             h.addListener("success", function() {
 
                 that.__csvData = h.getResponseText();
+
                 try {
                     that.__plot = that._createPlot(parameter, start, stop, that.__title);
                     that.add(that.__plot);
+                    that._hideNoData();
                 } catch (e) {
-                    that.remove(that.__loading);
-                    that.add(that.__nodata);
+                    that._hideLoading();
+                    that._showNoData();
                 }
-                    
+                
                 /* w/o error handling
                 that.__csvData = h.getResponseText();
                 that.__plot = that._createPlot(parameter, start, stop, title);
@@ -303,7 +305,8 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ACETimeSeriesWindow",
                 
                 var mdata = new qx.ui.form.Button("View Metadata");
                 mdata.addListener("click", function(evt) {
-                    var mdurl = "http://www.srl.caltech.edu/ACE/ASC/level2/new/metadata/";
+                    //var mdurl = "http://www.srl.caltech.edu/ACE/ASC/level2/new/metadata/";
+                    var mdurl = "http://www.srl.caltech.edu/ACE/ASC/level2/mag_l2desc.html";
                     window.open(mdurl,"");
                     popup.hide();
 
@@ -351,16 +354,17 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ACETimeSeriesWindow",
         //
         _startDateChangeBusCallback : function(e) {
 
-            // sanity checking
-            if (typeof this.__plot === undefined || this.__plot === null) { return; }
-            var g = this.__plot.getPlotObject();
-            if (typeof g === undefined || g === null) { return; }
-            g.destroy();
+            // cleanup, if available
+            if (typeof this.__plot !== undefined && this.__plot !== null) {
+                var g = this.__plot.getPlotObject();
+                if (typeof g !== undefined && g !== null) {
+                    g.destroy();
+                    this.remove(this.__plot);
+                    qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
+                }
+            }
 
-            this.remove(this.__plot);
             this._showLoading();
-
-            qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
             this.__plot = null;
             this.__csvData = null;
             
@@ -382,10 +386,10 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ACETimeSeriesWindow",
                     that.__csvData = h.getResponseText();
                     try {
                         that.__plot = that._createPlot(parameter, start, stop, that.__title);
-                        that.add(that.__plot);
+                        that._hideNoData();
                     } catch (e) {
-                        that.remove(that.__loading);
-                        that.add(that.__nodata);
+                        that._hideLoading();
+                        that._showNoData();
                     }
 
                     /* w/o error handling
@@ -411,16 +415,17 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ACETimeSeriesWindow",
         //
         _stopDateChangeBusCallback : function(e) {
 
-            // sanity checking
-            if (typeof this.__plot === undefined || this.__plot === null) { return; }
-            var g = this.__plot.getPlotObject();
-            if (typeof g === undefined || g === null) { return; }
-            g.destroy();
+            // cleanup, if available
+            if (typeof this.__plot !== undefined && this.__plot !== null) {
+                var g = this.__plot.getPlotObject();
+                if (typeof g !== undefined && g !== null) {
+                    g.destroy();
+                    this.remove(this.__plot);
+                    qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
+                }
+            }
 
-            this.remove(this.__plot);
             this._showLoading();
-
-            qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
             this.__plot = null;
             this.__csvData = null;
             
@@ -442,10 +447,10 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ACETimeSeriesWindow",
                     that.__csvData = h.getResponseText();
                     try {
                         that.__plot = that._createPlot(parameter, start, stop, that.__title);
-                        that.add(that.__plot);
+                        that._hideNoData();
                     } catch (e) {
-                        that.remove(that.__loading);
-                        that.add(that.__nodata);
+                        that._hideLoading();
+                        that._showNoData();
                     }
 
                     /* w/o error handling 
@@ -515,6 +520,14 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ACETimeSeriesWindow",
     */
     destruct : function()
     {
+        // cleanup, if available
+        if (typeof this.__plot !== undefined && this.__plot !== null) {
+            var g = this.__plot.getPlotObject();
+            if (typeof g !== undefined && g !== null) {
+                g.destroy();
+            }
+        }
+        
         this.__error = null;
         this.__title = null;
         this.__loading = null;

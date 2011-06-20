@@ -95,7 +95,17 @@ qx.Class.define("auroral_resources.ui.tree.AutoplotTreeFile",
         //
         _doubleClicked : function(e) {
 
+            var start = this.__timeBus.getStartDate();
+            var startMin = 1293840000000; // 1/1/11 00:00:00
+            var stop = this.__timeBus.getStopDate();
+            var stopMax = 1301529600000; // 3/31/11 00:00:00
+            if (!(start >= startMin && stop <= stopMax)) {
+                dialog.Dialog.med_alert("Unfortunately, no data are available for your time range for this data set. This data is only available from Jan 1, 2011 through April 1, 2011.");
+                return;
+            }
+
             if (this.__parameter !== undefined) {
+
 
                 var cur = this.__timeBus.getNow();
                 cur = new Date(cur);
@@ -126,6 +136,18 @@ qx.Class.define("auroral_resources.ui.tree.AutoplotTreeFile",
         //
         //
         _dragStart : function(e) {
+
+            var start = this.__timeBus.getStartDate();
+            var startMin = 1293840000000; // 1/1/11 00:00:00
+            var stop = this.__timeBus.getStopDate();
+            var stopMax = 1301529600000; // 3/31/11 00:00:00
+
+            if (!(start >= startMin && stop <= stopMax)) {
+                
+                dialog.Dialog.med_alert("Unfortunately, no data are available for your time range for this data set. This data is only available from Jan 1, 2011 through April 1, 2011.");
+                return;
+            }
+
             e.addAction("copy");
             e.addAction("move");
             e.addType("widget");

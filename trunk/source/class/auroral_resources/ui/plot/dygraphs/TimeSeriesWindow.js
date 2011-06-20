@@ -138,10 +138,10 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
                 that.__csvData = h.getResponseText();
                 try {
                     that.__plot = that._createPlot(parameter, start, stop, title);
-                    that.add(that.__plot);
+                    that._hideNoData();
                 } catch (e) {
-                    that.remove(that.__loading);
-                    that.add(that.__nodata);
+                    that._hideLoading();
+                    that._showNoData();
                 }
             });
             h.addListener("error", function() {
@@ -303,7 +303,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
                 });
                 
                 popup.add(new qx.ui.basic.Label("Additional Options"));
-                popup.add(png);
+                //popup.add(png);
                 popup.add(data);
                 popup.add(mdata);
                 popup.placeToMouse(evt);
@@ -344,16 +344,17 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
         //
         _startDateChangeBusCallback : function(e) {
 
-            // sanity checking
-            if (typeof this.__plot === undefined || this.__plot === null) { return; }
-            var g = this.__plot.getPlotObject();
-            if (typeof g === undefined || g === null) { return; }
-            g.destroy();
+            // cleanup, if available
+            if (typeof this.__plot !== undefined && this.__plot !== null) {
+                var g = this.__plot.getPlotObject();
+                if (typeof g !== undefined && g !== null) {
+                    g.destroy();
+                    this.remove(this.__plot);
+                    qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
+                }
+            }
 
-            this.remove(this.__plot);
             this._showLoading();
-
-            qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
             this.__plot = null;
             this.__csvData = null;
             
@@ -375,10 +376,10 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
                     that.__csvData = h.getResponseText();
                     try {
                         that.__plot = that._createPlot(parameter, start, stop, that.__title);
-                        that.add(that.__plot);
+                        that._hideNoData();
                     } catch (e) {
-                        that.remove(that.__loading);
-                        that.add(that.__nodata);
+                        that._hideLoading();
+                        that._showNoData();
                     }
 
                     /* w/o error handling
@@ -404,16 +405,17 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
         //
         _stopDateChangeBusCallback : function(e) {
 
-            // sanity checking
-            if (typeof this.__plot === undefined || this.__plot === null) { return; }
-            var g = this.__plot.getPlotObject();
-            if (typeof g === undefined || g === null) { return; }
-            g.destroy();
+            // cleanup, if available
+            if (typeof this.__plot !== undefined && this.__plot !== null) {
+                var g = this.__plot.getPlotObject();
+                if (typeof g !== undefined && g !== null) {
+                    g.destroy();
+                    this.remove(this.__plot);
+                    qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
+                }
+            }
 
-            this.remove(this.__plot);
             this._showLoading();
-
-            qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
             this.__plot = null;
             this.__csvData = null;
             
@@ -435,10 +437,10 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
                     that.__csvData = h.getResponseText();
                     try {
                         that.__plot = that._createPlot(parameter, start, stop, that.__title);
-                        that.add(that.__plot);
+                        that._hideNoData();
                     } catch (e) {
-                        that.remove(that.__loading);
-                        that.add(that.__nodata);
+                        that._hideLoading();
+                        that._showNoData();
                     }
 
                     /* w/o error handling
@@ -508,7 +510,14 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
     */
     destruct : function()
     {
-        this.__plot.getPlotObject().destroy();
+        // cleanup, if available
+        if (typeof this.__plot !== undefined && this.__plot !== null) {
+            var g = this.__plot.getPlotObject();
+            if (typeof g !== undefined && g !== null) {
+                g.destroy();
+            }
+        }
+
         this.__error = null;
         this.__title = null;
         this.__loading = null;

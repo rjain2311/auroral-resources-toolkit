@@ -57,6 +57,7 @@ qx.Class.define("auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile",
     {
         this.base(arguments, title);
         this.setDraggable(true);
+        this.addListener("dblclick", this._doubleClicked, this);
         this.addListener("dragstart", this._dragStart, this);
         this.addListener("droprequest", this._dropRequest, this);
         this.__title = title;
@@ -82,6 +83,13 @@ qx.Class.define("auroral_resources.ui.tree.CDAWebTimeSeriesTreeFile",
         __timeBus : null,
         __parameter : null,
         __mddocname : null,
+
+        _doubleClicked : function(e) {
+            if (!auroral_resources.Application.isWidgetDropAllowed()) { return; }
+            this.__window = new auroral_resources.ui.window.CDAWebTimeSeriesWindow(600, 400, this.__parameter, this.__title, this.__mddocname);
+            var w = this.__window;
+            auroral_resources.Application.addWindow(w);
+        },
 
         _dragStart : function(e) {
             e.addAction("copy");
