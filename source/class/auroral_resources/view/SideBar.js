@@ -142,6 +142,10 @@ qx.Class.define("auroral_resources.view.SideBar",
             panel.setValue(false);
         }
 
+        this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
+//        this.__timeBus.getBus().subscribe("time.now", this._nowChangeBusCallback, this);
+        this.__timeBus.getBus().subscribe("time.stopDate", this._stopDateChangeBusCallback, this);
+
         return this.__resize;
     },
 
@@ -165,6 +169,20 @@ qx.Class.define("auroral_resources.view.SideBar",
         __dateFormatTime : null,
         __testLabel : null,
         __timeBus : null,
+
+
+        //
+        // callback for the 'startDate' message channel
+        //
+        _startDateChangeBusCallback : function(e) {
+        },
+
+
+        //
+        // callback for the 'stopDate' message channel
+        //
+        _stopDateChangeBusCallback : function(e) {
+        },
 
 
         //
@@ -590,12 +608,24 @@ qx.Class.define("auroral_resources.view.SideBar",
 
             // 1 month currently
             var delta = max - min;
-            var max_range_allowed = (60*60*24*7*4)*1000;
+            var max_range_allowed = (60*60*24*30)*1000;
+
             if ( delta >= max_range_allowed ) {
+
+                // change the stop time too
+                var newStop = min + max_range_allowed;
+                this.__timeBus.setStopDate(newStop);
+                newStop = new Date(newStop);
+                this.__sliderGroup.maximum.setValue(this.__dateFormat.format(newStop));
+                this.__stopChooser.setValue(newStop);
+                this.__sliderGroup.slider.setMaximum(newStop);
+
+                /* or bomb completely
                 var msg = "You're only allowed to display up to a month of data.  Please adjust the time range accordingly.";
                 dialog.Dialog.error(msg);
                 this.__startPopup.hide();
                 return;
+                */
             }
 
             this.__sliderGroup.slider.setMinimum(min);
@@ -625,11 +655,23 @@ qx.Class.define("auroral_resources.view.SideBar",
 
             // 1 month currently
             var delta = max - min;
-            var max_range_allowed = (60*60*24*7*31)*1000;
+            var max_range_allowed = (60*60*24*30)*1000;
+
             if ( delta >= max_range_allowed ) {
+
+                // change the start time too
+                var newStart = max - max_range_allowed;
+                this.__timeBus.setStartDate(newStart);
+                newStart = new Date(newStart);
+                this.__sliderGroup.minimum.setValue(this.__dateFormat.format(newStart));
+                this.__startChooser.setValue(newStart);
+                this.__sliderGroup.slider.setMinimum(newStart);
+
+                /* bomb completely
                 dialog.Dialog.error("At present you may only view up to a month at a time, please try again, you've attempted to view more than a month");
                 this.__startPopup.hide();
                 return;
+                */
             }
 
             this.__sliderGroup.slider.setMaximum(max);

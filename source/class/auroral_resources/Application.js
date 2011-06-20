@@ -80,6 +80,13 @@ qx.Class.define("auroral_resources.Application",
         __longUrl : null,
         __SAFE_FOR_IE : true,
 
+        //
+        // add a window to the workspace a 0,0 origin
+        //
+        addWindow : function(w) {
+            auroral_resources.Application.__mainWindow.add( w, { left:0, top:0 });
+            w.open();
+        },
 
         //
         // I absolutely hate this implementation, but there is _NOT_
@@ -878,7 +885,6 @@ qx.Class.define("auroral_resources.Application",
  
         },
 
-
         //
         // add the widget to the workspace at the cursor
         //
@@ -888,8 +894,16 @@ qx.Class.define("auroral_resources.Application",
             if (typeof w !== undefined && w !== null && w === "launcher") { return; }
             if (typeof w !== undefined && w !== null && w === "ignore") { return; }
 
-            var x = e.getDocumentLeft() - auroral_resources.Application.__X_OFFSET; // sub off extra to center it more
-            var y = e.getDocumentTop() - auroral_resources.Application.__Y_OFFSET;  // ditto
+            var dx = e.getDocumentLeft();
+            var dy = e.getDocumentTop(); 
+            var x = 0;
+            var y = 0;
+             
+            if (typeof dx !== undefined && dx !== null && typeof dy !== undefined && dy !== null) {
+                x = dx - auroral_resources.Application.__X_OFFSET; // sub off extra to center it more
+                y = dy - auroral_resources.Application.__Y_OFFSET;  // ditto
+            }
+
             auroral_resources.Application.__mainWindow.add( w, { left:x, top:y });
             w.open();
             //auroral_resources.Application.__mainWindow.setBlockToolTip(true);
