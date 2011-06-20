@@ -136,9 +136,21 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow",
             var h = new qx.io.request.Xhr();
             h.setAsync(true);
             h.addListener("success", function() {
+
+                that.__csvData = h.getResponseText();
+                try {
+                    that.__plot = that._createPlot(parameter, start, stop, that.__title);
+                    that.add(that.__plot);
+                } catch (e) {
+                    that.remove(that.__loading);
+                    that.add(that.__nodata);
+                }
+                
+                /* w/o error handling
                 that.__csvData = h.getResponseText();
                 that.__plot = that._createPlot(parameter, start, stop, title);
                 that.add(that.__plot);
+                */
             });
             h.addListener("error", function() {
                 this.error("Unable to create initial plot!");
@@ -195,6 +207,11 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow",
 
             var that = this;
 
+            // not enough data to do anything meaningful
+            if ( that.__csvData.length <= 256 ) { 
+                throw "no data for "+parameter+" between "+start+" and "+stop;
+            }
+            
             var plot = new qxdygraphs.Plot(
                 that.__csvData,
                 {
@@ -280,12 +297,17 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow",
 
                 var data = new qx.ui.form.Button("Download Data");
                 data.addListener("click", function(evt) {
-                    alert('Not Yet Available');
+//                    var dlurl = "http://cdaweb.gsfc.nasa.gov/istp_public/";
+                    var dlurl = "http://cdaweb.gsfc.nasa.gov/"; //better option...
+                    window.open(dlurl,"");
+                    popup.hide();
                 });
                 
                 var mdata = new qx.ui.form.Button("View Metadata");
                 mdata.addListener("click", function(evt) {
-                    alert('Not Yet Available');
+                    var mdurl = "http://vspo.gsfc.nasa.gov/websearch/dispatcher";
+                    window.open(mdurl,"");
+                    popup.hide();
                 });
                 
                 popup.add(new qx.ui.basic.Label("Additional Options"));
@@ -357,9 +379,21 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow",
                 var h = new qx.io.request.Xhr();
                 h.setAsync(true);
                 h.addListener("success", function() {
+
+                    that.__csvData = h.getResponseText();
+                    try {
+                        that.__plot = that._createPlot(parameter, start, stop, that.__title);
+                        that.add(that.__plot);
+                    } catch (e) {
+                        that.remove(that.__loading);
+                        that.add(that.__nodata);
+                    }
+
+                    /* w/o error handling
                     that.__csvData = h.getResponseText();
                     that.__plot = that._createPlot(parameter, start, stop, that.__title);
                     that.add(that.__plot);
+                    */
                 });
                 h.setMethod("GET");
                 h.setUrl(auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow.getCsvUrl(parameter,start,stop));
@@ -405,9 +439,21 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow",
                 var h = new qx.io.request.Xhr();
                 h.setAsync(true);
                 h.addListener("success", function() {
+
+                    that.__csvData = h.getResponseText();
+                    try {
+                        that.__plot = that._createPlot(parameter, start, stop, that.__title);
+                        that.add(that.__plot);
+                    } catch (e) {
+                        that.remove(that.__loading);
+                        that.add(that.__nodata);
+                    }
+
+                    /* w/o error handling
                     that.__csvData = h.getResponseText();
                     that.__plot = that._createPlot(parameter, start, stop, that.__title);
                     that.add(that.__plot);
+                    */
                 });
                 h.setMethod("GET");
                 h.setUrl(auroral_resources.ui.plot.dygraphs.CDAWebTimeSeriesWindow.getCsvUrl(parameter,start,stop));

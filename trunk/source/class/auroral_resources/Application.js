@@ -115,10 +115,12 @@ qx.Class.define("auroral_resources.Application",
         //
         checkForIE : function() 
         {
-            if ( qx.core.Environment.get("browser.name") === "IE" ) {
+            if ( qx.core.Environment.get("browser.name").toUpperCase() === "IE" ) {
 
-                var iemsg = "Older versions of Internet Explorer may have problems with this site. For the best experience, please download and use Internet Explorer 9 or greater, or, any other modern web browser such as Chrome, Safari, FireFox, Opera etc...";
+                var iemsg = "Older versions of Internet Explorer may have problems with this site. For the best experience, please download and use Internet Explorer 9+, or, any other modern web browser such as Chrome, Safari, FireFox, Opera etc...";
                 var ver = qx.core.Environment.get("browser.version");
+                // only care about the major version...
+                ver = ver.substring(0,1);
 
                 // IE 8 ?
                 if ( ver === "8" ) {
@@ -128,6 +130,8 @@ qx.Class.define("auroral_resources.Application",
                 else if ( ver === "6" || ver === "7" ) {
                     auroral_resources.Application.__SAFE_FOR_IE = false;
                     alert(iemsg);
+                } else {
+                    // do nothing ?
                 }
             }
         },

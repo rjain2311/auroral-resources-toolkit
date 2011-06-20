@@ -136,6 +136,17 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ProxiedTimeSeriesWindow",
             var h = new qx.io.request.Xhr();
             h.setAsync(true);
             h.addListener("success", function() {
+
+                that.__csvData = h.getResponseText();
+                try {
+                    that.__plot = that._createPlot(parameter, start, stop, that.__title);
+                    that.add(that.__plot);
+                } catch (e) {
+                    that.remove(that.__loading);
+                    that.add(that.__nodata);
+                }
+
+                /* w/partial error handling
                 that.__csvData = h.getResponseText();
                 var lines = that.__csvData.length;
                 if (typeof lines === undefined || lines === null || lines.length < 128) { //128 is arbitrary... big enough to ensure more than column defs on line 1 is all that's needed
@@ -146,6 +157,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ProxiedTimeSeriesWindow",
                     that.__plot = that._createPlot(parameter, start, stop, title);
                     that.add(that.__plot);
                 }
+                */
             });
             h.addListener("error", function() {
                 this.error("Unable to create initial plot!");
@@ -202,6 +214,11 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ProxiedTimeSeriesWindow",
 
             var that = this;
 
+            // not enough data to do anything meaningful
+            if ( that.__csvData.length <= 256 ) { 
+                throw "no data for "+parameter+" between "+start+" and "+stop;
+            }
+            
             var plot = new qxdygraphs.Plot(
                 that.__csvData,
                 {
@@ -368,6 +385,17 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ProxiedTimeSeriesWindow",
                 var h = new qx.io.request.Xhr();
                 h.setAsync(true);
                 h.addListener("success", function() {
+
+                    that.__csvData = h.getResponseText();
+                    try {
+                        that.__plot = that._createPlot(parameter, start, stop, that.__title);
+                        that.add(that.__plot);
+                    } catch (e) {
+                        that.remove(that.__loading);
+                        that.add(that.__nodata);
+                    }
+
+                    /* w/o error handling
                     that.__csvData = h.getResponseText();
                     var lines = that.__csvData.length;
                     if (typeof lines === undefined || lines === null || lines.length < 128) { //128 is arbitrary... big enough to ensure more than column defs on line 1 is all that's needed
@@ -378,6 +406,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ProxiedTimeSeriesWindow",
                         that.__plot = that._createPlot(parameter, start, stop, title);
                         that.add(that.__plot);
                     }
+                    */
                 });
                 h.setMethod("GET");
                 h.setUrl(auroral_resources.ui.window.ProxiedTimeSeriesWindow.getCsvUrl(start,stop));
@@ -423,6 +452,17 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ProxiedTimeSeriesWindow",
                 var h = new qx.io.request.Xhr();
                 h.setAsync(true);
                 h.addListener("success", function() {
+
+                    that.__csvData = h.getResponseText();
+                    try {
+                        that.__plot = that._createPlot(parameter, start, stop, that.__title);
+                        that.add(that.__plot);
+                    } catch (e) {
+                        that.remove(that.__loading);
+                        that.add(that.__nodata);
+                    }
+
+                    /* w/o error handling 
                     that.__csvData = h.getResponseText();
                     var lines = that.__csvData.length;
                     if (typeof lines === undefined || lines === null || lines.length < 128) { //128 is arbitrary... big enough to ensure more than column defs on line 1 is all that's needed
@@ -433,6 +473,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ProxiedTimeSeriesWindow",
                         that.__plot = that._createPlot(parameter, start, stop, title);
                         that.add(that.__plot);
                     }
+                    */
                 });
                 h.setMethod("GET");
                 h.setUrl(auroral_resources.ui.window.ProxiedTimeSeriesWindow.getCsvUrl(start,stop));
