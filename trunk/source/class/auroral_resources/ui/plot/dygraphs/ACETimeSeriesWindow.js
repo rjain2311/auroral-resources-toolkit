@@ -313,7 +313,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ACETimeSeriesWindow",
                 });
                 
                 popup.add(new qx.ui.basic.Label("Additional Options"));
-                popup.add(png);
+                //popup.add(png);
                 popup.add(data);
                 popup.add(mdata);
                 popup.placeToMouse(evt);
