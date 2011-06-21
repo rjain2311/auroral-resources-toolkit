@@ -142,7 +142,11 @@ qx.Class.define("auroral_resources.ui.window.MapWindow",
         this.setHeight(height);
         this.setContentPadding(0,0,0,0);
 
-        this.add(new qx.ui.basic.Image(qx.util.ResourceManager.getInstance().toUri("auroral_resources/loading_map.png")));
+        this.__loading = new qx.ui.basic.Image(qx.util.ResourceManager.getInstance().toUri("auroral_resources/loading_map.png"));
+        this.__errloading = new qx.ui.basic.Image(qx.util.ResourceManager.getInstance().toUri("auroral_resources/errorloading_map.png"));
+        this.__nodata = new qx.ui.basic.Image(qx.util.ResourceManager.getInstance().toUri("auroral_resources/nodata_map.png"));
+
+        this._showLoading();
 
         var olScripts = [
             qx.util.ResourceManager.getInstance().toUri("auroral_resources/proj4js-combined.js.gz"),
@@ -196,7 +200,74 @@ qx.Class.define("auroral_resources.ui.window.MapWindow",
         __mddocname : null,
         __isle : null,
         __hasIsle : 1,
+        __loading : null,
+        __errloading : null,
+        __nodata : null,
 
+
+        //
+        //
+        //
+        _showLoading : function() {
+            if ( this.indexOf(this.__loading) === -1 ) { 
+                this._hideNoData();
+                this._hideErrLoading();
+                this.add(this.__loading);
+            }
+        },
+
+
+        //
+        //
+        //
+        _hideLoading : function() {
+            if ( this.indexOf(this.__loading) !== -1 ) { 
+                this.remove(this.__loading);
+            }
+        },
+
+        //
+        //
+        //
+        _showErrLoading : function() {
+            if ( this.indexOf(this.__loading) === -1 ) { 
+                this._hideNoData();
+                this._hideLoading();
+                this.add(this.__errloading);
+            }
+        },
+
+
+        //
+        //
+        //
+        _hideErrLoading : function() {
+            if ( this.indexOf(this.__errloading) !== -1 ) { 
+                this.remove(this.__errloading);
+            }
+        },
+
+        //
+        //
+        //
+        _showNoData : function() {
+            if ( this.indexOf(this.__nodata) === -1 ) { 
+                this._hideLoading();
+                this._hideErrLoading();
+                this.add(this.__nodata);
+            }
+        },
+
+
+        //
+        //
+        //
+        _hideNoData : function() {
+            if ( this.indexOf(this.__nodata) !== -1 ) { 
+                this.remove(this.__nodata);
+            }
+        },
+        
         //
         //
         //
@@ -366,11 +437,15 @@ qx.Class.define("auroral_resources.ui.window.MapWindow",
         // callback for 'now' changes
         //
         _nowChangeBusCallback : function(e) {
+
+            this._showLoading();
+
             // rotate base layer and get the ovation layer based on current time
             if(this.__hasIsle === 0) {
                 this.removeAll();
                 this.add(this.__isle);
                 this.__hasIsle = 1;
+                this._hideLoading();
             }
 
             this.__map.removeLayer(this.__baseLayer);
@@ -386,6 +461,7 @@ qx.Class.define("auroral_resources.ui.window.MapWindow",
                 layer = this._getOvationOverlay(this.__map, this.__period);
 
                 if (layer != null) {
+                    this._hideLoading();
                     this.__map.addLayer(layer);
                 }
 
@@ -400,6 +476,7 @@ qx.Class.define("auroral_resources.ui.window.MapWindow",
                 layer = this._getOLSOverlay(this.getAngle(), this.__map);
 
                 if (layer != null) {
+                    this._hideLoading();
                     this.__map.addLayer(layer);
                 }
 
@@ -473,7 +550,7 @@ qx.Class.define("auroral_resources.ui.window.MapWindow",
 
                 this.removeAll();
                 this.__hasIsle = 0;
-                this.add(new qx.ui.basic.Image(qx.util.ResourceManager.getInstance().toUri("auroral_resources/errorloading_map.png")));
+                this._showNoData();
 
                 /*
                 layer = new OpenLayers.Layer.Image(
@@ -518,7 +595,7 @@ qx.Class.define("auroral_resources.ui.window.MapWindow",
 
                 this.removeAll();
                 this.__hasIsle = 0;
-                this.add(new qx.ui.basic.Image(qx.util.ResourceManager.getInstance().toUri("auroral_resources/nodata_map.png")));
+                this._showNoData();
 
                 /*
                 layer = new OpenLayers.Layer.Image(

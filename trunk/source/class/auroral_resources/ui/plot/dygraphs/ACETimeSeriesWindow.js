@@ -140,10 +140,8 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ACETimeSeriesWindow",
 
                 try {
                     that.__plot = that._createPlot(parameter, start, stop, that.__title);
-                    that._hideNoData();
                     that.add(that.__plot);
                 } catch (e) {
-                    that._hideLoading();
                     that._showNoData();
                 }
                 
@@ -237,6 +235,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ACETimeSeriesWindow",
         //
         _showLoading : function() {
             if ( this.indexOf(this.__loading) === -1 ) { 
+                this._hideNoData();
                 this.add(this.__loading);
             }
         },
@@ -257,6 +256,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ACETimeSeriesWindow",
         //
         _showNoData : function() {
             if ( this.indexOf(this.__nodata) === -1 ) { 
+                this._hideLoading();
                 this.add(this.__nodata);
             }
         },
@@ -386,10 +386,8 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ACETimeSeriesWindow",
                     that.__csvData = h.getResponseText();
                     try {
                         that.__plot = that._createPlot(parameter, start, stop, that.__title);
-                        that._hideNoData();
                         that.add(that.__plot);
                     } catch (e) {
-                        that._hideLoading();
                         that._showNoData();
                     }
 
@@ -405,7 +403,6 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ACETimeSeriesWindow",
 
             } catch(e) {
                 this.error("Unable to update start time for plot!");
-                this._hideLoading();
                 this._showNoData();
             }
         },
@@ -448,10 +445,8 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ACETimeSeriesWindow",
                     that.__csvData = h.getResponseText();
                     try {
                         that.__plot = that._createPlot(parameter, start, stop, that.__title);
-                        that._hideNoData();
                         that.add(that.__plot);
                     } catch (e) {
-                        that._hideLoading();
                         that._showNoData();
                     }
 
@@ -467,7 +462,6 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.ACETimeSeriesWindow",
 
             } catch(e) {
                 this.error("Unable to update stop time for plot!");
-                this._hideLoading();
                 this._showNoData();
             }
         },	
