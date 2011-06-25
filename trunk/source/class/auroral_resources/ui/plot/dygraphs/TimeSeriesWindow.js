@@ -116,7 +116,7 @@ qx.Class.define("auroral_resources.ui.plot.dygraphs.TimeSeriesWindow",
         this.__nodata = new qx.ui.basic.Label().set({
             width: width,
             height: height,
-            value: "<center><h1 style='color:red'>No Data!</h1></center>",
+            value: "<center><h1 style='color:red'>No data for your time range. Right click and 'View Metadata'</h1></center>",
             rich : true
         });
 
