@@ -89,7 +89,7 @@ qx.Class.define("auroral_resources.view.ToolBar",
         mainPart.addSeparator();
         
         var sharebtn = new qx.ui.toolbar.Button(this.tr("Share"), "icon/22/actions/mail-forward.png");
-        sharebtn.setToolTipText(this.tr("Share your current workspaace via E-Mail"));
+        sharebtn.setToolTipText(this.tr("Share your current workspace via E-Mail"));
         sharebtn.addListener("mouseup", application.shareUrl, application);
         mainPart.add(sharebtn);
 

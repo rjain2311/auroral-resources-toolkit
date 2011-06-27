@@ -189,13 +189,13 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
             if (dy.length == 1) { dy = "0" + dy; }
             var ymd = stop.getFullYear() + "-" + mo + "-" + dy + "T";
             var hr = stop.getHours();
-            if (hr.length == 1 ) { hr = "0" + hr; }
+            if (hr.length == 1 ) { hr = "23" + hr; }
             ymd += hr + ":";
             var mn = stop.getMinutes();
-            if (mn.length == 1 ) { mn = "0" + mn; }
+            if (mn.length == 1 ) { mn = "59" + mn; }
             ymd += mn + ":";
             var sc = stop.getSeconds();
-            if (sc.length == 1 ) { sc = "0" + sc; }
+            if (sc.length == 1 ) { sc = "59" + sc; }
             ymd += sc + "UTC";
 
             return ymd;
@@ -213,6 +213,7 @@ qx.Class.define("auroral_resources.messaging.TimeBus",
             if (mo.length == 1 ) { mo = "0" + mo; }
             // var dy = stop.getUTCDate();
             var dy = stop.getDate();
+            dy = new Date(stop.valueOf()-86400).getDate(); // a bit more than a day
             dy = "" + dy;
             if (dy.length == 1) { dy = "0" + dy; }
             // stop = stop.getUTCFullYear() + "" + mo + "" + dy;
