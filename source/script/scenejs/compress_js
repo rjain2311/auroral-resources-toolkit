@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+js=`find . -name '*.js'`
+
+for file in ${js[*]}
+do
+	gzip -9 -c "$file" > "$file.gz"
+done
