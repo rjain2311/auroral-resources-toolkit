@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/jquery.min.js.gz"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js.gz"></script>
+    <script type="text/javascript" src="js/scenejs.js.gz"></script>
+
+</head>
+
+<div id="container">
+
+    <div id="content">
+
+        <canvas id="theCanvas" width="1030" height="700">
+            <p>This example requires a browser that supports the
+                <a href="http://www.w3.org/html/wg/html5/">HTML5</a>
+                &lt;canvas&gt; feature.</p>
+        </canvas>
+
+        <div id="info">
+            <h2>SceneJS Texture Layers Example</h2>
+
+            <p>Demonstration of how to apply textures separately to the diffuse, specular and emission components of a material.</p>
+
+            <br/>
+
+        </div>
+
+        <div id="log">
+            <h3>Log</h3>
+            <div id="theLoggingDiv"></div>
+        </div>
+
+    </div>
+</div>
+
+<div id="loading-dialog" title="Loading textures..">
+    <p>Just a second please, loading the textures for this example.</p>
+</div>
+
+<script type="text/javascript" src="js/texture-layers-scene.js"></script>
+
+</body>
+</html>

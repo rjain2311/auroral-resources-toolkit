@@ -64,7 +64,7 @@ msgid "Share"
 msgstr ""
 
 #: auroral_resources/view/ToolBar.js:92
-msgid "Share your current workspaace via E-Mail"
+msgid "Share your current workspace via E-Mail"
 msgstr ""
 
 #: auroral_resources/view/ToolBar.js:99
@@ -131,6 +131,9 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Preferences"
+#~ msgstr ""
+
+#~ msgid "Share your current workspaace via E-Mail"
 #~ msgstr ""
 
 #~ msgid "URLs"
