@@ -43,7 +43,7 @@ Peter Elespuru - peter.elespuru@noaa.gov
 
 /* ************************************************************************
 
-#asset(auroral_resources/*)
+#asset(scenejs_embedded/*)
 
 ************************************************************************ */
 
@@ -109,6 +109,19 @@ qx.Class.define("auroral_resources.ui.window.SceneJSWindow",
         this.setHeight(height);
         this.setContentPadding(0,0,0,0);
                 
+        var frame = new qx.ui.embed.ThemedIframe();
+        frame.setSource("resource/scenejs_embedded/index.html");
+        this.add(frame);
+
+        return this;
+
+        //
+        // SceneJS is not loading correctly or getting clobbered somehow
+        // getting an error that hasn't be resolvable thus far
+        // Uncaught TypeError: Object [object Object] has no method '_parseNodeJSON' scenejs.js:156
+        // punting for now and going embedded
+        //
+
         this.__error = new qx.ui.basic.Label().set({
             width: width,
             height: height,

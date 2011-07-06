@@ -222,9 +222,8 @@ qx.Class.define("qxscenejs.Scene",
                 var id = 'sjsId'+(qxscenejs.Scene.INSTANCE_COUNTER++);
                 qx.bom.element.Attribute.set(this.__element, 'id', id);
                 qxParm.canvasId = id;
-                alert(SceneJS.VERSION);
-                var scene = qxThis.__sceneObject = new SceneJS.createNode(qxParm);
-                qxThis.fireDataEvent('sceneCreated', scene);
+                var myScene = qxThis.__sceneObject = new SceneJS.createNode(qxParm);
+                qxThis.fireDataEvent('sceneCreated', myScene);
 
             }
         }
