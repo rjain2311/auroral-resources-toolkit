@@ -1,0 +1,34 @@
+{
+  "info" : 
+  {
+    "name" : "QxSceneJS",
+
+    "summary" : "QxSceneJS Contribution",
+    "description" : "Integrate SceneJS into qooxdoo.",
+    
+    "homepage" : "",
+
+    "license" : "LGPL/EPL",
+
+    "authors" : 
+    [
+      {
+        "name" : "Peter R. Elespuru (elespuru)",
+        "email" : "peter.elespuru@noaa.gov"
+      }
+    ],
+
+    "version" : "trunk",
+    "qooxdoo-versions": ["1.1", "1.2", "1.3", "1.4", "1.5-pre", "1.5"]
+  },
+  
+  "provides" : 
+  {
+    "namespace"   : "qxscenejs",
+    "encoding"    : "utf-8",
+    "class"       : "source/class",
+    "resource"    : "source/resource",
+    "translation" : "source/translation",
+    "type"        : "contribution"
+  }
+}

@@ -65,7 +65,8 @@
         { "manifest" : "contrib/OpenFlashChart/trunk/Manifest.json" },
         { "manifest" : "contrib/QxGalleria/trunk/Manifest.json" },
         { "manifest" : "contrib/QxJqPlot/trunk/Manifest.json" },
-        { "manifest" : "contrib/QxHighcharts/trunk/Manifest.json" }
+        { "manifest" : "contrib/QxHighcharts/trunk/Manifest.json" },
+        { "manifest" : "contrib/QxSceneJS/trunk/Manifest.json" }
       ]
     },
 

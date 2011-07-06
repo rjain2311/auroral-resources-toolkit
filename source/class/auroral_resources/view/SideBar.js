@@ -297,13 +297,11 @@ qx.Class.define("auroral_resources.view.SideBar",
                 item.add(item2);
                 parent.add(item);
 
-                /*
                 item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("*Experimental*");
-                item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("3D WebGL Widget(s)");
-                item2.add(new auroral_resources.ui.tree.SceneJSTreeFile("http://scenejs.org/","SceneJS WebGL Widget"));
+                item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("3D");
+                item2.add(new auroral_resources.ui.tree.SceneJSTreeFile("http://scenejs.org/","WebGL Earth,Lights,Clouds"));
                 item.add(item2);
                 parent.add(item);
-                */
 
             } else if (index == 2) {
 
