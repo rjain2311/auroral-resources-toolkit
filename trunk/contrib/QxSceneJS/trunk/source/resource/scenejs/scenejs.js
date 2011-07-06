@@ -123,6 +123,7 @@ var SceneJS = {
      * @return {SceneJS.Node} Root of (sub)graph
      */
     createNode : function(json) {
+        alert("WTF");
         if (!json) {
             throw "createNode param 'json' is null or undefined";
         }

@@ -368,115 +368,122 @@ qx.Class.define("auroral_resources.ui.window.SceneJSWindow",
         };
 
         this.__scene = new qxscenejs.Scene(opts);
-        this.add(this.__scene);
+        var scene = this.__scene;
+        var that = this;
 
-        var canvas = this.__scene.getCanvas();
-        var yaw = 0;
-        var pitch = 0;
-        var lastX;
-        var lastY;
-        var dragging = false;
-        var posZ = 10;
-        var earthRotate = 0;
-        var cloudsRotate = 0;
+        this.__scene.addListener("sceneCreated",function() {
 
-        function mouseDown(event) {
-            lastX = event.clientX;
-            lastY = event.clientY;
-            dragging = true;
-        }
+            var canvas = scene.getCanvas();
+            var yaw = 0;
+            var pitch = 0;
+            var lastX;
+            var lastY;
+            var dragging = false;
+            var posZ = 10;
+            var earthRotate = 0;
+            var cloudsRotate = 0;
 
-        function mouseUp() {
-            dragging = false;
-        }
-
-        /* On a mouse drag, we'll re-render the scene, passing in
-         * incremented angles in each time.
-         */
-        function mouseMove(event) {
-            if (dragging) {
-                yaw += (event.clientX - lastX) * 0.3;
-                pitch += (event.clientY - lastY) * 0.3;
-
+            function mouseDown(event) {
                 lastX = event.clientX;
                 lastY = event.clientY;
+                dragging = true;
             }
-        }
 
-        function mouseWheel(event) {
-            var delta = 0;
-            if (!event) event = window.event;
-            if (event.wheelDelta) {
-                delta = event.wheelDelta / 120;
-                if (window.opera) delta = -delta;
-            } else if (event.detail) {
-                delta = -event.detail / 3;
+            function mouseUp() {
+                dragging = false;
             }
-            if (delta) {
-                if (delta < 0) {
-                    posZ -= 0.6;
-                } else {
-                    posZ += 0.6;
+
+            /* On a mouse drag, we'll re-render the scene, passing in
+             * incremented angles in each time.
+             */
+            function mouseMove(event) {
+                if (dragging) {
+                    yaw += (event.clientX - lastX) * 0.3;
+                    pitch += (event.clientY - lastY) * 0.3;
+
+                    lastX = event.clientX;
+                    lastY = event.clientY;
                 }
             }
-            if (event.preventDefault)
-                event.preventDefault();
-            event.returnValue = false;
 
-
-        }
-
-        canvas.addEventListener('mousedown', mouseDown, true);
-        canvas.addEventListener('mousemove', mouseMove, true);
-        canvas.addEventListener('mouseup', mouseUp, true);
-        canvas.addEventListener('mousewheel', mouseWheel, true);
-        canvas.addEventListener('DOMMouseScroll', mouseWheel, true);
-
-        SceneJS.withNode("the-scene").set("layers", [
-            "surface-layer",
-            "cloud-layer"
-        ]);
-
-        SceneJS.withNode("the-scene").start({
-            idleFunc: function() {
-                SceneJS.withNode("earth-rotate").set("angle", earthRotate);
-                SceneJS.withNode("clouds-rotate").set("angle", cloudsRotate);
-                SceneJS.withNode("pitch").set("angle", pitch);
-                SceneJS.withNode("yaw").set("angle", yaw);
-                SceneJS.withNode("yaw").set("angle", yaw);
-                SceneJS.withNode("the-lookat").set({ eye: { x: 0, y: 0, z: posZ } });
-
-                //earthRotate -= 0.004;
-                cloudsRotate -= 0.06;
-            }
-        });
-
-        var $dialog = $('<div></div>')
-                .html('<br/><p>Loading textures, please wait</p>')
-                .dialog({
-            autoOpen: false,
-            title: 'Just a second..'
-        });
-
-        var dialogOpen = false;
-        SceneJS.withNode("the-scene").bind("loading-status", function(event) {
-                var params = event.params;
-
-                if (params.numNodesLoading > 0) {
-                    if (!dialogOpen) {
-                        $dialog.dialog('open');
-                        dialogOpen = true;
-                    }
-                } else {
-                    if (dialogOpen) {
-                        $dialog.dialog('close');
-                        dialogOpen = false;
+            function mouseWheel(event) {
+                var delta = 0;
+                if (!event) event = window.event;
+                if (event.wheelDelta) {
+                    delta = event.wheelDelta / 120;
+                    if (window.opera) delta = -delta;
+                } else if (event.detail) {
+                    delta = -event.detail / 3;
+                }
+                if (delta) {
+                    if (delta < 0) {
+                        posZ -= 0.6;
+                    } else {
+                        posZ += 0.6;
                     }
                 }
-            }
-        );
+                if (event.preventDefault)
+                    event.preventDefault();
+                event.returnValue = false;
 
-        this._hideLoading();
+
+            }
+
+            canvas.addEventListener('mousedown', mouseDown, true);
+            canvas.addEventListener('mousemove', mouseMove, true);
+            canvas.addEventListener('mouseup', mouseUp, true);
+            canvas.addEventListener('mousewheel', mouseWheel, true);
+            canvas.addEventListener('DOMMouseScroll', mouseWheel, true);
+
+            SceneJS.withNode("the-scene").set("layers", [
+                "surface-layer",
+                "cloud-layer"
+            ]);
+
+            SceneJS.withNode("the-scene").start({
+                idleFunc: function() {
+                    SceneJS.withNode("earth-rotate").set("angle", earthRotate);
+                    SceneJS.withNode("clouds-rotate").set("angle", cloudsRotate);
+                    SceneJS.withNode("pitch").set("angle", pitch);
+                    SceneJS.withNode("yaw").set("angle", yaw);
+                    SceneJS.withNode("yaw").set("angle", yaw);
+                    SceneJS.withNode("the-lookat").set({ eye: { x: 0, y: 0, z: posZ } });
+
+                    //earthRotate -= 0.004;
+                    cloudsRotate -= 0.06;
+                }
+            });
+
+            var $dialog = $('<div></div>')
+                    .html('<br/><p>Loading textures, please wait</p>')
+                    .dialog({
+                autoOpen: false,
+                title: 'Just a second..'
+            });
+
+            var dialogOpen = false;
+            SceneJS.withNode("the-scene").bind("loading-status", function(event) {
+                    var params = event.params;
+
+                    if (params.numNodesLoading > 0) {
+                        if (!dialogOpen) {
+                            $dialog.dialog('open');
+                            dialogOpen = true;
+                        }
+                    } else {
+                        if (dialogOpen) {
+                            $dialog.dialog('close');
+                            dialogOpen = false;
+                        }
+                    }
+                }
+            );
+
+            that.add(scene);
+            that._hideLoading();
+
+        }, this);        
+
 
         return this;
     },
