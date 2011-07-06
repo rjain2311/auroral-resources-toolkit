@@ -87,6 +87,7 @@ qx.Class.define("qxscenejs.Scene",
     construct: function(parameters)
     {
         this.base(arguments);
+        var parm = parameters;
 
 
         // whether to use the minified version
@@ -101,13 +102,14 @@ qx.Class.define("qxscenejs.Scene",
         var codeArr = [
             "jquery" + min + ".js",
             "jquery-ui" + min + ".js",
-            "scenejs" + min + ".js"
+//            "scenejs" + min + ".js"
+            "scenejs.js" //minified version doesn't complain at all...
         ];
 
         // load'em
         this.__addCss("jquery-ui.css");
         this.__addCss("style.css");
-        this.__loadScriptArr(codeArr,qx.lang.Function.bind(this.__addCanvas,this,parameters));
+        this.__loadScriptArr(codeArr,qx.lang.Function.bind(this.__addCanvas, this, parm));
     },
 
 
@@ -144,7 +146,7 @@ qx.Class.define("qxscenejs.Scene",
                 var el = document.createElement("link");
                 el.type = "text/css";
                 el.rel="stylesheet";
-                el.href=qx.util.ResourceManager.getInstance().toUri("resource/css/scenejs/"+url);
+                el.href=qx.util.ResourceManager.getInstance().toUri("resource/scenejs/css/"+url);
                 setTimeout(function() {
                     head.appendChild(el);
                 }, 0);
@@ -204,23 +206,25 @@ qx.Class.define("qxscenejs.Scene",
         //
         __addCanvas: function(parameters)
         {
-            //this.__element = this.getContentElement().getDomElement();
-            this.__element = new qx.ui.embed.Canvas().set({ canvasWidth: 512, canvasHeight: 512, syncDimension: true });
+            // use of the embed canvas from qx needs some more integration effort, going native for now
+            //new qx.ui.embed.Canvas().set({ canvasWidth: 512, canvasHeight: 512, syncDimension: true });
+            this.__element = document.createElement("canvas"); 
 
             var qxThis = this;
             var qxParm = parameters;
 
             if (this.__element == null){
 
-                this.addListenerOnce('appear',qx.lang.Function.bind(this.__addCanvas,this,parameters),this);
+                this.addListenerOnce('appear',qx.lang.Function.bind(qxThis.__addCanvas, qxThis, qxParm), qxThis);
 
             } else {
 
                 var id = 'sjsId'+(qxscenejs.Scene.INSTANCE_COUNTER++);
                 qx.bom.element.Attribute.set(this.__element, 'id', id);
                 qxParm.canvasId = id;
+                alert(SceneJS.VERSION);
                 var scene = qxThis.__sceneObject = new SceneJS.createNode(qxParm);
-                qxThis.fireDataEvent('sceneCreated', plot);
+                qxThis.fireDataEvent('sceneCreated', scene);
 
             }
         }
