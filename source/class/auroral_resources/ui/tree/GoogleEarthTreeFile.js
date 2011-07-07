@@ -41,26 +41,29 @@ Peter R. Elespuru - peter.elespuru@noaa.gov
 
 *************************************************************************/
 
-qx.Class.define("auroral_resources.ui.tree.SceneJSTreeFile",
+/* ************************************************************************
+
+#asset(auroral_resources/icons/*)
+
+************************************************************************ */
+
+qx.Class.define("auroral_resources.ui.tree.GoogleEarthTreeFile",
 {
     extend : qx.ui.tree.TreeFile,
-
 
     /*
     *****************************************************************************
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(mdurl, title)
+    construct : function(title)
     {
         this.base(arguments, title);
         this.setDraggable(true);
         this.addListener("dblclick", this._doubleClicked, this);
         this.addListener("dragstart", this._dragStart, this);
         this.addListener("droprequest", this._dropRequest, this);
-        this.__mdurl = mdurl;
         this.__title = title;
-        this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
         this.setToolTipText("Drag this widget anywhere into the gray workspace to the right");
         return this;
     },
@@ -68,44 +71,35 @@ qx.Class.define("auroral_resources.ui.tree.SceneJSTreeFile",
 
     /*
     *****************************************************************************
-        CLASS VARIABLES AND METHODS
+        CLASS VARIABLES AND MEMBERS
     *****************************************************************************
     */
     members :
     {
         __window : null,
         __title : null,
-        __timeBus : null,
-        __mdurl : null,
 
         _doubleClicked : function(e) {
             if (!auroral_resources.Application.isWidgetDropAllowed()) { return; }
-            this.__window = new auroral_resources.ui.window.SceneJSWindow(635,455,this.__mdurl,this.__title);
+            this.__window = new auroral_resources.ui.window.GoogleEarthWindow(512, 512, this.__title);
             var w = this.__window;
             auroral_resources.Application.addWindow(w);
         },
 
-        //
-        //
-        //
         _dragStart : function(e) {
             e.addAction("copy");
             e.addAction("move");
             e.addType("widget");
         },
 
-        //
-        //
-        //
         _dropRequest : function(e) {
-            
             var action = e.getCurrentAction();
             var type = e.getCurrentType();
             var result = null;
-            
+
             if (type === "widget") {
                 if (!auroral_resources.Application.isWidgetDropAllowed()) { e.addData(type, "ignore"); return; }
-                this.__window = new auroral_resources.ui.window.SceneJSWindow(635,455,this.__mdurl,this.__title);
+                this.__window = new auroral_resources.ui.window.GoogleEarthWindow(512, 512, this.__title);
                 result = this.__window;
                 e.addData(type, result);
             }
@@ -122,8 +116,6 @@ qx.Class.define("auroral_resources.ui.tree.SceneJSTreeFile",
     {
         this.__window = null;
         this.__title = null;
-        this.__timeBus = null;
-        this.__mdurl = null;        
     }
     
 

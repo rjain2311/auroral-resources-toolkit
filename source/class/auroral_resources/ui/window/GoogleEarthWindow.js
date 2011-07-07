@@ -37,31 +37,69 @@ or
 EPL: http://www.eclipse.org/org/documents/epl-v10.php
 
 AUTHOR(S) OF THIS FILE:
-Peter R. Elespuru - peter.elespuru@noaa.gov
+Peter Elespuru - peter.elespuru@noaa.gov
 
 *************************************************************************/
 
-qx.Class.define("auroral_resources.ui.tree.SceneJSTreeFile",
-{
-    extend : qx.ui.tree.TreeFile,
+/* ************************************************************************
 
+#asset(googleearth_embedded/*)
+
+************************************************************************ */
+
+qx.Class.define("auroral_resources.ui.window.GoogleEarthWindow",
+{
+
+    extend : qx.ui.window.Window,
+
+    /*
+    *****************************************************************************
+        STATICS
+    *****************************************************************************
+    */
+    statics : 
+    {
+        fromArray : function(argArray) { 
+            return new auroral_resources.ui.window.GoogleEarthWindow(
+                parseInt(decodeURI(argArray[3])), 
+                parseInt(decodeURI(argArray[4])), 
+                decodeURI(argArray[5])
+            );
+        }
+    },
+    
 
     /*
     *****************************************************************************
         CONSTRUCTOR
     *****************************************************************************
     */
-    construct : function(mdurl, title)
+    construct : function(width, height, title)
     {
         this.base(arguments, title);
-        this.setDraggable(true);
-        this.addListener("dblclick", this._doubleClicked, this);
-        this.addListener("dragstart", this._dragStart, this);
-        this.addListener("droprequest", this._dropRequest, this);
-        this.__mdurl = mdurl;
-        this.__title = title;
-        this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
-        this.setToolTipText("Drag this widget anywhere into the gray workspace to the right");
+
+        this.set({
+            allowMaximize: false,
+            allowMinimize: false,
+            showMaximize: false,
+            showMinimize: false,
+            showClose: true,
+            status: title,
+            layout: new qx.ui.layout.Grow()
+        });
+        
+        this.setCaption(this.getCaption()+" -- *! EXPERIMENTAL !*");
+        this.setWidth(width);
+        this.setHeight(height);
+        this.setContentPadding(0,0,0,0);
+        
+        this.addListener("close", this._destroy, this); //function(evt) { this.destroy() });
+        this.addListener("mouseup", this._rightClick, this);
+
+        var frame = new qx.ui.embed.ThemedIframe();
+        frame.setSource("resource/googleearth_embedded/index.html");
+        this.add(frame);
+
         return this;
     },
 
@@ -73,58 +111,24 @@ qx.Class.define("auroral_resources.ui.tree.SceneJSTreeFile",
     */
     members :
     {
-        __window : null,
-        __title : null,
-        __timeBus : null,
-        __mdurl : null,
-
-        _doubleClicked : function(e) {
-            if (!auroral_resources.Application.isWidgetDropAllowed()) { return; }
-            this.__window = new auroral_resources.ui.window.SceneJSWindow(635,455,this.__mdurl,this.__title);
-            var w = this.__window;
-            auroral_resources.Application.addWindow(w);
-        },
-
         //
         //
         //
-        _dragStart : function(e) {
-            e.addAction("copy");
-            e.addAction("move");
-            e.addType("widget");
-        },
-
-        //
-        //
-        //
-        _dropRequest : function(e) {
-            
-            var action = e.getCurrentAction();
-            var type = e.getCurrentType();
-            var result = null;
-            
-            if (type === "widget") {
-                if (!auroral_resources.Application.isWidgetDropAllowed()) { e.addData(type, "ignore"); return; }
-                this.__window = new auroral_resources.ui.window.SceneJSWindow(635,455,this.__mdurl,this.__title);
-                result = this.__window;
-                e.addData(type, result);
+        _rightClick : function(evt) { 
+            if(evt.isRightPressed()) { 
+                dialog.Dialog.alert('This window does not have any additional options');
             }
-        }
-    },
-    
-    
-    /*
-    *****************************************************************************
-        DESTRUCTOR
-    *****************************************************************************
-    */
-    destruct : function()
-    {
-        this.__window = null;
-        this.__title = null;
-        this.__timeBus = null;
-        this.__mdurl = null;        
+        },
+
+        //
+        //
+        //
+        _destroy : function () 
+        {
+            auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE -= 1;        
+            this.destroy();
+        }        
     }
-    
+
 
 });
