@@ -300,7 +300,7 @@ qx.Class.define("auroral_resources.view.SideBar",
                 item = new auroral_resources.ui.tree.TouchEnabledTreeFolder("*Experimental*");
                 item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("3D");
                 item2.add(new auroral_resources.ui.tree.SceneJSTreeFile("http://scenejs.org/","WebGL Earth,Lights,Clouds"));
-                item2.add(new auroral_resources.ui.tree.GoogleEarthTreeFile("Google Earth"));
+                item2.add(new auroral_resources.ui.tree.GoogleEarthTreeFile("Google Earth w/TEC from ES4D"));
                 item.add(item2);
                 parent.add(item);
 

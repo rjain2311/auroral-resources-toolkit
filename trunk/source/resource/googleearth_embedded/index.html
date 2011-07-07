@@ -25,6 +25,8 @@ limitations under the License.
     <script> 
 google.load("earth", "1");
  
+var tec_kml = "http://sol.spacenvironment.net:16080/~ionops/kml_files/ES4D_ionops_TEC.kml";
+
 var ge = null;
  
 function init() {
@@ -34,15 +36,24 @@ function init() {
 function initCallback(object) {
   ge = object;
   ge.getWindow().setVisibility(true);
+
+  google.earth.fetchKml(ge, tec_kml, function(kmlObject) {
+        if (kmlObject) {
+           ge.getFeatures().appendChild(kmlObject);
+        }
+  });  
 }
  
 function failureCallback(object) {
 }
     </script> 
+
   </head> 
+
   <body onload='init()' id='body'> 
     <center> 
       <div id='map3d' style='border: 0px;'></div> 
     </center> 
   </body> 
+
 </html> 
