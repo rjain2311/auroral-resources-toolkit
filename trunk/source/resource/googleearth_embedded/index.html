@@ -19,9 +19,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --> 
 
-    <title>Hello Google Earth!</title> 
-    <!-- *** Replace the key below below with your own API key, available at http://code.google.com/apis/maps/signup.html *** --> 
-    <script src="http://www.google.com/jsapi?key=ABQIAAAAwbkbZLyhsmTCWXbTcjbgbRSzHs7K5SvaUdm8ua-Xxy_-2dYwMxQMhnagaawTo7L1FE1-amhuQxIlXw"></script> 
+<!-- added spidrdev API key below so not using the default anymore -->
+
+    <script src="http://www.google.com/jsapi?key=ABQIAAAA4Vfi5VFmDRFqj2Hnxw2J_RTUwW88AtY3StDT8_jvpSaDmMPh3hRqOeOCbXscfBp-RcoZBRLExIPj0w"></script> 
     <script> 
 google.load("earth", "1");
  
@@ -42,11 +42,7 @@ function failureCallback(object) {
   </head> 
   <body onload='init()' id='body'> 
     <center> 
-      <div> 
-        Hello, Earth!
-      </div> 
- 
-      <div id='map3d' style='border: 1px solid silver; height: 600px; width: 800px;'></div> 
+      <div id='map3d' style='border: 0px;'></div> 
     </center> 
   </body> 
 </html> 
