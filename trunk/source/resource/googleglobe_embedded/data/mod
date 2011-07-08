@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+rm -f ovation_mod.json
+#cat $1 | gawk '{printf $1 $2 "%.2f,",$3*100}' > ovation_mod.json
+#cat $1 | gawk '{printf $1 $2 $3*100 ","}' > ovation_mod.json
+cat $1 | gawk '{printf $1 $2 $3 ","}' > ovation_mod.json
+perl -pi -e 's/,,/,/g' $1
+#perl -pi -e 's, ,,g' $1
+#perl -pi -e 's/\n/,/g' $1
