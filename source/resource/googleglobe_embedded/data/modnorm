@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+data=`cat $1 | gawk '{printf $1 $2 $3 ",\n"}'`
+
+for datum in ${data[*]}
+do
+	lat=`echo $datum | gawk -F, '{printf $1}'`
+	lon=`echo $datum | gawk -F, '{printf $2}'`
+	mag=`echo $datum | gawk -F, '{printf $3}'`
+
+	if [[ $mag > 2.5 ]]; then
+		mag=1
+	elif [[ $mag > 1.0 && $mag < 2.5 ]]; then
+		mag=`echo "$mag / 10" | bc`
+	fi
+
+	printf "$lat,$lon,$mag,"
+done
+
+#pr -m -t -s\  $1 $2 | gawk '{print $1 $2 $4 ","}'
+
+#cat $1 | gawk '{printf $1 $2 "%.2f,",$3*100}' > ovation_mod.json
+#cat $1 | gawk '{printf $1 $2 $3*100 ","}' > ovation_mod.json
+#cat $1 | gawk '{printf $1 $2 $3 ","}' > ovation_mod.json
+#perl -pi -e 's/,,/,/g' $1
+#perl -pi -e 's, ,,g' $1
+#perl -pi -e 's/\n/,/g' $1
