@@ -318,6 +318,8 @@ qx.Class.define("auroral_resources.view.SideBar",
                 var item2 = new auroral_resources.ui.tree.TouchEnabledTreeFolder("YouTube");
                 item2.add(new auroral_resources.ui.tree.ExternalVidTreeFile("_Y2gv-MoQx4","Halloween Storm (NASA) 2003"));
                 item2.add(new auroral_resources.ui.tree.ExternalVidTreeFile("v/9AoIBt-zgn0","Tromsø Norway 2009"));
+                item2.add(new auroral_resources.ui.tree.ExternalVidTreeFile("Rea_XKgz-Iw","Aurora Australis from Space"));
+                item2.add(new auroral_resources.ui.tree.ExternalVidTreeFile("PdDEpC0uHWI","Earth from the ISS"));
                 item.add(item2);
                 parent.add(item);
 
