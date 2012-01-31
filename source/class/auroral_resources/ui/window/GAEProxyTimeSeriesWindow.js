@@ -45,17 +45,29 @@ Peter Elespuru - peter.elespuru@noaa.gov
 qx.Class.define("auroral_resources.ui.window.GAEProxyTimeSeriesWindow",
 {
 
-    extend : qx.ui.window.Window,
+    /* 
+     * just a wrapper class for the specific plotter in use at this time to simplify
+     * switching between several different ones easily and quickly
+     */
+
+    extend : auroral_resources.ui.plot.dygraphs.TimeSeriesWindow,
 
     /*
     *****************************************************************************
-        STATICS
+        STATICS ARE NOT INHERITED!
     *****************************************************************************
     */
     statics : 
     {
+        getCsvUrl : function(parameter, start, stop) {
+
+            var args = escape("param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop);
+            var url ="http://www.auroral-resources.org/proxy?service=spidr.ngdc.GetData&args="+args;
+            return url;
+        },
+
         fromArray : function(argArray) { 
-            return new auroral_resources.ui.window.GAEProxyTimeSeriesWindow(
+            return new auroral_resources.ui.plot.dygraphs.TimeSeriesWindow(
                 parseInt(decodeURI(argArray[3])), 
                 parseInt(decodeURI(argArray[4])), 
                 decodeURI(argArray[5]), 
@@ -63,321 +75,6 @@ qx.Class.define("auroral_resources.ui.window.GAEProxyTimeSeriesWindow",
                 decodeURI(argArray[7])
             );
         }
-    },
-
-
-    /*
-    *****************************************************************************
-        CONSTRUCTOR
-    *****************************************************************************
-    */
-    construct : function(width, height, parameter, title, mddocname)
-    {
-        this.base(arguments, title);
-
-        this.__timeBus = auroral_resources.messaging.TimeBus.getInstance();
-        this.__parameter = parameter;
-        this.__mddocname = mddocname;
-        this.__title = title;
-
-        this.set({
-            allowMaximize: false,
-            allowMinimize: false,
-            showMaximize: false,
-            showMinimize: false,
-            showClose: true,
-            status: parameter + ',' + title + ',' + mddocname,
-            layout: new qx.ui.layout.Grow()
-        });
-        
-        this.setWidth(width);
-        this.setHeight(height);
-
-        var start = this.__timeBus.getStartDateForSPIDRWS();
-        var stop = this.__timeBus.getStopDateForSPIDRWS();
-
-        this.__startDate = start;
-        this.__stopDate = stop;
-
-        var args = escape("param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop);
-        this.__plot = new qxdygraphs.Plot(
-            "/proxy?service=spidr.ngdc.GetData&args="+args,
-            {
-                labelsKMB: true,
-                drawPoints: true,
-                errorBars: false,
-                lables: [title],
-                highlightCircleSize: 3,
-                strokeWidth: 1,
-                underlayCallback: this._vline,
-                zoomCallback: this._zoom
-            }
-        );
-
-        this.add(this.__plot);
-        this.addListener("close", this._destroy, this); //function(evt) { this.destroy() });
-        this.addListener("mouseup", this._rightClick, this);
-        this.__timeBus.getBus().subscribe("time.startDate", this._startDateChangeBusCallback, this);
-        this.__timeBus.getBus().subscribe("time.now", this._nowChangeBusCallback, this);
-        this.__timeBus.getBus().subscribe("time.stopDate", this._stopDateChangeBusCallback, this);
-
-        return this;
-    },
-
-
-    /*
-    *****************************************************************************
-        CLASS VARIABLES AND METHODS
-    *****************************************************************************
-    */
-    members :
-    {
-        __title : null,
-        __parameter : null,
-        __mddocname : null,
-        __timeBus : null,
-        __startDate : null,
-        __stopDate : null,
-        __plot : null,
-        __now : null,
-        
-
-        //
-        //
-        //
-        _rightClick : function(evt) { 
-            if(evt.isRightPressed()) {
-                
-                var popup = new qx.ui.popup.Popup(new qx.ui.layout.VBox()).set({
-                     autoHide: true
-                });
-                
-                var param = this.__parameter;
-                var start = this.__startDate;
-                var stop = this.__stopDate;
-                var mddoc = this.__mddocname;
-                var that = this;
-                
-                var png = new qx.ui.form.Button("Download Image (PNG)");
-                png.addListener("click", function(evt) {
-                    // TBD add axix content to PNG via the canvas... add some code to dygraphs for this. clone the canvas, add the text, return the object
-                    var canvas = that.__plot.getPlotObject().getStaticCanvas();
-                    Canvas2Image.saveAsPNG(canvas);
-                    popup.hide();
-                });
-
-                var data = new qx.ui.form.Button("Download Data");
-                data.addListener("click", function(evt) {
-                    
-                    var args = escape("param="+parameter+"&format=zip&dateFrom="+start+"&dateTo="+stop);
-                    var dlurl = "/proxy?service=spidr.ngdc.GetData&args="+args;
-                    window.open(dlurl,"");
-                    popup.hide();
-                });
-                
-                var mdata = new qx.ui.form.Button("View Metadata");
-                mdata.addListener("click", function(evt) {
-                    var mdurl = "http://spidr.ngdc.noaa.gov/spidrvo/viewdata.do?docname="+mddoc;
-                    window.open(mdurl,"");
-                    popup.hide();
-                });
-                
-                /* 
-                var pdf = new qx.ui.form.Button("Download PDF");
-                pdf.addListener("click", function(evt) {
-                    dialog.Dialog.alert("Coming Soon!");
-                    popup.hide();
-                });
-                
-                var svg = new qx.ui.form.Button("Download SVG");
-                svg.addListener("click", function(evt) {
-                    dialog.Dialog.alert("Coming Soon!");
-                    popup.hide();
-                });
-                */
-                
-                popup.add(new qx.ui.basic.Label("Additional Options"));
-                popup.add(png);
-                popup.add(data);
-                popup.add(mdata);
-                //popup.add(pdf);
-                //popup.add(svg);
-                popup.placeToMouse(evt);
-                popup.show();            
-            }
-        },
-        
-        
-        //
-        //
-        //
-        _zoom : function(minDate, maxDate, minValue, maxValue) {
-            // not doing anything here yet
-        },
-        
-        
-        //
-        // vertical line function
-        //
-        _vline : function(canvas, area, g) {
-            /* no need to normalize, just use toDomCoords !!!
-            // alert(area.toSource()); // MUST BE RUN IN FIREFOX! => debug output
-            // note the way this method is registered as a callback prevents access
-            // to class variables, must access them anew (e.g. timeBus)
-            var timeBus = auroral_resources.messaging.TimeBus.getInstance();
-            var start = timeBus.getStartDate();
-            var stop = timeBus.getStopDate();
-            var now = timeBus.getNow();
-            
-            var A = start;
-            var B = stop;
-            var C = area.x+1;
-            var D = area.w+area.x;
-            // normalize x-prime to determine how the time maps to pixel space
-            var xp = ((D-C)*(now-A)) / (B-A) + C;
-            */
-            
-            var timeBus = auroral_resources.messaging.TimeBus.getInstance();
-            var now = timeBus.getNow();
-//            now = now + ((new Date().getTimezoneOffset()*60)*1000);
-            var xp = g.toDomCoords(parseInt(now),0); //only care about X
-            xp = xp[0];
-            
-            canvas.beginPath();
-            canvas.strokeStyle = "rgba(255, 0, 0, 1.0)";
-            canvas.moveTo(xp, 0);
-            canvas.lineTo(xp, area.h);
-            canvas.closePath();
-            canvas.stroke();
-        },
-
-        //
-        // callback for the 'startDate' message channel
-        //
-        _startDateChangeBusCallback : function(e) {
-            this.remove(this.__plot);
-
-            qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
-            this.__plot = null;
-            
-            var start = this.__timeBus.convertToSPIDRWS(e.getData());
-            this.__start = start;
-            var stop = this.__timeBus.getStopDateForSPIDRWS();
-            var now = this.__timeBus.getNow();
-            var parameter = this.__parameter;
-            
-            var args = escape("param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop);
-            this.__plot = new qxdygraphs.Plot(
-                "/proxy?service=spidr.ngdc.GetData&args="+args,
-                {
-                    labelsKMB: true,
-                    errorBars: false,
-                    drawPoints: true,
-                    lables: [this.__title],
-                    highlightCircleSize: 3,
-                    strokeWidth: 1,
-                    underlayCallback: this._vline,
-                    zoomCallback: this._zoom
-                }
-            );
-
-            this.add(this.__plot);      	    
-        },
-
-        //
-        // callback for the 'stopDate' message channel
-        //
-        _stopDateChangeBusCallback : function(e) {
-            this.remove(this.__plot);
-
-            qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
-            this.__plot = null;
-            
-            var start = this.__timeBus.getStartDateForSPIDRWS();
-            var stop = this.__timeBus.convertToSPIDRWS(e.getData());
-            this.__stop = stop;
-            var now = this.__timeBus.getNow();
-            var parameter = this.__parameter;
-
-            var args = escape("param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop);
-            this.__plot = new qxdygraphs.Plot(
-                "/proxy?service=spidr.ngdc.GetData&args="+args,
-                {
-                    labelsKMB: true,
-                    errorBars: false,
-                    drawPoints: true,
-                    lables: [this.__title],
-                    highlightCircleSize: 3,
-                    strokeWidth: 1,
-                    underlayCallback: this._vline,
-                    zoomCallback: this._zoom
-                }
-            );
-
-            this.add(this.__plot);
-        },	
-
-        //
-        //
-        //
-        _nowChangeBusCallback : function(e) {
-            this.remove(this.__plot);
-
-            qx.util.DisposeUtil.disposeObjects(this, "__plot", false);
-            this.__plot = null;
-            
-            var start = this.__timeBus.getStartDateForSPIDRWS();
-            var stop = this.__timeBus.getStopDateForSPIDRWS();
-            var now = e.getData();
-            this.__now = now;
-            var parameter = this.__parameter;
-
-            var args = escape("param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop);
-            this.__plot = new qxdygraphs.Plot(
-                "/proxy?service=spidr.ngdc.GetData&args="+args,
-                {
-                    labelsKMB: true,
-                    errorBars: false,
-                    drawPoints: true,
-                    lables: [this.__title],
-                    highlightCircleSize: 3,
-                    strokeWidth: 1,
-                    underlayCallback: this._vline,
-                    zoomCallback: this._zoom
-                }
-            );
-
-            this.add(this.__plot);          
-        },
-
-
-        //
-        //
-        //
-        _destroy : function () 
-        {
-            auroral_resources.Application.__N_WIDGETS_ON_WORKSPACE -= 1;        
-            this.destroy();
-        }
-    },
-
-
-    /*
-    *****************************************************************************
-        DESTRUCTOR
-    *****************************************************************************
-    */
-    destruct : function()
-    {
-        this.__title = null;
-        this.__parameter = null;
-        this.__mddocname = null;
-        this.__timeBus = null;
-        this.__startDate = null;
-        this.__stopDate = null;
-        this.__plot = null;
-        this.__now = null;        
     }
-
 
 });

@@ -308,6 +308,7 @@ qx.Class.define("auroral_resources.Application",
             //
             var sl = new qx.io.ScriptLoader();
             sl.load("script/date.js.gz", function(status) {
+//            sl.load("script/date.js", function(status) {
                 if (status === 'success') {
                     Date.prototype.getDOY = function() {
                         return new Date().getDayOfYear();
@@ -320,6 +321,7 @@ qx.Class.define("auroral_resources.Application",
             //
             var sl = new qx.io.ScriptLoader();
             var script = "script/canvas2image/base64.js.gz";
+//            var script = "script/canvas2image/base64.js";
             sl.load( script, function(status ) {
                 if (status !== 'success') {
                     this.error("Unable to load "+script);
@@ -327,6 +329,7 @@ qx.Class.define("auroral_resources.Application",
             });
             sl = new qx.io.ScriptLoader();
             script = "script/canvas2image/canvas2image.js.gz";
+//            script = "script/canvas2image/canvas2image.js";
             sl.load( script, function(status ) {
                 if (status !== 'success') {
                     this.error("Unable to load "+script);
@@ -699,6 +702,18 @@ qx.Class.define("auroral_resources.Application",
                 if ( typeof host !== undefined && host !== null && host === "spidrd") { return; }
 //                if ( typeof host !== undefined && host !== null && host === "localh") { return; }
 
+                /* GAE proxied examples
+                pieces = [1,1,"auroral_resources.ui.window.GoogleGlobeWindow",400,400,"3D Ovation Auroral Forecast"];
+                addWidget(stringToClass, mW, pieces, wD);
+
+                pieces = [402,1,"auroral_resources.ui.window.TimeSeriesWindow",400,200,"iono_foF2.BC840","(Proxied) Boulder%20(BC840)%20foF2%20%7BMHz%7D","IonoStationsBC840"];
+                addWidget(stringToClass, mW, pieces, wD);
+
+                pieces = [402,201,"auroral_resources.ui.window.TimeSeriesWindow",400,200,"iono_hpF.SMJ67","(Proxied) Sondrestrom%20(SMJ67)%20hpF%20%7BKm%7D","IonoStationsSMJ67"];
+                addWidget(stringToClass, mW, pieces, wD);
+                */
+
+                /* "normal" default */
                 pieces = [0,0,"auroral_resources.ui.window.ExternalImageWindow",325,350,"http://www.ngdc.noaa.gov/stp/ovation_prime/data/north_forecast_aacgm.png","Latest Ovation%20Prime%20Real-Time%20Forecast"];
                 addWidget(stringToClass, mW, pieces, wD);
 
@@ -710,7 +725,7 @@ qx.Class.define("auroral_resources.Application",
 
                 pieces = [327,377,"auroral_resources.ui.window.TimeSeriesWindow",400,160,"vsw_x.ACE_RT","ACE%20Flow%20%7BKm/s%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];
                 addWidget(stringToClass, mW, pieces, wD);
-                
+                /**/
 
                 /*
                 pieces = [0,487,"auroral_resources.ui.window.TimeSeriesWindow",445,209,"vsw_x.ACE_RT","ACE%20Flow%20%7BKm/s%7D","78A5B86C-71AF-3D4D-A054-EE8E765CF8D6"];

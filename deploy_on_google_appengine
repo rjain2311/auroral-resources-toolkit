@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
+QXOPTS="-s" #-v verbose -s exception stack trace on fatal error
+
+rm -fr google-appengine/art &&\
 rm -fr ar &&\
 rm -fr build &&\
-./generate.py build &&\
-./generate.py compress &&\
-rm -fr build/resource/auroral_resources/chapman2011 &&\
+./generate.py ${QXOPTS} translation &&\
+./generate.py ${QXOPTS} default &&\
+./generate.py ${QXOPTS} compress &&\
 mv build google-appengine/art &&\
-cp -pR inspector google-appengine/art/ &&\
-cp source/inspector.html google-appengine/art/ &&\
 find google-appengine/art/ -name '.svn' | xargs rm -fr &&\
 appcfg.py update google-appengine &&\
 rm -fr google-appengine/art &&\
