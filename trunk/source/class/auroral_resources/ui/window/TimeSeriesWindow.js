@@ -60,7 +60,7 @@ qx.Class.define("auroral_resources.ui.window.TimeSeriesWindow",
     statics : 
     {
         getCsvUrl : function(parameter, start, stop) {
-            return "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop;
+            return "http://"+auroral_resources.Application.getHost()+"/spidr/servlet/GetData?compress=true&param="+parameter+"&format=csv&header=false&fillmissing=false&dateFrom="+start+"&dateTo="+stop; 
         },
 
         fromArray : function(argArray) { 
